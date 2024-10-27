@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SOC</RootNamespace>
     <AssemblyName>SOC</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -72,10 +72,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CityHash">
-      <HintPath>assets\ToolAssets\CityHash.dll</HintPath>
+      <HintPath>..\..\..\..\OneDrive\Desktop\CityHash.dll</HintPath>
     </Reference>
     <Reference Include="FoxLib">
-      <HintPath>..\..\..\..\..\Downloads\FoxLib.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\FoxLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
