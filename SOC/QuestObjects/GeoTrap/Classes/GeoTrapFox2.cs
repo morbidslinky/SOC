@@ -11,9 +11,9 @@ namespace SOC.QuestObjects.GeoTrap
 {
     class GeoTrapFox2
     {
-        internal static void AddQuestEntities(GeoTrapDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        internal static void AddQuestEntities(GeoTrapsDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
-            List<GeoTrapShape> shapes = detail.trapShapes;
+            List<GeoTrap> shapes = detail.trapShapes;
 
             if (shapes.Count > 0)
             {
@@ -37,7 +37,7 @@ namespace SOC.QuestObjects.GeoTrap
                     entityList.Add(moduleConditionTransform);
                     entityList.Add(checkCallback);
 
-                    foreach(GeoTrapShape shape in shapes)
+                    foreach(GeoTrap shape in shapes)
                     {
                         if (shape.geoTrap != geoTrapName)
                             continue;

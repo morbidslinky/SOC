@@ -16,7 +16,7 @@ namespace SOC.QuestObjects.Vehicle
     {
         public int ID;
 
-        public VehicleBox(Vehicle qObject, VehicleMetadata meta)
+        public VehicleBox(Vehicle qObject, VehiclesMetadata meta)
         {
             InitializeComponent();
             ID = qObject.ID;

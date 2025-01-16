@@ -9,10 +9,10 @@ namespace SOC.QuestObjects.Animal
 {
     class AnimalFox2
     {
-        public static void AddQuestEntities(AnimalDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        public static void AddQuestEntities(AnimalsDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<Animal> animals = detail.animals;
-            AnimalMetadata meta = detail.animalMetadata;
+            AnimalsMetadata meta = detail.animalMetadata;
 
             if (animals.Count() > 0)
             {

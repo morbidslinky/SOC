@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.Animal
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        internal void SetMetadata(AnimalMetadata meta)
+        internal void SetMetadata(AnimalsMetadata meta)
         {
             comboBox_ObjType.Text = meta.objectiveType;
         }

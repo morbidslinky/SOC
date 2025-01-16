@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.Camera
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        public void SetMetadata(CameraMetadata meta)
+        public void SetMetadata(CamerasMetadata meta)
         {
             comboBox_ObjType.Text = meta.objectiveType;
         }

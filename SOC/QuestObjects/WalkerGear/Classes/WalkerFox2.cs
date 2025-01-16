@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.WalkerGear
 {
     static class WalkerFox2
     {
-        internal static void AddQuestEntities(WalkerDetail walkerDetail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        internal static void AddQuestEntities(WalkerGearsDetail walkerDetail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<WalkerGear> walkers = walkerDetail.walkers;
 

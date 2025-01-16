@@ -20,14 +20,9 @@ namespace SOC.Classes.Lua
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
         OnUpdate onUpdate = new OnUpdate();
         
-        public void AddToOpeningVariables(string variableName, string value)
+        public void AddToOpeningVariables(string variableName, string value = "")
         {
             openingVariables.Add(variableName, value);
-        }
-
-        public void AddToOpeningVariables(string variableName)
-        {
-            openingVariables.Add(variableName, "");
         }
 
         public void AddToAuxiliary(LuaFunction function)

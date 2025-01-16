@@ -16,7 +16,7 @@ namespace SOC.QuestObjects.GeoTrap
     {
         public int ID;
 
-        public GeoTrapBox(GeoTrapShape qObject)
+        public GeoTrapBox(GeoTrap qObject)
         {
             InitializeComponent();
             ID = qObject.ID;
@@ -45,7 +45,7 @@ namespace SOC.QuestObjects.GeoTrap
 
         public override QuestObject getQuestObject()
         {
-            return new GeoTrapShape(this);
+            return new GeoTrap(this);
         }
     }
 }

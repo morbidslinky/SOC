@@ -12,7 +12,7 @@ namespace SOC.Classes.Common
 
         public Quest() { }
 
-        public Quest(CoreDetails core, List<Detail> details)
+        public Quest(SetupDetails core, List<ObjectsDetail> details)
         {
             version = GetSOCVersion().ToString();
             coreDetails = core;
@@ -24,7 +24,7 @@ namespace SOC.Classes.Common
 
             using (FileStream stream = new FileStream(fileName, FileMode.Create))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Quest),  ManagerArray.GetAllDetailTypes());
+                XmlSerializer serializer = new XmlSerializer(typeof(Quest),  DetailTypes.GetAllDetailTypes());
                 serializer.Serialize(stream, this);
             }
 
@@ -40,7 +40,7 @@ namespace SOC.Classes.Common
 
             using (FileStream stream = new FileStream(fileName, FileMode.Open))
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(Quest), ManagerArray.GetAllDetailTypes());
+                XmlSerializer deserializer = new XmlSerializer(typeof(Quest), DetailTypes.GetAllDetailTypes());
                 try
                 {
                     Quest loadedQuest = (Quest)deserializer.Deserialize(stream);
@@ -71,10 +71,10 @@ namespace SOC.Classes.Common
         public string version { get; set; }
 
         [XmlElement]
-        public CoreDetails coreDetails { get; set; }
+        public SetupDetails coreDetails { get; set; }
 
         [XmlArray]
-        public List<Detail> questObjectDetails { get; set; }
+        public List<ObjectsDetail> questObjectDetails { get; set; }
 
     }
 }

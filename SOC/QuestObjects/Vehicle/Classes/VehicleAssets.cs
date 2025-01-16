@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.Vehicle
     {
         static string VehAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//VehicleAssets");
 
-        internal static void GetVehicleAssets(VehicleDetail questDetail, FileAssets fileAssets)
+        internal static void GetVehicleAssets(VehiclesDetail questDetail, FileAssets fileAssets)
         {
             string VehFPKAssetsPath = Path.Combine(VehAssetsPath, "FPK_Files");
             string VehFPKDAssetsPath = Path.Combine(VehAssetsPath, "FPKD_Files");

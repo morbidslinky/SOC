@@ -25,7 +25,7 @@ function this.SetCameraAttributes()
   end
 end");
 
-        internal static void GetMain(CameraDetail detail, MainLua mainLua)
+        internal static void GetMain(CamerasDetail detail, MainLua mainLua)
         {
             if (detail.cameras.Count > 0)
             {

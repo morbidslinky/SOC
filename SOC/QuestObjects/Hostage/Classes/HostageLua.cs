@@ -66,7 +66,7 @@ function this.CheckIsHostage(gameId)
   return Tpp.IsHostage(gameId)
 end");
 
-        public static void GetDefinition(HostageDetail hostageDetail, DefinitionLua definitionLua)
+        public static void GetDefinition(HostagesDetail hostageDetail, DefinitionLua definitionLua)
         {
             int hostageCount = hostageDetail.hostages.Count;
             BodyInfoEntry hostageBody = NPCBodyInfo.GetBodyInfo(hostageDetail.hostageMetadata.hostageBodyName);
@@ -80,7 +80,7 @@ end");
             }
         }
 
-        public static void GetMain(HostageDetail hostageDetail, MainLua mainLua)
+        public static void GetMain(HostagesDetail hostageDetail, MainLua mainLua)
         {
             List<Hostage> hostages = hostageDetail.hostages;
             HostageMetadata meta = hostageDetail.hostageMetadata;
@@ -130,7 +130,7 @@ end");
             }
         }
 
-        private static Table BuildHostageList(HostageDetail hostageDetail)
+        private static Table BuildHostageList(HostagesDetail hostageDetail)
         {
             Table hostageList = new Table("hostageList");
             List<Hostage> hostages = hostageDetail.hostages;

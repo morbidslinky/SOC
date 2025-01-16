@@ -97,7 +97,7 @@ function this.CheckIsWalkerGear(gameId)
   return Tpp.IsEnemyWalkerGear(gameId)
 end");
 
-        internal static void GetDefinition(WalkerDetail walkerDetail, DefinitionLua definitionLua)
+        internal static void GetDefinition(WalkerGearsDetail walkerDetail, DefinitionLua definitionLua)
         {
             int walkerCount = walkerDetail.walkers.Count;
 
@@ -107,10 +107,10 @@ end");
             }
         }
 
-        internal static void GetMain(WalkerDetail detail, MainLua mainLua)
+        internal static void GetMain(WalkerGearsDetail detail, MainLua mainLua)
         {
             List<WalkerGear> walkers = detail.walkers;
-            WalkerMetadata meta = detail.walkerMetadata;
+            WalkerGearsMetadata meta = detail.walkerMetadata;
 
             if (detail.walkers.Count > 0)
             {
@@ -146,11 +146,11 @@ end");
             }
         }
 
-        private static Table BuildWalkerList(WalkerDetail walkerDetail)
+        private static Table BuildWalkerList(WalkerGearsDetail walkerDetail)
         {
             Table walkerList = new Table("walkerList");
             List<WalkerGear> walkers = walkerDetail.walkers;
-            WalkerMetadata meta = walkerDetail.walkerMetadata;
+            WalkerGearsMetadata meta = walkerDetail.walkerMetadata;
 
             foreach (WalkerGear walker in walkers)
             {

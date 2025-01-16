@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Camera
 {
     class CameraFox2
     {
-        internal static void AddQuestEntities(CameraDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        internal static void AddQuestEntities(CamerasDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<Camera> cameras = detail.cameras;
 

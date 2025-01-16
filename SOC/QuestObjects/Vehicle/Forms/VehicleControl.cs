@@ -12,7 +12,7 @@ namespace SOC.QuestObjects.Vehicle
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        internal void SetMetadata(VehicleMetadata meta)
+        internal void SetMetadata(VehiclesMetadata meta)
         {
              comboBox_ObjType.Text = meta.ObjectiveType;
         }

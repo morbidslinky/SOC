@@ -13,20 +13,20 @@ namespace SOC.Classes.QuestBuild.Lua
     {
         static string[] questLuaTemplate = File.ReadAllLines(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//questScript.lua"));
         
-        public static void WriteDefinitionLua(string dir, CoreDetails coreDetails, DetailManager[] managers)
+        public static void WriteDefinitionLua(string dir, SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             string DefinitionLuaPath = $@"{dir}/GameDir/mod/quests/";
-            string DefinitionLuaFile = Path.Combine(DefinitionLuaPath, $"ih_quest_q{coreDetails.QuestNum}.lua");
+            string DefinitionLuaFile = Path.Combine(DefinitionLuaPath, $"ih_quest_q{setupDetails.QuestNum}.lua");
 
             Directory.CreateDirectory(DefinitionLuaPath);
 
             using (StreamWriter defFile = new StreamWriter(DefinitionLuaFile))
             {
-                defFile.Write(BuildDefinition(coreDetails, managers));
+                defFile.Write(BuildDefinition(setupDetails, objectsDetails));
             }
         }
 
-        private static string BuildDefinition(CoreDetails coreDetails, DetailManager[] managers) //rewrite
+        private static string BuildDefinition(SetupDetails coreDetails, ObjectsDetails objectsDetails) //rewrite
         {
             DefinitionLua definitionLua = new DefinitionLua();
             string questCompleteLangId = coreDetails.progressLangID;
@@ -43,26 +43,26 @@ namespace SOC.Classes.QuestBuild.Lua
             definitionLua.AddDefinition($"questRank = TppDefine.QUEST_RANK.{coreDetails.reward}");
             definitionLua.AddDefinition("disableLzs = {}");
 
-            foreach (DetailManager manager in managers)
+            foreach (ObjectsDetail detail in objectsDetails.details)
             {
-                manager.AddToDefinitionLua(definitionLua);
+                detail.AddToDefinitionLua(definitionLua);
             }
             definitionLua.AddPackPath($"/Assets/tpp/pack/mission2/quest/ih/{coreDetails.FpkName}.fpk");
 
             return definitionLua.GetDefinitionLuaFormatted();
         }
 
-        public static void WriteMainQuestLua(string dir, CoreDetails coreDetails, DetailManager[] managers)
+        public static void WriteMainQuestLua(string dir, SetupDetails coreDetails, ObjectsDetails objectsDetails)
         {
             string LuaScriptPath = $@"{dir}/Assets/tpp/pack/mission2/quest/ih/{coreDetails.FpkName}_fpkd/Assets/tpp/level/mission2/quest/ih";
             string LuaScriptFile = Path.Combine(LuaScriptPath, coreDetails.FpkName + ".lua");
 
             Directory.CreateDirectory(LuaScriptPath);
 
-            File.WriteAllText(LuaScriptFile, BuildMain(coreDetails, managers));
+            File.WriteAllText(LuaScriptFile, BuildMain(coreDetails, objectsDetails));
         }
 
-        private static string BuildMain(CoreDetails coreDetails, DetailManager[] managers)
+        private static string BuildMain(SetupDetails coreDetails, ObjectsDetails objectsDetails)
         {
             MainLua mainLua = new MainLua();
             mainLua.AddToOpeningVariables("this", "{}");
@@ -105,15 +105,15 @@ namespace SOC.Classes.QuestBuild.Lua
             mainLua.AddToQuestTable("soldierSubType = SUBTYPE");
             mainLua.AddToQuestTable(BuildCpList(coreDetails));
 
-            foreach (DetailManager manager in managers)
+            foreach (ObjectsDetail detail in objectsDetails.details)
             {
-                manager.AddToMainLua(mainLua);
+                detail.AddToMainLua(mainLua);
             }
 
             return mainLua.GetMainLuaFormatted();
         }
 
-        private static string BuildCpList(CoreDetails coreDetails)
+        private static string BuildCpList(SetupDetails coreDetails)
         {
             StringBuilder cpListBuilder = new StringBuilder("cpList = {");
             //if (coreDetails.CPName != "NONE")

@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.UAV
     {
         static string UAVAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//UAVAssets");
 
-        internal static void GetUAVAssets(UAVDetail questDetail, FileAssets fileAssets)
+        internal static void GetUAVAssets(UAVsDetail questDetail, FileAssets fileAssets)
         {
             if (questDetail.UAVs.Count > 0)
             {

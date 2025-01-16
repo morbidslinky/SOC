@@ -10,10 +10,10 @@ namespace SOC.QuestObjects.Item
 {
     class ItemFox2
     {
-        public static void AddQuestEntities(ItemDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        public static void AddQuestEntities(ItemsDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<Item> items = detail.items;
-            ItemMetadata meta = detail.itemMetadata;
+            ItemsMetadata meta = detail.itemMetadata;
 
             if (items.Count() > 0)
             {

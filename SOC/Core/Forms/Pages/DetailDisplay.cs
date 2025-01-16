@@ -1,24 +1,25 @@
 ﻿using SOC.Classes.Common;
 using SOC.QuestObjects.Common;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace SOC.UI
 {
     public partial class DetailDisplay : UserControl
     {
-        MasterManager managerMaster;
+        ObjectsDetails managers;
 
-        public DetailDisplay(MasterManager manMaster)
+        public DetailDisplay(ObjectsDetails _managers)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            managerMaster = manMaster;
-            flowPanelDetails.Controls.AddRange(managerMaster.GetModulePanels());
+            managers = _managers;
+            flowPanelDetails.Controls.AddRange(managers.GetModulePanels());
         }
 
-        public void RefreshObjectPanels(CoreDetails core)
+        public void RefreshObjectPanels(SetupDetails setupDetails)
         {
-            managerMaster.RefreshAllPanels(core);
+            managers.RefreshAllPanels(setupDetails);
         }
 
         private void flowPanelDetails_Layout(object sender, LayoutEventArgs e)

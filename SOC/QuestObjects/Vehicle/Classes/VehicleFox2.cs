@@ -9,10 +9,10 @@ namespace SOC.QuestObjects.Vehicle
 {
     class VehicleFox2
     {
-        public static void AddQuestEntities(VehicleDetail details, DataSet dataSet, List<Fox2EntityClass> entityList)
+        public static void AddQuestEntities(VehiclesDetail details, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<Vehicle> vehicles = details.vehicles;
-            VehicleMetadata hMetadata = details.vehicleMetadata;
+            VehiclesMetadata hMetadata = details.vehicleMetadata;
 
             if (vehicles.Count() > 0)
             {

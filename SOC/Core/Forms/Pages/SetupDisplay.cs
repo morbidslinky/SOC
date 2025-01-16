@@ -20,31 +20,26 @@ namespace SOC.UI
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
         public int locationID = -1;
-        public MasterManager managerMaster;
+        public ObjectsDetails managers;
         RouteManager routeManager = new RouteManager();
 
-        public SetupDisplay(MasterManager manMaster)
+        public SetupDisplay(ObjectsDetails _managers)
         {
             InitializeComponent();
             locationalTabsScrolling = new PanelScroll(this.flowPanelLocationalStubs, true);
-            SetManagerMaster(manMaster);
+            managers = _managers;
             Dock = DockStyle.Fill;
             SendMessage(textBoxQuestNum.Handle, 0x1501, 1, "30103");
             SendMessage(textBoxFPKName.Handle, 0x1501, 1, "Example_Quest_Name");
             SendMessage(textBoxQuestTitle.Handle, 0x1501, 1, "Example Quest Title Text");
 
-            flowPanelLocationalStubs.Controls.AddRange(managerMaster.GetLocationalStubs().ToArray());
+            flowPanelLocationalStubs.Controls.AddRange(managers.GetLocationalStubs());
 
             refreshNotifsList();
             refreshRoutesList();
         }
 
-        public void SetManagerMaster(MasterManager manMaster)
-        {
-            managerMaster = manMaster;
-        }
-
-        public void SetForm(CoreDetails core)
+        public void SetForm(SetupDetails core)
         {
             textBoxQuestTitle.Text = core.QuestTitle;
             textBoxQuestDesc.Text = core.QuestDesc;
@@ -92,9 +87,9 @@ namespace SOC.UI
                 comboBoxRoute.SelectedItem = "NONE";
         }
 
-        public CoreDetails GetCoreDetails()
+        public SetupDetails GetCoreDetails()
         {
-            return new CoreDetails(this);
+            return new SetupDetails(this);
         }
 
         public void refreshNotifsList()
@@ -127,7 +122,7 @@ namespace SOC.UI
             string[] loadArea = new string[0];
             string[] cpNames = new string[0];
             enableRegionInput();
-            managerMaster.EnableVehicleBox();
+            managers.EnableVehicleBox();
 
             switch (comboBoxRegion.Text)
             {
@@ -148,7 +143,7 @@ namespace SOC.UI
                     loadArea = LoadAreas.mtbs;
                     cpNames = EnemyInfo.GetCPNames(EnemyInfo.MtbsCP);
                     disableRegionInput();
-                    managerMaster.DisableVehicleBox();
+                    managers.DisableVehicleBox();
                     comboBoxRadius.Text = "1";
                     break;
             }

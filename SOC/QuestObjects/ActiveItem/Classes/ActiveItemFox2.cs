@@ -10,10 +10,10 @@ namespace SOC.QuestObjects.ActiveItem
 {
     class ActiveItemFox2
     {
-        public static void AddQuestEntities(ActiveItemDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        public static void AddQuestEntities(ActiveItemsDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<ActiveItem> activeItems = detail.activeItems;
-            ActiveItemMetadata meta = detail.activeItemMetadata;
+            ActiveItemsMetadata meta = detail.activeItemMetadata;
 
             if (activeItems.Count() > 0)
             {

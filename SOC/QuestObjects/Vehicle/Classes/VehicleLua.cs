@@ -26,7 +26,7 @@ function this.WarpVehicles()
   end
 end");
 
-        public static void GetMain(VehicleDetail detail, MainLua mainLua)
+        public static void GetMain(VehiclesDetail detail, MainLua mainLua)
         {
             mainLua.AddToQuestTable(BuildVehicleList(detail.vehicles));
 

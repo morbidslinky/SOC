@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.Animal
     {
         static string animalAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//AnimalAssets");
 
-        internal static void GetAnimalAssets(AnimalDetail questDetail, FileAssets fileAssets)
+        internal static void GetAnimalAssets(AnimalsDetail questDetail, FileAssets fileAssets)
         {
             string AniFPKAssetsPath = Path.Combine(animalAssetsPath, "FPK_Files");
             string AniFPKDAssetsPath = Path.Combine(animalAssetsPath, "FPKD_Files");

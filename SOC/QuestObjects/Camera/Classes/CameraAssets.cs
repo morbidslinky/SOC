@@ -13,7 +13,7 @@ namespace SOC.QuestObjects.Camera
     {
         static string CameraAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//CameraAssets");
 
-        internal static void GetCameraAssets(CameraDetail questDetail, FileAssets fileAssets)
+        internal static void GetCameraAssets(CamerasDetail questDetail, FileAssets fileAssets)
         {
             if (questDetail.cameras.Count > 0)
             {

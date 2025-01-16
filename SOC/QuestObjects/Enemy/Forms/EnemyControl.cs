@@ -12,7 +12,7 @@ namespace SOC.QuestObjects.Enemy
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        internal void SetMetadata(EnemyMetadata meta, List<string> subtypes)
+        internal void SetMetadata(EnemiesMetadata meta, List<string> subtypes)
         {
             comboBox_ObjType.Text = meta.objectiveType;
 

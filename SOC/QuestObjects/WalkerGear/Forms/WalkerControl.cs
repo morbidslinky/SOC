@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.WalkerGear
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        public void SetMetadata(WalkerMetadata meta)
+        public void SetMetadata(WalkerGearsMetadata meta)
         {
             comboBox_ObjType.Text = meta.objectiveType;
         }

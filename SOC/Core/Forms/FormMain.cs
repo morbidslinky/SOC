@@ -5,40 +5,50 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SOC.UI
 {
     public partial class FormMain : Form
     {
-        MasterManager managerMaster = new MasterManager(new ManagerArray());
+        enum Step
+        {
+            NONE,
+            Setup,
+            Detail,
+            Build
+        }
 
+        private ObjectsDetails managers;
         private SetupDisplay setupPage;
         private DetailDisplay detailPage;
-        private Waiting waitingPage = new Waiting();
-        private int pageNum = 0;
+        private Waiting waitingPage;
+        private Step currentStep;
 
         public FormMain()
         {
-            setupPage = new SetupDisplay(managerMaster);
-            detailPage = new DetailDisplay(managerMaster);
+            managers = new ObjectsDetails();
+            setupPage = new SetupDisplay(managers);
+            detailPage = new DetailDisplay(managers);
+            waitingPage = new Waiting();
+            currentStep = Step.NONE;
+
             InitializeComponent();
 
-            GoToPanel();
-            buttonBack.Visible = false;
+            GoToPage(Step.Setup);
         }
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            pageNum++;
-            this.GoToPanel();
+            GoToPage(currentStep + 1);
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
-            pageNum--;
-            this.GoToPanel();
+            GoToPage(currentStep - 1);
         }
+
         private bool isFilled()
         {
             //return true; // FOR DEBUG
@@ -52,32 +62,38 @@ namespace SOC.UI
 
             return true;
         }
-        private void GoToPanel()
+
+        private void GoToPage(Step step)
         {
-            switch (pageNum)
+            if (step == currentStep)
             {
-                case 0:
+                return;
+            }
+
+            currentStep = step;
+            switch (step)
+            {
+                case Step.Setup:
                     ShowSetup();
                     break;
 
-                case 1:
+                case Step.Detail:
                     if (isFilled())
                     {
                         ShowWait();
-                        Application.DoEvents();
                         ShowDetails();
                     }
                     else
                     {
                         MessageBox.Show("Please fill in the remaining Setup and Flavor Text fields.", "Missing Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        pageNum--;
+                        currentStep--;
                         return;
                     }
                     break;
 
-                case 2:
+                case Step.Build:
                     BuildQuest();
-                    pageNum--;
+                    currentStep--;
                     break;
             }
         }
@@ -86,38 +102,43 @@ namespace SOC.UI
         {
             buttonBack.Visible = false;
             
-            panelMain.Controls.Clear();
-            panelMain.Controls.Add(setupPage);
+            SetDisplay(setupPage);
             setupPage.EnableScrolling();
-            managerMaster.UpdateAllDetailsFromControl();
-            managerMaster.RefreshAllStubTexts();
+            managers.UpdateAllDetailsFromControl();
+            managers.RefreshAllStubTexts();
             buttonNext.Text = "Next >>";
         }
 
         private void ShowWait()
         {
             setupPage.DisableScrolling();
-            panelMain.Controls.Clear();
-            panelMain.Controls.Add(waitingPage);
+            SetDisplay(waitingPage);
 
             buttonNext.Enabled = false;
         }
 
         private void ShowDetails()
         {
+            SetupDetails setupDetails = setupPage.GetCoreDetails();
+            detailPage.RefreshObjectPanels(setupDetails);
+
             buttonBack.Visible = true;
             buttonNext.Text = "Build";
-            detailPage.RefreshObjectPanels(setupPage.GetCoreDetails());
             buttonNext.Enabled = true;
 
+            SetDisplay(detailPage);
+        }
+
+        private void SetDisplay(Control displayPage)
+        {
             panelMain.Controls.Clear();
-            panelMain.Controls.Add(detailPage);
+            panelMain.Controls.Add(displayPage);
         }
 
         private void BuildQuest()
         {
-            managerMaster.UpdateAllDetailsFromControl();
-            Quest quest = new Quest(setupPage.GetCoreDetails(), managerMaster.GetQuestObjectDetails());
+            managers.UpdateAllDetailsFromControl();
+            Quest quest = new Quest(setupPage.GetCoreDetails(), managers.GetQuestObjectDetails());
             
             if (BuildManager.Build(quest))
             {
@@ -142,19 +163,16 @@ namespace SOC.UI
             DialogResult result = loadFile.ShowDialog();
             if (result != DialogResult.OK) return;
 
-            if (pageNum != 0)
-            {
-                pageNum = 0; GoToPanel();
-            }
+            GoToPage(Step.Setup);
 
             Quest quest = new Quest();
 
             if (quest.Load(loadFile.FileName))
             {
-                managerMaster.SetManagerArray(new ManagerArray(quest.questObjectDetails));
-                setupPage.managerMaster.ToString();
+                managers = new ObjectsDetails(quest.questObjectDetails);
+                setupPage.managers.ToString();
                 setupPage.SetForm(quest.coreDetails);
-                managerMaster.RefreshAllStubTexts();
+                managers.RefreshAllStubTexts();
             }
         }
 
@@ -177,17 +195,16 @@ namespace SOC.UI
 
         private void Save()
         {
-            CoreDetails core = setupPage.GetCoreDetails();
+            SetupDetails core = setupPage.GetCoreDetails();
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
             saveFile.FileName = core.FpkName;
             DialogResult saveResult = saveFile.ShowDialog();
             if (saveResult != DialogResult.OK) return;
-            if (pageNum != 0)
-            {
-                pageNum = 0; GoToPanel();
-            }
-            Quest quest = new Quest(core, managerMaster.GetQuestObjectDetails());
+
+            GoToPage(Step.Setup);
+
+            Quest quest = new Quest(core, managers.GetQuestObjectDetails());
             quest.Save(saveFile.FileName);
         }
 

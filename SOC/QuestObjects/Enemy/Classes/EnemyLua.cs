@@ -14,7 +14,7 @@ function this.CheckIsSoldier(gameId)
   return Tpp.IsSoldier(gameId)
 end");
 
-        public static void GetDefinition(EnemyDetail detail, DefinitionLua definitionLua)
+        public static void GetDefinition(EnemiesDetail detail, DefinitionLua definitionLua)
         {
             if (detail.enemies.Count > 0)
             {
@@ -101,10 +101,10 @@ end");
             }
         }
 
-        public static void GetMain(EnemyDetail detail, MainLua mainLua)
+        public static void GetMain(EnemiesDetail detail, MainLua mainLua)
         {
             List<Enemy> enemies = detail.enemies;
-            EnemyMetadata meta = detail.enemyMetadata;
+            EnemiesMetadata meta = detail.enemyMetadata;
             
             mainLua.AddToOpeningVariables("SUBTYPE", $@"""{meta.subtype}""");
 

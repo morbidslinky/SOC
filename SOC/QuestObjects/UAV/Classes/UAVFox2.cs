@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.UAV
 {
     class UAVFox2
     {
-        internal static void AddQuestEntities(UAVDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        internal static void AddQuestEntities(UAVsDetail detail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<UAV> UAVs = detail.UAVs;
 

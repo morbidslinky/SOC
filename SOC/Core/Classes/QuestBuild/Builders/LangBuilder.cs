@@ -9,11 +9,11 @@ namespace SOC.Classes.QuestBuild.Lang
     {
         static string[] lngLanguages = { "eng", "fre", "ger", "ita", "jpn", "por", "rus", "spa" };
 
-        public static void WriteQuestLangs(string dir, params CoreDetails[] coreDetails)
+        public static void WriteQuestLangs(string dir, params SetupDetails[] coreDetails)
         {
             List<LangEntry> langList = new List<LangEntry>();
             List<string> notificationLangIds = new List<string>();
-            foreach(CoreDetails core in coreDetails)
+            foreach(SetupDetails core in coreDetails)
             {
                 string notifId = core.progressLangID;
 

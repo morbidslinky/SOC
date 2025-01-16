@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Animal
 {
     class AnimalLua
     {
-        public static void GetMain(AnimalDetail detail, MainLua mainLua)
+        public static void GetMain(AnimalsDetail detail, MainLua mainLua)
         {
             if (detail.animals.Count > 0)
             {

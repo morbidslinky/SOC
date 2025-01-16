@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Model
 {
     static class ModelFox2
     {
-        internal static void AddQuestEntities(ModelDetail questDetail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        internal static void AddQuestEntities(ModelsDetail questDetail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<Model> models = questDetail.models;
 

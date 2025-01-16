@@ -14,7 +14,7 @@ function this.checkIsDormantItem(targetItemInfo)
   return (targetItemInfo.active == false)
 end");
 
-        internal static void GetDefinition(ItemDetail questDetail, DefinitionLua definitionLua)
+        internal static void GetDefinition(ItemsDetail questDetail, DefinitionLua definitionLua)
         {
             List<string> requestList = new List<string>();
             StringBuilder requestEquipBuilder = new StringBuilder("requestEquipIds = {");
@@ -33,7 +33,7 @@ end");
             definitionLua.AddDefinition(requestEquipBuilder.ToString());
         }
 
-        internal static void GetMain(ItemDetail questDetail, MainLua mainLua)
+        internal static void GetMain(ItemsDetail questDetail, MainLua mainLua)
         {
             if (questDetail.items.Any(item => item.isTarget))
             {

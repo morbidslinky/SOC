@@ -10,7 +10,7 @@ namespace SOC.QuestObjects.Model
     {
         public static string modelAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ModelAssets");
 
-        internal static void AddAssets(ModelDetail questDetail, FileAssets fileAssets)
+        internal static void AddAssets(ModelsDetail questDetail, FileAssets fileAssets)
         {
             foreach (Model model in questDetail.models)
             {

@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.Helicopter
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        public void SetMetadata(HelicopterMetadata meta)
+        public void SetMetadata(HelicoptersMetadata meta)
         {
             comboBox_ObjType.Text = meta.objectiveType;
         }

@@ -14,21 +14,21 @@ using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.Helicopter
 {
-    class HelicopterVisualizer : NonLocationalVisualizer
+    class HelicopterVisualizer : ObjectsDetailVisualizer
     {
         public HelicopterVisualizer(HelicopterControl control) : base(control, control.panelQuestBoxes) { }
 
         private List<string> routes = new List<string>();
 
-        public override void DrawMetadata(Metadata meta)
+        public override void DrawMetadata(ObjectsMetadata meta)
         {
             HelicopterControl heliControl = (HelicopterControl)detailControl;
-            heliControl.SetMetadata((HelicopterMetadata)meta);
+            heliControl.SetMetadata((HelicoptersMetadata)meta);
         }
 
-        public override Metadata GetMetadataFromControl()
+        public override ObjectsMetadata GetMetadataFromControl()
         {
-            return new HelicopterMetadata((HelicopterControl)detailControl);
+            return new HelicoptersMetadata((HelicopterControl)detailControl);
         }
 
         public override QuestBox NewBox(QuestObject qObject)
@@ -36,12 +36,12 @@ namespace SOC.QuestObjects.Helicopter
             return new HelicopterBox((Helicopter)qObject, routes);
         }
 
-        public override Detail NewDetail(Metadata meta, IEnumerable<QuestObject> qObjects)
+        public override ObjectsDetail NewDetail(ObjectsMetadata meta, IEnumerable<QuestObject> qObjects)
         {
-            return new HelicopterDetail(qObjects.Cast<Helicopter>().ToList(), (HelicopterMetadata)meta);
+            return new HelicoptersDetail(qObjects.Cast<Helicopter>().ToList(), (HelicoptersMetadata)meta);
         }
 
-        public override void SetDetailsFromSetup(Detail detail, CoreDetails core)
+        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails core)
         {
             // Routes
             List<string> heliRoutes = new List<string>();

@@ -4,6 +4,7 @@ using SOC.QuestObjects.Common;
 using System.IO;
 using SOC.Classes.Assets;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SOC.Classes.QuestBuild
 {
@@ -26,15 +27,15 @@ namespace SOC.Classes.QuestBuild
             
             foreach(Quest quest in quests)
             {
-                CoreDetails coreDetails = quest.coreDetails;
-                DetailManager[] managers = new ManagerArray(quest.questObjectDetails).GetManagers();
+                SetupDetails coreDetails = quest.coreDetails;
+                ObjectsDetails objectsDetails = new ObjectsDetails(quest.questObjectDetails);
 
                 ClearQuestFolders(buildDir, coreDetails.FpkName);
 
-                Lua.LuaBuilder.WriteDefinitionLua(buildDir, coreDetails, managers);
-                Lua.LuaBuilder.WriteMainQuestLua(buildDir, coreDetails, managers);
-                Fox2.Fox2Builder.WriteQuestFox2(buildDir, coreDetails.FpkName, managers);
-                Assets.AssetsBuilder.BuildAssets(buildDir, coreDetails, managers);
+                Lua.LuaBuilder.WriteDefinitionLua(buildDir, coreDetails, objectsDetails);
+                Lua.LuaBuilder.WriteMainQuestLua(buildDir, coreDetails, objectsDetails);
+                Fox2.Fox2Builder.WriteQuestFox2(buildDir, coreDetails.FpkName, objectsDetails);
+                Assets.AssetsBuilder.BuildAssets(buildDir, coreDetails, objectsDetails);
             }
 
             /*

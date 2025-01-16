@@ -20,7 +20,7 @@ namespace SOC.Classes.QuestBuild.Fox2
             }
         }
 
-        public static List<Fox2EntityClass> BuildQuestEntityList(string fpkName, DetailManager[] managers)
+        public static List<Fox2EntityClass> BuildQuestEntityList(string fpkName, ObjectsDetails objectsDetails)
         {
             List<Fox2EntityClass> entityList = new List<Fox2EntityClass>();
             DataSet entityDataSet = new DataSet(entityList);
@@ -28,9 +28,9 @@ namespace SOC.Classes.QuestBuild.Fox2
             entityList.Add(entityDataSet);
             entityList.Add(new ScriptBlockScript("ScriptBlockScript0000", entityDataSet, fpkName));
 
-            foreach (DetailManager manager in managers)
+            foreach (ObjectsDetail detail in objectsDetails.details)
             {
-                manager.AddToFox2Entities(entityDataSet, entityList);
+                detail.AddToFox2Entities(entityDataSet, entityList);
             }
 
             entityList.Add(new TexturePackLoadConditioner("TexturePackLoadConditioner0000", entityDataSet));
@@ -38,9 +38,9 @@ namespace SOC.Classes.QuestBuild.Fox2
             return entityList;
         }
 
-        public static void WriteQuestFox2(string dir, string fpkName, DetailManager[] managers)
+        public static void WriteQuestFox2(string dir, string fpkName, ObjectsDetails objectsDetails)
         {
-            List<Fox2EntityClass> entityList = BuildQuestEntityList(fpkName, managers);
+            List<Fox2EntityClass> entityList = BuildQuestEntityList(fpkName, objectsDetails);
             SetAddresses(entityList, Fox2Info.baseQuestAddress);
 
             string fox2Path = $@"{dir}/Assets/tpp/pack/mission2/quest/ih/{fpkName}_fpkd/Assets/tpp/level/mission2/quest/ih";

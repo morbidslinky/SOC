@@ -24,7 +24,7 @@ function this.SetHeliAttributes()
   end
 end");
 
-        internal static void GetDefinition(HelicopterDetail questDetail, DefinitionLua definitionLua)
+        internal static void GetDefinition(HelicoptersDetail questDetail, DefinitionLua definitionLua)
         {
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
             {
@@ -32,7 +32,7 @@ end");
             }
         }
 
-        internal static void GetMain(HelicopterDetail questDetail, MainLua mainLua)
+        internal static void GetMain(HelicoptersDetail questDetail, MainLua mainLua)
         {
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
             {
@@ -49,7 +49,7 @@ end");
             }
         }
 
-        private static Table BuildHeliList(HelicopterDetail questDetail)
+        private static Table BuildHeliList(HelicoptersDetail questDetail)
         {
             Table heliList = new Table("heliList");
 

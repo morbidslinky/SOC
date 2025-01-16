@@ -9,9 +9,9 @@ namespace SOC.QuestObjects.GeoTrap
 {
     class GeoTrapLua
     {
-        internal static void GetMain(GeoTrapDetail detail, MainLua mainLua)
+        internal static void GetMain(GeoTrapsDetail detail, MainLua mainLua)
         {
-            List<GeoTrapShape> shapes = detail.trapShapes;
+            List<GeoTrap> shapes = detail.trapShapes;
 
             if (shapes.Count > 0)
             {

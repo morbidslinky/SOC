@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Helicopter
 {
     static class HelicopterFox2
     {
-        internal static void AddQuestEntities(HelicopterDetail questDetail, DataSet dataSet, List<Fox2EntityClass> entityList)
+        internal static void AddQuestEntities(HelicoptersDetail questDetail, DataSet dataSet, List<Fox2EntityClass> entityList)
         {
             List<Helicopter> helis = questDetail.helicopters;
 

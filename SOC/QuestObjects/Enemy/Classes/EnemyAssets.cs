@@ -10,7 +10,7 @@ namespace SOC.QuestObjects.Enemy
     {
         public static string enemyAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//EnemyAssets");
         
-        internal static void GetEnemyAssets(EnemyDetail questDetail, FileAssets fileAssets)
+        internal static void GetEnemyAssets(EnemiesDetail questDetail, FileAssets fileAssets)
         {
             string enemyFPKDAssetsPath = Path.Combine(enemyAssetsPath, "FPKD_Files");
             if (HasZombie(questDetail.enemies))

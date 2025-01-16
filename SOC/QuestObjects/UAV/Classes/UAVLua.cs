@@ -35,7 +35,7 @@ function this.SetupUAV()
 	end
 end");
 
-        internal static void GetMain(UAVDetail detail, MainLua mainLua)
+        internal static void GetMain(UAVsDetail detail, MainLua mainLua)
         {
             if (detail.UAVs.Count > 0)
             {

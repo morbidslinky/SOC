@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.UAV
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        public void SetMetadata(UAVMetadata meta)
+        public void SetMetadata(UAVsMetadata meta)
         {
             comboBox_ObjType.Text = meta.objectiveType;
         }

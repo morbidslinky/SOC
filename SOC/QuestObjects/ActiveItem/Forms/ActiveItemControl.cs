@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.ActiveItem
             Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
         }
 
-        internal void SetMetadata(ActiveItemMetadata meta)
+        internal void SetMetadata(ActiveItemsMetadata meta)
         {
             comboBox_ObjType.Text = meta.objectiveType;
         }

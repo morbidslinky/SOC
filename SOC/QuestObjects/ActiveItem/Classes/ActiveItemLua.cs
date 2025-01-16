@@ -14,7 +14,7 @@ function this.checkIsActiveItem(targetItemInfo)
   return (targetItemInfo.active == true)
 end");
 
-        internal static void GetMain(ActiveItemDetail questDetail, MainLua mainLua)
+        internal static void GetMain(ActiveItemsDetail questDetail, MainLua mainLua)
         {
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {
@@ -24,7 +24,7 @@ end");
             }
         }
 
-        private static Table BuildTargetItemList(ActiveItemDetail detail)
+        private static Table BuildTargetItemList(ActiveItemsDetail detail)
         {
             Table targetItemList = new Table("targetItemList");
             foreach (ActiveItem activeItem in detail.activeItems)
