@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.ActiveItem
 {
-    public partial class ActiveItemBox : QuestBox
+    public partial class ActiveItemBox : QuestObjectBox
     {
         public int ID;
 

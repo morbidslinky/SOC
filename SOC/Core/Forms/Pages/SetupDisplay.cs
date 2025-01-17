@@ -21,7 +21,6 @@ namespace SOC.UI
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
         public int locationID = -1;
         public ObjectsDetails managers;
-        RouteManager routeManager = new RouteManager();
 
         public SetupDisplay(ObjectsDetails _managers)
         {
@@ -39,14 +38,14 @@ namespace SOC.UI
             refreshRoutesList();
         }
 
-        public void SetForm(SetupDetails core)
+        public void SetForm(SetupDetails setup)
         {
-            textBoxQuestTitle.Text = core.QuestTitle;
-            textBoxQuestDesc.Text = core.QuestDesc;
-            textBoxFPKName.Text = core.FpkName;
-            textBoxQuestNum.Text = core.QuestNum;
+            textBoxQuestTitle.Text = setup.QuestTitle;
+            textBoxQuestDesc.Text = setup.QuestDesc;
+            textBoxFPKName.Text = setup.FpkName;
+            textBoxQuestNum.Text = setup.QuestNum;
 
-            locationID = core.locationID;
+            locationID = setup.locationID;
 
             switch(locationID)
             {
@@ -61,33 +60,33 @@ namespace SOC.UI
                     break;
             }
 
-            comboBoxLoadArea.Text = core.loadArea;
+            comboBoxLoadArea.Text = setup.loadArea;
 
-            textBoxXCoord.Text = core.coords.xCoord;
-            textBoxYCoord.Text = core.coords.yCoord;
-            textBoxZCoord.Text = core.coords.zCoord;
+            textBoxXCoord.Text = setup.coords.xCoord;
+            textBoxYCoord.Text = setup.coords.yCoord;
+            textBoxZCoord.Text = setup.coords.zCoord;
 
-            comboBoxRadius.Text = core.radius;
-            comboBoxCategory.Text = core.category;
-            comboBoxReward.Text = core.reward;
+            comboBoxRadius.Text = setup.radius;
+            comboBoxCategory.Text = setup.category;
+            comboBoxReward.Text = setup.reward;
             
-            comboBoxCP.Text = core.CPName;
+            comboBoxCP.Text = setup.CPName;
 
             refreshNotifsList();
-            string displayNotification = UpdateNotifsManager.GetDisplayNotification(core.progressLangID);
+            string displayNotification = UpdateNotifsManager.GetDisplayNotification(setup.progressLangID);
             if (displayNotification != null)
                 comboBoxProgressNotifs.Text = displayNotification;
             else if (comboBoxProgressNotifs.Items.Count > 0)
                 comboBoxProgressNotifs.SelectedIndex = 0;
 
             refreshRoutesList();
-            if (!string.IsNullOrEmpty(core.routeName) && comboBoxRoute.Items.Contains(core.routeName))
-                comboBoxRoute.SelectedItem = core.routeName;
+            if (!string.IsNullOrEmpty(setup.routeName) && comboBoxRoute.Items.Contains(setup.routeName))
+                comboBoxRoute.SelectedItem = setup.routeName;
             else
                 comboBoxRoute.SelectedItem = "NONE";
         }
 
-        public SetupDetails GetCoreDetails()
+        public SetupDetails GetSetupDetails()
         {
             return new SetupDetails(this);
         }
@@ -99,7 +98,7 @@ namespace SOC.UI
 
         public void refreshRoutesList()
         {
-            List<string> routesList = routeManager.GetRouteFileNameList();
+            List<string> routesList = RouteManager.GetRouteFileNameList();
             routesList.Insert(0, "NONE");
 
             UpdateComboBox(comboBoxRoute, routesList);

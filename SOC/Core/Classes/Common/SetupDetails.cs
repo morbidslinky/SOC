@@ -1,6 +1,8 @@
 ﻿using SOC.UI;
 using System.Xml.Serialization;
 using System.Linq;
+using SOC.Core.Classes.Route;
+using System.Collections.Generic;
 
 namespace SOC.Classes.Common
 {
@@ -46,6 +48,8 @@ namespace SOC.Classes.Common
         [XmlElement]
         public string routeName { get; set; } = "";
 
+        public List<string> fileRoutes = new List<string>();
+
         public SetupDetails() { }
 
         public SetupDetails(string fpk, string quest, int locID, string loada, Coordinates c, string rad, string cat, string rew, string progId, string cpnme, string qtitle, string qdesc, string route)
@@ -69,6 +73,7 @@ namespace SOC.Classes.Common
             reward = rew;
 
             routeName = route;
+            GetRoutesFromFile();
         }
 
         public SetupDetails(SetupDisplay setupPage)
@@ -93,6 +98,15 @@ namespace SOC.Classes.Common
             reward = setupPage.comboBoxReward.Text;
 
             routeName = setupPage.comboBoxRoute.Text;
+            GetRoutesFromFile();
+        }
+
+        private void GetRoutesFromFile()
+        {
+            if (routeName != "NONE")
+            {
+                fileRoutes = RouteManager.GetRouteNames(routeName);
+            }
         }
     }
 }

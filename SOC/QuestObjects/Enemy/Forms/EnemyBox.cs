@@ -13,7 +13,7 @@ using SOC.Classes.Common;
 
 namespace SOC.QuestObjects.Enemy
 {
-    public partial class EnemyBox : QuestBox
+    public partial class EnemyBox : QuestObjectBox
     {
         private static int armorCount = 0;
         private static int balaclavaCount = 0;

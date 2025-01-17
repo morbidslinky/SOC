@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.UAV
 {
-    public partial class UAVBox : QuestBox
+    public partial class UAVBox : QuestObjectBox
     {
         public int ID;
 

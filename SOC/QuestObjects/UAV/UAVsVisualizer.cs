@@ -32,7 +32,7 @@ namespace SOC.QuestObjects.UAV
             return new UAVsMetadata();
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new UAVBox((UAV)qObject, routes);
         }
@@ -42,20 +42,20 @@ namespace SOC.QuestObjects.UAV
             return new UAVsDetail(qObjects.Cast<UAV>().ToList(), (UAVsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new UAV(pos, index);
         }
 
-        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails core)
+        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             // Routes
             RouteManager router = new RouteManager();
-            List<string> uavRoutes = router.GetRouteNames(core.routeName);
-            uavRoutes.AddRange(EnemyInfo.GetCP(core.CPName).CPsoldierRoutes);
+            List<string> uavRoutes = setup.fileRoutes;
+            uavRoutes.AddRange(EnemyInfo.GetCP(setup.CPName).CPsoldierRoutes);
 
             routes = uavRoutes;
-            base.SetDetailsFromSetup(detail, core);
+            base.SetDetailsFromSetup(detail, setup);
         }
     }
 }

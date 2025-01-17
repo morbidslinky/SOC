@@ -30,10 +30,10 @@ namespace SOC.QuestObjects.Common
             detailStub.SetStubText(new IHLogPositions(posList));
         }
 
-        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails core)
+        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             List<Position> stubPositions = detailStub.GetStubLocations().GetPositions();
-            List<QuestObject> qObjects = detail.GetQuestObjects().ToList();
+            List<QuestObject> qObjects = detail.GetQuestObjects();
             int positionCount = stubPositions.Count;
             int objectCount = qObjects.Count;
 
@@ -41,7 +41,7 @@ namespace SOC.QuestObjects.Common
             {
                 if (i >= objectCount) // add
                 {
-                    qObjects.Add(NewObject(stubPositions[i], i));
+                    qObjects.Add(NewQuestObject(stubPositions[i], i));
                 }
                 else // modify
                 {
@@ -57,7 +57,7 @@ namespace SOC.QuestObjects.Common
             detail.SetQuestObjects(qObjects);
         }
 
-        public abstract QuestObject NewObject(Position pos, int index);
+        public abstract QuestObject NewQuestObject(Position pos, int index);
 
     }
 }

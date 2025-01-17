@@ -28,7 +28,7 @@ namespace SOC.QuestObjects.Vehicle
             return new VehiclesMetadata((VehicleControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new VehicleBox((Vehicle)qObject, (VehiclesMetadata)GetMetadataFromControl());
         }
@@ -38,7 +38,7 @@ namespace SOC.QuestObjects.Vehicle
             return new VehiclesDetail(qObjects.Cast<Vehicle>().ToList(), (VehiclesMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position objectPosition, int objectID)
+        public override QuestObject NewQuestObject(Position objectPosition, int objectID)
         {
             return new Vehicle(objectPosition, objectID);
         }

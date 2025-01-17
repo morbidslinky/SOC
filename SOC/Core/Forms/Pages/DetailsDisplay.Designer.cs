@@ -1,6 +1,6 @@
 ﻿namespace SOC.UI
 {
-    partial class DetailDisplay
+    partial class DetailsDisplay
     {
         /// <summary> 
         /// Required designer variable.
@@ -53,12 +53,12 @@
             this.labelFlowHeight.Size = new System.Drawing.Size(0, 452);
             this.labelFlowHeight.TabIndex = 0;
             // 
-            // Details
+            // DetailsDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.flowPanelDetails);
-            this.Name = "Details";
+            this.Name = "DetailsDisplay";
             this.Size = new System.Drawing.Size(267, 452);
             this.flowPanelDetails.ResumeLayout(false);
             this.ResumeLayout(false);

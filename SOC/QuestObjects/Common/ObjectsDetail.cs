@@ -22,24 +22,25 @@ namespace SOC.QuestObjects.Common
             visualizer.GetDetailFromControl();
         }
 
-        public void UpdateDetailFromSetup(SetupDetails core)
+        public void UpdateDetailFromSetup(SetupDetails setup)
         {
             var visualizer = this.GetVisualizer();
-            visualizer.SetDetailsFromSetup(this, core);
+            visualizer.SetDetailsFromSetup(this, setup);
         }
 
-        public void RefreshPanel(SetupDetails core)
+        public void RefreshPanel(SetupDetails setup)
         {
+            var visualizer = this.GetVisualizer();
             if (GetQuestObjects().Count > 0)
             {
-                GetVisualizer().ShowDetail();
+                visualizer.ShowDetail();
             }
             else
             {
-                GetVisualizer().HideDetail();
+                visualizer.HideDetail();
             }
 
-            GetVisualizer().VisualizeDetail(this);
+            visualizer.VisualizeDetail(this);
         }
 
         public virtual void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList) { return; }

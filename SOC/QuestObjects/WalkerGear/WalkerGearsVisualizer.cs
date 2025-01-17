@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.WalkerGear
             return new WalkerGearsMetadata((WalkerControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new WalkerBox((WalkerGear)qObject);
         }
@@ -34,7 +34,7 @@ namespace SOC.QuestObjects.WalkerGear
             return new WalkerGearsDetail(qObjects.Cast<WalkerGear>().ToList(), (WalkerGearsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position objectPosition, int objectID)
+        public override QuestObject NewQuestObject(Position objectPosition, int objectID)
         {
             return new WalkerGear(objectPosition, objectID);
         }

@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.WalkerGear
 {
-    public partial class WalkerBox : QuestBox
+    public partial class WalkerBox : QuestObjectBox
     {
         public int ID;
 

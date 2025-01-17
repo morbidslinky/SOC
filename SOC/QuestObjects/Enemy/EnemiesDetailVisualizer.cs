@@ -32,7 +32,7 @@ namespace SOC.QuestObjects.Enemy
             return new EnemiesMetadata((EnemyControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new EnemyBox((Enemy)qObject, routes, bodies);
         }
@@ -42,26 +42,25 @@ namespace SOC.QuestObjects.Enemy
             return new EnemiesDetail(qObjects.Cast<Enemy>().ToList(), (EnemiesMetadata)meta);
         }
 
-        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails core)
+        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             // Routes
-            RouteManager router = new RouteManager();
-            List<string> eneRoutes = router.GetRouteNames(core.routeName);
-            eneRoutes.AddRange(EnemyInfo.GetCP(core.CPName).CPsoldierRoutes);
+            List<string> eneRoutes = setup.fileRoutes;
+            eneRoutes.AddRange(EnemyInfo.GetCP(setup.CPName).CPsoldierRoutes);
             routes = eneRoutes;
 
             // Bodies
-            List<string> eneBodies = NPCBodyInfo.GetRegionBodies(core.locationID).ToList();
+            List<string> eneBodies = NPCBodyInfo.GetRegionBodies(setup.locationID).ToList();
             bodies = eneBodies;
 
             // SubTypes
-            List<string> eneSubTypes = NPCBodyInfo.GetRegionSubTypes(core.locationID).ToList();
+            List<string> eneSubTypes = NPCBodyInfo.GetRegionSubTypes(setup.locationID).ToList();
             subtypes = eneSubTypes;
 
             // Add/remove/modify detail soldiers
             string[] soldiers = new string[0];
-            if (core.CPName != "NONE" || core.routeName != "NONE")
-                soldiers = EnemyInfo.GetQuestSoldierNames(core.CPName, core.locationID);
+            if (setup.CPName != "NONE" || setup.routeName != "NONE")
+                soldiers = EnemyInfo.GetQuestSoldierNames(setup.CPName, setup.locationID);
 
             List<Enemy> qObjects = detail.GetQuestObjects().Cast<Enemy>().ToList();
             int soldierCount = soldiers.Length;

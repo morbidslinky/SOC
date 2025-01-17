@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.Vehicle
 {
-    public partial class VehicleBox : QuestBox
+    public partial class VehicleBox : QuestObjectBox
     {
         public int ID;
 

@@ -25,7 +25,7 @@ namespace SOC.QuestObjects.Item
             return new ItemsMetadata((ItemControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new ItemBox((Item)qObject);
         }
@@ -35,7 +35,7 @@ namespace SOC.QuestObjects.Item
             return new ItemsDetail(qObjects.Cast<Item>().ToList(), (ItemsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new Item(pos, index);
         }

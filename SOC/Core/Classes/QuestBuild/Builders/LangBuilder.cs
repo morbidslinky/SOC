@@ -9,21 +9,21 @@ namespace SOC.Classes.QuestBuild.Lang
     {
         static string[] lngLanguages = { "eng", "fre", "ger", "ita", "jpn", "por", "rus", "spa" };
 
-        public static void WriteQuestLangs(string dir, params SetupDetails[] coreDetails)
+        public static void WriteQuestLangs(string dir, params SetupDetails[] setupDetails)
         {
             List<LangEntry> langList = new List<LangEntry>();
             List<string> notificationLangIds = new List<string>();
-            foreach(SetupDetails core in coreDetails)
+            foreach(SetupDetails setup in setupDetails)
             {
-                string notifId = core.progressLangID;
+                string notifId = setup.progressLangID;
 
                 if (!notificationLangIds.Contains(notifId) && UpdateNotifsManager.isCustomNotification(notifId))
                 {
                     notificationLangIds.Add(notifId);
                 }
 
-                langList.Add(new LangEntry("name_q" + core.QuestNum, core.QuestTitle, 5));
-                langList.Add(new LangEntry("info_q" + core.QuestNum, core.QuestDesc, 5));
+                langList.Add(new LangEntry("name_q" + setup.QuestNum, setup.QuestTitle, 5));
+                langList.Add(new LangEntry("info_q" + setup.QuestNum, setup.QuestDesc, 5));
             }
 
             foreach(string langId in notificationLangIds)
@@ -34,10 +34,10 @@ namespace SOC.Classes.QuestBuild.Lang
             LangFile questLng = new LangFile(langList);
 
             string fileName = "";
-            if (coreDetails.Length > 1)
-                fileName = $"ih_q{coreDetails[0].QuestNum}_q{coreDetails[coreDetails.Length - 1].QuestNum}";
-            else if (coreDetails.Length > 0)
-                fileName = $"ih_quest_q{coreDetails[0].QuestNum}";
+            if (setupDetails.Length > 1)
+                fileName = $"ih_q{setupDetails[0].QuestNum}_q{setupDetails[setupDetails.Length - 1].QuestNum}";
+            else if (setupDetails.Length > 0)
+                fileName = $"ih_quest_q{setupDetails[0].QuestNum}";
 
             foreach (string language in lngLanguages)
             {

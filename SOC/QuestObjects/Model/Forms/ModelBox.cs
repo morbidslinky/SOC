@@ -13,7 +13,7 @@ using System.IO;
 
 namespace SOC.QuestObjects.Model
 {
-    public partial class ModelBox : QuestBox
+    public partial class ModelBox : QuestObjectBox
     {
         public int ID;
 

@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.Camera
 {
-    public partial class CameraBox : QuestBox
+    public partial class CameraBox : QuestObjectBox
     {
         public int ID;
 

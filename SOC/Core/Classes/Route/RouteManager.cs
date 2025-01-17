@@ -15,12 +15,12 @@ namespace SOC.Core.Classes.Route
 
         public static Dictionary<uint, string> RouteNameHashDictionary = new Dictionary<uint, string>();
 
-        public string GetRouteFileName(string frtName)
+        public static string GetRouteFileName(string frtName)
         {
             return Path.Combine(RouteAssets.routeAssetsPath, frtName) + ".frt";
         }
 
-        public List<string> GetRouteFileNameList()
+        public static List<string> GetRouteFileNameList()
         {
             List<string> routeNameList = new List<string>();
 
@@ -32,7 +32,7 @@ namespace SOC.Core.Classes.Route
             return routeNameList;
         }
 
-        public List<string> GetRouteNames(string frtName)
+        public static List<string> GetRouteNames(string frtName)
         {
             string frtPath = GetRouteFileName(frtName);
             uint[] frtUintNames = GetUintNames(frtPath);

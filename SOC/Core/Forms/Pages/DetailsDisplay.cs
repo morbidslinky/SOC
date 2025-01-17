@@ -5,21 +5,21 @@ using System.Threading.Tasks;
 
 namespace SOC.UI
 {
-    public partial class DetailDisplay : UserControl
+    public partial class DetailsDisplay : UserControl
     {
-        ObjectsDetails managers;
+        ObjectsDetails objectsDetails;
 
-        public DetailDisplay(ObjectsDetails _managers)
+        public DetailsDisplay(ObjectsDetails _managers)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            managers = _managers;
-            flowPanelDetails.Controls.AddRange(managers.GetModulePanels());
+            objectsDetails = _managers;
+            flowPanelDetails.Controls.AddRange(objectsDetails.GetModulePanels());
         }
 
         public void RefreshObjectPanels(SetupDetails setupDetails)
         {
-            managers.RefreshAllPanels(setupDetails);
+            objectsDetails.RefreshAllPanels(setupDetails);
         }
 
         private void flowPanelDetails_Layout(object sender, LayoutEventArgs e)

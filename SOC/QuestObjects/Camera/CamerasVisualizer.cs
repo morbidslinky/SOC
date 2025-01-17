@@ -28,7 +28,7 @@ namespace SOC.QuestObjects.Camera
             return new CamerasMetadata();
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new CameraBox((Camera)qObject);
         }
@@ -38,7 +38,7 @@ namespace SOC.QuestObjects.Camera
             return new CamerasDetail(qObjects.Cast<Camera>().ToList(), (CamerasMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new Camera(pos, index);
         }

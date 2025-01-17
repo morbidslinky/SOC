@@ -163,7 +163,7 @@
     <Compile Include="Core\Classes\LangTool\LangFile.cs" />
     <Compile Include="Core\Classes\Common\Quest.cs" />
     <Compile Include="Core\Forms\PanelScroll.cs" />
-    <Compile Include="Core\Forms\QuestBox.cs">
+    <Compile Include="Core\Forms\QuestObjectBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="QuestObjects\ActiveItem\ActiveItem.cs" />
@@ -280,11 +280,11 @@
       <DependentUpon>formCustomProgressLang.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Classes\QuestBuild\Builders\Fox2Builder.cs" />
-    <Compile Include="Core\Forms\Pages\DetailDisplay.cs">
+    <Compile Include="Core\Forms\Pages\DetailsDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Details.Designer.cs">
-      <DependentUpon>DetailDisplay.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\DetailsDisplay.Designer.cs">
+      <DependentUpon>DetailsDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Forms\Pages\LocationalDataStub.cs">
       <SubType>UserControl</SubType>
@@ -458,8 +458,8 @@
       <DependentUpon>formCustomProgressLang.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\Details.resx">
-      <DependentUpon>DetailDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\DetailsDisplay.resx">
+      <DependentUpon>DetailsDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>

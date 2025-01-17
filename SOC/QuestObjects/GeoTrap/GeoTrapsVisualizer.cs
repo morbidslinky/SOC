@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.GeoTrap
             return new GeoTrapsMetadata((GeoTrapControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new GeoTrapBox((GeoTrap)qObject);
         }
@@ -28,7 +28,7 @@ namespace SOC.QuestObjects.GeoTrap
             return new GeoTrapsDetail(qObjects.Cast<GeoTrap>().ToList(), (GeoTrapsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new GeoTrap(pos, index);
         }

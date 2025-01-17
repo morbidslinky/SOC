@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.Helicopter
 {
-    public partial class HelicopterBox : QuestBox
+    public partial class HelicopterBox : QuestObjectBox
     {
         public int ID;
 

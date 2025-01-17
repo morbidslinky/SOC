@@ -15,7 +15,7 @@ using SOC.UI;
 
 namespace SOC.QuestObjects.Hostage
 {
-    public partial class HostageBox : QuestBox // Note: inherit from UserControl to show box in designer
+    public partial class HostageBox : QuestObjectBox // Note: inherit from UserControl to show box in designer
     {
         public int ID;
 

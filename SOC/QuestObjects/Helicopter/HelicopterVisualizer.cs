@@ -31,7 +31,7 @@ namespace SOC.QuestObjects.Helicopter
             return new HelicoptersMetadata((HelicopterControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new HelicopterBox((Helicopter)qObject, routes);
         }
@@ -41,13 +41,11 @@ namespace SOC.QuestObjects.Helicopter
             return new HelicoptersDetail(qObjects.Cast<Helicopter>().ToList(), (HelicoptersMetadata)meta);
         }
 
-        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails core)
+        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             // Routes
-            List<string> heliRoutes = new List<string>();
-            if (core.routeName != "NONE")
-                heliRoutes = new RouteManager().GetRouteNames(core.routeName);
-            heliRoutes.AddRange(EnemyInfo.GetCP(core.CPName).CPheliRoutes);
+            List<string> heliRoutes = setup.fileRoutes;
+            heliRoutes.AddRange(EnemyInfo.GetCP(setup.CPName).CPheliRoutes);
 
             routes = heliRoutes;
 

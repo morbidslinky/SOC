@@ -30,7 +30,7 @@ namespace SOC.QuestObjects.Hostage
             return new HostageMetadata((HostageControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new HostageBox((Hostage)qObject, (HostageMetadata)GetMetadataFromControl());
         }
@@ -40,15 +40,15 @@ namespace SOC.QuestObjects.Hostage
             return new HostagesDetail(qObjects.Cast<Hostage>().ToList(), (HostageMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position objectPosition, int objectID)
+        public override QuestObject NewQuestObject(Position objectPosition, int objectID)
         {
             return new Hostage(objectPosition, objectID);
         }
 
-        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails core)
+        public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
-            base.SetDetailsFromSetup(detail, core);
-            if (LoadAreas.isMtbs(core.locationID))
+            base.SetDetailsFromSetup(detail, setup);
+            if (LoadAreas.isMtbs(setup.locationID))
             {
                 bodyNames = NPCBodyInfo.BodyInfoArray.Where(bodyEntry => bodyEntry.hasface).Select(BodyEntry => BodyEntry.Name).ToArray();
             }
@@ -56,7 +56,7 @@ namespace SOC.QuestObjects.Hostage
             {
                 bodyNames = NPCBodyInfo.BodyInfoArray.Select(bodyEntry => bodyEntry.Name).ToArray();
             }
-            cpName = core.CPName;
+            cpName = setup.CPName;
         }
 
         private void OnBodyIndexChanged(object sender, EventArgs e)

@@ -23,19 +23,19 @@ namespace SOC.Classes.QuestBuild
             }
             else buildDir = SINGLEBUILDDIR;
 
-            Lang.LangBuilder.WriteQuestLangs(buildDir, quests.Select(singleQuest => singleQuest.coreDetails).ToArray());
+            Lang.LangBuilder.WriteQuestLangs(buildDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
             
             foreach(Quest quest in quests)
             {
-                SetupDetails coreDetails = quest.coreDetails;
+                SetupDetails setupDetails = quest.setupDetails;
                 ObjectsDetails objectsDetails = new ObjectsDetails(quest.questObjectDetails);
 
-                ClearQuestFolders(buildDir, coreDetails.FpkName);
+                ClearQuestFolders(buildDir, setupDetails.FpkName);
 
-                Lua.LuaBuilder.WriteDefinitionLua(buildDir, coreDetails, objectsDetails);
-                Lua.LuaBuilder.WriteMainQuestLua(buildDir, coreDetails, objectsDetails);
-                Fox2.Fox2Builder.WriteQuestFox2(buildDir, coreDetails.FpkName, objectsDetails);
-                Assets.AssetsBuilder.BuildAssets(buildDir, coreDetails, objectsDetails);
+                Lua.LuaBuilder.WriteDefinitionLua(buildDir, setupDetails, objectsDetails);
+                Lua.LuaBuilder.WriteMainQuestLua(buildDir, setupDetails, objectsDetails);
+                Fox2.Fox2Builder.WriteQuestFox2(buildDir, setupDetails.FpkName, objectsDetails);
+                Assets.AssetsBuilder.BuildAssets(buildDir, setupDetails, objectsDetails);
             }
 
             /*

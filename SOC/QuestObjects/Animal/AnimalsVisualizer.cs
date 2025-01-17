@@ -22,7 +22,7 @@ namespace SOC.QuestObjects.Animal
             return new AnimalsMetadata((AnimalControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new AnimalBox((Animal)qObject);
         }
@@ -32,7 +32,7 @@ namespace SOC.QuestObjects.Animal
             return new AnimalsDetail(qObjects.Cast<Animal>().ToList(), (AnimalsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new Animal(pos, index);
         }

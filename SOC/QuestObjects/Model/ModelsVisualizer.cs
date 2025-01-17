@@ -27,7 +27,7 @@ namespace SOC.QuestObjects.Model
             return new ModelsMetadata();
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new ModelBox((Model)qObject);
         }
@@ -37,7 +37,7 @@ namespace SOC.QuestObjects.Model
             return new ModelsDetail(qObjects.Cast<Model>().ToList(), (ModelsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new Model(pos, index);
         }

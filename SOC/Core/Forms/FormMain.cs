@@ -20,17 +20,17 @@ namespace SOC.UI
             Build
         }
 
-        private ObjectsDetails managers;
+        private ObjectsDetails objectsDetails;
         private SetupDisplay setupPage;
-        private DetailDisplay detailPage;
+        private DetailsDisplay detailPage;
         private Waiting waitingPage;
         private Step currentStep;
 
         public FormMain()
         {
-            managers = new ObjectsDetails();
-            setupPage = new SetupDisplay(managers);
-            detailPage = new DetailDisplay(managers);
+            objectsDetails = new ObjectsDetails();
+            setupPage = new SetupDisplay(objectsDetails);
+            detailPage = new DetailsDisplay(objectsDetails);
             waitingPage = new Waiting();
             currentStep = Step.NONE;
 
@@ -100,45 +100,47 @@ namespace SOC.UI
 
         private void ShowSetup()
         {
-            buttonBack.Visible = false;
-            
-            SetDisplay(setupPage);
-            setupPage.EnableScrolling();
-            managers.UpdateAllDetailsFromControl();
-            managers.RefreshAllStubTexts();
+            objectsDetails.UpdateAllDetailsFromControl();
+            objectsDetails.RefreshAllStubTexts();
+
+            panelMain.Controls.Clear();
+            setupPage.EnableScrolling(); 
+            panelMain.Controls.Add(setupPage);
+
             buttonNext.Text = "Next >>";
+            buttonBack.Visible = false;
         }
 
         private void ShowWait()
         {
+            panelMain.Controls.Clear();
             setupPage.DisableScrolling();
-            SetDisplay(waitingPage);
 
             buttonNext.Enabled = false;
+            panelMain.Controls.Add(waitingPage);
+            waitingPage.Refresh();
         }
 
-        private void ShowDetails()
+        private async void ShowDetails()
         {
-            SetupDetails setupDetails = setupPage.GetCoreDetails();
+            SetupDetails setupDetails = setupPage.GetSetupDetails();
             detailPage.RefreshObjectPanels(setupDetails);
+
+            panelMain.Controls.Add(detailPage);
+            panelMain.Controls.Remove(waitingPage);
 
             buttonBack.Visible = true;
             buttonNext.Text = "Build";
+
+            await Task.Delay(100);
+
             buttonNext.Enabled = true;
-
-            SetDisplay(detailPage);
-        }
-
-        private void SetDisplay(Control displayPage)
-        {
-            panelMain.Controls.Clear();
-            panelMain.Controls.Add(displayPage);
         }
 
         private void BuildQuest()
         {
-            managers.UpdateAllDetailsFromControl();
-            Quest quest = new Quest(setupPage.GetCoreDetails(), managers.GetQuestObjectDetails());
+            objectsDetails.UpdateAllDetailsFromControl();
+            Quest quest = new Quest(setupPage.GetSetupDetails(), objectsDetails.GetQuestObjectDetails());
             
             if (BuildManager.Build(quest))
             {
@@ -169,10 +171,10 @@ namespace SOC.UI
 
             if (quest.Load(loadFile.FileName))
             {
-                managers = new ObjectsDetails(quest.questObjectDetails);
+                objectsDetails = new ObjectsDetails(quest.questObjectDetails);
                 setupPage.managers.ToString();
-                setupPage.SetForm(quest.coreDetails);
-                managers.RefreshAllStubTexts();
+                setupPage.SetForm(quest.setupDetails);
+                objectsDetails.RefreshAllStubTexts();
             }
         }
 
@@ -195,16 +197,16 @@ namespace SOC.UI
 
         private void Save()
         {
-            SetupDetails core = setupPage.GetCoreDetails();
+            SetupDetails setup = setupPage.GetSetupDetails();
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
-            saveFile.FileName = core.FpkName;
+            saveFile.FileName = setup.FpkName;
             DialogResult saveResult = saveFile.ShowDialog();
             if (saveResult != DialogResult.OK) return;
 
             GoToPage(Step.Setup);
 
-            Quest quest = new Quest(core, managers.GetQuestObjectDetails());
+            Quest quest = new Quest(setup, objectsDetails.GetQuestObjectDetails());
             quest.Save(saveFile.FileName);
         }
 
@@ -234,8 +236,8 @@ namespace SOC.UI
                 Quest quest = new Quest();
                 if (quest.Load(filePath))
                 {
-                    if (!quests.Exists(questInList => questInList.coreDetails.FpkName == quest.coreDetails.FpkName)
-                        && !quests.Exists(questInList => questInList.coreDetails.QuestNum == quest.coreDetails.QuestNum))
+                    if (!quests.Exists(questInList => questInList.setupDetails.FpkName == quest.setupDetails.FpkName)
+                        && !quests.Exists(questInList => questInList.setupDetails.QuestNum == quest.setupDetails.QuestNum))
                         quests.Add(quest);
                     else failedCount++;
                 }

@@ -28,7 +28,7 @@ namespace SOC.QuestObjects.ActiveItem
             return new ActiveItemsMetadata((ActiveItemControl)detailControl);
         }
 
-        public override QuestBox NewBox(QuestObject qObject)
+        public override QuestObjectBox NewQuestObjectBox(QuestObject qObject)
         {
             return new ActiveItemBox((ActiveItem)qObject);
         }
@@ -38,7 +38,7 @@ namespace SOC.QuestObjects.ActiveItem
             return new ActiveItemsDetail(qObjects.Cast<ActiveItem>().ToList(), (ActiveItemsMetadata)meta);
         }
 
-        public override QuestObject NewObject(Position pos, int index)
+        public override QuestObject NewQuestObject(Position pos, int index)
         {
             return new ActiveItem(pos, index);
         }

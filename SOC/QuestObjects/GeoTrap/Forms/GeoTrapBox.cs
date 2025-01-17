@@ -12,7 +12,7 @@ using SOC.UI;
 
 namespace SOC.QuestObjects.GeoTrap
 {
-    public partial class GeoTrapBox : QuestBox
+    public partial class GeoTrapBox : QuestObjectBox
     {
         public int ID;
 

@@ -12,7 +12,7 @@ using SOC.QuestObjects.Common;
 
 namespace SOC.QuestObjects.Animal
 {
-    public partial class AnimalBox : QuestBox
+    public partial class AnimalBox : QuestObjectBox
     {
         public int ID;
 

@@ -26,43 +26,43 @@ namespace SOC.Classes.QuestBuild.Lua
             }
         }
 
-        private static string BuildDefinition(SetupDetails coreDetails, ObjectsDetails objectsDetails) //rewrite
+        private static string BuildDefinition(SetupDetails setupDetails, ObjectsDetails objectsDetails) //rewrite
         {
             DefinitionLua definitionLua = new DefinitionLua();
-            string questCompleteLangId = coreDetails.progressLangID;
+            string questCompleteLangId = setupDetails.progressLangID;
             
-            definitionLua.AddDefinition($"locationId = {coreDetails.locationID}");
-            definitionLua.AddDefinition($@"areaName = ""{coreDetails.loadArea}""");
-            if (LoadAreas.isMtbs(coreDetails.locationID))
-                definitionLua.AddDefinition($@"clusterName = ""{coreDetails.loadArea.Substring(4)}""");
-            definitionLua.AddDefinition($"iconPos = Vector3({coreDetails.coords.xCoord},{coreDetails.coords.yCoord},{coreDetails.coords.zCoord})");
-            definitionLua.AddDefinition($"radius = {coreDetails.radius}");
-            definitionLua.AddDefinition($"category = TppQuest.QUEST_CATEGORIES_ENUM.{coreDetails.category}");
+            definitionLua.AddDefinition($"locationId = {setupDetails.locationID}");
+            definitionLua.AddDefinition($@"areaName = ""{setupDetails.loadArea}""");
+            if (LoadAreas.isMtbs(setupDetails.locationID))
+                definitionLua.AddDefinition($@"clusterName = ""{setupDetails.loadArea.Substring(4)}""");
+            definitionLua.AddDefinition($"iconPos = Vector3({setupDetails.coords.xCoord},{setupDetails.coords.yCoord},{setupDetails.coords.zCoord})");
+            definitionLua.AddDefinition($"radius = {setupDetails.radius}");
+            definitionLua.AddDefinition($"category = TppQuest.QUEST_CATEGORIES_ENUM.{setupDetails.category}");
             definitionLua.AddDefinition($@"questCompleteLangId = ""{questCompleteLangId}""");
             definitionLua.AddDefinition("canOpenQuest=InfQuest.AllwaysOpenQuest");
-            definitionLua.AddDefinition($"questRank = TppDefine.QUEST_RANK.{coreDetails.reward}");
+            definitionLua.AddDefinition($"questRank = TppDefine.QUEST_RANK.{setupDetails.reward}");
             definitionLua.AddDefinition("disableLzs = {}");
 
             foreach (ObjectsDetail detail in objectsDetails.details)
             {
                 detail.AddToDefinitionLua(definitionLua);
             }
-            definitionLua.AddPackPath($"/Assets/tpp/pack/mission2/quest/ih/{coreDetails.FpkName}.fpk");
+            definitionLua.AddPackPath($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk");
 
             return definitionLua.GetDefinitionLuaFormatted();
         }
 
-        public static void WriteMainQuestLua(string dir, SetupDetails coreDetails, ObjectsDetails objectsDetails)
+        public static void WriteMainQuestLua(string dir, SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
-            string LuaScriptPath = $@"{dir}/Assets/tpp/pack/mission2/quest/ih/{coreDetails.FpkName}_fpkd/Assets/tpp/level/mission2/quest/ih";
-            string LuaScriptFile = Path.Combine(LuaScriptPath, coreDetails.FpkName + ".lua");
+            string LuaScriptPath = $@"{dir}/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}_fpkd/Assets/tpp/level/mission2/quest/ih";
+            string LuaScriptFile = Path.Combine(LuaScriptPath, setupDetails.FpkName + ".lua");
 
             Directory.CreateDirectory(LuaScriptPath);
 
-            File.WriteAllText(LuaScriptFile, BuildMain(coreDetails, objectsDetails));
+            File.WriteAllText(LuaScriptFile, BuildMain(setupDetails, objectsDetails));
         }
 
-        private static string BuildMain(SetupDetails coreDetails, ObjectsDetails objectsDetails)
+        private static string BuildMain(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             MainLua mainLua = new MainLua();
             mainLua.AddToOpeningVariables("this", "{}");
@@ -74,36 +74,36 @@ namespace SOC.Classes.QuestBuild.Lua
             mainLua.AddToOpeningVariables("RECOVERED", "TppDefine.QUEST_TYPE.RECOVERED");
             mainLua.AddToOpeningVariables("KILLREQUIRED", "9");
 
-            string cpNameString = coreDetails.CPName;
-            if (coreDetails.CPName == "NONE")
+            string cpNameString = setupDetails.CPName;
+            if (setupDetails.CPName == "NONE")
             {
                 /*
-                if (LoadAreas.isAfgh(coreDetails.locationID))
+                if (LoadAreas.isAfgh(setupDetails.locationID))
                 {
                     cpNameString = @"""afgh_plantSouth_ob"""; // empty ob for afgh. doesn't trigger interrogations?
                 }
-                else if (LoadAreas.isMafr(coreDetails.locationID))
+                else if (LoadAreas.isMafr(setupDetails.locationID))
                 {
                     cpNameString = @"""mafr_factory_cp"""; // empty cp for mafr
                 }
                 else
                 {
                 */
-                    cpNameString = $"InfMain.GetClosestCp{{{coreDetails.coords.xCoord},{coreDetails.coords.yCoord},{coreDetails.coords.zCoord}}}";
+                    cpNameString = $"InfMain.GetClosestCp{{{setupDetails.coords.xCoord},{setupDetails.coords.yCoord},{setupDetails.coords.zCoord}}}";
                 //}
             }
             else
             {
-                cpNameString = $@"""{coreDetails.CPName}""";
+                cpNameString = $@"""{setupDetails.CPName}""";
             }
 
             mainLua.AddToOpeningVariables("CPNAME", cpNameString);
-            mainLua.AddToOpeningVariables("DISTANTCP", $@"""{QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(coreDetails.CPName, coreDetails.locationID)}""");
-            mainLua.AddToOpeningVariables("questTrapName", $@"""trap_preDeactiveQuestArea_{coreDetails.loadArea}""");
+            mainLua.AddToOpeningVariables("DISTANTCP", $@"""{QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)}""");
+            mainLua.AddToOpeningVariables("questTrapName", $@"""trap_preDeactiveQuestArea_{setupDetails.loadArea}""");
 
             mainLua.AddToQuestTable("questType = ELIMINATE");
             mainLua.AddToQuestTable("soldierSubType = SUBTYPE");
-            mainLua.AddToQuestTable(BuildCpList(coreDetails));
+            mainLua.AddToQuestTable(BuildCpList(setupDetails));
 
             foreach (ObjectsDetail detail in objectsDetails.details)
             {
@@ -113,10 +113,10 @@ namespace SOC.Classes.QuestBuild.Lua
             return mainLua.GetMainLuaFormatted();
         }
 
-        private static string BuildCpList(SetupDetails coreDetails)
+        private static string BuildCpList(SetupDetails setupDetails)
         {
             StringBuilder cpListBuilder = new StringBuilder("cpList = {");
-            //if (coreDetails.CPName != "NONE")
+            //if (setupDetails.CPName != "NONE")
                 cpListBuilder.Append(@"
       nil");/*
             else
@@ -124,10 +124,10 @@ namespace SOC.Classes.QuestBuild.Lua
                 cpListBuilder.Append($@"
       {{
         cpName = ""quest_cp"",
-        cpPosition_x = {coreDetails.coords.xCoord}, cpPosition_y = {coreDetails.coords.yCoord}, cpPosition_z = {coreDetails.coords.zCoord}, cpPosition_r = {70},
+        cpPosition_x = {setupDetails.coords.xCoord}, cpPosition_y = {setupDetails.coords.yCoord}, cpPosition_z = {setupDetails.coords.zCoord}, cpPosition_r = {70},
         isOuterBaseCp = true,
         gtName = ""gt_quest_0000"",
-        gtPosition_x = {coreDetails.coords.xCoord}, gtPosition_y = {coreDetails.coords.yCoord}, gtPosition_z = {coreDetails.coords.zCoord}, gtPosition_r = {70},
+        gtPosition_x = {setupDetails.coords.xCoord}, gtPosition_y = {setupDetails.coords.yCoord}, gtPosition_z = {setupDetails.coords.zCoord}, gtPosition_r = {70},
       }},");
             }*/
             cpListBuilder.Append(@"

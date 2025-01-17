@@ -15,7 +15,7 @@ using SOC.UI;
 
 namespace SOC.QuestObjects.Item
 {
-    public partial class ItemBox : QuestBox
+    public partial class ItemBox : QuestObjectBox
     {
         public int ID;
 
