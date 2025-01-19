@@ -8,6 +8,7 @@ using System.Linq;
 using SOC.Classes.Assets;
 using SOC.Classes.Fox2;
 using SOC.Forms.Pages;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Model
 {
@@ -47,9 +48,9 @@ namespace SOC.QuestObjects.Model
             models = qObjects.Cast<Model>().ToList();
         }
 
-        public override void AddToAssets(FileAssets fileAssets)
+        public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
-            ModelAssets.AddAssets(this, fileAssets);
+            ModelAssets.AddAssets(this, assetsBuilder);
         }
 
         public override void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList)

@@ -9,6 +9,7 @@ using SOC.Classes.Assets;
 using SOC.Classes.Fox2;
 using SOC.Classes.Lua;
 using SOC.Forms.Pages;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.UAV
 {
@@ -48,9 +49,9 @@ namespace SOC.QuestObjects.UAV
             UAVs = qObjects.Cast<UAV>().ToList();
         }
 
-        public override void AddToAssets(FileAssets fileAssets)
+        public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
-            UAVAssets.GetUAVAssets(this, fileAssets);
+            UAVAssets.GetUAVAssets(this, assetsBuilder);
         }
 
         public override void AddToMainLua(MainLua mainLua)

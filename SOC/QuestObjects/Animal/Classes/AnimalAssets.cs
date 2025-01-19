@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using SOC.Classes.Assets;
 using System;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Animal
 {
@@ -11,7 +12,7 @@ namespace SOC.QuestObjects.Animal
     {
         static string animalAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//AnimalAssets");
 
-        internal static void GetAnimalAssets(AnimalsDetail questDetail, FileAssets fileAssets)
+        internal static void GetAnimalAssets(AnimalsDetail questDetail, CommonAssetsBuilder fileAssets)
         {
             string AniFPKAssetsPath = Path.Combine(animalAssetsPath, "FPK_Files");
             string AniFPKDAssetsPath = Path.Combine(animalAssetsPath, "FPKD_Files");
@@ -20,8 +21,8 @@ namespace SOC.QuestObjects.Animal
             {
                 string animalType = animal.animal;
 
-                fileAssets.AddFPKFolder(Path.Combine(AniFPKAssetsPath, $"{animalType}_fpk"));
-                fileAssets.AddFPKDFolder(Path.Combine(AniFPKDAssetsPath, $"{animalType}_fpkd"));
+                fileAssets.AddFPKAssetPath(Path.Combine(AniFPKAssetsPath, $"{animalType}_fpk"));
+                fileAssets.AddFPKDAssetPath(Path.Combine(AniFPKDAssetsPath, $"{animalType}_fpkd"));
             }
         }
     }

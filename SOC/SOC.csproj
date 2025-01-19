@@ -150,7 +150,7 @@
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\QStep_Start.cs" />
     <Compile Include="Core\Classes\Lua\MainLua.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\QuestTable.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\AssetsBuilder.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\BuildManager.cs" />
     <Compile Include="Core\Classes\Common\LoadAreas.cs" />
     <Compile Include="Core\Classes\Common\NPCMtbsInfo.cs" />
@@ -351,7 +351,6 @@
     <Compile Include="QuestObjects\Model\Forms\ModelControl.Designer.cs">
       <DependentUpon>ModelControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Classes\Route\RouteAssets.cs" />
     <Compile Include="QuestObjects\Model\Model.cs" />
     <Compile Include="QuestObjects\Model\ModelsMetadata.cs" />
     <Compile Include="QuestObjects\Model\ModelsVisualizer.cs" />

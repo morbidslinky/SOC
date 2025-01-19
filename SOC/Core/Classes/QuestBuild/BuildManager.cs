@@ -5,6 +5,7 @@ using System.IO;
 using SOC.Classes.Assets;
 using System.Linq;
 using System.Collections.Generic;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.Classes.QuestBuild
 {
@@ -13,29 +14,40 @@ namespace SOC.Classes.QuestBuild
         private const string SINGLEBUILDDIR = "Sideop_Build";
         private const string BATCHBUILDDIR = "Sideop_Batch_Build";
 
+        private const string QUESTARCHIVEPATH = "Assets/tpp/pack/mission2/quest/ih";
+        private const string QUESTGAMEDIRPATH = "GameDir/mod/quests";
+
         internal static bool Build(params Quest[] quests)
         {
-            string buildDir;
+            string initDir;
             if (quests.Length > 1)
             {
-                buildDir = BATCHBUILDDIR;
                 ClearBatchFolder();
+                initDir = BATCHBUILDDIR;
             }
-            else buildDir = SINGLEBUILDDIR;
+            else
+            {
+                initDir = SINGLEBUILDDIR;
+            }
 
-            Lang.LangBuilder.WriteQuestLangs(buildDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
+            Lang.LangBuilder.WriteQuestLangs(initDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
             
             foreach(Quest quest in quests)
             {
                 SetupDetails setupDetails = quest.setupDetails;
                 ObjectsDetails objectsDetails = new ObjectsDetails(quest.questObjectDetails);
 
-                ClearQuestFolders(buildDir, setupDetails.FpkName);
+                var buildArchivePath = Path.Combine(initDir, QUESTARCHIVEPATH);
+                var buildGameDirPath = Path.Combine(initDir, QUESTGAMEDIRPATH);
 
-                Lua.LuaBuilder.WriteDefinitionLua(buildDir, setupDetails, objectsDetails);
-                Lua.LuaBuilder.WriteMainQuestLua(buildDir, setupDetails, objectsDetails);
-                Fox2.Fox2Builder.WriteQuestFox2(buildDir, setupDetails.FpkName, objectsDetails);
-                Assets.AssetsBuilder.BuildAssets(buildDir, setupDetails, objectsDetails);
+                ClearQuestFolders(buildArchivePath, setupDetails.FpkName);
+
+                CommonAssetsBuilder assetsBuilder = new CommonAssetsBuilder();
+                assetsBuilder.Build(buildArchivePath, setupDetails, objectsDetails);
+
+                Lua.LuaBuilder.WriteDefinitionLua(buildGameDirPath, setupDetails, objectsDetails);
+                Lua.LuaBuilder.WriteMainQuestLua(buildArchivePath, setupDetails, objectsDetails);
+                Fox2.Fox2Builder.WriteQuestFox2(buildArchivePath, setupDetails.FpkName, objectsDetails);
             }
 
             /*
@@ -45,27 +57,47 @@ namespace SOC.Classes.QuestBuild
             3. write definition lua
             4. write main quest lua
             5. write fox2 file
-            6. Add necessary asset files
+            6. Add necessary common asset files
             */
             return true;
         }
 
         public static void ClearQuestFolders(string buildDir, string fpkName)
         {
-            string fpkdir = $"{buildDir}//Assets//tpp//pack//mission2//quest//ih//{fpkName}_fpk";
-            string fpkddir = $"{buildDir}//Assets//tpp//pack//mission2//quest//ih//{fpkName}_fpkd";
+            string questFPKPath = Path.Combine(buildDir, fpkName + "_fpk");
+            if (Directory.Exists(questFPKPath))
+                DeleteDirectory(questFPKPath);
 
-            if (Directory.Exists(fpkdir))
-                FileAssets.DeleteDirectory(fpkdir);
-
-            if (Directory.Exists(fpkddir))
-                FileAssets.DeleteDirectory(fpkddir);
+            string questFPKDPath = Path.Combine(buildDir, fpkName + "_fpkd");
+            if (Directory.Exists(questFPKDPath))
+                DeleteDirectory(questFPKDPath);
         }
 
         private static void ClearBatchFolder()
         {
             if (Directory.Exists(BATCHBUILDDIR))
-                FileAssets.DeleteDirectory(BATCHBUILDDIR);
+                DeleteDirectory(BATCHBUILDDIR);
+        }
+
+        private static void DeleteDirectory(string dir)
+        {
+            foreach (string directory in Directory.GetDirectories(dir))
+            {
+                DeleteDirectory(directory);
+            }
+
+            try
+            {
+                Directory.Delete(dir, true);
+            }
+            catch (IOException)
+            {
+                Directory.Delete(dir, true);
+            }
+            catch (System.UnauthorizedAccessException)
+            {
+                Directory.Delete(dir, true);
+            }
         }
     }
 }

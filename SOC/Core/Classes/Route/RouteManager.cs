@@ -9,22 +9,23 @@ using static FoxLib.Tpp.RouteSet;
 
 namespace SOC.Core.Classes.Route
 {
-    class RouteManager
+    public static class RouteManager
     {
-        public static string RouteNameDictionaryFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets\\ToolAssets\\route_name_dictionary.txt");
+        public static string routeNameDictionaryFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets\\ToolAssets\\route_name_dictionary.txt");
+        public static string routeAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//RouteAssets");
 
         public static Dictionary<uint, string> RouteNameHashDictionary = new Dictionary<uint, string>();
 
         public static string GetRouteFileName(string frtName)
         {
-            return Path.Combine(RouteAssets.routeAssetsPath, frtName) + ".frt";
+            return Path.Combine(routeAssetsPath, frtName) + ".frt";
         }
 
         public static List<string> GetRouteFileNameList()
         {
             List<string> routeNameList = new List<string>();
 
-            foreach (string filename in Directory.GetFiles(RouteAssets.routeAssetsPath, "*.frt"))
+            foreach (string filename in Directory.GetFiles(routeAssetsPath, "*.frt"))
             {
                 routeNameList.Add(Path.GetFileNameWithoutExtension(filename));
             }
@@ -37,10 +38,10 @@ namespace SOC.Core.Classes.Route
             string frtPath = GetRouteFileName(frtName);
             uint[] frtUintNames = GetUintNames(frtPath);
 
-            if (File.Exists(RouteNameDictionaryFile))
-                RouteNameHashDictionary = Hashing.MakeHashLookupTableFromFile(RouteNameDictionaryFile);
+            if (File.Exists(routeNameDictionaryFile))
+                RouteNameHashDictionary = Hashing.MakeHashLookupTableFromFile(routeNameDictionaryFile);
             else
-                MessageBox.Show("Route Dictionary Not Found. \n\n" + RouteNameDictionaryFile, "Dictionary Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Route Dictionary Not Found. \n\n" + routeNameDictionaryFile, "Dictionary Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             List<string> routeStringNames = new List<string>();
 

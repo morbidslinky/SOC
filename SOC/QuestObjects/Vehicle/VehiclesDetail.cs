@@ -13,6 +13,7 @@ using SOC.Classes.Fox2;
 using SOC.Classes.Lua;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using SOC.Forms.Pages;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Vehicle
 {
@@ -62,9 +63,9 @@ namespace SOC.QuestObjects.Vehicle
             VehicleLua.GetMain(this, mainLua);
         }
 
-        public override void AddToAssets(FileAssets fileAssets)
+        public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
-            VehicleAssets.GetVehicleAssets(this, fileAssets);
+            VehicleAssets.GetVehicleAssets(this, assetsBuilder);
         }
 
         public override ObjectsDetailVisualizer GetVisualizer()

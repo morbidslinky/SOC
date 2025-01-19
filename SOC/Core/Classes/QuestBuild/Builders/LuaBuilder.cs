@@ -15,10 +15,8 @@ namespace SOC.Classes.QuestBuild.Lua
         
         public static void WriteDefinitionLua(string dir, SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
-            string DefinitionLuaPath = $@"{dir}/GameDir/mod/quests/";
-            string DefinitionLuaFile = Path.Combine(DefinitionLuaPath, $"ih_quest_q{setupDetails.QuestNum}.lua");
-
-            Directory.CreateDirectory(DefinitionLuaPath);
+            Directory.CreateDirectory(dir);
+            string DefinitionLuaFile = Path.Combine(dir, $"ih_quest_q{setupDetails.QuestNum}.lua");
 
             using (StreamWriter defFile = new StreamWriter(DefinitionLuaFile))
             {
@@ -54,7 +52,7 @@ namespace SOC.Classes.QuestBuild.Lua
 
         public static void WriteMainQuestLua(string dir, SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
-            string LuaScriptPath = $@"{dir}/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}_fpkd/Assets/tpp/level/mission2/quest/ih";
+            string LuaScriptPath = Path.Combine(dir, setupDetails.FpkName + "_fpkd", "Assets/tpp/level/mission2/quest/ih");
             string LuaScriptFile = Path.Combine(LuaScriptPath, setupDetails.FpkName + ".lua");
 
             Directory.CreateDirectory(LuaScriptPath);

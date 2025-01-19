@@ -35,7 +35,7 @@ namespace SOC.QuestObjects.Common
 
         public abstract void DrawMetadata(ObjectsMetadata meta);
 
-        public void DrawObjectsControls(IEnumerable<QuestObject> questObjects)
+        public void DrawObjectsControls(List<QuestObject> questObjects)
         {
             var questObjectBoxes = questObjects.Select(objects => NewQuestObjectBox(objects)).ToArray();
             flowPanel.Controls.Clear();

@@ -50,7 +50,6 @@ namespace SOC.QuestObjects.UAV
         public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             // Routes
-            RouteManager router = new RouteManager();
             List<string> uavRoutes = setup.fileRoutes;
             uavRoutes.AddRange(EnemyInfo.GetCP(setup.CPName).CPsoldierRoutes);
 

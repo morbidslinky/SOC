@@ -17,8 +17,9 @@ namespace SOC.UI
             flowPanelDetails.Controls.AddRange(objectsDetails.GetModulePanels());
         }
 
-        public void RefreshObjectPanels(SetupDetails setupDetails)
+        public void RefreshObjectPanels(SetupDetails setupDetails, ObjectsDetails _objectsDetails)
         {
+            objectsDetails = _objectsDetails;
             objectsDetails.RefreshAllPanels(setupDetails);
         }
 

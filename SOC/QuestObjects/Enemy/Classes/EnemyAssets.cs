@@ -1,5 +1,6 @@
 ﻿using SOC.Classes.Assets;
 using SOC.Classes.Common;
+using SOC.Classes.QuestBuild.Assets;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -10,12 +11,12 @@ namespace SOC.QuestObjects.Enemy
     {
         public static string enemyAssetsPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//EnemyAssets");
         
-        internal static void GetEnemyAssets(EnemiesDetail questDetail, FileAssets fileAssets)
+        internal static void GetEnemyAssets(EnemiesDetail questDetail, CommonAssetsBuilder assetsBuilder)
         {
             string enemyFPKDAssetsPath = Path.Combine(enemyAssetsPath, "FPKD_Files");
             if (HasZombie(questDetail.enemies))
             {
-                fileAssets.AddFPKDFolder(Path.Combine(enemyFPKDAssetsPath, "zombie_fpkd"));
+                assetsBuilder.AddFPKDAssetPath(Path.Combine(enemyFPKDAssetsPath, "zombie_fpkd"));
             }
         }
 

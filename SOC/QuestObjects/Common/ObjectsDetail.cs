@@ -3,6 +3,7 @@ using SOC.Classes.Common;
 using SOC.Classes.Assets;
 using SOC.Classes.Fox2;
 using SOC.Classes.Lua;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Common
 {
@@ -15,12 +16,6 @@ namespace SOC.QuestObjects.Common
         public abstract ObjectsDetailVisualizer GetVisualizer();
 
         public abstract ObjectsMetadata GetMetadata();
-
-        public void UpdateDetailFromControl()
-        {
-            var visualizer = this.GetVisualizer();
-            visualizer.GetDetailFromControl();
-        }
 
         public void UpdateDetailFromSetup(SetupDetails setup)
         {
@@ -39,7 +34,7 @@ namespace SOC.QuestObjects.Common
             {
                 visualizer.HideDetail();
             }
-
+            
             visualizer.VisualizeDetail(this);
         }
 
@@ -49,6 +44,6 @@ namespace SOC.QuestObjects.Common
 
         public virtual void AddToMainLua(MainLua mainLua) { return; }
 
-        public virtual void AddToAssets(FileAssets fileAssets) { return; }
+        public virtual void AddToAssets(CommonAssetsBuilder assetsBuilder) { return; }
     }
 }

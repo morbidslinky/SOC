@@ -43,7 +43,7 @@ namespace SOC.Classes.QuestBuild.Fox2
             List<Fox2EntityClass> entityList = BuildQuestEntityList(fpkName, objectsDetails);
             SetAddresses(entityList, Fox2Info.baseQuestAddress);
 
-            string fox2Path = $@"{dir}/Assets/tpp/pack/mission2/quest/ih/{fpkName}_fpkd/Assets/tpp/level/mission2/quest/ih";
+            string fox2Path = Path.Combine(dir, fpkName + "_fpkd", "Assets/tpp/level/mission2/quest/ih");
             string fox2QuestFile = Path.Combine(fox2Path, string.Format("{0}.fox2.xml", fpkName));
 
             Directory.CreateDirectory(fox2Path);

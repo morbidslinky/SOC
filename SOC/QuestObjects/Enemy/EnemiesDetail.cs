@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using SOC.Classes.Assets;
 using SOC.Classes.Lua;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Enemy
 {
@@ -59,9 +60,9 @@ namespace SOC.QuestObjects.Enemy
             EnemyLua.GetMain(this, mainLua);
         }
 
-        public override void AddToAssets(FileAssets fileAssets)
+        public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
-            EnemyAssets.GetEnemyAssets(this, fileAssets);
+            EnemyAssets.GetEnemyAssets(this, assetsBuilder);
         }
     }
 }

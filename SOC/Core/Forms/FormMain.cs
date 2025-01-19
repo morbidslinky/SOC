@@ -100,7 +100,7 @@ namespace SOC.UI
 
         private void ShowSetup()
         {
-            objectsDetails.UpdateAllDetailsFromControl();
+            objectsDetails.UpdateAllDetailsFromVisualizers();
             objectsDetails.RefreshAllStubTexts();
 
             panelMain.Controls.Clear();
@@ -113,10 +113,11 @@ namespace SOC.UI
 
         private void ShowWait()
         {
-            panelMain.Controls.Clear();
+            panelMain.Controls.Clear(); 
             setupPage.DisableScrolling();
 
             buttonNext.Enabled = false;
+            this.Cursor = Cursors.WaitCursor;
             panelMain.Controls.Add(waitingPage);
             waitingPage.Refresh();
         }
@@ -124,13 +125,14 @@ namespace SOC.UI
         private async void ShowDetails()
         {
             SetupDetails setupDetails = setupPage.GetSetupDetails();
-            detailPage.RefreshObjectPanels(setupDetails);
+            detailPage.RefreshObjectPanels(setupDetails, objectsDetails);
 
             panelMain.Controls.Add(detailPage);
             panelMain.Controls.Remove(waitingPage);
 
             buttonBack.Visible = true;
             buttonNext.Text = "Build";
+            this.Cursor = Cursors.Default;
 
             await Task.Delay(100);
 
@@ -139,7 +141,7 @@ namespace SOC.UI
 
         private void BuildQuest()
         {
-            objectsDetails.UpdateAllDetailsFromControl();
+            objectsDetails.UpdateAllDetailsFromVisualizers();
             Quest quest = new Quest(setupPage.GetSetupDetails(), objectsDetails.GetQuestObjectDetails());
             
             if (BuildManager.Build(quest))

@@ -3,6 +3,10 @@ using System.Xml.Serialization;
 using System.Linq;
 using SOC.Core.Classes.Route;
 using System.Collections.Generic;
+using SOC.Classes.QuestBuild.Assets;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace SOC.Classes.Common
 {
@@ -106,6 +110,15 @@ namespace SOC.Classes.Common
             if (routeName != "NONE")
             {
                 fileRoutes = RouteManager.GetRouteNames(routeName);
+            }
+        }
+
+        public void addToAssets(CommonAssetsBuilder assetsBuilder)
+        {
+            if (!routeName.Equals("NONE"))
+            {
+                string frtFilePath = Path.Combine(RouteManager.routeAssetsPath, routeName) + ".frt";
+                assetsBuilder.AddFPKAssetPath(frtFilePath);
             }
         }
     }

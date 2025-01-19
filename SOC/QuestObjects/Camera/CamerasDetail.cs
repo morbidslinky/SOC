@@ -9,6 +9,7 @@ using SOC.Classes.Assets;
 using SOC.Classes.Fox2;
 using SOC.Classes.Lua;
 using SOC.Forms.Pages;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Camera
 {
@@ -48,9 +49,9 @@ namespace SOC.QuestObjects.Camera
             cameras = qObjects.Cast<Camera>().ToList();
         }
 
-        public override void AddToAssets(FileAssets fileAssets)
+        public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
-            CameraAssets.GetCameraAssets(this, fileAssets);
+            CameraAssets.GetCameraAssets(this, assetsBuilder);
         }
 
         public override void AddToMainLua(MainLua mainLua)

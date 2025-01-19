@@ -10,6 +10,7 @@ using SOC.Classes.Fox2;
 using SOC.Classes.Lua;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using SOC.Forms.Pages;
+using SOC.Classes.QuestBuild.Assets;
 
 namespace SOC.QuestObjects.Animal
 {
@@ -39,7 +40,7 @@ namespace SOC.QuestObjects.Animal
             return animalMetadata;
         }
 
-        public override List<QuestObject> GetQuestObjects()
+        public override List<QuestObject>  GetQuestObjects()
         {
             return animals.Cast<QuestObject>().ToList();
         }
@@ -59,9 +60,9 @@ namespace SOC.QuestObjects.Animal
             AnimalLua.GetMain(this, mainLua);
         }
 
-        public override void AddToAssets(FileAssets fileAssets)
+        public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
-            AnimalAssets.GetAnimalAssets(this, fileAssets);
+            AnimalAssets.GetAnimalAssets(this, assetsBuilder);
         }
 
         public override ObjectsDetailVisualizer GetVisualizer()

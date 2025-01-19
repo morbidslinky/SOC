@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Common
 {
     public class ObjectsDetails
     {
-        public List<ObjectsDetail> details {  get; }
+        public List<ObjectsDetail> details;
 
         public ObjectsDetails()
         {
@@ -36,12 +36,9 @@ namespace SOC.QuestObjects.Common
             }
         }
 
-        public void UpdateAllDetailsFromControl()
+        public void UpdateAllDetailsFromVisualizers()
         {
-            foreach (ObjectsDetail detail in details)
-            {
-                detail.UpdateDetailFromControl();
-            }
+            details = details.Select(detail => detail.GetVisualizer().GetDetailFromControl()).ToList();
         }
 
         public void RefreshAllStubTexts()
