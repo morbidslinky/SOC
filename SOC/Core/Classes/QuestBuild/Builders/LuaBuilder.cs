@@ -11,8 +11,6 @@ namespace SOC.Classes.QuestBuild.Lua
 {
     static class LuaBuilder
     {
-        static string[] questLuaTemplate = File.ReadAllLines(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//questScript.lua"));
-        
         public static void WriteDefinitionLua(string dir, SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             Directory.CreateDirectory(dir);
