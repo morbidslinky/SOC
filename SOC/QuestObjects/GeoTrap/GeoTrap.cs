@@ -67,13 +67,13 @@ namespace SOC.QuestObjects.GeoTrap
         public string type { get; set; } = "box";
 
         [XmlElement]
-        public string xScale { get; set; } = "1";
+        public string xScale { get; set; } = "3";
 
         [XmlElement]
-        public string zScale { get; set; } = "1";
+        public string zScale { get; set; } = "3";
 
         [XmlElement]
-        public string yScale { get; set; } = "1";
+        public string yScale { get; set; } = "3";
 
         [XmlElement]
         public Position position { get; set; } = new Position(new Coordinates(), new Rotation());

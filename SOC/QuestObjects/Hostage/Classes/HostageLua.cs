@@ -112,8 +112,8 @@ end");
 
                 mainLua.AddToQStep_Main(QStep_MainCommonMessages.genericTargetMessages);
                 
-                mainLua.AddToQStep_Start_OnEnter(WarpHostages);
-                mainLua.AddToAuxiliary(WarpHostages);
+                //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
+                //mainLua.AddToAuxiliary(WarpHostages);
 
                 mainLua.AddToQStep_Start_OnEnter(SetHostageAttributes);
                 mainLua.AddToAuxiliary(SetHostageAttributes);
