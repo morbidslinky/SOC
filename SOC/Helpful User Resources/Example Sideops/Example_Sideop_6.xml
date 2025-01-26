@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.0.0">
-  <coreDetails FpkName="Example_Sideop_6" QuestNum="30355">
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.2.0">
+  <setupDetails FpkName="Example_Sideop_6" QuestNum="30355">
     <QuestTitle>Example: Extract the Bears</QuestTitle>
     <QuestDesc>Extract all the bears at the Aabe Shifap Ruins along the river.</QuestDesc>
     <locationID>10</locationID>
@@ -12,13 +12,13 @@
     <reward>C</reward>
     <progressLangID>announce_quest_extract_animal</progressLangID>
     <routeName>NONE</routeName>
-  </coreDetails>
+  </setupDetails>
   <questObjectDetails>
-    <Detail xsi:type="EnemyDetail">
+    <ObjectsDetail xsi:type="EnemiesDetail">
       <enemyMetadata objectiveType="ELIMINATE" subtype="PF_A" />
       <enemies />
-    </Detail>
-    <Detail xsi:type="HostageDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="HostagesDetail">
       <hostageMetadata objectiveType="ELIMINATE" hostageBodyName="DDS_RESEARCHER_FEMALE" canInterrogate="false" />
       <hostages>
         <Hostage ID="0">
@@ -48,28 +48,28 @@
           </position>
         </Hostage>
       </hostages>
-    </Detail>
-    <Detail xsi:type="VehicleDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="VehiclesDetail">
       <vehicleMetadata ObjectiveType="ELIMINATE" />
       <vehicles />
-    </Detail>
-    <Detail xsi:type="HelicopterDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="HelicoptersDetail">
       <helicopterMetadata objectiveType="KILLREQUIRED" />
       <helicopters />
-    </Detail>
-    <Detail xsi:type="UAVDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="UAVsDetail">
       <UAVmetadata objectiveType="KILLREQUIRED" />
       <UAVs />
-    </Detail>
-    <Detail xsi:type="CameraDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="CamerasDetail">
       <cameraMetadata objectiveType="KILLREQUIRED" />
       <cameras />
-    </Detail>
-    <Detail xsi:type="WalkerDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="WalkerGearsDetail">
       <walkerMetadata objectiveType="ELIMINATE" />
       <walkers />
-    </Detail>
-    <Detail xsi:type="AnimalDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="AnimalsDetail">
       <animalMetadata objectiveType="RECOVERED" />
       <animals>
         <Animal ID="0">
@@ -103,8 +103,8 @@
           </position>
         </Animal>
       </animals>
-    </Detail>
-    <Detail xsi:type="ItemDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="ItemsDetail">
       <itemMetadata objectiveType="RECOVERED" />
       <items>
         <Item ID="0">
@@ -128,14 +128,14 @@
           <item>EQP_WP_EX_hg_000_G04</item>
         </Item>
       </items>
-    </Detail>
-    <Detail xsi:type="ActiveItemDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="ActiveItemsDetail">
       <activeItemMetadata objectiveType="ELIMINATE" />
       <activeItems />
-    </Detail>
-    <Detail xsi:type="ModelDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="ModelsDetail">
       <modelMetadata />
       <models />
-    </Detail>
+    </ObjectsDetail>
   </questObjectDetails>
 </Quest>

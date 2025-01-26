@@ -52,6 +52,7 @@ namespace SOC.Classes.Common
         [XmlElement]
         public string routeName { get; set; } = "";
 
+        [XmlIgnore]
         public List<string> fileRoutes = new List<string>();
 
         public SetupDetails() { }

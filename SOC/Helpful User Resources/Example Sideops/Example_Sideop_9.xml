@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.0.0">
-  <coreDetails FpkName="Example_Sideop_9" QuestNum="30358">
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.2.0">
+  <setupDetails FpkName="Example_Sideop_9" QuestNum="30358">
     <QuestTitle>Example: Extract the Cliffside Pilots</QuestTitle>
     <QuestDesc>Extract the two pilots marooned on a cliff.</QuestDesc>
     <locationID>20</locationID>
@@ -12,13 +12,13 @@
     <reward>D</reward>
     <progressLangID>quest_extract_hostage</progressLangID>
     <routeName>NONE</routeName>
-  </coreDetails>
+  </setupDetails>
   <questObjectDetails>
-    <Detail xsi:type="EnemyDetail">
+    <ObjectsDetail xsi:type="EnemiesDetail">
       <enemyMetadata objectiveType="ELIMINATE" subtype="PF_A" />
       <enemies />
-    </Detail>
-    <Detail xsi:type="HostageDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="HostagesDetail">
       <hostageMetadata objectiveType="RECOVERED" hostageBodyName="DDS_PILOT2" canInterrogate="false" />
       <hostages>
         <Hostage ID="0">
@@ -48,36 +48,36 @@
           </position>
         </Hostage>
       </hostages>
-    </Detail>
-    <Detail xsi:type="VehicleDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="VehiclesDetail">
       <vehicleMetadata ObjectiveType="ELIMINATE" />
       <vehicles />
-    </Detail>
-    <Detail xsi:type="HelicopterDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="HelicoptersDetail">
       <helicopterMetadata objectiveType="KILLREQUIRED" />
       <helicopters />
-    </Detail>
-    <Detail xsi:type="UAVDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="UAVsDetail">
       <UAVmetadata objectiveType="KILLREQUIRED" />
       <UAVs />
-    </Detail>
-    <Detail xsi:type="CameraDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="CamerasDetail">
       <cameraMetadata objectiveType="KILLREQUIRED" />
       <cameras />
-    </Detail>
-    <Detail xsi:type="WalkerDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="WalkerGearsDetail">
       <walkerMetadata objectiveType="ELIMINATE" />
       <walkers />
-    </Detail>
-    <Detail xsi:type="AnimalDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="AnimalsDetail">
       <animalMetadata objectiveType="RECOVERED" />
       <animals />
-    </Detail>
-    <Detail xsi:type="ItemDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="ItemsDetail">
       <itemMetadata objectiveType="RECOVERED" />
       <items />
-    </Detail>
-    <Detail xsi:type="ActiveItemDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="ActiveItemsDetail">
       <activeItemMetadata objectiveType="ELIMINATE" />
       <activeItems>
         <ActiveItem ID="0">
@@ -153,8 +153,8 @@
           </position>
         </ActiveItem>
       </activeItems>
-    </Detail>
-    <Detail xsi:type="ModelDetail">
+    </ObjectsDetail>
+    <ObjectsDetail xsi:type="ModelsDetail">
       <modelMetadata />
       <models>
         <Model ID="0">
@@ -166,6 +166,6 @@
           <model>RustedBlackfoot</model>
         </Model>
       </models>
-    </Detail>
+    </ObjectsDetail>
   </questObjectDetails>
 </Quest>
