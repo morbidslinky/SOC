@@ -49,6 +49,16 @@ namespace SOC.Classes.Common
                         System.Windows.Forms.MessageBox.Show("The selected xml file does not contain a version number. \n\nThe save file is likely earlier than SOC 0.7.0.0 and no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                         return false;
                     }
+
+                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+                    string version = fvi.FileVersion;
+                    if (version != loadedQuest.version)
+                    {
+                        System.Windows.Forms.MessageBox.Show("The selected xml file is from an earlier version of SOC. \n\nThe save file is no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        return false;
+                    }
+
                     setupDetails = loadedQuest.setupDetails;
                     questObjectDetails = loadedQuest.questObjectDetails;
                     return true;
