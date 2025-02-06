@@ -24,7 +24,7 @@ namespace SOC.Classes.Lua
         OnUpdate onUpdate = new OnUpdate();
         OnTerminate onTerminate = new OnTerminate();
         QStep_Start qStep_start = new QStep_Start();
-        QStep_Main qStep_main = new QStep_Main();
+        public QStep_Main qStep_main = new QStep_Main();
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
 

@@ -17,6 +17,17 @@ namespace SOC.Classes.Lua
 
         public string ToLua(MainLua mainLua)
         {
+            
+            foreach (StrCodeBlock strCode in mainLua.qStep_main.strCodes)
+            {
+                foreach (StrCodeMsgBlock msgBlock in strCode.msgBlocks)
+                {
+                    foreach (LuaFunction luaFunction in msgBlock.functions)
+                    {
+                        this.Add(luaFunction.ToLua());
+                    }
+                }
+            }
             StringBuilder auxCodeBuilder = new StringBuilder();
             foreach (string auxCode in auxiliaryCodes)
                 auxCodeBuilder.Append($@"

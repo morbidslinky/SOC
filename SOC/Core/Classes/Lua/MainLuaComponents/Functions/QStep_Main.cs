@@ -8,25 +8,19 @@ namespace SOC.Classes.Lua
 {
     public class QStep_Main
     {
-        List<StrCodeBlock> strCodes = new List<StrCodeBlock>();
+        public List<StrCodeBlock> strCodes = new List<StrCodeBlock>();
 
         public void Add(StrCodeBlock _codeBlock)
         {
-            bool isNewStrCodeBlock = true;
             foreach (StrCodeBlock codeBlock in strCodes)
             {
                 if (codeBlock.Equals(_codeBlock))
                 {
                     codeBlock.Add(_codeBlock.msgBlocks);
-                    isNewStrCodeBlock = false;
-                    break;
+                    return;
                 }
             }
-
-            if (isNewStrCodeBlock)
-            {
-                strCodes.Add(_codeBlock);
-            }
+            strCodes.Add(_codeBlock);
         }
 
         public bool Contains(StrCodeBlock _codeBlock)
@@ -58,14 +52,12 @@ namespace SOC.Classes.Lua
             return false;
         }
 
-
         public string ToLua(MainLua mainLua)
         {
             return $@"
 quest_step.QStep_Main = {{
   Messages = function( self )
-    return
-      StrCode32Table {{
+    return StrCode32Table {{
         {string.Join(",", strCodes.Select(code => code.ToLua()))}
       }}
   end,
@@ -111,32 +103,26 @@ quest_step.QStep_Main = {{
 
         public void Add(StrCodeMsgBlock _msgBlock)
         {
-            bool isNewStrCodeMsg = true;
             foreach (StrCodeMsgBlock msgBlock in msgBlocks)
             {
                 if (msgBlock.Equals(_msgBlock))
                 {
                     msgBlock.AddFunctionCalls(_msgBlock.functions);
-                    isNewStrCodeMsg = false;
-                    break;
+                    return;
                 }
             }
-
-            if (isNewStrCodeMsg)
-            {
-                msgBlocks.Add(_msgBlock);
-            }
+            msgBlocks.Add(_msgBlock);
         }
 
         public bool Equals(StrCodeBlock _code)
         {
-            return strCode.Equals(_code);
+            return strCode.Equals(_code.strCode);
         }
 
         public string ToLua()
         {
             return $@"{strCode} = {{
-            {string.Join("},\n{", msgBlocks.Select(msg => msg.ToLua()))}
+            {string.Join(", ", msgBlocks.Select(msg => $"{{{msg.ToLua()}}}"))}
             }}";
         }
     }
@@ -176,7 +162,7 @@ quest_step.QStep_Main = {{
         public string ToLua()
         {
             return $@"
-            msg = {msg}, {(sender == "" ? "" : $@"
+            msg = ""{msg}"", {(sender == "" ? "" : $@"
             sender = {sender}, ")}
             func = function({string.Join(", ", msgArgs)})
               {string.Join(" ", functions.Select(func => func.Call(msgArgs)))}
