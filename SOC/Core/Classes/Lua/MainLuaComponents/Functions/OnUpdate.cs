@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class OnUpdate : LuaMainComponent
+    class OnUpdate
     {
         List<string> onUpdateList = new List<string>();
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             StringBuilder onUpdateBuilder = new StringBuilder(@"
 function this.OnUpdate()

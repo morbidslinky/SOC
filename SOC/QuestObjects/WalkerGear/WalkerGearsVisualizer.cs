@@ -6,13 +6,14 @@ using System.Linq;
 using SOC.Forms.Pages;
 using SOC.UI;
 using SOC.Classes.Common;
+using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.WalkerGear
 {
     class WalkerGearsVisualizer : ObjectsDetailVisualizerLocational
     {
         public WalkerGearsVisualizer(LocationalDataStub walkerStub, WalkerControl walkerControl) : base(walkerStub, walkerControl, walkerControl.panelQuestBoxes) { }
-        
+
         public override void DrawMetadata(ObjectsMetadata meta)
         {
             WalkerControl walkerControl = (WalkerControl)detailControl;

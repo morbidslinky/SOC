@@ -60,7 +60,7 @@ namespace SOC.Classes.QuestBuild.Lua
 
         private static string BuildMain(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
-            MainLua mainLua = new MainLua();
+            MainLua mainLua = new MainLua(setupDetails, objectsDetails);
             mainLua.AddToOpeningVariables("this", "{}");
             mainLua.AddToOpeningVariables("quest_step", "{}");
             mainLua.AddToOpeningVariables("StrCode32", "Fox.StrCode32");

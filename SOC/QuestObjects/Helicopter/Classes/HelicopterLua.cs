@@ -9,21 +9,11 @@ namespace SOC.QuestObjects.Helicopter
 {
     static class HelicopterLua
     {
-
-        static readonly LuaFunction setHelicopterAttributes = new LuaFunction("SetHeliAttributes", @"
-function this.SetHeliAttributes()
-  for i,heliInfo in ipairs(this.QUEST_TABLE.heliList)do
-    local gameObjectId = GetGameObjectId(heliInfo.heliName)
-    if gameObjectId~=GameObject.NULL_ID then
-	  if heliInfo.commands then
-        for j,heliCommand in ipairs(heliInfo.commands)do
-	      GameObject.SendCommand(gameObjectId, heliCommand)
-	    end
-	  end
-    end
-  end
-end");
-
+        static readonly LuaFunction setHelicopterAttributes = new LuaFunction(
+            "SetHeliAttributes",
+            new string[] { },
+            " for i,heliInfo in ipairs(this.QUEST_TABLE.heliList)do local gameObjectId = GetGameObjectId(heliInfo.heliName); if gameObjectId~=GameObject.NULL_ID then if heliInfo.commands then for j,heliCommand in ipairs(heliInfo.commands)do GameObject.SendCommand(gameObjectId, heliCommand); end; end; end; end; ");
+        
         internal static void GetDefinition(HelicoptersDetail questDetail, DefinitionLua definitionLua)
         {
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
@@ -40,7 +30,7 @@ end");
                 mainLua.AddToAuxiliary(setHelicopterAttributes);
                 if (questDetail.helicopters.Any(helicopter => helicopter.isTarget))
                 {
-                    mainLua.AddToQStep_Main(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                    mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
                     CheckQuestGenericEnemy helicopterCheck = new CheckQuestGenericEnemy(mainLua);
                     foreach (Helicopter heli in questDetail.helicopters)
                         if (heli.isTarget)

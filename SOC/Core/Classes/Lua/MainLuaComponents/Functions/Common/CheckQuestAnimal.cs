@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SOC.Classes.Lua
 {
     class CheckQuestAnimal : CheckQuestMethodsPair
     {
-        static readonly LuaFunction IsTargetSetMessageIdForAnimal = new LuaFunction("IsTargetSetMessageIdForAnimal",
-    @"
-function this.IsTargetSetMessageIdForAnimal(gameId, messageId, checkAnimalId)
-  if checkAnimalId ~= nil then
+        static readonly LuaFunction IsTargetSetMessageIdForAnimal = new LuaFunction("IsTargetSetMessageIdForAnimal", new string[] { "gameId", "messageId", "checkAnimalId" },
+    @"if checkAnimalId ~= nil then
     local databaseId = TppAnimal.GetDataBaseIdFromAnimalId(checkAnimalId)
     local isTarget = false
     for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
@@ -35,13 +34,10 @@ function this.IsTargetSetMessageIdForAnimal(gameId, messageId, checkAnimalId)
       end
       return isTarget, true
     end
-  return false, false
-end");
+  return false, false");
 
-        static readonly LuaFunction TallyAnimalTargets = new LuaFunction("TallyAnimalTargets",
-            @"
-function this.TallyAnimalTargets(totalTargets, objectiveCompleteCount, objectiveFailedCount)
-  local dynamicQuestType = ObjectiveTypeList.animalObjective
+        static readonly LuaFunction TallyAnimalTargets = new LuaFunction("TallyAnimalTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+            @" local dynamicQuestType = ObjectiveTypeList.animalObjective
   for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
     local targetMessageId = targetInfo.messageId
 
@@ -68,8 +64,7 @@ function this.TallyAnimalTargets(totalTargets, objectiveCompleteCount, objective
     end
     totalTargets = totalTargets + 1
   end
-  return totalTargets, objectiveCompleteCount, objectiveFailedCount
-end");
+  return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
 
         public CheckQuestAnimal(MainLua mainLua, string objectiveType) : base(mainLua, IsTargetSetMessageIdForAnimal, TallyAnimalTargets, "animalObjective = " + objectiveType) { }
     }

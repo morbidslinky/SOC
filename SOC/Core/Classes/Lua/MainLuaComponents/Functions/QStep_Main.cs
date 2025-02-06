@@ -6,27 +6,67 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class QStep_Main : LuaMainComponent
+    public class QStep_Main
     {
-        List<QStep_Message> messageList = new List<QStep_Message>();
+        List<StrCodeBlock> strCodes = new List<StrCodeBlock>();
 
-        public void Add(QStep_Message msg)
+        public void Add(StrCodeBlock _codeBlock)
         {
-            messageList.Add(msg);
+            bool isNewStrCodeBlock = true;
+            foreach (StrCodeBlock codeBlock in strCodes)
+            {
+                if (codeBlock.Equals(_codeBlock))
+                {
+                    codeBlock.Add(_codeBlock.msgBlocks);
+                    isNewStrCodeBlock = false;
+                    break;
+                }
+            }
+
+            if (isNewStrCodeBlock)
+            {
+                strCodes.Add(_codeBlock);
+            }
         }
 
-        public bool Contains(QStep_Message msg)
+        public bool Contains(StrCodeBlock _codeBlock)
         {
-            return (messageList.Exists(message => message.Equals(msg)));
+            var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaFunction)>();
+
+            foreach (StrCodeBlock codeBlock in strCodes)
+            {
+                foreach(StrCodeMsgBlock msgBlock in codeBlock.msgBlocks)
+                {
+                    foreach(LuaFunction luaFunction in msgBlock.functions)
+                    {
+                        existingMsgFunctionPairs.Add((msgBlock, luaFunction));
+                    }
+                }
+            }
+
+            foreach (StrCodeMsgBlock _msgBlock in _codeBlock.msgBlocks)
+            {
+                foreach (LuaFunction _luaFunction in _msgBlock.functions)
+                {
+                    if (existingMsgFunctionPairs.Contains((_msgBlock, _luaFunction)))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
-        public override string GetComponent()
+
+        public string ToLua(MainLua mainLua)
         {
             return $@"
 quest_step.QStep_Main = {{
   Messages = function( self )
     return
-      StrCode32Table {{{GetMessagesFormatted()}
+      StrCode32Table {{
+        {string.Join(",", strCodes.Select(code => code.ToLua()))}
       }}
   end,
   OnEnter = function() end,
@@ -34,73 +74,126 @@ quest_step.QStep_Main = {{
 }}";
         }
 
-        public string GetMessagesFormatted()
+    }
+
+    public class StrCodeBlock
+    {
+        public string strCode;
+        public List<StrCodeMsgBlock> msgBlocks = new List<StrCodeMsgBlock>();
+
+        public StrCodeBlock(string _strCode, StrCodeMsgBlock _msgBlock)
         {
-            List<string> categories = new List<string>();
-            foreach(QStep_Message msg in messageList)
+            strCode = _strCode; msgBlocks.Add(_msgBlock);
+        }
+
+        public StrCodeBlock(string _strCode, List<StrCodeMsgBlock> _msgBlocks)
+        {
+            strCode = _strCode; msgBlocks.AddRange(_msgBlocks);
+        }
+
+        public StrCodeBlock(string _strCode, string _name, string[] _msgArgs, params LuaFunction[] _functions)
+        {
+            strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _msgArgs, _functions));
+        }
+
+        public StrCodeBlock(string _strCode, string _name, string _sender, string[] _msgArgs, params LuaFunction[] _functions)
+        {
+            strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _sender, _msgArgs, _functions));
+        }
+
+        public void Add(List<StrCodeMsgBlock> _msgBlocks)
+        {
+            foreach (StrCodeMsgBlock msg in _msgBlocks)
             {
-                if (!categories.Contains(msg.GetCategory()))
-                    categories.Add(msg.GetCategory());
+                this.Add(msg);
             }
-            StringBuilder formattedMessageBuilder = new StringBuilder();
-            foreach(string category in categories)
+        }
+
+        public void Add(StrCodeMsgBlock _msgBlock)
+        {
+            bool isNewStrCodeMsg = true;
+            foreach (StrCodeMsgBlock msgBlock in msgBlocks)
             {
-                formattedMessageBuilder.Append($@"
-        {category} = {{");
-                foreach(QStep_Message msg in messageList)
+                if (msgBlock.Equals(_msgBlock))
                 {
-                    if (msg.GetCategory() != category)
-                        continue;
-                    formattedMessageBuilder.Append($@"
-          {{{msg.GetMessageFormatted()}
-          }},");
+                    msgBlock.AddFunctionCalls(_msgBlock.functions);
+                    isNewStrCodeMsg = false;
+                    break;
                 }
-                formattedMessageBuilder.Append(@"
-        },");
             }
-            return formattedMessageBuilder.ToString();
+
+            if (isNewStrCodeMsg)
+            {
+                msgBlocks.Add(_msgBlock);
+            }
+        }
+
+        public bool Equals(StrCodeBlock _code)
+        {
+            return strCode.Equals(_code);
+        }
+
+        public string ToLua()
+        {
+            return $@"{strCode} = {{
+            {string.Join("},\n{", msgBlocks.Select(msg => msg.ToLua()))}
+            }}";
         }
     }
 
-    public class QStep_Message
+    public class StrCodeMsgBlock
     {
-        string msgCategory;
-        string msgName;
-        string msgSender;
-        string msgFunc;
+        string msg;
+        string sender;
+        string[] msgArgs;
+        public List<LuaFunction> functions;
 
-        public QStep_Message(string category, string name, string function)
+        public StrCodeMsgBlock(string _name, string[] _msgArgs)
         {
-            msgCategory = category; msgName = name; msgFunc = function; msgSender = "";
+            msg = _name; sender = ""; msgArgs = _msgArgs; functions = new List<LuaFunction>();
         }
 
-        public QStep_Message(string category, string name, string sender, string function)
+        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs)
         {
-            msgCategory = category; msgName = name; msgFunc = function; msgSender = sender;
+            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = new List<LuaFunction>();
         }
 
-        public string GetCategory()
+        public StrCodeMsgBlock(string _name, string[] _msgArgs, LuaFunction[] _functions)
         {
-            return msgCategory;
+            msg = _name; sender = ""; msgArgs = _msgArgs; functions = _functions.ToList();
         }
 
-        public string GetMessageFormatted()
+        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs, LuaFunction[] _functions)
         {
-            StringBuilder msgBuilder = new StringBuilder($@"
-            msg = {msgName}, {(msgSender == "" ? "" : $@"
-            sender = {msgSender}, ")}
-            func = {msgFunc}");
-
-            return msgBuilder.ToString();
+            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = _functions.ToList();
         }
 
-        public bool Equals(QStep_Message msg)
+        public void AddFunctionCalls(List<LuaFunction> calls)
         {
-            if (msgCategory == msg.msgCategory)
-                if (msgName == msg.msgName)
-                    if (msgSender == msg.msgSender)
-                        return msgFunc == msg.msgFunc;
-            return false;
+            functions.AddRange(calls);
+        }
+
+        public string ToLua()
+        {
+            return $@"
+            msg = {msg}, {(sender == "" ? "" : $@"
+            sender = {sender}, ")}
+            func = function({string.Join(", ", msgArgs)})
+              {string.Join(" ", functions.Select(func => func.Call(msgArgs)))}
+            end";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is StrCodeMsgBlock other))
+                return false;
+
+            return msg.Equals(other.msg) && sender.Equals(other.sender);
+        }
+
+        public override int GetHashCode()
+        {
+            return msg.GetHashCode() + sender.GetHashCode();
         }
     }
 }

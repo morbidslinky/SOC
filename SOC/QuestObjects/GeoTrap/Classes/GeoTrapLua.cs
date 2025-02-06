@@ -18,13 +18,27 @@ namespace SOC.QuestObjects.GeoTrap
                 var uniqueGeoTraps = shapes.Select(shape => shape.geoTrap).Distinct();
                 foreach (string geoTrapName in uniqueGeoTraps)
                 {
-                    QStep_Message EnterTrap = new QStep_Message("Trap", @"""Enter""", $@"""{geoTrapName}""", $@"function()
-              InfCore.DebugPrint(""{geoTrapName} Enter"")
-            end");
-                    QStep_Message ExitTrap = new QStep_Message("Trap", @"""Exit""", $@"""{geoTrapName}""", $@"function()
-              InfCore.DebugPrint(""{geoTrapName} Exit"")
-            end");
-                    mainLua.AddToQStep_Main(EnterTrap, ExitTrap);
+                    StrCodeBlock EnterTrap = new StrCodeBlock(
+                        "Trap",
+                        "Enter",
+                        geoTrapName,
+                        new string[] { },
+                        new LuaFunction(
+                            $"{geoTrapName}Enter",
+                            new string[] { },
+                            $@" InfCore.DebugPrint(""{geoTrapName} Enter""); "));
+
+                    StrCodeBlock ExitTrap = new StrCodeBlock(
+                        "Trap",
+                        "Exit",
+                        geoTrapName,
+                        new string[] { },
+                        new LuaFunction(
+                            $"{geoTrapName}Exit",
+                            new string[] { },
+                            $@" InfCore.DebugPrint(""{geoTrapName} Exit""); "));
+
+                    mainLua.AddBaseQStep_MainMsgs(EnterTrap, ExitTrap);
                 }
             }
         }

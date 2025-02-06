@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SOC.Classes.Lua
 {
     class CheckQuestItem : CheckQuestMethodsPair
     {
-        static readonly LuaFunction IsTargetSetMessageIdForItem = new LuaFunction("IsTargetSetMessageIdForItem",
-    @"
-function this.IsTargetSetMessageIdForItem(gameId, messageId, checkAnimalId)
-  if messageId == ""PickUpDormant"" then
+        static readonly LuaFunction IsTargetSetMessageIdForItem = new LuaFunction("IsTargetSetMessageIdForItem", new string[] { "gameId", "messageId", "checkAnimalId" },
+    @" if messageId == ""PickUpDormant"" then
     for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
       if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == false then
         targetInfo.messageId = messageId
@@ -26,13 +25,10 @@ function this.IsTargetSetMessageIdForItem(gameId, messageId, checkAnimalId)
       end
     end
   end
-  return false, false
-end");
+  return false, false; ");
 
-        static readonly LuaFunction TallyItemTargets = new LuaFunction("TallyItemTargets",
-            @"
-function this.TallyItemTargets(totalTargets, objectiveCompleteCount, objectiveFailedCount)
-  for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+        static readonly LuaFunction TallyItemTargets = new LuaFunction("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+            @" for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
     local dynamicQuestType = RECOVERED
     for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.itemTargets) do
       if ObjectiveTypeInfo.Check(targetInfo) then
@@ -65,8 +61,7 @@ function this.TallyItemTargets(totalTargets, objectiveCompleteCount, objectiveFa
   	end
     totalTargets = totalTargets + 1
   end
-  return totalTargets, objectiveCompleteCount, objectiveFailedCount
-end");
+  return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
         
         public CheckQuestItem(MainLua mainLua, LuaFunction checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
     }

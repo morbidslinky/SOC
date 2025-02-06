@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class CheckQuestAllTargetDynamic : LuaMainComponent
+    class CheckQuestAllTargetDynamic
     {
-        public override string GetComponent()
+        public string GetComponent()
         {
             return @"
 function this.CheckQuestAllTargetDynamic(messageId, gameId, checkAnimalId)

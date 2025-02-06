@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class Messages : LuaMainComponent
+    class Messages
     {
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return @"
 this.Messages = function()

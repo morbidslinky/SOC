@@ -9,10 +9,7 @@ namespace SOC.QuestObjects.Enemy
 {
     static class EnemyLua
     {
-        static readonly LuaFunction CheckIsSoldier = new LuaFunction("CheckIsSoldier", @"
-function this.CheckIsSoldier(gameId)
-  return Tpp.IsSoldier(gameId)
-end");
+        static readonly LuaFunction CheckIsSoldier = new LuaFunction("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
 
         public static void GetDefinition(EnemiesDetail detail, DefinitionLua definitionLua)
         {
@@ -134,7 +131,7 @@ end");
 
                 if (hasTarget)
                 {
-                    mainLua.AddToQStep_Main(QStep_MainCommonMessages.genericTargetMessages);
+                    mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.genericTargetMessages);
                     CheckQuestGenericEnemy CheckEnemy = new CheckQuestGenericEnemy(mainLua, CheckIsSoldier, meta.objectiveType);
                 }
             }

@@ -9,39 +9,15 @@ namespace SOC.QuestObjects.UAV
 {
     class UAVLua
     {
-        static readonly LuaFunction setupUAV = new LuaFunction("SetupUAV", @"
-function this.SetupUAV()
-	for index, uavInfo in pairs(this.QUEST_TABLE.UAVList) do
-		local gameObjectId = GameObject.GetGameObjectId(uavInfo.name)
-		if gameObjectId ~= GameObject.NULL_ID then
-			GameObject.SendCommand(gameObjectId, {id = ""SetEnabled"", enabled = true} )
-            GameObject.SendCommand(gameObjectId, {id = ""SetDevelopLevel"", developLevel = uavInfo.weapon, empLevel = 0} )
-			if uavInfo.dRoute then
-			  GameObject.SendCommand(gameObjectId, {id = ""SetPatrolRoute"", route = uavInfo.dRoute} )
-			end
-			if uavInfo.aRoute then
-			  GameObject.SendCommand(gameObjectId, {id = ""SetCombatRoute"", route = uavInfo.aRoute} )
-			end
-            if uavInfo.defenseGrade then
-			  GameObject.SendCommand(gameObjectId, {id = ""SetCombatGrade"", defenseGrade = uavInfo.defenseGrade} )
-            end
-			if uavInfo.docile == true then
-			  GameObject.SendCommand(gameObjectId, {id = ""SetFriendly""})
-			  GameObject.SendCommand(gameObjectId, {id = ""SetCommandPost"", cp = DISTANTCP } )
-			else
-			  GameObject.SendCommand(gameObjectId, {id = ""SetCommandPost"", cp = CPNAME } )
-            end
-		end
-	end
-end");
-
+        static readonly LuaFunction setupUAV = new LuaFunction("SetupUAV", new string[] { }, " for index, uavInfo in pairs(this.QUEST_TABLE.UAVList) do local gameObjectId = GameObject.GetGameObjectId(uavInfo.name); if gameObjectId ~= GameObject.NULL_ID then GameObject.SendCommand(gameObjectId, {id = \"SetEnabled\", enabled = true} ); GameObject.SendCommand(gameObjectId, {id = \"SetDevelopLevel\", developLevel = uavInfo.weapon, empLevel = 0} ); if uavInfo.dRoute then GameObject.SendCommand(gameObjectId, {id = \"SetPatrolRoute\", route = uavInfo.dRoute} ); end; if uavInfo.aRoute then GameObject.SendCommand(gameObjectId, {id = \"SetCombatRoute\", route = uavInfo.aRoute} ); end; if uavInfo.defenseGrade then GameObject.SendCommand(gameObjectId, {id = \"SetCombatGrade\", defenseGrade = uavInfo.defenseGrade} ); end; if uavInfo.docile == true then GameObject.SendCommand(gameObjectId, {id = \"SetFriendly\"}); GameObject.SendCommand(gameObjectId, {id = \"SetCommandPost\", cp = DISTANTCP } ); else GameObject.SendCommand(gameObjectId, {id = \"SetCommandPost\", cp = CPNAME } ); end; end; end; ");
+        
         internal static void GetMain(UAVsDetail detail, MainLua mainLua)
         {
             if (detail.UAVs.Count > 0)
             {
                 mainLua.AddToQuestTable(BuildUAVList(detail.UAVs));
 
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.AddToQStep_Start_OnEnter(setupUAV);
                 mainLua.AddToAuxiliary(setupUAV);

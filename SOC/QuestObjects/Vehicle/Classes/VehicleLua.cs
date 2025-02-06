@@ -9,30 +9,17 @@ namespace SOC.QuestObjects.Vehicle
 {
     class VehicleLua
     {
-        static readonly LuaFunction checkVehicle = new LuaFunction("CheckIsVehicle", @"
-function this.CheckIsVehicle(gameId)
-  return Tpp.IsVehicle(gameId)
-end");
+        static readonly LuaFunction checkVehicle = new LuaFunction("CheckIsVehicle", new string[] { "gameId" }, " return Tpp.IsVehicle(gameId) ");
 
-        static readonly LuaFunction warpVehicles = new LuaFunction("WarpVehicles", @"
-function this.WarpVehicles()
-  for i,vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList)do
-    local gameObjectId= GetGameObjectId(vehicleInfo.locator)
-    if gameObjectId~=GameObject.NULL_ID then
-      local position=vehicleInfo.position
-      local command={id=""SetPosition"",rotY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3])}
-      GameObject.SendCommand(gameObjectId,command)
-    end
-  end
-end");
-
+        static readonly LuaFunction warpVehicles = new LuaFunction("WarpVehicles", new string[] { }, " for i,vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList)do local gameObjectId= GetGameObjectId(vehicleInfo.locator); if gameObjectId~=GameObject.NULL_ID then local position=vehicleInfo.position; local command={id=\"SetPosition\",rotY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3])}; GameObject.SendCommand(gameObjectId,command); end; end; ");
+        
         public static void GetMain(VehiclesDetail detail, MainLua mainLua)
         {
             mainLua.AddToQuestTable(BuildVehicleList(detail.vehicles));
 
             if (detail.vehicles.Count > 0)
             {
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.mechaCaptureTargetMessages);
+                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaCaptureTargetMessages);
 
                 mainLua.AddToQStep_Start_OnEnter(warpVehicles);
                 mainLua.AddToAuxiliary(warpVehicles);

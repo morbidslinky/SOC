@@ -9,11 +9,9 @@ namespace SOC.QuestObjects.Item
 {
     class ItemLua
     {
-        static readonly LuaFunction checkIsDormantItem = new LuaFunction("checkIsDormantItem", @"
-function this.checkIsDormantItem(targetItemInfo)
-  return (targetItemInfo.active == false)
-end");
 
+        static readonly LuaFunction checkIsDormantItem = new LuaFunction("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
+        
         internal static void GetDefinition(ItemsDetail questDetail, DefinitionLua definitionLua)
         {
             List<string> requestList = new List<string>();
@@ -39,7 +37,7 @@ end");
             {
                 CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsDormantItem, questDetail.itemMetadata.objectiveType);
                 mainLua.AddToQuestTable(BuildItemTargetList(questDetail.items));
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.dormantItemTargetMessages);
+                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.dormantItemTargetMessages);
             }
         }
 

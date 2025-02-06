@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SOC.Classes.Common;
+using SOC.QuestObjects.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +10,28 @@ namespace SOC.Classes.Lua
 {
     public class MainLua
     {
+        public SetupDetails setupDetails;
+        public ObjectsDetails objectsDetails;
+
         List<string> functionList = new List<string>();
 
         OpeningVariables openingVariables = new OpeningVariables();
         AuxiliaryCode auxiliaryCode = new AuxiliaryCode();
         OnAllocate onAllocate = new OnAllocate();
+        Messages messages = new Messages();
+        OnInitialize onInitialize = new OnInitialize();
         QuestTable questTable = new QuestTable();
+        OnUpdate onUpdate = new OnUpdate();
+        OnTerminate onTerminate = new OnTerminate();
         QStep_Start qStep_start = new QStep_Start();
         QStep_Main qStep_main = new QStep_Main();
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
-        OnUpdate onUpdate = new OnUpdate();
+
+        public MainLua(SetupDetails _setupDetails, ObjectsDetails _objectsDetails)
+        {
+            setupDetails = _setupDetails; objectsDetails = _objectsDetails;
+        }
         
         public void AddToOpeningVariables(string variableName, string value = "")
         {
@@ -27,7 +40,7 @@ namespace SOC.Classes.Lua
 
         public void AddToAuxiliary(LuaFunction function)
         {
-            auxiliaryCode.Add(function.FunctionFull);
+            auxiliaryCode.Add(function.ToLua());
         }
 
         public void AddToAuxiliary(string localVar)
@@ -93,42 +106,30 @@ namespace SOC.Classes.Lua
             questTable.AddTarget(targetName);
         }
 
-        public void AddToQStep_Main(params QStep_Message[] messages)
+        public void AddBaseQStep_MainMsgs(params StrCodeBlock[] messages)
         {
-            foreach (QStep_Message message in messages)
+            foreach (StrCodeBlock message in messages)
                 if (!qStep_main.Contains(message))
                     qStep_main.Add(message);
         }
 
         public string GetMainLuaFormatted()
         {
-            openingVariables.BuildComponent(this); // local variables declared before the quest table
-            questTable.BuildComponent(this); // the quest table, which lists information on every lua quest object for the sideop
-            auxiliaryCode.BuildComponent(this); // functions and variables used for setting up quest objects and other misc. purposes
-            onAllocate.BuildComponent(this);// onallocate. namely contains OnTerminate logic 
-            new Messages().BuildComponent(this); // quest messages, not to be confused with qStep_main messages
-            new OnInitialize().BuildComponent(this);
-            onUpdate.BuildComponent(this); // contains calls to frequent checks
-            new OnTerminate().BuildComponent(this);
-            qStep_start.BuildComponent(this); // calls auxiliary setup functions
-            qStep_main.BuildComponent(this); // contains a long list of messages which listen for quest updates
-            objectiveTypesList.BuildComponent(this); // contains logic for how a quest update is determined as well as what object has what objective type
-            checkQuestMethodList.BuildComponent(this); // determines what and how to tally up quest objectives
-            new CheckQuestAllTargetDynamic().BuildComponent(this);
-            functionList.Add(@"
-return this");
-
             StringBuilder functionBuilder = new StringBuilder();
-            foreach (string function in functionList)
-                functionBuilder.Append($@"{function}
-");
+
+            functionBuilder.Append(openingVariables.ToLua(this)); // local variables declared before the quest table
+            functionBuilder.Append(questTable.ToLua(this)); // the quest table, which lists information on every lua quest object for the sideop
+            functionBuilder.Append(auxiliaryCode.ToLua(this)); // functions and variables used for setting up quest objects and other misc. purposes
+            functionBuilder.Append(onAllocate.ToLua(this));// onallocate. namely contains OnTerminate logic 
+            functionBuilder.Append(messages.ToLua(this)); // quest messages, not to be confused with qStep_main messages
+            functionBuilder.Append(onInitialize.ToLua(this));
+            functionBuilder.Append(onUpdate.ToLua(this)); // contains calls to frequent checks
+            functionBuilder.Append(onTerminate.ToLua(this));
+            functionBuilder.Append(qStep_start.ToLua(this)); // calls auxiliary setup functions
+            functionBuilder.Append(qStep_main.ToLua(this)); // contains a long list of messages which listen for quest updates
+            functionBuilder.Append(" return this");
 
             return functionBuilder.ToString();
-        }
-
-        public void AddCodeToScript(string code)
-        {
-            functionList.Add(code);
         }
     }
 }

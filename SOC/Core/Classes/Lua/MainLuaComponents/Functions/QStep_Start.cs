@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class QStep_Start : LuaMainComponent
+    public class QStep_Start
     {
         List<string> OnEnterList = new List<string>();
 
@@ -15,7 +15,7 @@ namespace SOC.Classes.Lua
             OnEnterList.Add(code);
         }
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return$@"
 quest_step.QStep_Start = {{

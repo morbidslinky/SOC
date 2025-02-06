@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class OnInitialize : LuaMainComponent
+    class OnInitialize
     {
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return @"
 function this.OnInitialize()

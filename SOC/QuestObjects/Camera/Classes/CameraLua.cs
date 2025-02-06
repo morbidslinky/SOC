@@ -10,28 +10,18 @@ namespace SOC.QuestObjects.Camera
 {
     class CameraLua
     {
-        static readonly LuaFunction SetCameraAttributes = new LuaFunction("SetCameraAttributes", @"
-function this.SetCameraAttributes()
-  GameObject.SendCommand({{type=""TppSecurityCamera2""}}, {{id=""SetDevelopLevel"", developLevel=6}})
-  for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList)do
-    local gameObjectId= GetGameObjectId(cameraInfo.name)
-    if gameObjectId~=GameObject.NULL_ID then
-	  if cameraInfo.commands then
-        for j,cameraCommand in ipairs(cameraInfo.commands)do
-	      GameObject.SendCommand(gameObjectId, cameraCommand)
-	    end
-	  end
-    end
-  end
-end");
-
+        static readonly LuaFunction SetCameraAttributes = new LuaFunction(
+            "SetCameraAttributes", 
+            new string[] {},
+            "GameObject.SendCommand({{type=\"TppSecurityCamera2\"}}, {{id=\"SetDevelopLevel\", developLevel=6}}); for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do local gameObjectId= GetGameObjectId(cameraInfo.name); if gameObjectId~=GameObject.NULL_ID then if cameraInfo.commands then for j, cameraCommand in ipairs(cameraInfo.commands) do GameObject.SendCommand(gameObjectId, cameraCommand); end; end; end; end; ");
+        
         internal static void GetMain(CamerasDetail detail, MainLua mainLua)
         {
             if (detail.cameras.Count > 0)
             {
                 mainLua.AddToQuestTable(BuildCameraList(detail.cameras));
 
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.AddToQStep_Start_OnEnter(SetCameraAttributes);
                 mainLua.AddToAuxiliary(SetCameraAttributes);

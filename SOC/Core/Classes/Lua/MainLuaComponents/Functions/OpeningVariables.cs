@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class OpeningVariables : LuaMainComponent
+    class OpeningVariables
     {
         Dictionary<string, string> variableDictionary = new Dictionary<string, string>();
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return GetVariablesFormatted();
         }

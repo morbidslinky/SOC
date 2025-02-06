@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class ObjectiveTypesList : LuaMainComponent
+    public class ObjectiveTypesList
     {
         public List<GenericTargetTable> targetTables = new List<GenericTargetTable>();
         public List<string> oneLineObjectiveTypes = new List<string>();
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return $@"{GetObjectiveFunctions()}
 {GetObjectiveTypesList()}
@@ -41,7 +41,7 @@ namespace SOC.Classes.Lua
                 foreach (GenericTargetPair pair in table.GetTargetPairs())
                 {
                     functionsBuilder.Append($@"
-{pair.checkMethod.FunctionFull}");
+{pair.checkMethod.ToLua()}");
                 }
             }
             return functionsBuilder.ToString();

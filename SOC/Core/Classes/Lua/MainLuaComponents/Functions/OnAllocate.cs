@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class OnAllocate : LuaMainComponent
+    class OnAllocate
     {
         List<string> onTerminateCalls = new List<string>();
 
@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
             return onTerminateCalls.Contains(call);
         }
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return $@"
 function this.OnAllocate()

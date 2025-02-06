@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class QuestTable : LuaMainComponent
+    class QuestTable
     {
         List<Table> Tables = new List<Table>();
         List<string> variables = new List<string>();
@@ -49,7 +49,7 @@ namespace SOC.Classes.Lua
             return null;
         }
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             return GetQuestTableFormatted();
         }

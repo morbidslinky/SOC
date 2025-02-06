@@ -140,7 +140,6 @@
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\Messages.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\OpeningVariables.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\GenericTargetPair.cs" />
-    <Compile Include="Core\Classes\Lua\MainLuaComponents\LuaMainComponent.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\ObjectiveTypesList.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\OnAllocate.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\OnInitialize.cs" />

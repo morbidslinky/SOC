@@ -8,12 +8,38 @@ namespace SOC.Classes.Lua
 {
     public class LuaFunction
     {
-        public string FunctionFull;
-        public string FunctionName;
+        public string FunctionName { get; set; }
+        public string[] Parameters { get; set; }
+        public string Function { get; set; }
 
-        public LuaFunction(string name, string function)
+        public LuaFunction(string functionName, string[] parameters, string function)
         {
-            FunctionName = name; FunctionFull = function;
+            FunctionName = functionName;
+            Parameters = parameters ?? Array.Empty<string>();
+            Function = function;
+        }
+
+        public string Call(string[] args)
+        {
+            return $@"this.{FunctionName}({string.Join(", ", args)})";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is LuaFunction other))
+                return false;
+
+            return this.ToLua() == other.ToLua();
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToLua().GetHashCode();
+        }
+
+        public string ToLua()
+        {
+            return $@"this.{FunctionName} = function({string.Join(", ", Parameters)}) {Function} end";
         }
     }
 }

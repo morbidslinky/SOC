@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class CheckQuestMethodsList : LuaMainComponent
+    public class CheckQuestMethodsList
     {
         List<CheckQuestMethodsPair> CheckQuestMethods = new List<CheckQuestMethodsPair>();
 
@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
             return (CheckQuestMethods.Exists(pair => pair.TallyMethod.Equals(methodsPair.TallyMethod) || pair.TargetMessageMethod.Equals(methodsPair.TargetMessageMethod)));
         }
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
 
             return $@"{GetCheckFunctions()}
@@ -33,8 +33,8 @@ namespace SOC.Classes.Lua
             StringBuilder checkQuestBuilder = new StringBuilder();
             foreach (CheckQuestMethodsPair pair in CheckQuestMethods)
             {
-                checkQuestBuilder.Append($@"{pair.TargetMessageMethod.FunctionFull}
-{pair.TallyMethod.FunctionFull}
+                checkQuestBuilder.Append($@"{pair.TargetMessageMethod.ToLua()}
+{pair.TallyMethod.ToLua()}
 ");
             }
             return checkQuestBuilder.ToString();

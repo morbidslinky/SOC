@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    class AuxiliaryCode : LuaMainComponent
+    class AuxiliaryCode
     {
         List<string> auxiliaryCodes = new List<string>();
 
@@ -15,7 +15,7 @@ namespace SOC.Classes.Lua
             auxiliaryCodes.Add(code);
         }
 
-        public override string GetComponent()
+        public string ToLua(MainLua mainLua)
         {
             StringBuilder auxCodeBuilder = new StringBuilder();
             foreach (string auxCode in auxiliaryCodes)
