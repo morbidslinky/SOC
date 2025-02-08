@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SOC.Classes.Lua
 {
-    class CheckQuestAllTargetDynamic
+    static class CheckQuestAllTargetDynamic
     {
-        public string GetComponent()
-        {
-            return @"
-function this.CheckQuestAllTargetDynamic(messageId, gameId, checkAnimalId)
-  local currentQuestName=TppQuest.GetCurrentQuestName()
+        public static readonly LuaFunction function = new LuaFunction("CheckQuestAllTargetDynamic", new string[] { "messageId", "gameId", "checkAnimalId" }, "" +
+            @"local currentQuestName=TppQuest.GetCurrentQuestName()
   if TppQuest.IsEnd(currentQuestName) then
     return TppDefine.QUEST_CLEAR_TYPE.NONE
   end
@@ -51,8 +49,6 @@ function this.CheckQuestAllTargetDynamic(messageId, gameId, checkAnimalId)
       end
     end
   end
-  return TppDefine.QUEST_CLEAR_TYPE.NONE
-end";
-        }
+  return TppDefine.QUEST_CLEAR_TYPE.NONE");
     }
 }

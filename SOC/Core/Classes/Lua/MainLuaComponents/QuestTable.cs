@@ -37,6 +37,11 @@ namespace SOC.Classes.Lua
                 targetNames.Add(targetName);
         }
 
+        public bool HasTargets()
+        {
+            return targetNames.Count > 0;
+        }
+
         public Table Find(string tableName)
         {
             foreach(Table table in Tables)

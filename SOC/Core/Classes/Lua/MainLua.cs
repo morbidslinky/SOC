@@ -127,6 +127,14 @@ namespace SOC.Classes.Lua
             functionBuilder.Append(onTerminate.ToLua(this));
             functionBuilder.Append(qStep_start.ToLua(this)); // calls auxiliary setup functions
             functionBuilder.Append(qStep_main.ToLua(this)); // contains a long list of messages which listen for quest updates
+
+            if (questTable.HasTargets())
+            {
+                functionBuilder.Append(objectiveTypesList.ToLua(this)); // contains logic for how a quest update is determined as well as what object has what objective type
+                functionBuilder.Append(checkQuestMethodList.ToLua(this)); // determines what and how to tally up quest objectives
+                functionBuilder.Append(CheckQuestAllTargetDynamic.function.ToLua());
+            }
+
             functionBuilder.Append(" return this");
 
             return functionBuilder.ToString();
