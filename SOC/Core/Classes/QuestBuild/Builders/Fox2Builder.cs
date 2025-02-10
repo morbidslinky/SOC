@@ -47,7 +47,7 @@ namespace SOC.Classes.QuestBuild.Fox2
             string fox2QuestFile = Path.Combine(fox2Path, string.Format("{0}.fox2.xml", fpkName));
 
             Directory.CreateDirectory(fox2Path);
-            using (System.IO.StreamWriter questFox2 = new System.IO.StreamWriter(fox2QuestFile))
+            using (StreamWriter questFox2 = new StreamWriter(fox2QuestFile))
             {
                 questFox2.WriteLine(@"<?xml version=""1.0"" encoding=""utf-8""?>");
                 questFox2.WriteLine(@"<fox formatVersion=""2"" fileVersion=""0"" originalVersion=""Sun Mar 16 00:00:00 UTC-05:00 1975"">");
