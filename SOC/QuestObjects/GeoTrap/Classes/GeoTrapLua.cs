@@ -23,7 +23,7 @@ namespace SOC.QuestObjects.GeoTrap
                         "Enter",
                         geoTrapName,
                         new string[] { },
-                        new LuaFunction(
+                        new LuaFunctionOldFormat(
                             $"{geoTrapName}Enter",
                             new string[] { },
                             $@" InfCore.DebugPrint(""{geoTrapName} Enter""); "));
@@ -33,7 +33,7 @@ namespace SOC.QuestObjects.GeoTrap
                         "Exit",
                         geoTrapName,
                         new string[] { },
-                        new LuaFunction(
+                        new LuaFunctionOldFormat(
                             $"{geoTrapName}Exit",
                             new string[] { },
                             $@" InfCore.DebugPrint(""{geoTrapName} Exit""); "));

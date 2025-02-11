@@ -9,7 +9,7 @@ namespace SOC.Classes.Lua
 {
     static class CheckQuestAllTargetDynamic
     {
-        public static readonly LuaFunction function = new LuaFunction("CheckQuestAllTargetDynamic", new string[] { "messageId", "gameId", "checkAnimalId" }, "" +
+        public static readonly LuaFunctionOldFormat function = new LuaFunctionOldFormat("CheckQuestAllTargetDynamic", new string[] { "messageId", "gameId", "checkAnimalId" }, "" +
             @"local currentQuestName=TppQuest.GetCurrentQuestName()
   if TppQuest.IsEnd(currentQuestName) then
     return TppDefine.QUEST_CLEAR_TYPE.NONE

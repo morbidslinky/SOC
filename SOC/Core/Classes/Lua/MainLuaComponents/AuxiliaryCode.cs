@@ -22,7 +22,7 @@ namespace SOC.Classes.Lua
             {
                 foreach (StrCodeMsgBlock msgBlock in strCode.msgBlocks)
                 {
-                    foreach (LuaFunction luaFunction in msgBlock.functions)
+                    foreach (LuaFunctionOldFormat luaFunction in msgBlock.functions)
                     {
                         this.Add(luaFunction.ToLua());
                     }

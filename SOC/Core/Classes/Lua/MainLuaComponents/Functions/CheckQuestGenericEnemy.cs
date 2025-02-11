@@ -10,7 +10,7 @@ namespace SOC.Classes.Lua
     class CheckQuestGenericEnemy : CheckQuestMethodsPair
     {
 
-        static readonly LuaFunction IsTargetSetMessageIdForGenericEnemy = new LuaFunction("IsTargetSetMessageIdForGenericEnemy", new string[] { "gameId", "messageId", "checkAnimalId" },
+        static readonly LuaFunctionOldFormat IsTargetSetMessageIdForGenericEnemy = new LuaFunctionOldFormat("IsTargetSetMessageIdForGenericEnemy", new string[] { "gameId", "messageId", "checkAnimalId" },
             @"if mvars.ene_questTargetList[gameId] then
 	local targetInfo = mvars.ene_questTargetList[gameId]
 	local intended = true
@@ -24,7 +24,7 @@ namespace SOC.Classes.Lua
   end
   return false, false; ");
 
-        static readonly LuaFunction TallyGenericTargets = new LuaFunction("TallyGenericTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        static readonly LuaFunctionOldFormat TallyGenericTargets = new LuaFunctionOldFormat("TallyGenericTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @"for targetGameId, targetInfo in pairs(mvars.ene_questTargetList) do
     local dynamicQuestType = ELIMINATE
     local isTarget = targetInfo.isTarget or false
@@ -66,7 +66,7 @@ namespace SOC.Classes.Lua
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
 
-        public CheckQuestGenericEnemy(MainLua mainLua, LuaFunction checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets, "genericTargets", checkFunction, objectiveType) { }
+        public CheckQuestGenericEnemy(MainLua mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets, "genericTargets", checkFunction, objectiveType) { }
 
         public CheckQuestGenericEnemy(MainLua mainLua) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets) { }
     }

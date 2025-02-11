@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Helicopter
 {
     static class HelicopterLua
     {
-        static readonly LuaFunction setHelicopterAttributes = new LuaFunction(
+        static readonly LuaFunctionOldFormat setHelicopterAttributes = new LuaFunctionOldFormat(
             "SetHeliAttributes",
             new string[] { },
             " for i,heliInfo in ipairs(this.QUEST_TABLE.heliList)do local gameObjectId = GetGameObjectId(heliInfo.heliName); if gameObjectId~=GameObject.NULL_ID then if heliInfo.commands then for j,heliCommand in ipairs(heliInfo.commands)do GameObject.SendCommand(gameObjectId, heliCommand); end; end; end; end; ");

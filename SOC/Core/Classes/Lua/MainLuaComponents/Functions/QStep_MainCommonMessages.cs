@@ -13,7 +13,7 @@ namespace SOC.Classes.Lua
             "Player",
             "OnPickUpWeapon",
             new string[] { "playerIndex", "playerIndex" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "PlayerPickUpWeaponClearCheck",
                 new string[] { "playerIndex", "playerIndex" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpDormant\", equipId); TppQuest.ClearWithSave(isClearType); "));
@@ -22,7 +22,7 @@ namespace SOC.Classes.Lua
             "Player",
             "OnPickUpPlaced",
             new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "PlayerPickUpPlacedClearCheck",
                 new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
                 " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpActive\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -31,7 +31,7 @@ namespace SOC.Classes.Lua
             "Placed",
             "OnActivatePlaced",
             new string[] { "equipId", "index" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "PlacedActivatePlacedClearCheck",
                 new string[] { "equipId", "index" },
                 " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"Activate\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -40,7 +40,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "Dead",
             new string[] { "gameObjectId", "gameObjectId01", "animalId" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectDeadClearCheck",
                 new string[] { "gameObjectId", "gameObjectId01", "animalId" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"Dead\",gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
@@ -49,7 +49,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "FultonInfo",
             new string[] { "gameObjectId"},
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectFultonInfoClearCheck",
                 new string[] { "gameObjectId" },
                 " if mvars.fultonInfo ~= NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = NONE; "));
@@ -58,7 +58,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "Fulton",
             new string[] { "gameObjectId", "animalId" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectFultonClearCheck",
                 new string[] { "gameObjectId", "animalId" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"Fulton\", gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
@@ -67,7 +67,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "FultonFailed",
             new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectFultonFailedClearCheck",
                 new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
                 " if failureType == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = this.CheckQuestAllTargetDynamic(\"FultonFailed\", gameObjectId, locatorName); TppQuest.ClearWithSave(isClearType); end;  "));
@@ -76,7 +76,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "PlacedIntoVehicle",
             new string[] { "gameObjectId", "vehicleGameObjectId" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectPlacedIntoHeliClearCheck",
                 new string[] { "gameObjectId", "vehicleGameObjectId" },
                 " if Tpp.IsHelicopter(vehicleGameObjectId) then local isClearType = this.CheckQuestAllTargetDynamic(\"InHelicopter\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -85,7 +85,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "VehicleBroken",
             new string[] { "gameObjectId", "state" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectVehicleBrokenClearCheck",
                 new string[] { "gameObjectId", "state" },
                 " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"VehicleBroken\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -94,7 +94,7 @@ namespace SOC.Classes.Lua
             "GameObject",
             "LostControl",
             new string[] { "gameObjectId", "state" },
-            new LuaFunction(
+            new LuaFunctionOldFormat(
                 "GameObjectLostControlClearCheck",
                 new string[] { "gameObjectId", "state" },
                 " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"LostControl\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));

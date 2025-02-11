@@ -8,10 +8,10 @@ namespace SOC.Classes.Lua
 {
     public class GenericTargetPair
     {
-        public LuaFunction checkMethod;
+        public LuaFunctionOldFormat checkMethod;
         public string ObjectiveType;
 
-        public GenericTargetPair(LuaFunction check, string type)
+        public GenericTargetPair(LuaFunctionOldFormat check, string type)
         {
             checkMethod = check; ObjectiveType = type;
         }

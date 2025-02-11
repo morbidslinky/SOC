@@ -58,23 +58,23 @@ namespace SOC.Classes.Lua
 
     public abstract class CheckQuestMethodsPair
     {
-        public LuaFunction TargetMessageMethod, TallyMethod;
+        public LuaFunctionOldFormat TargetMessageMethod, TallyMethod;
 
-        public CheckQuestMethodsPair(MainLua mainLua, LuaFunction a, LuaFunction b, string targetTableName, LuaFunction check, string objective)
+        public CheckQuestMethodsPair(MainLua mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string targetTableName, LuaFunctionOldFormat check, string objective)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
             mainLua.AddToObjectiveTypes(targetTableName, new GenericTargetPair(check, objective));
         }
 
-        public CheckQuestMethodsPair(MainLua mainLua, LuaFunction a, LuaFunction b, string oneLineObjective)
+        public CheckQuestMethodsPair(MainLua mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string oneLineObjective)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
             mainLua.AddToObjectiveTypes(oneLineObjective);
         }
 
-        public CheckQuestMethodsPair(MainLua mainLua, LuaFunction a, LuaFunction b)
+        public CheckQuestMethodsPair(MainLua mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);

@@ -38,7 +38,7 @@ namespace SOC.Classes.Lua
             openingVariables.Add(variableName, value);
         }
 
-        public void AddToAuxiliary(LuaFunction function)
+        public void AddToAuxiliary(LuaFunctionOldFormat function)
         {
             auxiliaryCode.Add(function.ToLua());
         }
@@ -62,9 +62,9 @@ namespace SOC.Classes.Lua
                 qStep_start.AddToOnEnter(functionCall);
         }
 
-        public void AddToQStep_Start_OnEnter(params LuaFunction[] auxiliaryFunctions)
+        public void AddToQStep_Start_OnEnter(params LuaFunctionOldFormat[] auxiliaryFunctions)
         {
-            foreach (LuaFunction function in auxiliaryFunctions)
+            foreach (LuaFunctionOldFormat function in auxiliaryFunctions)
                 qStep_start.AddToOnEnter($"InfCore.PCall(this.{function.FunctionName})");
         }
 

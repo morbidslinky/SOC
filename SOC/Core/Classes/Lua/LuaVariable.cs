@@ -11,6 +11,7 @@ namespace SOC.Classes.Lua
     {
         [XmlElement] public string Name { get; set; }
         [XmlElement] public bool DeclareLocally { get; set; }
+        [XmlIgnore] internal bool OneTimeLocalDeclaration;
         [XmlElement] public LuaValue AssignedTo { get; set; }
         public override string Value => Name;
 
@@ -18,7 +19,8 @@ namespace SOC.Classes.Lua
         public LuaVariable(string name, bool declareLocally): base(ValueType.Variable)
         {
             Name = name; 
-            DeclareLocally = declareLocally; 
+            DeclareLocally = declareLocally;
+            OneTimeLocalDeclaration = true;
             AssignedTo = new LuaNil();
         }
 
@@ -27,24 +29,14 @@ namespace SOC.Classes.Lua
             AssignedTo = luaValue;
         }
 
-        public string GetAssignmentLua()
+        public void GetAssignmentLua(StringBuilder luaBuilder)
         {
             if (IsLocalAndFirstTimeDeclared())
             {
-                return $"local {Name} = {AssignedTo}";
-            }
-            return $"{Name} = {AssignedTo}";
-        }
-
-        public string GetCallLua(string[] args, out LuaValue[] functionReturns)
-        {
-            if (AssignedTo is LuaFunction function)
-            {
-                functionReturns = function.Returns;
-                return $"{Name}({string.Join(", ", args)})";
-            }
-            functionReturns = new LuaValue[0];
-            return $"-- VARIABLE CALL FUNCTION ERROR: {AssignedTo} IS NOT A FUNCTION";
+                luaBuilder.AppendLine($"local {Name} = {AssignedTo}");
+                return;
+            } 
+            luaBuilder.AppendLine($"{Name} = {AssignedTo}");
         }
 
         public LuaValue GetAssignedValue()
@@ -52,11 +44,16 @@ namespace SOC.Classes.Lua
             return AssignedTo;
         }
 
+        public void GetReturnLua(StringBuilder luaBuilder)
+        {
+            luaBuilder.AppendLine($"return {Name}");
+        }
+
         private bool IsLocalAndFirstTimeDeclared()
         {
-            if (DeclareLocally)
+            if (DeclareLocally && OneTimeLocalDeclaration)
             {
-                DeclareLocally = false;
+                OneTimeLocalDeclaration = false;
                 return true;
             }
             return false;

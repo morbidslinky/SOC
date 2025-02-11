@@ -9,7 +9,7 @@ namespace SOC.Classes.Lua
 {
     class CheckQuestAnimal : CheckQuestMethodsPair
     {
-        static readonly LuaFunction IsTargetSetMessageIdForAnimal = new LuaFunction("IsTargetSetMessageIdForAnimal", new string[] { "gameId", "messageId", "checkAnimalId" },
+        static readonly LuaFunctionOldFormat IsTargetSetMessageIdForAnimal = new LuaFunctionOldFormat("IsTargetSetMessageIdForAnimal", new string[] { "gameId", "messageId", "checkAnimalId" },
     @"if checkAnimalId ~= nil then
     local databaseId = TppAnimal.GetDataBaseIdFromAnimalId(checkAnimalId)
     local isTarget = false
@@ -36,7 +36,7 @@ namespace SOC.Classes.Lua
     end
   return false, false");
 
-        static readonly LuaFunction TallyAnimalTargets = new LuaFunction("TallyAnimalTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        static readonly LuaFunctionOldFormat TallyAnimalTargets = new LuaFunctionOldFormat("TallyAnimalTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @" local dynamicQuestType = ObjectiveTypeList.animalObjective
   for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
     local targetMessageId = targetInfo.messageId

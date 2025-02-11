@@ -9,7 +9,7 @@ namespace SOC.Classes.Lua
 {
     class CheckQuestItem : CheckQuestMethodsPair
     {
-        static readonly LuaFunction IsTargetSetMessageIdForItem = new LuaFunction("IsTargetSetMessageIdForItem", new string[] { "gameId", "messageId", "checkAnimalId" },
+        static readonly LuaFunctionOldFormat IsTargetSetMessageIdForItem = new LuaFunctionOldFormat("IsTargetSetMessageIdForItem", new string[] { "gameId", "messageId", "checkAnimalId" },
     @" if messageId == ""PickUpDormant"" then
     for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
       if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == false then
@@ -27,7 +27,7 @@ namespace SOC.Classes.Lua
   end
   return false, false; ");
 
-        static readonly LuaFunction TallyItemTargets = new LuaFunction("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        static readonly LuaFunctionOldFormat TallyItemTargets = new LuaFunctionOldFormat("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @" for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
     local dynamicQuestType = RECOVERED
     for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.itemTargets) do
@@ -63,6 +63,6 @@ namespace SOC.Classes.Lua
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
         
-        public CheckQuestItem(MainLua mainLua, LuaFunction checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
+        public CheckQuestItem(MainLua mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
     }
 }

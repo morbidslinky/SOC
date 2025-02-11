@@ -25,13 +25,13 @@ namespace SOC.Classes.Lua
 
         public bool Contains(StrCodeBlock _codeBlock)
         {
-            var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaFunction)>();
+            var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaFunctionOldFormat)>();
 
             foreach (StrCodeBlock codeBlock in strCodes)
             {
                 foreach(StrCodeMsgBlock msgBlock in codeBlock.msgBlocks)
                 {
-                    foreach(LuaFunction luaFunction in msgBlock.functions)
+                    foreach(LuaFunctionOldFormat luaFunction in msgBlock.functions)
                     {
                         existingMsgFunctionPairs.Add((msgBlock, luaFunction));
                     }
@@ -40,7 +40,7 @@ namespace SOC.Classes.Lua
 
             foreach (StrCodeMsgBlock _msgBlock in _codeBlock.msgBlocks)
             {
-                foreach (LuaFunction _luaFunction in _msgBlock.functions)
+                foreach (LuaFunctionOldFormat _luaFunction in _msgBlock.functions)
                 {
                     if (existingMsgFunctionPairs.Contains((_msgBlock, _luaFunction)))
                     {
@@ -83,12 +83,12 @@ quest_step.QStep_Main = {{
             strCode = _strCode; msgBlocks.AddRange(_msgBlocks);
         }
 
-        public StrCodeBlock(string _strCode, string _name, string[] _msgArgs, params LuaFunction[] _functions)
+        public StrCodeBlock(string _strCode, string _name, string[] _msgArgs, params LuaFunctionOldFormat[] _functions)
         {
             strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _msgArgs, _functions));
         }
 
-        public StrCodeBlock(string _strCode, string _name, string _sender, string[] _msgArgs, params LuaFunction[] _functions)
+        public StrCodeBlock(string _strCode, string _name, string _sender, string[] _msgArgs, params LuaFunctionOldFormat[] _functions)
         {
             strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _sender, _msgArgs, _functions));
         }
@@ -132,29 +132,29 @@ quest_step.QStep_Main = {{
         string msg;
         string sender;
         string[] msgArgs;
-        public List<LuaFunction> functions;
+        public List<LuaFunctionOldFormat> functions;
 
         public StrCodeMsgBlock(string _name, string[] _msgArgs)
         {
-            msg = _name; sender = ""; msgArgs = _msgArgs; functions = new List<LuaFunction>();
+            msg = _name; sender = ""; msgArgs = _msgArgs; functions = new List<LuaFunctionOldFormat>();
         }
 
         public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs)
         {
-            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = new List<LuaFunction>();
+            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = new List<LuaFunctionOldFormat>();
         }
 
-        public StrCodeMsgBlock(string _name, string[] _msgArgs, LuaFunction[] _functions)
+        public StrCodeMsgBlock(string _name, string[] _msgArgs, LuaFunctionOldFormat[] _functions)
         {
             msg = _name; sender = ""; msgArgs = _msgArgs; functions = _functions.ToList();
         }
 
-        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs, LuaFunction[] _functions)
+        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs, LuaFunctionOldFormat[] _functions)
         {
             msg = _name; sender = _sender; msgArgs = _msgArgs; functions = _functions.ToList();
         }
 
-        public void AddFunctionCalls(List<LuaFunction> calls)
+        public void AddFunctionCalls(List<LuaFunctionOldFormat> calls)
         {
             functions.AddRange(calls);
         }

@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.Enemy
 {
     static class EnemyLua
     {
-        static readonly LuaFunction CheckIsSoldier = new LuaFunction("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
+        static readonly LuaFunctionOldFormat CheckIsSoldier = new LuaFunctionOldFormat("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
 
         public static void GetDefinition(EnemiesDetail detail, DefinitionLua definitionLua)
         {

@@ -16,10 +16,13 @@ namespace SOC.Classes.QuestBuild.Lua
             Directory.CreateDirectory(dir);
             string DefinitionLuaFile = Path.Combine(dir, $"ih_quest_q{setupDetails.QuestNum}.lua");
 
+            LuaFile questDefinition = new LuaFile();
+            questDefinition.WriteToFile( DefinitionLuaFile );
+            /*
             using (StreamWriter defFile = new StreamWriter(DefinitionLuaFile))
             {
                 defFile.Write(BuildDefinition(setupDetails, objectsDetails));
-            }
+            }*/
         }
 
         private static string BuildDefinition(SetupDetails setupDetails, ObjectsDetails objectsDetails) //rewrite
