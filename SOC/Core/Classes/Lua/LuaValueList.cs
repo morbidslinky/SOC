@@ -11,8 +11,8 @@ namespace SOC.Classes.Lua
     [XmlRoot("LuaValueList")]
     public class LuaValueList
     {
-        [XmlArray("Values")]
-        [XmlArrayItem("Value")]
+        [XmlArray("LuaValues")]
+        [XmlArrayItem("LuaValue")]
         public List<LuaValue> Values { get; set; }
 
         public LuaValueList()

@@ -9,7 +9,7 @@ namespace SOC.Classes.Lua
 {
     public class LuaNumber : LuaValue
     {
-        [XmlElement] public double Number { get; set; }
+        [XmlAttribute] public double Number { get; set; }
         public override string Value => Number.ToString();
 
         public LuaNumber() : base(ValueType.Number) { }

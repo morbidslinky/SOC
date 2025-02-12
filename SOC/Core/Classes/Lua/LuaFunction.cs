@@ -11,23 +11,42 @@ namespace SOC.Classes.Lua
     {
 
         [XmlArray("Parameters")]
-        [XmlArrayItem("Parameters")]
+        [XmlArrayItem("Parameter")]
         public string[] Parameters { get; set; }
-        [XmlElement] public string Body { get; set; }
+
+        [XmlArray("PopulationValues")]
+        [XmlArrayItem("Value")]
+        public LuaValue[] PopulationValues { get; set; }
+        public LuaTemplate Template { get; set; }
         public override string Value => GetFormattedLuaFunction();
 
         public LuaFunction() : base(ValueType.Function) { }
 
-        public LuaFunction(string body, params string[] parameters) : base(ValueType.Function)
+        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, params string[] parameters) : base(ValueType.Function)
         {
-            Body = body;
+            Template = template;
+            PopulationValues = populationValues;
             Parameters = parameters;
+        }
+
+        public LuaFunction(LuaTemplate template, params string[] parameters) : base(ValueType.Function)
+        {
+            Template = template;
+            PopulationValues = new LuaValue[0];
+            Parameters = parameters;
+        }
+
+        public LuaFunction(LuaTemplate template, params LuaValue[] populationValues) : base(ValueType.Function)
+        {
+            Template = template;
+            PopulationValues = populationValues;
+            Parameters = new string[0];
         }
 
         private string GetFormattedLuaFunction()
         {
             return $@"function({string.Join(", ", Parameters)})
-{Body}
+{Template.Populate(PopulationValues)}
 end";
         }
     }

@@ -3,65 +3,115 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace SOC.Classes.Lua
 {
-    internal class LuaTemplate
+    public class LuaTemplate
     {
-        public static string ParseTemplate(string template, params LuaValue[] populationData)
+        [XmlArray("Tokens")]
+        [XmlArrayItem("Token")]
+        public LuaTemplateToken[] Tokens { get; set; }
+        public LuaTemplate() { }
+        public LuaTemplate(LuaTemplateToken[] tokens) {
+            Tokens = tokens;
+        }
+
+        public static bool TryParse(string templateString, out LuaTemplate luaTemplate)
         {
-            StringBuilder populatedTemplate = new StringBuilder();
+            luaTemplate = new LuaTemplate();
+
+            List<LuaTemplateToken> tokenList = new List<LuaTemplateToken>();
             int start = 0;
 
-            while (start < template.Length)
+            while (start < templateString.Length)
             {
-                int open = template.IndexOf("<<", start);
+                int open = templateString.IndexOf("<<", start);
                 if (open == -1)
                 {
-                    populatedTemplate.Append(template.Substring(start));
+                    tokenList.Add(new LuaTemplatePlainText(templateString.Substring(start)));
                     break;
                 }
 
-                int close = template.IndexOf(">>", open);
+                int close = templateString.IndexOf(">>", open);
                 if (close == -1) break;
-                populatedTemplate.Append(template.Substring(start, open - start));
-                string placeholderToken = template.Substring(open + 2, close - open - 2).Trim();
 
-                populatedTemplate.Append(LuaTemplatePlaceholder.Parse(placeholderToken, populationData));
+                tokenList.Add(new LuaTemplatePlainText(templateString.Substring(start, open - start)));
+
+                string placeholderToken = templateString.Substring(open + 2, close - open - 2).Trim();
+
+                if (LuaTemplatePlaceholder.TryParse(placeholderToken, out LuaTemplatePlaceholder placeholder))
+                    tokenList.Add(placeholder);
+                else
+                    return false;
 
                 start = close + 2;
+            }
+
+            luaTemplate.Tokens = tokenList.ToArray();
+            return true;
+        }
+
+        public string Populate(params LuaValue[] populationData)
+        {
+            StringBuilder populatedTemplate = new StringBuilder();
+            foreach (LuaTemplateToken token in Tokens)
+            {
+                if (token is LuaTemplatePlainText textToken)
+                    populatedTemplate.Append(textToken.PlainText);
+                else if (token is LuaTemplatePlaceholder placeholder)
+                    populatedTemplate.Append(placeholder.Populate(populationData));
             }
             return populatedTemplate.ToString();
         }
     }
 
-    internal class LuaTemplatePlaceholder
-    {
-        int Index;
-        LuaValue.ValueType[] AllowedTypes;
+    [XmlInclude(typeof(LuaTemplatePlainText))]
+    [XmlInclude(typeof(LuaTemplatePlaceholder))]
+    public abstract class LuaTemplateToken { }
 
-        public static string Parse(string placeholderToken, LuaValue[] luaValues)
+    public class LuaTemplatePlainText : LuaTemplateToken 
+    {
+        [XmlAttribute] public string PlainText { get; set; }
+
+        public LuaTemplatePlainText() { }
+
+        public LuaTemplatePlainText(string plainText)
         {
-            LuaTemplatePlaceholder placeholder = new LuaTemplatePlaceholder();
-            if (!placeholder.TryParsePlaceholder(placeholderToken))
-                return $"--[[Invalid Placeholder ({placeholderToken})]]";
-            if (!placeholder.TryGetValidKeyValue(luaValues, out LuaValue luaValue))
-                return $"--[[Valid Placeholder ({placeholderToken}), Invalid Data ({luaValue},{(luaValue is LuaVariable v ? v.GetAssignedValue() : luaValue).Type.ToString().ToLower()})]]";
-            return luaValue.Value;
+            PlainText = plainText;
+        }
+    }
+
+    public class LuaTemplatePlaceholder : LuaTemplateToken
+    {
+        [XmlAttribute] public int Index { get; set; }
+
+        [XmlArray("AllowedTypes")]
+        [XmlArrayItem("AllowedType")]
+        public LuaValue.ValueType[] AllowedTypes { get; set; }
+
+        public LuaTemplatePlaceholder() { }
+        
+        public LuaTemplatePlaceholder(int index, LuaValue.ValueType[] allowedTypes)
+        {
+            Index = index; AllowedTypes = allowedTypes;
         }
 
-        internal bool TryParsePlaceholder(string placeholderToken)
+        public static bool TryParse(string placeholderToken, out LuaTemplatePlaceholder placeholder)
         {
+            placeholder = new LuaTemplatePlaceholder();
+
             string[] commaSeparatedSplit = placeholderToken.Split(',');
             if (commaSeparatedSplit.Length != 2)
                 return false;
             if (!int.TryParse(commaSeparatedSplit[0].Trim(), out int parseInt))
                 return false;
 
-            Index = parseInt;
+            placeholder.Index = parseInt;
 
             string[] typeRestrictions = commaSeparatedSplit[1].Split('|');
-            AllowedTypes = new LuaValue.ValueType[typeRestrictions.Length];
+            placeholder.AllowedTypes = new LuaValue.ValueType[typeRestrictions.Length];
 
             for (int i = 0; i < typeRestrictions.Length; i++)
             {
@@ -69,33 +119,33 @@ namespace SOC.Classes.Lua
                 {
                     case "bool":
                     case "boolean":
-                        AllowedTypes[i] = LuaValue.ValueType.Boolean;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Boolean;
                         break;
                     case "text":
                     case "string":
-                        AllowedTypes[i] = LuaValue.ValueType.Text;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Text;
                         break;
                     case "num":
                     case "number":
-                        AllowedTypes[i] = LuaValue.ValueType.Number;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Number;
                         break;
                     case "func":
                     case "function":
-                        AllowedTypes[i] = LuaValue.ValueType.Function;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Function;
                         break;
                     case "table":
-                        AllowedTypes[i] = LuaValue.ValueType.Table;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Table;
                         break;
                     case "var":
                     case "variable":
-                        AllowedTypes[i] = LuaValue.ValueType.Variable;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Variable;
                         break;
                     case "any":
                     case "value":
-                        AllowedTypes[i] = LuaValue.ValueType.ANY;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.ANY;
                         break;
                     case "nil":
-                        AllowedTypes[i] = LuaValue.ValueType.NIL;
+                        placeholder.AllowedTypes[i] = LuaValue.ValueType.NIL;
                         break;
                     default:
                         return false;
@@ -103,6 +153,15 @@ namespace SOC.Classes.Lua
             }
 
             return true;
+        }
+
+        public string Populate(LuaValue[] luaValues)
+        {
+            if (Index == -1)
+                return $"--[[ERROR: Invalid Placeholder]]";
+            if (!TryGetValidKeyValue(luaValues, out LuaValue luaValue))
+                return $"--[[ERROR: Valid Placeholder ({Index},{string.Join(", ", AllowedTypes.Select(t => t.ToString()))}), Invalid Data ({luaValue},{(luaValue is LuaVariable v ? v.GetAssignedValue() : luaValue).Type.ToString().ToLower()})]]";
+            return luaValue.Value;
         }
 
         internal bool TryGetValidKeyValue(LuaValue[] luaValues, out LuaValue luaKeyValue)

@@ -4,7 +4,7 @@ namespace SOC.Classes.Lua
 {
     public class LuaBoolean : LuaValue
     {
-        [XmlElement] public bool BooleanValue { get; set; }
+        [XmlAttribute] public bool BooleanValue { get; set; }
         public override string Value => BooleanValue ? "true" : "false";
 
         public LuaBoolean() : base(ValueType.Boolean) { }

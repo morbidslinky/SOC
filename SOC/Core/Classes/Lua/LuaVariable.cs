@@ -9,8 +9,8 @@ namespace SOC.Classes.Lua
 {
     public class LuaVariable : LuaValue
     {
-        [XmlElement] public string Name { get; set; }
-        [XmlElement] public bool DeclareLocally { get; set; }
+        [XmlAttribute] public string Name { get; set; }
+        [XmlAttribute] public bool DeclareLocally { get; set; }
         [XmlIgnore] internal bool OneTimeLocalDeclaration;
         [XmlElement] public LuaValue AssignedTo { get; set; }
         public override string Value => Name;

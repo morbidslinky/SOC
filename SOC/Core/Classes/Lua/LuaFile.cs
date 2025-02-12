@@ -29,14 +29,14 @@ namespace SOC.Classes.Lua
             foo.AssignTo(new LuaText("something about a door or whatever"));
             foo.GetAssignmentLua(Lua);
 
-            string[] printParams = {"paramName", "paramName2"};
-            var someNestedFunction = new LuaFunction(
-                LuaTemplate.ParseTemplate($@"InfCore.DebugPrint({printParams[0]} .. {printParams[1]}); InfCore.DebugPrint(<<0, number|nil|text>>);", foo),
-                printParams);
+            string[] infCoreParams = {"paramName", "paramName2"};
+            LuaValue[] infCoreTemplateValues = { foo };
+            LuaTemplate.TryParse($@"InfCore.DebugPrint({infCoreParams[0]} .. {infCoreParams[1]}); InfCore.DebugPrint(<<0, number|nil|text>>);", out LuaTemplate infCoreTemplate);
+            var someNestedFunction = new LuaFunction(infCoreTemplate, infCoreTemplateValues, infCoreParams);
 
-            var someFunction = new LuaFunction(
-                LuaTemplate.ParseTemplate(@"local thePTNumber = <<0, num>>; (<<1, func>>)(""close enough, "", ""welcome back silent hills"");",
-                new LuaValue[] { new LuaNumber("204863"), someNestedFunction }));
+            LuaValue[] ptTemplateValues = { new LuaNumber("204863"), someNestedFunction };
+            LuaTemplate.TryParse(@"local thePTNumber = <<0, num>>; (<<1, func>>)(""close enough, "", ""welcome back silent hills"");", out LuaTemplate ptTemplate);
+            var someFunction = new LuaFunction(ptTemplate, ptTemplateValues);
             
             var bar = new LuaVariable("bar", true);
             bar.AssignTo(someFunction);

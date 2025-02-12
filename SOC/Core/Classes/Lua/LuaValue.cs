@@ -15,7 +15,7 @@ namespace SOC.Classes.Lua
     [XmlInclude(typeof(LuaFunction))]
     public abstract class LuaValue
     {
-        [XmlAttribute] public ValueType Type { get; set; }
+        [XmlIgnore] public ValueType Type { get; set; }
         [XmlIgnore] public abstract string Value { get; }
 
         protected LuaValue() { }
