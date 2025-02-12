@@ -134,6 +134,7 @@
     <Compile Include="Core\Classes\Lua\LuaNil.cs" />
     <Compile Include="Core\Classes\Lua\LuaNumber.cs" />
     <Compile Include="Core\Classes\Lua\LuaTable.cs" />
+    <Compile Include="Core\Classes\Lua\LuaTemplate.cs" />
     <Compile Include="Core\Classes\Lua\LuaText.cs" />
     <Compile Include="Core\Classes\Lua\LuaMultiAssignment.cs" />
     <Compile Include="Core\Classes\Lua\LuaValueList.cs" />

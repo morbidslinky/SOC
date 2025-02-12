@@ -26,6 +26,10 @@ namespace SOC.Classes.Lua
 
         public void AssignTo(LuaValue luaValue)
         {
+            while (luaValue is LuaVariable variable)
+            {
+                luaValue = variable.GetAssignedValue();
+            }
             AssignedTo = luaValue;
         }
 

@@ -25,35 +25,23 @@ namespace SOC.Classes.Lua
 
         public void WriteToFile(string filename)
         {
+            var foo = new LuaVariable("foo", true);
+            foo.AssignTo(new LuaText("something about a door or whatever"));
+            foo.GetAssignmentLua(Lua);
 
-
-            ModuleVariable.GetAssignmentLua(Lua);
-            var funcTestVariable = new LuaVariable("foo", true);
-            funcTestVariable.AssignTo(new LuaText("something about a door or whatever"));
-            funcTestVariable.GetAssignmentLua(Lua);
-
+            string[] printParams = {"paramName", "paramName2"};
             var someNestedFunction = new LuaFunction(
-                @"function(param1)
-        InfCore.DebugPrint(param1)
-        InfCore.DebugPrint({{0, var}})
-    end",
-                new LuaValue[] { funcTestVariable });
+                LuaTemplate.ParseTemplate($@"InfCore.DebugPrint({printParams[0]} .. {printParams[1]}); InfCore.DebugPrint(<<0, number|nil|text>>);", foo),
+                printParams);
 
             var someFunction = new LuaFunction(
-                @"function()
-    local thePTNumber = {{0, num}}
-    ({{1, func}})(""close enough welcome back silent hills"")
-end",
-                new LuaValue[] {
-                    new LuaNumber("204863"), someNestedFunction
-                });
-
+                LuaTemplate.ParseTemplate(@"local thePTNumber = <<0, num>>; (<<1, func>>)(""close enough, "", ""welcome back silent hills"");",
+                new LuaValue[] { new LuaNumber("204863"), someNestedFunction }));
             
-            var funcOtherTestVariable = new LuaVariable("FunctionTestVar", true);
-            funcOtherTestVariable.AssignTo(someFunction);
-            funcOtherTestVariable.GetAssignmentLua(Lua);
+            var bar = new LuaVariable("bar", true);
+            bar.AssignTo(someFunction);
+            bar.GetAssignmentLua(Lua);
 
-            ModuleVariable.GetReturnLua(Lua);
             using (StreamWriter fileWriter = new StreamWriter(filename))
             {
                 fileWriter.Write(Lua.ToString());
@@ -61,7 +49,6 @@ end",
 
             LuaValueList savestuff = new LuaValueList();
             savestuff.Values.Add(someFunction);
-
             LuaValueList.SaveToXml(savestuff, filename + ".luavalues.xml");
         }
     }
