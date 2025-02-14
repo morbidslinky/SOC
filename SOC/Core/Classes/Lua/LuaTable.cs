@@ -20,48 +20,50 @@ namespace SOC.Classes.Lua
             KeyValuePairs = new List<LuaTableEntry>();
         }
 
-        public bool TrySet(LuaValue key, LuaValue value)
+        public bool TrySet(LuaValue key, LuaValue value, bool extrude = false)
         {
             if (TryGetKeyValuePair(key, out LuaTableEntry existingEntry))
             {
                 existingEntry.Value = value;
+                existingEntry.ExtrudeForAssignmentVariable = extrude;
                 return true;
             }
             return false;
         }
 
-        public bool TrySet(LuaValue[] nestedTableKeys, LuaValue value)
+        public bool TrySet(LuaValue[] nestedTableKeys, LuaValue value, bool extrude = false)
         {
             if (TryGetKeyValuePair(nestedTableKeys, out LuaTableEntry existingEntry))
             {
                 existingEntry.Value = value;
+                existingEntry.ExtrudeForAssignmentVariable = extrude;
                 return true;
             }
             return false;
         }
 
-        public bool TryAdd(LuaValue key, LuaValue value)
+        public bool TryAdd(LuaValue key, LuaValue value, bool extrude = false)
         {
             if (!TryGetKeyValuePair(key, out _))
             {
-                KeyValuePairs.Add(new LuaTableEntry { Key = key, Value = value });
+                KeyValuePairs.Add(new LuaTableEntry { Key = key, Value = value, ExtrudeForAssignmentVariable = extrude });
                 return true;
             }
             return false;
         }
 
-        public bool TryAdd(LuaValue[] nestedTableKeys, LuaValue value, int depth = 0)
+        public bool TryAdd(LuaValue[] nestedTableKeys, LuaValue value, int depth = 0, bool extrude = false)
         {
             if (depth == nestedTableKeys.Length - 1)
-                return TryAdd(nestedTableKeys[depth], value);
+                return TryAdd(nestedTableKeys[depth], value, extrude);
 
             LuaTable nextTable = EnsureOrCreateTable(nestedTableKeys[depth]);
-            return nextTable.TryAdd(nestedTableKeys, value, depth + 1);
+            return nextTable.TryAdd(nestedTableKeys, value, depth + 1, extrude);
         }
 
         private LuaTable EnsureOrCreateTable(LuaValue key)
         {
-            if (!TryGet(key, out LuaValue value) || !(value is LuaTable table))
+            if (!TryGet(key, out LuaValue value, out bool _) || !(value is LuaTable table))
             {
                 table = new LuaTable();
                 TryAdd(key, table);
@@ -69,26 +71,30 @@ namespace SOC.Classes.Lua
             return table;
         }
 
-        public bool TryGet(LuaValue key, out LuaValue value)
+        public bool TryGet(LuaValue key, out LuaValue value, out bool isMarkedForExtrusion)
         {
             if (TryGetKeyValuePair(key, out LuaTableEntry pair))
             {
                 value = pair.Value;
+                isMarkedForExtrusion = pair.ExtrudeForAssignmentVariable;
                 return true;
             }
 
+            isMarkedForExtrusion = false;
             value = null;
             return false;
         }
 
-        public bool TryGet(LuaValue[] nestedTableKeys, out LuaValue value)
+        public bool TryGet(LuaValue[] nestedTableKeys, out LuaValue value, out bool isMarkedForExtrusion)
         {
             if (TryGetKeyValuePair(nestedTableKeys, out LuaTableEntry pair))
             {
                 value = pair.Value;
+                isMarkedForExtrusion = pair.ExtrudeForAssignmentVariable;
                 return true;
             }
 
+            isMarkedForExtrusion = false;
             value = null;
             return false;
         }
@@ -119,34 +125,68 @@ namespace SOC.Classes.Lua
                 && nestedTable.TryGetKeyValuePair(nestedTableKeys, out pair, currentDepth + 1);
         }
 
+        public List<List<LuaValue>> GetTablePaths(bool distinctPaths = false)
+        {
+            var pathList = new List<List<LuaValue>>();
+            var visitedTables = new HashSet<LuaTable>();
+
+            foreach (var node in KeyValuePairs)
+            {
+                GetNestedPaths(pathList, node, new List<LuaValue>(), visitedTables, distinctPaths);
+            }
+
+            return pathList;
+        }
+
+        private void GetNestedPaths(List<List<LuaValue>> pathList, LuaTableEntry currentNode, List<LuaValue> parentKeyPath, HashSet<LuaTable> visitedTables, bool distinctPaths)
+        {
+            var currentNodePath = new List<LuaValue>();
+            currentNodePath.AddRange(parentKeyPath);
+            currentNodePath.Add(currentNode.Key);
+
+            pathList.Add(currentNodePath);
+
+            if (currentNode.Value is LuaTable table)
+            {
+                if (!visitedTables.Add(table)) return;
+
+                visitedTables.Add(table);
+                foreach (var childNode in table.KeyValuePairs)
+                    GetNestedPaths(pathList, childNode, currentNodePath, visitedTables, distinctPaths);
+
+                if (!distinctPaths) visitedTables.Remove(table);
+            }
+        }
+
+
         public override string Value => GetFormattedLuaTable();
 
         private string GetFormattedLuaTable()
         {
-            if (!KeyValuePairs.Any()) return "{}";
+            if (!KeyValuePairs.Where(kvp => !kvp.ExtrudeForAssignmentVariable).Any()) return "{}";
 
-            var orderedPairs = KeyValuePairs.OrderBy(kvp => kvp.Key is LuaNumber ? Convert.ToInt32(kvp.Key.ToString()) : int.MaxValue).ToList();
+            var orderedKeyValuePairs = KeyValuePairs.Where(kvp => !kvp.ExtrudeForAssignmentVariable).OrderBy(kvp => kvp.Key is LuaNumber ? Convert.ToInt32(kvp.Key.ToString()) : int.MaxValue).ToList();
             var sequentialValues = new List<string>();
             var keyedValues = new List<string>();
 
             int expectedIndex = 1;
-            foreach (var kvp in orderedPairs)
+            foreach (var keyValuePair in orderedKeyValuePairs)
             {
-                if (kvp.Key is LuaNumber numKey && Convert.ToInt32(numKey.ToString()) == expectedIndex)
+                if (keyValuePair.Key is LuaNumber numKey && Convert.ToInt32(numKey.ToString()) == expectedIndex)
                 {
-                    sequentialValues.Add(FormatValue(kvp.Value));
+                    sequentialValues.Add(FormatValue(keyValuePair.Value));
                     expectedIndex++;
                 }
                 else
                 {
-                    keyedValues.Add($"{FormatKey(kvp.Key)} = {FormatValue(kvp.Value)}");
-                }
+                keyedValues.Add($"{FormatKey(keyValuePair.Key)} = {FormatValue(keyValuePair.Value)}");
+            }
             }
 
-            string sequentialPart = sequentialValues.Any() ? string.Join(", ", sequentialValues) : "";
-            string keyedPart = keyedValues.Any() ? string.Join(", ", keyedValues) : "";
+            string sequentialPart = sequentialValues.Any() ? string.Join(",\n", sequentialValues) : "";
+            string keyedPart = keyedValues.Any() ? string.Join(",\n", keyedValues) : "";
 
-            return $"{{ {string.Join(", ", new[] { sequentialPart, keyedPart }.Where(s => !string.IsNullOrEmpty(s)))} }}";
+            return $"{{\n{string.Join(",\n", new[] { sequentialPart, keyedPart }.Where(s => !string.IsNullOrEmpty(s)))}\n}}";
         }
 
         private string FormatKey(LuaValue key)
@@ -164,7 +204,7 @@ namespace SOC.Classes.Lua
             return value is LuaTable table ? table.GetFormattedLuaTable() : value.ToString();
         }
 
-        private bool IsValidLuaIdentifier(string key)
+        public static bool IsValidLuaIdentifier(string key)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(key, "^[a-zA-Z_][a-zA-Z0-9_]*$");
         }
@@ -177,6 +217,9 @@ namespace SOC.Classes.Lua
 
         [XmlElement]
         public LuaValue Value { get; set; }
+
+        [XmlAttribute("Extrude")]
+        public bool ExtrudeForAssignmentVariable { get; set; }
     }
 
 }

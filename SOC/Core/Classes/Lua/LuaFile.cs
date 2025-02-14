@@ -16,31 +16,46 @@ namespace SOC.Classes.Lua
         public StringBuilder Lua;
 
         public LuaFile() { 
-            ModuleTable = new LuaTable();
-            ModuleVariable = new LuaVariable("this", true);
+            //ModuleTable = new LuaTable();
+            //ModuleVariable = new LuaVariable("this", true);
             Lua = new StringBuilder();
 
-            ModuleVariable.AssignTo(ModuleTable);
+            //ModuleVariable.AssignTo(ModuleTable);
         }
 
         public void WriteToFile(string filename)
         {
-            var foo = new LuaVariable("foo", true);
-            foo.AssignTo(new LuaText("something about a door or whatever"));
-            foo.GetAssignmentLua(Lua);
+            var thisTable = new LuaTable();
+            var nestedTable = new LuaTable();
 
-            string[] infCoreParams = {"paramName", "paramName2"};
-            LuaValue[] infCoreTemplateValues = { foo };
-            LuaTemplate.TryParse($@"InfCore.DebugPrint({infCoreParams[0]} .. {infCoreParams[1]}); InfCore.DebugPrint(<<0, number|nil|text>>);", out LuaTemplate infCoreTemplate);
-            var someNestedFunction = new LuaFunction(infCoreTemplate, infCoreTemplateValues, infCoreParams);
+            for (int i = 1; i < 4; i++)
+            {
+                nestedTable.TryAdd(new LuaNumber(i.ToString()), new LuaFunction(new LuaTemplate($"local Foo = {i}")), true); // extrude is set to true
+            }
+            for (int i = 1; i < 3; i++)
+            {
+                nestedTable.TryAdd(new LuaText($"TableFunc{i}"), new LuaFunction(new LuaTemplate($"local Foo = {i}")), false); // extrude is set to false
+            }
+            nestedTable.TryAdd(new LuaText($"TableFunc with a space in the id"), new LuaFunction(new LuaTemplate($"local Foo = 2")), true);
 
-            LuaValue[] ptTemplateValues = { new LuaNumber("204863"), someNestedFunction };
-            LuaTemplate.TryParse(@"local thePTNumber = <<0, num>>; (<<1, func>>)(""close enough, "", ""welcome back silent hills"");", out LuaTemplate ptTemplate);
-            var someFunction = new LuaFunction(ptTemplate, ptTemplateValues);
-            
-            var bar = new LuaVariable("bar", true);
-            bar.AssignTo(someFunction);
-            bar.GetAssignmentLua(Lua);
+            thisTable.TryAdd(new LuaText("NestedTable"), nestedTable, true);
+
+            thisTable.TryAdd(new LuaText("SomeOtherFunc"), new LuaFunction(new LuaTemplate($"local Bar = 0")), false); // extrude is set to false
+
+            var thisVar = new LuaVariable("this", true);
+            Lua.AppendLine(thisVar.AssignTo(thisTable));
+
+
+
+
+
+
+
+
+
+
+
+
 
             using (StreamWriter fileWriter = new StreamWriter(filename))
             {
@@ -48,7 +63,7 @@ namespace SOC.Classes.Lua
             }
 
             LuaValueList savestuff = new LuaValueList();
-            savestuff.Values.Add(someFunction);
+            savestuff.Values.Add(thisVar);
             LuaValueList.SaveToXml(savestuff, filename + ".luavalues.xml");
         }
     }

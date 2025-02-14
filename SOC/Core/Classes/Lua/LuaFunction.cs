@@ -36,6 +36,13 @@ namespace SOC.Classes.Lua
             Parameters = parameters;
         }
 
+        public LuaFunction(LuaTemplate template) : base(ValueType.Function)
+        {
+            Template = template;
+            PopulationValues = new LuaValue[0];
+            Parameters = new string[0];
+        }
+
         public LuaFunction(LuaTemplate template, params LuaValue[] populationValues) : base(ValueType.Function)
         {
             Template = template;
@@ -45,9 +52,7 @@ namespace SOC.Classes.Lua
 
         private string GetFormattedLuaFunction()
         {
-            return $@"function({string.Join(", ", Parameters)})
-{Template.Populate(PopulationValues)}
-end";
+            return $"function({string.Join(", ", Parameters)})\n{Template.Populate(PopulationValues)}\nend";
         }
     }
 }

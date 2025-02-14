@@ -10,19 +10,26 @@ namespace SOC.Classes.Lua
 {
     public class LuaTemplate
     {
-        [XmlArray("Tokens")]
-        [XmlArrayItem("Token")]
-        public LuaTemplateToken[] Tokens { get; set; }
+        [XmlElement]public string Template {  get; set; }
         public LuaTemplate() { }
-        public LuaTemplate(LuaTemplateToken[] tokens) {
-            Tokens = tokens;
+        public LuaTemplate(string templateString)
+        {
+            Template = templateString;
         }
 
         public static bool TryParse(string templateString, out LuaTemplate luaTemplate)
         {
             luaTemplate = new LuaTemplate();
+            bool isValid = TryTokenize(templateString, out _);
+            luaTemplate.Template = templateString;
+            return isValid;
+        }
 
-            List<LuaTemplateToken> tokenList = new List<LuaTemplateToken>();
+        internal static bool TryTokenize(string templateString, out LuaTemplateToken[] tokens)
+        {
+            tokens = new LuaTemplateToken[0];
+            bool isValid = true;
+            List<LuaTemplateToken> tokenBuilder = new List<LuaTemplateToken>();
             int start = 0;
 
             while (start < templateString.Length)
@@ -30,33 +37,32 @@ namespace SOC.Classes.Lua
                 int open = templateString.IndexOf("<<", start);
                 if (open == -1)
                 {
-                    tokenList.Add(new LuaTemplatePlainText(templateString.Substring(start)));
+                    tokenBuilder.Add(new LuaTemplatePlainText(templateString.Substring(start)));
                     break;
                 }
 
                 int close = templateString.IndexOf(">>", open);
                 if (close == -1) break;
 
-                tokenList.Add(new LuaTemplatePlainText(templateString.Substring(start, open - start)));
+                tokenBuilder.Add(new LuaTemplatePlainText(templateString.Substring(start, open - start)));
 
                 string placeholderToken = templateString.Substring(open + 2, close - open - 2).Trim();
-
-                if (LuaTemplatePlaceholder.TryParse(placeholderToken, out LuaTemplatePlaceholder placeholder))
-                    tokenList.Add(placeholder);
-                else
-                    return false;
+                isValid = LuaTemplatePlaceholder.TryParse(placeholderToken, out LuaTemplatePlaceholder placeholder) && isValid;
+                tokenBuilder.Add(placeholder);
 
                 start = close + 2;
             }
 
-            luaTemplate.Tokens = tokenList.ToArray();
-            return true;
+            tokens = tokenBuilder.ToArray();
+            return isValid;
         }
 
         public string Populate(params LuaValue[] populationData)
         {
             StringBuilder populatedTemplate = new StringBuilder();
-            foreach (LuaTemplateToken token in Tokens)
+            TryTokenize(Template, out LuaTemplateToken[] tokens);
+
+            foreach (LuaTemplateToken token in tokens)
             {
                 if (token is LuaTemplatePlainText textToken)
                     populatedTemplate.Append(textToken.PlainText);
@@ -67,13 +73,11 @@ namespace SOC.Classes.Lua
         }
     }
 
-    [XmlInclude(typeof(LuaTemplatePlainText))]
-    [XmlInclude(typeof(LuaTemplatePlaceholder))]
     public abstract class LuaTemplateToken { }
 
     public class LuaTemplatePlainText : LuaTemplateToken 
     {
-        [XmlAttribute] public string PlainText { get; set; }
+        public string PlainText { get; set; }
 
         public LuaTemplatePlainText() { }
 
@@ -85,22 +89,22 @@ namespace SOC.Classes.Lua
 
     public class LuaTemplatePlaceholder : LuaTemplateToken
     {
-        [XmlAttribute] public int Index { get; set; }
-
-        [XmlArray("AllowedTypes")]
-        [XmlArrayItem("AllowedType")]
+        public string PlaceholderString { get; set; }
+        public int Index { get; set; }
         public LuaValue.ValueType[] AllowedTypes { get; set; }
 
-        public LuaTemplatePlaceholder() { }
+        public LuaTemplatePlaceholder(string placeholderString) {
+            Index = -1; AllowedTypes = new LuaValue.ValueType[0]; PlaceholderString = placeholderString;
+        }
         
-        public LuaTemplatePlaceholder(int index, LuaValue.ValueType[] allowedTypes)
+        public LuaTemplatePlaceholder(string placeholder, int index, LuaValue.ValueType[] allowedTypes)
         {
-            Index = index; AllowedTypes = allowedTypes;
+            Index = index; AllowedTypes = allowedTypes; PlaceholderString = placeholder;
         }
 
         public static bool TryParse(string placeholderToken, out LuaTemplatePlaceholder placeholder)
         {
-            placeholder = new LuaTemplatePlaceholder();
+            placeholder = new LuaTemplatePlaceholder(placeholderToken);
 
             string[] commaSeparatedSplit = placeholderToken.Split(',');
             if (commaSeparatedSplit.Length != 2)
@@ -148,6 +152,7 @@ namespace SOC.Classes.Lua
                         placeholder.AllowedTypes[i] = LuaValue.ValueType.NIL;
                         break;
                     default:
+                        placeholder.AllowedTypes = new LuaValue.ValueType[0];
                         return false;
                 }
             }
@@ -157,10 +162,10 @@ namespace SOC.Classes.Lua
 
         public string Populate(LuaValue[] luaValues)
         {
-            if (Index == -1)
-                return $"--[[ERROR: Invalid Placeholder]]";
+            if (Index == -1 || AllowedTypes.Length == 0)
+                return $"--[[ERROR: Invalid Placeholder ({PlaceholderString})]]";
             if (!TryGetValidKeyValue(luaValues, out LuaValue luaValue))
-                return $"--[[ERROR: Valid Placeholder ({Index},{string.Join(", ", AllowedTypes.Select(t => t.ToString()))}), Invalid Data ({luaValue},{(luaValue is LuaVariable v ? v.GetAssignedValue() : luaValue).Type.ToString().ToLower()})]]";
+                return $"--[[ERROR: Valid Placeholder ({PlaceholderString}), Invalid Data ({luaValue},{(luaValue is LuaVariable v ? v.GetAssignedValue() : luaValue).Type.ToString().ToLower()})]]";
             return luaValue.Value;
         }
 
