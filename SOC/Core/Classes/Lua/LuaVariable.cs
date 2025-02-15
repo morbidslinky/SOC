@@ -11,34 +11,28 @@ namespace SOC.Classes.Lua
     public class LuaVariable : LuaValue
     {
         [XmlAttribute] public string Name { get; set; }
-        [XmlAttribute] public bool Global { get; set; }
-
-        // First time variable is called will return the initial assignment string, and calls after that will return the name. Painful design flaw.
-        [XmlAttribute] public bool AssignmentStatementOnFirstUse { get; set; }
         [XmlElement] public LuaValue AssignedTo { get; set; }
-        public override string Value => GetVariable();
+        public override string Value => GetVarName();
 
-        public LuaVariable() : base(ValueType.Variable) { }
-        public LuaVariable(string name, LuaValue assignedTo, bool isGlobal = false, bool assignmentStatmentOnFirstUse = true): base(ValueType.Variable)
+        public LuaVariable() : base(TemplateRestrictionType.VARIABLE) { }
+        public LuaVariable(string name, LuaValue assignedTo, bool isGlobal = false, bool assignmentStatmentOnFirstUse = true): base(TemplateRestrictionType.VARIABLE)
         {
             Name = name;
             AssignedTo = assignedTo;
-            Global = isGlobal;
-            AssignmentStatementOnFirstUse = assignmentStatmentOnFirstUse;
         }
 
-        public string GetVariable()
+        public string GetVarName()
         {
-            if (AssignmentStatementOnFirstUse)
-            {
-                AssignmentStatementOnFirstUse = false;
-                StringBuilder luaBuilder = new StringBuilder();
-                luaBuilder.AppendLine($"{(Global ? "" : "local ")}{Name} = {AssignedTo}\n");
-                AppendTableValuesMarkedForExtrusion(luaBuilder);
+        return Name; 
+        }
 
-                return luaBuilder.ToString();
-            }
-            return Name;
+        public string GetAssignmentLua()
+        {
+            StringBuilder luaBuilder = new StringBuilder();
+            luaBuilder.AppendLine($"{Name} = {AssignedTo}\n");
+            AppendTableValuesMarkedForExtrusion(luaBuilder);
+
+            return luaBuilder.ToString();
         }
 
         private void AppendTableValuesMarkedForExtrusion(StringBuilder luaBuilder)

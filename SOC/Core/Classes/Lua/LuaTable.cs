@@ -15,7 +15,7 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Entry")]
         public List<LuaTableEntry> KeyValuePairs { get; set; }
 
-        public LuaTable() : base(ValueType.Table)
+        public LuaTable() : base(TemplateRestrictionType.TABLE)
         {
             KeyValuePairs = new List<LuaTableEntry>();
         }

@@ -14,24 +14,25 @@ namespace SOC.Classes.Lua
     [XmlInclude(typeof(LuaFunction))]
     public abstract class LuaValue
     {
-        [XmlIgnore] public ValueType Type { get; set; }
+        [XmlIgnore] public TemplateRestrictionType Type { get; set; }
         [XmlIgnore] public abstract string Value { get; }
 
         protected LuaValue() { }
-        protected LuaValue(ValueType type) { Type = type; }
+        protected LuaValue(TemplateRestrictionType type) { Type = type; }
 
         public override string ToString() => Value;
 
-        public enum ValueType
+        public enum TemplateRestrictionType
         {
             NIL,
-            Text,
-            Number,
-            Boolean,
-            Table,
-            Function,
-            Variable,
-            ANY
+            TEXT,
+            NUMBER,
+            BOOLEAN,
+            TABLE,
+            FUNCTION,
+            VARIABLE,
+            ASSIGN_VARIABLE,
+            TEMPLATE_ERROR
         }
     }
 }

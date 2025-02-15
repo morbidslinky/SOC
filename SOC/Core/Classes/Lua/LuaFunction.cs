@@ -15,37 +15,36 @@ namespace SOC.Classes.Lua
         [XmlArray("Parameters")]
         [XmlArrayItem("Parameter")]
         public string[] Parameters { get; set; }
-
+        public LuaTemplate Template { get; set; }
         [XmlArray("PopulationValues")]
         [XmlArrayItem("Value")]
         public LuaValue[] PopulationValues { get; set; }
-        public LuaTemplate Template { get; set; }
         public override string Value => GetLuaFunction();
 
-        public LuaFunction() : base(ValueType.Function) { }
+        public LuaFunction() : base(TemplateRestrictionType.FUNCTION) { }
 
-        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, params string[] parameters) : base(ValueType.Function)
+        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, params string[] parameters) : base(TemplateRestrictionType.FUNCTION)
         {
             Template = template;
             PopulationValues = populationValues;
             Parameters = parameters;
         }
 
-        public LuaFunction(LuaTemplate template, params string[] parameters) : base(ValueType.Function)
+        public LuaFunction(LuaTemplate template, params string[] parameters) : base(TemplateRestrictionType.FUNCTION)
         {
             Template = template;
             PopulationValues = new LuaValue[0];
             Parameters = parameters;
         }
 
-        public LuaFunction(LuaTemplate template) : base(ValueType.Function)
+        public LuaFunction(LuaTemplate template) : base(TemplateRestrictionType.FUNCTION)
         {
             Template = template;
             PopulationValues = new LuaValue[0];
             Parameters = new string[0];
         }
 
-        public LuaFunction(LuaTemplate template, params LuaValue[] populationValues) : base(ValueType.Function)
+        public LuaFunction(LuaTemplate template, params LuaValue[] populationValues) : base(TemplateRestrictionType.FUNCTION)
         {
             Template = template;
             PopulationValues = populationValues;
@@ -78,10 +77,15 @@ namespace SOC.Classes.Lua
                 string token = tokens[i];
                 if (token == "\n")
                 {
-                    if (i + 1 < tokens.Count)
-                    if (tokens[i + 1] == "end" || tokens[i + 1] == "end," || tokens[i + 1] == "until" || tokens[i + 1] == "}" || tokens[i + 1] == "},")
+                    if (i + 1 < tokens.Count && (tokens[i + 1] == "end" || tokens[i + 1] == "end," || tokens[i + 1] == "until" || tokens[i + 1] == "}" || tokens[i + 1] == "},"))
                     {
                         indentLevel--;
+                    }
+
+                    if (indentLevel < 0)
+                    {
+
+                        indentLevel = 0;
                     }
                     formattedCode.Append("\n" + new string('\t', indentLevel));
                 }

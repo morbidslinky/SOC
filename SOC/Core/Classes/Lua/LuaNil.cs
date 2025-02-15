@@ -5,6 +5,6 @@ namespace SOC.Classes.Lua
     {
         public override string Value => "nil";
 
-        public LuaNil() : base(ValueType.NIL) { }
+        public LuaNil() : base(TemplateRestrictionType.NIL) { }
     }
 }

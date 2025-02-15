@@ -34,14 +34,14 @@ namespace SOC.Classes.Lua
 
             while (start < templateString.Length)
             {
-                int open = templateString.IndexOf("<<", start);
+                int open = templateString.IndexOf("|[", start);
                 if (open == -1)
                 {
                     tokenBuilder.Add(new LuaTemplatePlainText(templateString.Substring(start)));
                     break;
                 }
 
-                int close = templateString.IndexOf(">>", open);
+                int close = templateString.IndexOf("]|", open);
                 if (close == -1) break;
 
                 tokenBuilder.Add(new LuaTemplatePlainText(templateString.Substring(start, open - start)));
@@ -91,70 +91,67 @@ namespace SOC.Classes.Lua
     {
         public string PlaceholderString { get; set; }
         public int Index { get; set; }
-        public LuaValue.ValueType[] AllowedTypes { get; set; }
+        public LuaValue.TemplateRestrictionType AllowedType { get; set; }
 
         public LuaTemplatePlaceholder(string placeholderString) {
-            Index = -1; AllowedTypes = new LuaValue.ValueType[0]; PlaceholderString = placeholderString;
+            Index = -1; AllowedType = LuaValue.TemplateRestrictionType.NIL; PlaceholderString = placeholderString;
         }
         
-        public LuaTemplatePlaceholder(string placeholder, int index, LuaValue.ValueType[] allowedTypes)
+        public LuaTemplatePlaceholder(string placeholder, int index, LuaValue.TemplateRestrictionType allowedType)
         {
-            Index = index; AllowedTypes = allowedTypes; PlaceholderString = placeholder;
+            Index = index; AllowedType = allowedType; PlaceholderString = placeholder;
         }
 
         public static bool TryParse(string placeholderToken, out LuaTemplatePlaceholder placeholder)
         {
             placeholder = new LuaTemplatePlaceholder(placeholderToken);
 
-            string[] commaSeparatedSplit = placeholderToken.Split(',');
-            if (commaSeparatedSplit.Length != 2)
+            string[] splitPlaceholderTokens = placeholderToken.Split('|');
+            if (splitPlaceholderTokens.Length != 2)
                 return false;
-            if (!int.TryParse(commaSeparatedSplit[0].Trim(), out int parseInt))
+            if (!int.TryParse(splitPlaceholderTokens[0].Trim(), out int parseInt))
                 return false;
 
             placeholder.Index = parseInt;
 
-            string[] typeRestrictions = commaSeparatedSplit[1].Split('|');
-            placeholder.AllowedTypes = new LuaValue.ValueType[typeRestrictions.Length];
+            string typeRestriction = splitPlaceholderTokens[1];
 
-            for (int i = 0; i < typeRestrictions.Length; i++)
+            switch (typeRestriction.Trim().ToLower())
             {
-                switch (typeRestrictions[i].Trim().ToLower())
-                {
-                    case "bool":
-                    case "boolean":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Boolean;
-                        break;
-                    case "text":
-                    case "string":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Text;
-                        break;
-                    case "num":
-                    case "number":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Number;
-                        break;
-                    case "func":
-                    case "function":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Function;
-                        break;
-                    case "table":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Table;
-                        break;
-                    case "var":
-                    case "variable":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.Variable;
-                        break;
-                    case "any":
-                    case "value":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.ANY;
-                        break;
-                    case "nil":
-                        placeholder.AllowedTypes[i] = LuaValue.ValueType.NIL;
-                        break;
-                    default:
-                        placeholder.AllowedTypes = new LuaValue.ValueType[0];
-                        return false;
-                }
+                case "bool":
+                case "boolean":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.BOOLEAN;
+                    break;
+                case "text":
+                case "string":
+                    placeholder.AllowedType  = LuaValue.TemplateRestrictionType.TEXT;
+                    break;
+                case "num":
+                case "number":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.NUMBER;
+                    break;
+                case "func":
+                case "function":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION;
+                    break;
+                case "table":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE;
+                    break;
+                case "var":
+                case "variable":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.VARIABLE;
+                    break;
+                case "assign":
+                case "assignvar":
+                case "assignvariable":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE;
+                    break;
+                case "nil":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.NIL;
+                    break;
+                default:
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.TEMPLATE_ERROR;
+                    return false;
             }
 
             return true;
@@ -162,30 +159,43 @@ namespace SOC.Classes.Lua
 
         public string Populate(LuaValue[] luaValues)
         {
-            if (Index == -1 || AllowedTypes.Length == 0)
-                return $"--[[ERROR: Invalid Placeholder ({PlaceholderString})]]";
-            if (!TryGetValidKeyValue(luaValues, out LuaValue luaValue))
-                return $"--[[ERROR: Valid Placeholder ({PlaceholderString}), Invalid Data ({(luaValue is LuaVariable v ? $"{v.Name}, {v.GetAssignedValue()}" : luaValue.Value).ToLower()})]]";
-            return luaValue.ToString();
+            if (Index == -1 || AllowedType == LuaValue.TemplateRestrictionType.TEMPLATE_ERROR)
+                return $"--[[ERROR: Invalid placeholder ({PlaceholderString})]]";
+            if (!TryGetValueString(luaValues, out string luaString))
+                return $"--[[ERROR: Valid placeholder ({PlaceholderString}), but invalid data ({luaString})]]";
+            return luaString;
         }
 
-        internal bool TryGetValidKeyValue(LuaValue[] luaValues, out LuaValue luaKeyValue)
+        internal bool TryGetValueString(LuaValue[] luaValues, out string valueString)
         {
             if (Index >= luaValues.Length || luaValues[Index] == null)
             {
-                luaKeyValue = new LuaNil();
+                valueString = $"Missing population data At index '{Index}'";
                 return false;
             }
-
             LuaValue luaValueAtIndex = luaValues[Index];
-            if (luaValueAtIndex is LuaVariable variable && !AllowedTypes.Contains(LuaValue.ValueType.Variable))
+
+            if (luaValueAtIndex is LuaVariable variable)
             {
-                luaValueAtIndex = variable.GetAssignedValue();
+                if (AllowedType == LuaValue.TemplateRestrictionType.VARIABLE || variable.GetAssignedValue().Type == AllowedType)
+                {
+                    valueString = variable.ToString();
+                    return true;
+                } 
+                else if (AllowedType == LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE)
+                {
+                    valueString = variable.GetAssignmentLua();
+                    return true;
+                }
+            }
+            else if (luaValueAtIndex.Type == AllowedType)
+            {
+                valueString = luaValueAtIndex.ToString();
+                return true;
             }
 
-            bool isValid = AllowedTypes.Contains(luaValueAtIndex.Type) || AllowedTypes.Contains(LuaValue.ValueType.ANY);
-            luaKeyValue = luaValues[Index];
-            return isValid;
+            valueString = luaValueAtIndex.ToString();
+            return false;
         }
     }
 }

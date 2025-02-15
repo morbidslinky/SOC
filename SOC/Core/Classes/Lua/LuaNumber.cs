@@ -12,8 +12,8 @@ namespace SOC.Classes.Lua
         [XmlAttribute] public double Number { get; set; }
         public override string Value => Number.ToString();
 
-        public LuaNumber() : base(ValueType.Number) { }
-        public LuaNumber(string number) : base(ValueType.Number)
+        public LuaNumber() : base(TemplateRestrictionType.NUMBER) { }
+        public LuaNumber(string number) : base(TemplateRestrictionType.NUMBER)
         {
             Number = double.TryParse(number, out double result) ? result : 0;
         }

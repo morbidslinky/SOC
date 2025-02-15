@@ -7,8 +7,8 @@ namespace SOC.Classes.Lua
         [XmlAttribute] public string Text { get; set; }
         public override string Value => $"\"{Text}\"";
 
-        public LuaText() : base(ValueType.Text) { }
-        public LuaText(string text) : base(ValueType.Text)
+        public LuaText() : base(TemplateRestrictionType.TEXT) { }
+        public LuaText(string text) : base(TemplateRestrictionType.TEXT)
         {
             Text = text;
         }
