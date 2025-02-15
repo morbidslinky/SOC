@@ -11,7 +11,6 @@ namespace SOC.Classes.Lua
     [XmlInclude(typeof(LuaNumber))]
     [XmlInclude(typeof(LuaTable))]
     [XmlInclude(typeof(LuaVariable))]
-    [XmlInclude(typeof(LuaMultiAssignment))]
     [XmlInclude(typeof(LuaFunction))]
     public abstract class LuaValue
     {

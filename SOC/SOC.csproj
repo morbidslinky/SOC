@@ -129,15 +129,13 @@
     <Compile Include="Core\Classes\Fox2\Fox2EntityClass.cs" />
     <Compile Include="Core\Classes\InfiniteHeaven\Position.cs" />
     <Compile Include="Core\Classes\Lua\LuaBoolean.cs" />
-    <Compile Include="Core\Classes\Lua\LuaFile.cs" />
     <Compile Include="Core\Classes\Lua\LuaFunction.cs" />
+    <Compile Include="Core\Classes\Lua\LuaLexer.cs" />
     <Compile Include="Core\Classes\Lua\LuaNil.cs" />
     <Compile Include="Core\Classes\Lua\LuaNumber.cs" />
     <Compile Include="Core\Classes\Lua\LuaTable.cs" />
     <Compile Include="Core\Classes\Lua\LuaTemplate.cs" />
     <Compile Include="Core\Classes\Lua\LuaText.cs" />
-    <Compile Include="Core\Classes\Lua\LuaMultiAssignment.cs" />
-    <Compile Include="Core\Classes\Lua\LuaValueList.cs" />
     <Compile Include="Core\Classes\Lua\DefinitionLua.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\AuxiliaryCode.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\CheckQuestAllTargetDynamic.cs" />

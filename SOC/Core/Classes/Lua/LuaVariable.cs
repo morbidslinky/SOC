@@ -11,29 +11,34 @@ namespace SOC.Classes.Lua
     public class LuaVariable : LuaValue
     {
         [XmlAttribute] public string Name { get; set; }
-        [XmlAttribute] public bool DeclareLocally { get; set; }
-        [XmlIgnore] internal bool OneTimeLocalDeclaration;
+        [XmlAttribute] public bool Global { get; set; }
+
+        // First time variable is called will return the initial assignment string, and calls after that will return the name. Painful design flaw.
+        [XmlAttribute] public bool AssignmentStatementOnFirstUse { get; set; }
         [XmlElement] public LuaValue AssignedTo { get; set; }
-        public override string Value => Name;
+        public override string Value => GetVariable();
 
         public LuaVariable() : base(ValueType.Variable) { }
-        public LuaVariable(string name, bool declareLocally): base(ValueType.Variable)
+        public LuaVariable(string name, LuaValue assignedTo, bool isGlobal = false, bool assignmentStatmentOnFirstUse = true): base(ValueType.Variable)
         {
-            Name = name; 
-            DeclareLocally = declareLocally;
-            OneTimeLocalDeclaration = true;
-            AssignedTo = new LuaNil();
+            Name = name;
+            AssignedTo = assignedTo;
+            Global = isGlobal;
+            AssignmentStatementOnFirstUse = assignmentStatmentOnFirstUse;
         }
 
-        public string AssignTo(LuaValue luaValue)
+        public string GetVariable()
         {
-            StringBuilder luaBuilder = new StringBuilder();
-            AssignedTo = luaValue;
+            if (AssignmentStatementOnFirstUse)
+            {
+                AssignmentStatementOnFirstUse = false;
+                StringBuilder luaBuilder = new StringBuilder();
+                luaBuilder.AppendLine($"{(Global ? "" : "local ")}{Name} = {AssignedTo}\n");
+                AppendTableValuesMarkedForExtrusion(luaBuilder);
 
-            luaBuilder.AppendLine($"{(IsLocalAndFirstTimeDeclared() ? "local " : "")}{Name} = {AssignedTo}\n");
-            AppendTableValuesMarkedForExtrusion(luaBuilder);
-
-            return luaBuilder.ToString();
+                return luaBuilder.ToString();
+            }
+            return Name;
         }
 
         private void AppendTableValuesMarkedForExtrusion(StringBuilder luaBuilder)
@@ -66,21 +71,6 @@ namespace SOC.Classes.Lua
                 rootValue = variable.AssignedTo;
             }
             return rootValue;
-        }
-
-        public void GetReturnLua(StringBuilder luaBuilder)
-        {
-            luaBuilder.AppendLine($"return {Name}");
-        }
-
-        private bool IsLocalAndFirstTimeDeclared()
-        {
-            if (DeclareLocally && OneTimeLocalDeclaration)
-            {
-                OneTimeLocalDeclaration = false;
-                return true;
-            }
-            return false;
         }
     }
 

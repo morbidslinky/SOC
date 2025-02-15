@@ -165,8 +165,8 @@ namespace SOC.Classes.Lua
             if (Index == -1 || AllowedTypes.Length == 0)
                 return $"--[[ERROR: Invalid Placeholder ({PlaceholderString})]]";
             if (!TryGetValidKeyValue(luaValues, out LuaValue luaValue))
-                return $"--[[ERROR: Valid Placeholder ({PlaceholderString}), Invalid Data ({luaValue},{(luaValue is LuaVariable v ? v.GetAssignedValue() : luaValue).Type.ToString().ToLower()})]]";
-            return luaValue.Value;
+                return $"--[[ERROR: Valid Placeholder ({PlaceholderString}), Invalid Data ({(luaValue is LuaVariable v ? $"{v.Name}, {v.GetAssignedValue()}" : luaValue.Value).ToLower()})]]";
+            return luaValue.ToString();
         }
 
         internal bool TryGetValidKeyValue(LuaValue[] luaValues, out LuaValue luaKeyValue)
@@ -178,7 +178,7 @@ namespace SOC.Classes.Lua
             }
 
             LuaValue luaValueAtIndex = luaValues[Index];
-            if (luaValueAtIndex is LuaVariable variable)
+            if (luaValueAtIndex is LuaVariable variable && !AllowedTypes.Contains(LuaValue.ValueType.Variable))
             {
                 luaValueAtIndex = variable.GetAssignedValue();
             }
