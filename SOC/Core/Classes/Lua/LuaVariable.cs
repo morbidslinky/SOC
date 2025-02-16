@@ -1,5 +1,4 @@
-﻿using SOC.Classes.QuestBuild.Lua;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +14,10 @@ namespace SOC.Classes.Lua
         public override string Value => GetVarName();
 
         public LuaVariable() : base(TemplateRestrictionType.VARIABLE) { }
-        public LuaVariable(string name, LuaValue assignedTo, bool isGlobal = false, bool assignmentStatmentOnFirstUse = true): base(TemplateRestrictionType.VARIABLE)
+        public LuaVariable(string name, LuaValue assignedTo = null): base(TemplateRestrictionType.VARIABLE)
         {
             Name = name;
-            AssignedTo = assignedTo;
+            AssignedTo = assignedTo == null ? new LuaNil() : assignedTo;
         }
 
         public string GetVarName()
@@ -30,30 +29,18 @@ namespace SOC.Classes.Lua
         {
             StringBuilder luaBuilder = new StringBuilder();
             luaBuilder.AppendLine($"{Name} = {AssignedTo}\n");
-            AppendTableValuesMarkedForExtrusion(luaBuilder);
+            AppendTableIdentifiersMarkedForExtrusion(luaBuilder);
 
             return luaBuilder.ToString();
         }
 
-        private void AppendTableValuesMarkedForExtrusion(StringBuilder luaBuilder)
+        private void AppendTableIdentifiersMarkedForExtrusion(StringBuilder luaBuilder)
         {
             if (AssignedTo is LuaTable table)
                 foreach (var path in table.GetTablePaths(true))
                 {
-                    var pathArray = path.ToArray();
-                    if (table.TryGet(pathArray, out LuaValue tableNode, out bool isMarkedForExtrusion))
-                        if (isMarkedForExtrusion)
-                        {
-                            luaBuilder.Append(Name);
-                            foreach(var key in pathArray)
-                            {
-                                if (key is LuaText luaString)
-                                    luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
-                                else
-                                    luaBuilder.Append($"[{key}]");
-                            }
-                            luaBuilder.AppendLine($" = {tableNode}\n");
-                        }
+                    var varIdentifier = new LuaTableIdentifier(this, path.ToArray());
+                    luaBuilder.AppendLine(varIdentifier.GetAssignmentLua(this));
                 }
         }
 

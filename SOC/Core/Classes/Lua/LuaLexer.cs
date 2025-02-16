@@ -16,7 +16,7 @@ namespace SOC.Classes.Lua
             StringLiteral
         }
 
-        public static List<string> Tokenize(string luaCode)
+        private static List<string> Tokenize(string luaCode)
         {
             List<string> tokens = new List<string>();
             State state = State.Normal;
@@ -143,6 +143,42 @@ namespace SOC.Classes.Lua
             }
 
             return tokens;
+        }
+
+        internal static string FormatIndentions(string unformattedString)
+        {
+            var tokens = Tokenize(unformattedString);
+            int indentLevel = 0;
+            StringBuilder formattedCode = new StringBuilder();
+
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                string token = tokens[i];
+                if (token == "\n")
+                {
+                    if (i + 1 < tokens.Count && (tokens[i + 1] == "end" || tokens[i + 1] == "end," || tokens[i + 1] == "until" || tokens[i + 1] == "}" || tokens[i + 1] == "},"))
+                    {
+                        indentLevel--;
+                    }
+
+                    if (indentLevel < 0)
+                    {
+
+                        indentLevel = 0;
+                    }
+                    formattedCode.Append("\n" + new string('\t', indentLevel));
+                }
+                else
+                {
+                    formattedCode.Append(token + " ");
+                }
+
+                if (token == "function()" || token == "if" || token == "for" || token == "while" || token == "repeat" || token == "do" || token == "{")
+                {
+                    indentLevel++;
+                }
+            }
+            return formattedCode.ToString();
         }
 
     }

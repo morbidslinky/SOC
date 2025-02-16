@@ -10,6 +10,7 @@ namespace SOC.Classes.Lua
     [XmlInclude(typeof(LuaBoolean))]
     [XmlInclude(typeof(LuaNumber))]
     [XmlInclude(typeof(LuaTable))]
+    [XmlInclude(typeof(LuaTableIdentifier))]
     [XmlInclude(typeof(LuaVariable))]
     [XmlInclude(typeof(LuaFunction))]
     public abstract class LuaValue
@@ -29,6 +30,7 @@ namespace SOC.Classes.Lua
             NUMBER,
             BOOLEAN,
             TABLE,
+            TABLE_IDENTIFIER,
             FUNCTION,
             VARIABLE,
             ASSIGN_VARIABLE,

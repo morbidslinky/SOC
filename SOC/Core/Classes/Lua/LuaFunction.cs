@@ -60,55 +60,13 @@ namespace SOC.Classes.Lua
         {
             string populatedTemplate = Template.Populate(PopulationValues);
 
+            var directoryPath = Path.GetDirectoryName(filename);
+            if (!string.IsNullOrEmpty(directoryPath))
+                Directory.CreateDirectory(directoryPath);
             using (StreamWriter fileWriter = new StreamWriter(filename))
             {
-                fileWriter.Write(FormatIndentions(populatedTemplate));
+                fileWriter.Write(LuaLexer.FormatIndentions(populatedTemplate));
             }
-        }
-
-        internal static string FormatIndentions(string unformattedString)
-        {
-            var tokens = LuaLexer.Tokenize(unformattedString);
-            int indentLevel = 0;
-            StringBuilder formattedCode = new StringBuilder();
-
-            for (int i = 0; i < tokens.Count; i++)
-            {
-                string token = tokens[i];
-                if (token == "\n")
-                {
-                    if (i + 1 < tokens.Count && (tokens[i + 1] == "end" || tokens[i + 1] == "end," || tokens[i + 1] == "until" || tokens[i + 1] == "}" || tokens[i + 1] == "},"))
-                    {
-                        indentLevel--;
-                    }
-
-                    if (indentLevel < 0)
-                    {
-
-                        indentLevel = 0;
-                    }
-                    formattedCode.Append("\n" + new string('\t', indentLevel));
-                }
-                else
-                {
-                    formattedCode.Append(token + " ");
-                }
-
-                if (token == "function()" || token == "if" || token == "for" || token == "while" || token == "repeat" || token == "do" || token == "{")
-                {
-                    indentLevel++;
-                }
-            }
-            return formattedCode.ToString();
-        }
-
-        internal static string Indent(string codeLine, int indents)
-        {
-            StringBuilder indentBuilder = new StringBuilder();
-            for (int i = 0; i < indents; i++)
-                indentBuilder.Append("\t");
-
-            return indentBuilder.ToString() + codeLine.Trim();
         }
 
         public void WriteToXml(string filePath)

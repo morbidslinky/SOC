@@ -8,10 +8,16 @@ using System.Xml.Serialization;
 
 namespace SOC.Classes.Lua
 {
+    /// <summary>
+    /// Embed |[index,restriction]| into the template string to set placeholders that will be populated when the lua is written to a file from a LuaFunction, assuming the function's populationValues are aligned with the template placeholders.
+    /// Example: "This is a string: |[0,string]|, and this is a variable: |[1,variable]|, and this is an error: |[foo,bar]|."
+    /// Accepted placeholder restrictions: boolean, string, number, function, table, table_identifier, variable, assign_variable, nil 
+    /// </summary>
     public class LuaTemplate
     {
         [XmlElement]public string Template {  get; set; }
         public LuaTemplate() { }
+        
         public LuaTemplate(string templateString)
         {
             Template = templateString;
@@ -118,32 +124,28 @@ namespace SOC.Classes.Lua
 
             switch (typeRestriction.Trim().ToLower())
             {
-                case "bool":
                 case "boolean":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.BOOLEAN;
                     break;
-                case "text":
                 case "string":
                     placeholder.AllowedType  = LuaValue.TemplateRestrictionType.TEXT;
                     break;
-                case "num":
                 case "number":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.NUMBER;
                     break;
-                case "func":
                 case "function":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION;
                     break;
                 case "table":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE;
                     break;
-                case "var":
+                case "table_identifier":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE_IDENTIFIER;
+                    break;
                 case "variable":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.VARIABLE;
                     break;
-                case "assign":
-                case "assignvar":
-                case "assignvariable":
+                case "assign_variable":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE;
                     break;
                 case "nil":
