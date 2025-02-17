@@ -24,21 +24,21 @@ namespace SOC.QuestObjects.Hostage
 
         static readonly LuaFunctionOldFormat CheckIsHostage = new LuaFunctionOldFormat("CheckIsHostage", new string[] { "gameId" }, " return Tpp.IsHostage(gameId); ");
 
-        public static void GetDefinition(HostagesDetail hostageDetail, DefinitionLua definitionLua)
+        public static void GetDefinition(HostagesDetail hostageDetail, DefinitionLuaBuilder definitionLua)
         {
             int hostageCount = hostageDetail.hostages.Count;
             BodyInfoEntry hostageBody = NPCBodyInfo.GetBodyInfo(hostageDetail.hostageMetadata.hostageBodyName);
 
             if (hostageCount > 0)
             {
-                definitionLua.AddPackPath("/Assets/tpp/pack/mission2/ih/ih_hostage_base.fpk");
-                definitionLua.AddPackPath(hostageBody.missionPackPath);
+                definitionLua.AddFpkPathToQuestPackList("/Assets/tpp/pack/mission2/ih/ih_hostage_base.fpk");
+                definitionLua.AddFpkPathToQuestPackList(hostageBody.missionPackPath);
 
-                definitionLua.AddPackInfo($@"randomFaceListIH = {{ gender = ""{(hostageBody.isFemale ? "FEMALE" : "MALE")}"", count = {hostageCount}}}");
+                definitionLua.SetRandomFaceListIH(hostageBody.isFemale ? "FEMALE" : "MALE", hostageCount);
             }
         }
 
-        public static void GetMain(HostagesDetail hostageDetail, MainLua mainLua)
+        public static void GetMain(HostagesDetail hostageDetail, MainLuaBuilder mainLua)
         {
             List<Hostage> hostages = hostageDetail.hostages;
             HostageMetadata meta = hostageDetail.hostageMetadata;

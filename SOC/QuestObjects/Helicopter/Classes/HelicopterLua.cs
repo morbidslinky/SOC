@@ -14,15 +14,12 @@ namespace SOC.QuestObjects.Helicopter
             new string[] { },
             " for i,heliInfo in ipairs(this.QUEST_TABLE.heliList)do local gameObjectId = GetGameObjectId(heliInfo.heliName); if gameObjectId~=GameObject.NULL_ID then if heliInfo.commands then for j,heliCommand in ipairs(heliInfo.commands)do GameObject.SendCommand(gameObjectId, heliCommand); end; end; end; end; ");
         
-        internal static void GetDefinition(HelicoptersDetail questDetail, DefinitionLua definitionLua)
+        internal static void GetDefinition(HelicoptersDetail questDetail, DefinitionLuaBuilder definitionLua)
         {
-            if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
-            {
-                definitionLua.AddDefinition($"hasEnemyHeli = {(questDetail.helicopters.Any(helicopter => helicopter.isSpawn) ? "true" : "false")}");
-            }
+            definitionLua.SetHasEnemyHeli(questDetail.helicopters.Any(helicopter => helicopter.isSpawn));
         }
 
-        internal static void GetMain(HelicoptersDetail questDetail, MainLua mainLua)
+        internal static void GetMain(HelicoptersDetail questDetail, MainLuaBuilder mainLua)
         {
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
             {

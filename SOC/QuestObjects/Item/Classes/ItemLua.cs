@@ -12,26 +12,23 @@ namespace SOC.QuestObjects.Item
 
         static readonly LuaFunctionOldFormat checkIsDormantItem = new LuaFunctionOldFormat("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
         
-        internal static void GetDefinition(ItemsDetail questDetail, DefinitionLua definitionLua)
+        internal static void GetDefinition(ItemsDetail questDetail, DefinitionLuaBuilder definitionLua)
         {
             List<string> requestList = new List<string>();
-            StringBuilder requestEquipBuilder = new StringBuilder("requestEquipIds = {");
             foreach(Item item in questDetail.items)
             {
                 if (requestList.Contains(item.item))
                     continue;
                 else if(item.item.Contains("EQP_WP_"))
                 {
-                    requestEquipBuilder.Append($@"""{item.item}"", ");
                     requestList.Add(item.item);
                 }
             }
-            requestEquipBuilder.Append("}");
 
-            definitionLua.AddDefinition(requestEquipBuilder.ToString());
+            definitionLua.AddToRequestEquipIds(requestList);
         }
 
-        internal static void GetMain(ItemsDetail questDetail, MainLua mainLua)
+        internal static void GetMain(ItemsDetail questDetail, MainLuaBuilder mainLua)
         {
             if (questDetail.items.Any(item => item.isTarget))
             {

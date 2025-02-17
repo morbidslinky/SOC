@@ -20,12 +20,26 @@ namespace SOC.Classes.Lua
             KeyValuePairs = new List<LuaTableEntry>();
         }
 
-        public bool TrySet(LuaValue key, LuaValue value, bool extrude = false)
+        public LuaTable(params LuaTableEntry[] entries) : base(TemplateRestrictionType.TABLE)
         {
-            if (TryGetKeyValuePair(key, out LuaTableEntry existingEntry))
+            KeyValuePairs = new List<LuaTableEntry>();
+            AddOrSet(entries);
+        }
+
+        public void AddOrSet(params LuaTableEntry[] entries)
+        {
+            foreach (LuaTableEntry entry in entries)
             {
-                existingEntry.Value = value;
-                existingEntry.ExtrudeForAssignmentVariable = extrude;
+                if (!TryAdd(entry)) TrySet(entry);
+            }
+        }
+
+        public bool TrySet(LuaTableEntry entry)
+        {
+            if (TryGetKeyValuePair(entry.Key, out LuaTableEntry existingEntry))
+            {
+                existingEntry.Value = entry.Value;
+                existingEntry.ExtrudeForAssignmentVariable = entry.ExtrudeForAssignmentVariable;
                 return true;
             }
             return false;
@@ -42,11 +56,24 @@ namespace SOC.Classes.Lua
             return false;
         }
 
-        public bool TryAdd(LuaValue key, LuaValue value, bool extrude = false)
+        public bool TryAdd(LuaTableEntry entry)
         {
-            if (!TryGetKeyValuePair(key, out _))
+            if (entry.Key == null)
             {
-                KeyValuePairs.Add(new LuaTableEntry { Key = key, Value = value, ExtrudeForAssignmentVariable = extrude });
+                for (int i = 1; i <= KeyValuePairs.Count + 1; i++)
+                {
+                    var index = new LuaNumber(i);
+                    if(!TryGetKeyValuePair(index, out _))
+                    {
+                        entry.Key = index;
+                        KeyValuePairs.Add(entry);
+                        return true;
+                    }
+                }
+            }
+            if (!TryGetKeyValuePair(entry.Key, out _))
+            {
+                KeyValuePairs.Add(entry);
                 return true;
             }
             return false;
@@ -55,7 +82,10 @@ namespace SOC.Classes.Lua
         public bool TryAdd(LuaValue[] nestedTableKeys, LuaValue value, int depth = 0, bool extrude = false)
         {
             if (depth == nestedTableKeys.Length - 1)
-                return TryAdd(nestedTableKeys[depth], value, extrude);
+            {
+                var nestedTableEntry = LuaTableEntry.Create(nestedTableKeys[depth], value, extrude);
+                return TryAdd(nestedTableEntry);
+            }
 
             LuaTable nextTable = EnsureOrCreateTable(nestedTableKeys[depth]);
             return nextTable.TryAdd(nestedTableKeys, value, depth + 1, extrude);
@@ -66,7 +96,8 @@ namespace SOC.Classes.Lua
             if (!TryGet(key, out LuaValue value, out bool _) || !(value is LuaTable table))
             {
                 table = new LuaTable();
-                TryAdd(key, table);
+                var nestedTable = LuaTableEntry.Create(key, table);
+                TryAdd(nestedTable);
             }
             return table;
         }
@@ -101,7 +132,7 @@ namespace SOC.Classes.Lua
 
         private bool TryGetKeyValuePair(LuaValue key, out LuaTableEntry pair)
         {
-            pair = KeyValuePairs.FirstOrDefault(e => e.Key.Equals(key));
+            pair = KeyValuePairs.FirstOrDefault(e => e.Key.Value.Equals(key.Value));
             return pair != null;
         }
 
@@ -220,6 +251,48 @@ namespace SOC.Classes.Lua
 
         [XmlAttribute("Extrude")]
         public bool ExtrudeForAssignmentVariable { get; set; }
+
+        public LuaTableEntry() { }
+
+        public static LuaTableEntry Create<TableKeyValue, TableValue>(TableKeyValue key, TableValue val, bool extrude = false)
+        {
+            LuaTableEntry tableEntry = new LuaTableEntry();
+            tableEntry.Key = GetEntryValueType(key);
+            tableEntry.Value = GetEntryValueType(val);
+
+            return tableEntry;
+        }
+
+        public static LuaTableEntry Create<TableValue>(TableValue val, bool extrude = false)
+        {
+            LuaTableEntry tableEntry = new LuaTableEntry();
+            tableEntry.Value = GetEntryValueType(val);
+
+            return tableEntry;
+        }
+
+        private static LuaValue GetEntryValueType<TableValue>(TableValue val)
+        {
+            LuaValue tableEntry;
+
+            switch (val)
+            {
+                case string valueString:
+                    tableEntry = new LuaText(valueString); break;
+                case double valueDouble:
+                    tableEntry = new LuaNumber(valueDouble); break;
+                case int valueInt:
+                    tableEntry = new LuaNumber(valueInt); break;
+                case bool valueBool:
+                    tableEntry = new LuaBoolean(valueBool); break;
+                case LuaValue value:
+                    tableEntry = value; break;
+                default:
+                    tableEntry = new LuaText("Unsupported Value Type"); break;
+            }
+
+            return tableEntry;
+        }
     }
 
 }

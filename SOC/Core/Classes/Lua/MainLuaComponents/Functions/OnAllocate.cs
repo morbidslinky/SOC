@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
             return onTerminateCalls.Contains(call);
         }
 
-        public string ToLua(MainLua mainLua)
+        public string ToLua(MainLuaBuilder mainLua)
         {
             return $@"
 function this.OnAllocate()

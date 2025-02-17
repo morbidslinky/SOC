@@ -10,7 +10,7 @@ namespace SOC.Classes.Lua
     {
         Dictionary<string, string> variableDictionary = new Dictionary<string, string>();
 
-        public string ToLua(MainLua mainLua)
+        public string ToLua(MainLuaBuilder mainLua)
         {
             return GetVariablesFormatted();
         }

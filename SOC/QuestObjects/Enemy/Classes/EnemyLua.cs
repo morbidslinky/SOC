@@ -1,4 +1,5 @@
-﻿using SOC.Classes.Lua;
+﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,31 +12,39 @@ namespace SOC.QuestObjects.Enemy
     {
         static readonly LuaFunctionOldFormat CheckIsSoldier = new LuaFunctionOldFormat("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
 
-        public static void GetDefinition(EnemiesDetail detail, DefinitionLua definitionLua)
+        public static void GetDefinition(EnemiesDetail detail, DefinitionLuaBuilder definitionLua)
         {
             if (detail.enemies.Count > 0)
             {
                 string region = GetRegion(detail.enemyMetadata.subtype);
-
-                StringBuilder faceIdList = new StringBuilder("faceIdList = {");
-                if(HasBalaclavas(detail.enemies))
+                if (HasBalaclavas(detail.enemies))
                 {
-                    faceIdList.Append($"TppDefine.QUEST_FACE_ID_LIST.{region}_BALACLAVA, ");
+                    definitionLua.AddToFaceIdList(new LuaTableIdentifier(
+                        "TppDefine", new LuaValue[]
+                        {
+                            new LuaText("QUEST_FACE_ID_LIST"),
+                            new LuaText($"{region}_BALACLAVA")
+                        }));
                 }
-                faceIdList.Append("}");
-                definitionLua.AddPackInfo(faceIdList.ToString()); // if necessary faceIdList and bodyIdList should be components of definitionLua
-                
-                StringBuilder bodyIdList = new StringBuilder("bodyIdList = {");
+
                 if (HasArmors(detail.enemies))
                 {
-                    bodyIdList.Append($"TppDefine.QUEST_BODY_ID_LIST.{region}_ARMOR, ");
+                    definitionLua.AddToBodyIdList(new LuaTableIdentifier(
+                        "TppDefine", new LuaValue[]
+                        {
+                            new LuaText("QUEST_BODY_ID_LIST"),
+                            new LuaText($"{region}_ARMOR")
+                        }));
                 }
-                foreach(string body in GetBodies(detail.enemies))
+
+                foreach (string body in GetBodies(detail.enemies))
                 {
-                    bodyIdList.Append($"TppEnemyBodyId.{body}, ");
+                    definitionLua.AddToBodyIdList(new LuaTableIdentifier(
+                        "TppEnemyBodyId", new LuaValue[]
+                        {
+                            new LuaText($"{body}")
+                        }));
                 }
-                bodyIdList.Append("}");
-                definitionLua.AddPackInfo(bodyIdList.ToString());
             }
         }
 
@@ -98,7 +107,7 @@ namespace SOC.QuestObjects.Enemy
             }
         }
 
-        public static void GetMain(EnemiesDetail detail, MainLua mainLua)
+        public static void GetMain(EnemiesDetail detail, MainLuaBuilder mainLua)
         {
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;

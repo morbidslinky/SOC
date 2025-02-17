@@ -12,5 +12,9 @@ namespace SOC.Classes.Lua
         {
             BooleanValue = value == "1" || (bool.TryParse(value, out bool result) && result);
         }
+        public LuaBoolean(bool value) : base(TemplateRestrictionType.BOOLEAN)
+        {
+            BooleanValue = value;
+        }
     }
 }

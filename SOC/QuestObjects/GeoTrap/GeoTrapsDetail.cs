@@ -60,7 +60,7 @@ namespace SOC.QuestObjects.GeoTrap
             GeoTrapFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainLuaBuilder mainLua)
         {
             GeoTrapLua.GetMain(this, mainLua);
         }

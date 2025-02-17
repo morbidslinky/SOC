@@ -24,17 +24,17 @@ namespace SOC.QuestObjects.WalkerGear
 
         static readonly LuaFunctionOldFormat checkWalkerGear = new LuaFunctionOldFormat("CheckIsWalkerGear", new string[] { "gameId" }, " return Tpp.IsEnemyWalkerGear(gameId); ");
 
-        internal static void GetDefinition(WalkerGearsDetail walkerDetail, DefinitionLua definitionLua)
+        internal static void GetDefinition(WalkerGearsDetail walkerDetail, DefinitionLuaBuilder definitionLua)
         {
             int walkerCount = walkerDetail.walkers.Count;
 
             if (walkerCount > 0)
             {
-                definitionLua.AddPackPath("/Assets/tpp/pack/mission2/common/mis_com_walkergear.fpk");
+                definitionLua.AddFpkPathToQuestPackList("/Assets/tpp/pack/mission2/common/mis_com_walkergear.fpk");
             }
         }
 
-        internal static void GetMain(WalkerGearsDetail detail, MainLua mainLua)
+        internal static void GetMain(WalkerGearsDetail detail, MainLuaBuilder mainLua)
         {
             List<WalkerGear> walkers = detail.walkers;
             WalkerGearsMetadata meta = detail.walkerMetadata;

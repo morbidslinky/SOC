@@ -2,13 +2,14 @@
 using SOC.QuestObjects.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class MainLua
+    public class MainLuaBuilder
     {
         public SetupDetails setupDetails;
         public ObjectsDetails objectsDetails;
@@ -28,7 +29,11 @@ namespace SOC.Classes.Lua
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
 
-        public MainLua(SetupDetails _setupDetails, ObjectsDetails _objectsDetails)
+        public MainLuaBuilder()
+        {
+            
+        }
+        public MainLuaBuilder(SetupDetails _setupDetails, ObjectsDetails _objectsDetails)
         {
             setupDetails = _setupDetails; objectsDetails = _objectsDetails;
         }
@@ -138,6 +143,52 @@ namespace SOC.Classes.Lua
             functionBuilder.Append(" return this");
 
             return functionBuilder.ToString();
+        }
+
+        public void Build(string buildArchivePath, SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        {
+            /*
+            string LuaScriptPath = Path.Combine(dir, setupDetails.FpkName + "_fpkd", "Assets/tpp/level/mission2/quest/ih");
+            string LuaScriptFile = Path.Combine(LuaScriptPath, setupDetails.FpkName + ".lua");
+
+            Directory.CreateDirectory(LuaScriptPath);
+
+            File.WriteAllText(LuaScriptFile, BuildMain(setupDetails, objectsDetails));
+
+            MainLuaBuilder mainLua = new MainLuaBuilder(setupDetails, objectsDetails);
+            mainLua.AddToOpeningVariables("this", "{}");
+            mainLua.AddToOpeningVariables("quest_step", "{}");
+            mainLua.AddToOpeningVariables("StrCode32", "Fox.StrCode32");
+            mainLua.AddToOpeningVariables("StrCode32Table", "Tpp.StrCode32Table");
+            mainLua.AddToOpeningVariables("GetGameObjectId", "GameObject.GetGameObjectId");
+            mainLua.AddToOpeningVariables("ELIMINATE", "TppDefine.QUEST_TYPE.ELIMINATE");
+            mainLua.AddToOpeningVariables("RECOVERED", "TppDefine.QUEST_TYPE.RECOVERED");
+            mainLua.AddToOpeningVariables("KILLREQUIRED", "9");
+
+            string cpNameString = setupDetails.CPName;
+            if (setupDetails.CPName == "NONE")
+            {
+                cpNameString = $"InfMain.GetClosestCp{{{setupDetails.coords.xCoord},{setupDetails.coords.yCoord},{setupDetails.coords.zCoord}}}";
+            }
+            else
+            {
+                cpNameString = $@"""{setupDetails.CPName}""";
+            }
+
+            mainLua.AddToOpeningVariables("CPNAME", cpNameString);
+            mainLua.AddToOpeningVariables("DISTANTCP", $@"""{QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)}""");
+            mainLua.AddToOpeningVariables("questTrapName", $@"""trap_preDeactiveQuestArea_{setupDetails.loadArea}""");
+
+            mainLua.AddToQuestTable("questType = ELIMINATE");
+            mainLua.AddToQuestTable("soldierSubType = SUBTYPE");
+
+            foreach (ObjectsDetail detail in objectsDetails.details)
+            {
+                detail.AddToMainLua(mainLua);
+            }
+
+            return mainLua.GetMainLuaFormatted();
+            */
         }
     }
 }

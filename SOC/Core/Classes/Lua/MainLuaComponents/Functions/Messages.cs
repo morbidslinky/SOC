@@ -8,7 +8,7 @@ namespace SOC.Classes.Lua
 {
     class Messages
     {
-        public string ToLua(MainLua mainLua)
+        public string ToLua(MainLuaBuilder mainLua)
         {
             return @"
 this.Messages = function()

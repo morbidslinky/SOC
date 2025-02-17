@@ -17,5 +17,9 @@ namespace SOC.Classes.Lua
         {
             Number = double.TryParse(number, out double result) ? result : 0;
         }
+        public LuaNumber(double number) : base(TemplateRestrictionType.NUMBER)
+        {
+            Number = number;
+        }
     }
 }

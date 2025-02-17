@@ -6,6 +6,7 @@ using SOC.Classes.Assets;
 using System.Linq;
 using System.Collections.Generic;
 using SOC.Classes.QuestBuild.Assets;
+using SOC.Classes.Lua;
 
 namespace SOC.Classes.QuestBuild
 {
@@ -31,8 +32,18 @@ namespace SOC.Classes.QuestBuild
             }
 
             Lang.LangBuilder.WriteQuestLangs(initDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
-            
-            foreach(Quest quest in quests)
+
+            /*
+            steps to building a quest:
+            1. Clear possible existing fpk directories
+            2. Write lang files (preferably all custom quest langs would be stored in a single file)
+            3. write definition lua
+            4. write main quest lua
+            5. write fox2 file
+            6. Add necessary common asset files
+            */
+
+            foreach (Quest quest in quests)
             {
                 SetupDetails setupDetails = quest.setupDetails;
                 ObjectsDetails objectsDetails = new ObjectsDetails(quest.questObjectDetails);
@@ -45,20 +56,15 @@ namespace SOC.Classes.QuestBuild
                 CommonAssetsBuilder assetsBuilder = new CommonAssetsBuilder();
                 assetsBuilder.Build(buildArchivePath, setupDetails, objectsDetails);
 
-                Lua.LuaBuilder.WriteDefinitionLua(buildGameDirPath, setupDetails, objectsDetails);
-                Lua.LuaBuilder.WriteMainQuestLua(buildArchivePath, setupDetails, objectsDetails);
+                DefinitionLuaBuilder definitionBuilder = new DefinitionLuaBuilder(setupDetails, objectsDetails);
+                string definitionLuaFilePath = Path.Combine(buildGameDirPath, $"ih_quest_q{setupDetails.QuestNum}.lua");
+                definitionBuilder.Build(definitionLuaFilePath);
+
+                //MainLuaBuilder mainLuaBuilder = new MainLuaBuilder();
+                //mainLuaBuilder.Build(buildArchivePath, setupDetails, objectsDetails);
+
                 Fox2.Fox2Builder.WriteQuestFox2(buildArchivePath, setupDetails.FpkName, objectsDetails);
             }
-
-            /*
-            steps to building a quest:
-            1. Clear possible existing fpk directories
-            2. Write lang files (preferably all custom quest langs would be stored in a single file)
-            3. write definition lua
-            4. write main quest lua
-            5. write fox2 file
-            6. Add necessary common asset files
-            */
             return true;
         }
 

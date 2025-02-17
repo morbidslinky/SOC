@@ -15,7 +15,7 @@ namespace SOC.Classes.Lua
             auxiliaryCodes.Add(code);
         }
 
-        public string ToLua(MainLua mainLua)
+        public string ToLua(MainLuaBuilder mainLua)
         {
             
             foreach (StrCodeBlock strCode in mainLua.qStep_main.strCodes)

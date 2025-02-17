@@ -130,13 +130,15 @@
     <Compile Include="Core\Classes\InfiniteHeaven\Position.cs" />
     <Compile Include="Core\Classes\Lua\LuaBoolean.cs" />
     <Compile Include="Core\Classes\Lua\LuaFunction.cs" />
+    <Compile Include="Core\Classes\Lua\LuaFunctionCall.cs" />
     <Compile Include="Core\Classes\Lua\LuaLexer.cs" />
     <Compile Include="Core\Classes\Lua\LuaNil.cs" />
     <Compile Include="Core\Classes\Lua\LuaNumber.cs" />
     <Compile Include="Core\Classes\Lua\LuaTable.cs" />
+    <Compile Include="Core\Classes\Lua\LuaTableIdentifier.cs" />
     <Compile Include="Core\Classes\Lua\LuaTemplate.cs" />
     <Compile Include="Core\Classes\Lua\LuaText.cs" />
-    <Compile Include="Core\Classes\Lua\DefinitionLua.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\DefinitionLuaBuilder.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\AuxiliaryCode.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\CheckQuestAllTargetDynamic.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\CheckQuestAnimal.cs" />
@@ -157,7 +159,7 @@
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\OnUpdate.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\QStep_Main.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\QStep_Start.cs" />
-    <Compile Include="Core\Classes\Lua\MainLua.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainLuaBuilder.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\QuestTable.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\BuildManager.cs" />
@@ -430,7 +432,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\LuaBuilder.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

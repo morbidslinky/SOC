@@ -13,6 +13,7 @@ namespace SOC.Classes.Lua
     [XmlInclude(typeof(LuaTableIdentifier))]
     [XmlInclude(typeof(LuaVariable))]
     [XmlInclude(typeof(LuaFunction))]
+    [XmlInclude(typeof(LuaFunctionCall))]
     public abstract class LuaValue
     {
         [XmlIgnore] public TemplateRestrictionType Type { get; set; }
@@ -32,6 +33,7 @@ namespace SOC.Classes.Lua
             TABLE,
             TABLE_IDENTIFIER,
             FUNCTION,
+            CALL_FUNCTION,
             VARIABLE,
             ASSIGN_VARIABLE,
             TEMPLATE_ERROR

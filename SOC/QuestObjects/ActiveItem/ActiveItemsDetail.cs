@@ -53,7 +53,7 @@ namespace SOC.QuestObjects.ActiveItem
             ActiveItemFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainLuaBuilder mainLua)
         {
             ActiveItemLua.GetMain(this, mainLua);
         }

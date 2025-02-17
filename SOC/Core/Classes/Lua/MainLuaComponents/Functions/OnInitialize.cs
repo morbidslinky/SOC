@@ -8,7 +8,7 @@ namespace SOC.Classes.Lua
 {
     class OnInitialize
     {
-        public string ToLua(MainLua mainLua)
+        public string ToLua(MainLuaBuilder mainLua)
         {
             return @"
 function this.OnInitialize()

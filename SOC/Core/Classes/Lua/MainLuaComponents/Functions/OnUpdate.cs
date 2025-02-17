@@ -10,7 +10,7 @@ namespace SOC.Classes.Lua
     {
         List<string> onUpdateList = new List<string>();
 
-        public string ToLua(MainLua mainLua)
+        public string ToLua(MainLuaBuilder mainLua)
         {
             StringBuilder onUpdateBuilder = new StringBuilder(@"
 function this.OnUpdate()

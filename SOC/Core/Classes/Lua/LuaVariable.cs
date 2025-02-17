@@ -40,7 +40,7 @@ namespace SOC.Classes.Lua
                 foreach (var path in table.GetTablePaths(true))
                 {
                     var varIdentifier = new LuaTableIdentifier(this, path.ToArray());
-                    luaBuilder.AppendLine(varIdentifier.GetAssignmentLua(this));
+                    luaBuilder.Append(varIdentifier.GetAssignmentLua(this));
                 }
         }
 

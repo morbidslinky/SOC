@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace SOC.Classes.Common
 {
-    [XmlType("DefinitionDetails")]
+    [XmlType("SetupDetails")]
     public class SetupDetails
     {
         [XmlElement]
