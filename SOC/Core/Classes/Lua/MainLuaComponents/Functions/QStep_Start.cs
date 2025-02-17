@@ -15,7 +15,7 @@ namespace SOC.Classes.Lua
             OnEnterList.Add(code);
         }
 
-        public string ToLua(MainLuaBuilder mainLua)
+        public string ToLua(MainScriptBuilder mainLua)
         {
             return$@"
 quest_step.QStep_Start = {{

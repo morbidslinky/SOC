@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.WalkerGear
 
         static readonly LuaFunctionOldFormat checkWalkerGear = new LuaFunctionOldFormat("CheckIsWalkerGear", new string[] { "gameId" }, " return Tpp.IsEnemyWalkerGear(gameId); ");
 
-        internal static void GetDefinition(WalkerGearsDetail walkerDetail, DefinitionLuaBuilder definitionLua)
+        internal static void GetDefinition(WalkerGearsDetail walkerDetail, DefinitionScriptBuilder definitionLua)
         {
             int walkerCount = walkerDetail.walkers.Count;
 
@@ -34,7 +34,7 @@ namespace SOC.QuestObjects.WalkerGear
             }
         }
 
-        internal static void GetMain(WalkerGearsDetail detail, MainLuaBuilder mainLua)
+        internal static void GetMain(WalkerGearsDetail detail, MainScriptBuilder mainLua)
         {
             List<WalkerGear> walkers = detail.walkers;
             WalkerGearsMetadata meta = detail.walkerMetadata;

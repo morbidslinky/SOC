@@ -66,8 +66,8 @@ namespace SOC.Classes.Lua
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
 
-        public CheckQuestGenericEnemy(MainLuaBuilder mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets, "genericTargets", checkFunction, objectiveType) { }
+        public CheckQuestGenericEnemy(MainScriptBuilder mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets, "genericTargets", checkFunction, objectiveType) { }
 
-        public CheckQuestGenericEnemy(MainLuaBuilder mainLua) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets) { }
+        public CheckQuestGenericEnemy(MainScriptBuilder mainLua) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets) { }
     }
 }

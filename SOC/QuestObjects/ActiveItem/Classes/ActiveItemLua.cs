@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.ActiveItem
     {
         static readonly LuaFunctionOldFormat checkIsActiveItem = new LuaFunctionOldFormat("checkIsActiveItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == true); ");
 
-        internal static void GetMain(ActiveItemsDetail questDetail, MainLuaBuilder mainLua)
+        internal static void GetMain(ActiveItemsDetail questDetail, MainScriptBuilder mainLua)
         {
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {

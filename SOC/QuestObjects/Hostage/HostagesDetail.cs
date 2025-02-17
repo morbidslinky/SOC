@@ -53,12 +53,12 @@ namespace SOC.QuestObjects.Hostage
             HostageFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLuaBuilder mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             HostageLua.GetMain(this, mainLua);
         }
 
-        public override void AddToDefinitionLua(DefinitionLuaBuilder definitionLua)
+        public override void AddToDefinitionLua(DefinitionScriptBuilder definitionLua)
         {
             HostageLua.GetDefinition(this, definitionLua);
         }

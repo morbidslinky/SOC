@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
             return (CheckQuestMethods.Exists(pair => pair.TallyMethod.Equals(methodsPair.TallyMethod) || pair.TargetMessageMethod.Equals(methodsPair.TargetMessageMethod)));
         }
 
-        public string ToLua(MainLuaBuilder mainLua)
+        public string ToLua(MainScriptBuilder mainLua)
         {
 
             return $@"{GetCheckFunctions()}
@@ -60,21 +60,21 @@ namespace SOC.Classes.Lua
     {
         public LuaFunctionOldFormat TargetMessageMethod, TallyMethod;
 
-        public CheckQuestMethodsPair(MainLuaBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string targetTableName, LuaFunctionOldFormat check, string objective)
+        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string targetTableName, LuaFunctionOldFormat check, string objective)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
             mainLua.AddToObjectiveTypes(targetTableName, new GenericTargetPair(check, objective));
         }
 
-        public CheckQuestMethodsPair(MainLuaBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string oneLineObjective)
+        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string oneLineObjective)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
             mainLua.AddToObjectiveTypes(oneLineObjective);
         }
 
-        public CheckQuestMethodsPair(MainLuaBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b)
+        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);

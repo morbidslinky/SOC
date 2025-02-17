@@ -12,7 +12,7 @@ namespace SOC.QuestObjects.Item
 
         static readonly LuaFunctionOldFormat checkIsDormantItem = new LuaFunctionOldFormat("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
         
-        internal static void GetDefinition(ItemsDetail questDetail, DefinitionLuaBuilder definitionLua)
+        internal static void GetDefinition(ItemsDetail questDetail, DefinitionScriptBuilder definitionLua)
         {
             List<string> requestList = new List<string>();
             foreach(Item item in questDetail.items)
@@ -28,7 +28,7 @@ namespace SOC.QuestObjects.Item
             definitionLua.AddToRequestEquipIds(requestList);
         }
 
-        internal static void GetMain(ItemsDetail questDetail, MainLuaBuilder mainLua)
+        internal static void GetMain(ItemsDetail questDetail, MainScriptBuilder mainLua)
         {
             if (questDetail.items.Any(item => item.isTarget))
             {

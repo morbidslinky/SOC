@@ -40,9 +40,9 @@ namespace SOC.QuestObjects.Common
 
         public virtual void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList) { return; }
 
-        public virtual void AddToDefinitionLua(DefinitionLuaBuilder definitionLua) { return; }
+        public virtual void AddToDefinitionLua(DefinitionScriptBuilder definitionLua) { return; }
 
-        public virtual void AddToMainLua(MainLuaBuilder mainLua) { return; }
+        public virtual void AddToMainLua(MainScriptBuilder mainLua) { return; }
 
         public virtual void AddToAssets(CommonAssetsBuilder assetsBuilder) { return; }
     }

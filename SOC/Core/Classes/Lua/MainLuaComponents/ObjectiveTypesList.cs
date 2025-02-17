@@ -11,7 +11,7 @@ namespace SOC.Classes.Lua
         public List<GenericTargetTable> targetTables = new List<GenericTargetTable>();
         public List<string> oneLineObjectiveTypes = new List<string>();
 
-        public string ToLua(MainLuaBuilder mainLua)
+        public string ToLua(MainScriptBuilder mainLua)
         {
             return $@"{GetObjectiveFunctions()}
 {GetObjectiveTypesList()}

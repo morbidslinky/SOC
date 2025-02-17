@@ -50,12 +50,12 @@ namespace SOC.QuestObjects.Item
             ItemFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLuaBuilder mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             ItemLua.GetMain(this, mainLua);
         }
 
-        public override void AddToDefinitionLua(DefinitionLuaBuilder definitionLua)
+        public override void AddToDefinitionLua(DefinitionScriptBuilder definitionLua)
         {
             ItemLua.GetDefinition(this, definitionLua);
         }

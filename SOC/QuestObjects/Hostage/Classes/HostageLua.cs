@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.Hostage
 
         static readonly LuaFunctionOldFormat CheckIsHostage = new LuaFunctionOldFormat("CheckIsHostage", new string[] { "gameId" }, " return Tpp.IsHostage(gameId); ");
 
-        public static void GetDefinition(HostagesDetail hostageDetail, DefinitionLuaBuilder definitionLua)
+        public static void GetDefinition(HostagesDetail hostageDetail, DefinitionScriptBuilder definitionLua)
         {
             int hostageCount = hostageDetail.hostages.Count;
             BodyInfoEntry hostageBody = NPCBodyInfo.GetBodyInfo(hostageDetail.hostageMetadata.hostageBodyName);
@@ -38,7 +38,7 @@ namespace SOC.QuestObjects.Hostage
             }
         }
 
-        public static void GetMain(HostagesDetail hostageDetail, MainLuaBuilder mainLua)
+        public static void GetMain(HostagesDetail hostageDetail, MainScriptBuilder mainLua)
         {
             List<Hostage> hostages = hostageDetail.hostages;
             HostageMetadata meta = hostageDetail.hostageMetadata;

@@ -8,7 +8,7 @@ namespace SOC.Classes.Lua
 {
     class OnTerminate
     {
-        public string ToLua(MainLuaBuilder mainLua)
+        public string ToLua(MainScriptBuilder mainLua)
         {
             return @"
 function this.OnTerminate()

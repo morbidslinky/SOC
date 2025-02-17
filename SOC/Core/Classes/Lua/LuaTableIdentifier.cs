@@ -60,7 +60,7 @@ namespace SOC.Classes.Lua
                             else
                                 luaBuilder.Append($"[{key}]");
                         }
-                        luaBuilder.AppendLine($" = {luaValue}");
+                        luaBuilder.AppendLine($" = {luaValue}\n");
                         return luaBuilder.ToString();
                     }
                 }

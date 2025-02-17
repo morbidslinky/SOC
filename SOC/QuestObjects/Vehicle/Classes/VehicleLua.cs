@@ -13,7 +13,7 @@ namespace SOC.QuestObjects.Vehicle
 
         static readonly LuaFunctionOldFormat warpVehicles = new LuaFunctionOldFormat("WarpVehicles", new string[] { }, " for i,vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList)do local gameObjectId= GetGameObjectId(vehicleInfo.locator); if gameObjectId~=GameObject.NULL_ID then local position=vehicleInfo.position; local command={id=\"SetPosition\",rotY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3])}; GameObject.SendCommand(gameObjectId,command); end; end; ");
         
-        public static void GetMain(VehiclesDetail detail, MainLuaBuilder mainLua)
+        public static void GetMain(VehiclesDetail detail, MainScriptBuilder mainLua)
         {
             mainLua.AddToQuestTable(BuildVehicleList(detail.vehicles));
 

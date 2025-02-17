@@ -138,7 +138,7 @@
     <Compile Include="Core\Classes\Lua\LuaTableIdentifier.cs" />
     <Compile Include="Core\Classes\Lua\LuaTemplate.cs" />
     <Compile Include="Core\Classes\Lua\LuaText.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\DefinitionLuaBuilder.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\DefinitionScriptBuilder.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\AuxiliaryCode.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\CheckQuestAllTargetDynamic.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\CheckQuestAnimal.cs" />
@@ -159,7 +159,7 @@
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\OnUpdate.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\QStep_Main.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\Functions\QStep_Start.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainLuaBuilder.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder.cs" />
     <Compile Include="Core\Classes\Lua\MainLuaComponents\QuestTable.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\BuildManager.cs" />

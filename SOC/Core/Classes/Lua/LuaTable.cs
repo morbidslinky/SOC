@@ -259,6 +259,7 @@ namespace SOC.Classes.Lua
             LuaTableEntry tableEntry = new LuaTableEntry();
             tableEntry.Key = GetEntryValueType(key);
             tableEntry.Value = GetEntryValueType(val);
+            tableEntry.ExtrudeForAssignmentVariable = extrude;
 
             return tableEntry;
         }
@@ -267,6 +268,7 @@ namespace SOC.Classes.Lua
         {
             LuaTableEntry tableEntry = new LuaTableEntry();
             tableEntry.Value = GetEntryValueType(val);
+            tableEntry.ExtrudeForAssignmentVariable = extrude;
 
             return tableEntry;
         }

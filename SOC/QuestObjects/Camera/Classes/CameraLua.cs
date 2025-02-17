@@ -15,7 +15,7 @@ namespace SOC.QuestObjects.Camera
             new string[] {},
             "GameObject.SendCommand({{type=\"TppSecurityCamera2\"}}, {{id=\"SetDevelopLevel\", developLevel=6}}); for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do local gameObjectId= GetGameObjectId(cameraInfo.name); if gameObjectId~=GameObject.NULL_ID then if cameraInfo.commands then for j, cameraCommand in ipairs(cameraInfo.commands) do GameObject.SendCommand(gameObjectId, cameraCommand); end; end; end; end; ");
         
-        internal static void GetMain(CamerasDetail detail, MainLuaBuilder mainLua)
+        internal static void GetMain(CamerasDetail detail, MainScriptBuilder mainLua)
         {
             if (detail.cameras.Count > 0)
             {

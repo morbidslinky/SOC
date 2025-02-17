@@ -63,6 +63,6 @@ namespace SOC.Classes.Lua
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
         
-        public CheckQuestItem(MainLuaBuilder mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
+        public CheckQuestItem(MainScriptBuilder mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
     }
 }

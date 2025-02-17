@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class MainLuaBuilder
+    public class MainScriptBuilder
     {
         public SetupDetails setupDetails;
         public ObjectsDetails objectsDetails;
@@ -29,11 +29,11 @@ namespace SOC.Classes.Lua
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
 
-        public MainLuaBuilder()
+        public MainScriptBuilder()
         {
             
         }
-        public MainLuaBuilder(SetupDetails _setupDetails, ObjectsDetails _objectsDetails)
+        public MainScriptBuilder(SetupDetails _setupDetails, ObjectsDetails _objectsDetails)
         {
             setupDetails = _setupDetails; objectsDetails = _objectsDetails;
         }
@@ -145,7 +145,7 @@ namespace SOC.Classes.Lua
             return functionBuilder.ToString();
         }
 
-        public void Build(string buildArchivePath, SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public void Build(string mainLuaFilePath)
         {
             /*
             string LuaScriptPath = Path.Combine(dir, setupDetails.FpkName + "_fpkd", "Assets/tpp/level/mission2/quest/ih");

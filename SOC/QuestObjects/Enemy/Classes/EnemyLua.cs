@@ -12,7 +12,7 @@ namespace SOC.QuestObjects.Enemy
     {
         static readonly LuaFunctionOldFormat CheckIsSoldier = new LuaFunctionOldFormat("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
 
-        public static void GetDefinition(EnemiesDetail detail, DefinitionLuaBuilder definitionLua)
+        public static void GetDefinition(EnemiesDetail detail, DefinitionScriptBuilder definitionLua)
         {
             if (detail.enemies.Count > 0)
             {
@@ -107,7 +107,7 @@ namespace SOC.QuestObjects.Enemy
             }
         }
 
-        public static void GetMain(EnemiesDetail detail, MainLuaBuilder mainLua)
+        public static void GetMain(EnemiesDetail detail, MainScriptBuilder mainLua)
         {
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;

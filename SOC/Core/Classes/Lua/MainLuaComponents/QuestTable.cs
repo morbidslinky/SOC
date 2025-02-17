@@ -54,7 +54,7 @@ namespace SOC.Classes.Lua
             return null;
         }
 
-        public string ToLua(MainLuaBuilder mainLua)
+        public string ToLua(MainScriptBuilder mainLua)
         {
             return GetQuestTableFormatted();
         }

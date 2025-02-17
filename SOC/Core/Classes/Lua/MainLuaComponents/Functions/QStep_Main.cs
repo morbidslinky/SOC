@@ -52,7 +52,7 @@ namespace SOC.Classes.Lua
             return false;
         }
 
-        public string ToLua(MainLuaBuilder mainLua)
+        public string ToLua(MainScriptBuilder mainLua)
         {
             return $@"
 quest_step.QStep_Main = {{

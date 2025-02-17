@@ -66,6 +66,6 @@ namespace SOC.Classes.Lua
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
 
-        public CheckQuestAnimal(MainLuaBuilder mainLua, string objectiveType) : base(mainLua, IsTargetSetMessageIdForAnimal, TallyAnimalTargets, "animalObjective = " + objectiveType) { }
+        public CheckQuestAnimal(MainScriptBuilder mainLua, string objectiveType) : base(mainLua, IsTargetSetMessageIdForAnimal, TallyAnimalTargets, "animalObjective = " + objectiveType) { }
     }
 }

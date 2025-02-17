@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SOC.Classes.Lua
 {
-    public class DefinitionLuaBuilder
+    public class DefinitionScriptBuilder
     {
         private LuaTable definitionTable = new LuaTable();
         private LuaTable questPackList = new LuaTable();
@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
         private LuaTable disableLzs = new LuaTable();
         private LuaTable requestEquipIds = new LuaTable();
 
-        public DefinitionLuaBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public DefinitionScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             questPackList.AddOrSet(
                 new LuaTableEntry[] {
@@ -139,6 +139,7 @@ namespace SOC.Classes.Lua
         {
             var definitionLua = new LuaFunction(new LuaTemplate("local |[0|assign_variable]| return |[0|variable]|"), new LuaVariable("this", definitionTable));
             definitionLua.WriteToLua(definitionLuaFilePath);
+            definitionLua.WriteToXml(definitionLuaFilePath + ".xml");
         }
     }
 }
