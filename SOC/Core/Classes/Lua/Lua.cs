@@ -56,7 +56,23 @@ namespace SOC.Classes.Lua
 
         public static LuaTemplate Template(string text) { return new LuaTemplate(text); }
 
-        public static LuaTable Table(params LuaTableEntry[] entries) { return new LuaTable(entries); }
+        public static LuaTable Table<Entry>(params Entry[] entries) 
+        { 
+            LuaTable table = new LuaTable();
+
+            if (entries is LuaTableEntry[] explicitTableEntries)
+            {
+                return new LuaTable(explicitTableEntries);
+            }
+
+            LuaTableEntry[] implicitTableEntries = new LuaTableEntry[entries.Length];
+            for(int i = 0; i < entries.Length; i++)
+            {
+                implicitTableEntries[i] = TableEntry(GetEntryValueType(entries[i]));
+            }
+
+            return new LuaTable(implicitTableEntries); 
+        }
 
         public static LuaTableIdentifier TableIdentifier<Name, Key>(Name tableVar, params Key[] keys) 
         {
@@ -121,16 +137,39 @@ namespace SOC.Classes.Lua
             return new LuaFunction(new LuaTemplate(template), new LuaValue[0], new string[0]);
         }
 
-        public static LuaFunctionCall FunctionCall<Value>(Value name, params LuaValue[] args)
+        public static LuaFunctionCall FunctionCall<NameValue, ArgValue>(NameValue name, params ArgValue[] args)
         {
+            LuaFunctionCall call = new LuaFunctionCall();
+
             switch (name)
             {
-                case string s: return new LuaFunctionCall(s, args);
-                case LuaVariable v: return new LuaFunctionCall(v.GetVarName(), args);
-                case LuaTableIdentifier i: return new LuaFunctionCall(i.GetIdentifier(), args);
-                case LuaFunction f: return new LuaFunctionCall($"({f.GetLuaFunction()})", args);
-                default: return new LuaFunctionCall($"({new LuaFunction()})", args);
+                case string s: call.FunctionVariableName = s; break;
+                case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
+                case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
+                case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunction()})"; break;
+                default: call.FunctionVariableName = $"({new LuaFunction()})"; break;
             }
+
+            call.Arguments = Values(args);
+
+            return call;
+        }
+        public static LuaFunctionCall FunctionCall<NameValue>(NameValue name, params LuaValue[] args)
+        {
+            LuaFunctionCall call = new LuaFunctionCall();
+
+            switch (name)
+            {
+                case string s: call.FunctionVariableName = s; break;
+                case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
+                case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
+                case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunction()})"; break;
+                default: call.FunctionVariableName = $"({new LuaFunction()})"; break;
+            }
+
+            call.Arguments = args;
+
+            return call;
         }
 
         public static LuaTableEntry TableEntry<TableKeyValue, TableValue>(TableKeyValue key, TableValue val, bool extrude = false)

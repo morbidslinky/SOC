@@ -51,12 +51,8 @@ namespace SOC.Classes.Lua
             {
                 AddToQuestVariablesTable(Lua.TableEntry("CPNAME", 
                     Lua.FunctionCall(
-                        Lua.TableIdentifier("InfMain", Lua.Text("GetClosestCp")).ToString(),
-                        Lua.Table(
-                            Lua.TableEntry(Lua.Number(setupDetails.coords.xCoord)),
-                            Lua.TableEntry(Lua.Number(setupDetails.coords.yCoord)),
-                            Lua.TableEntry(Lua.Number(setupDetails.coords.zCoord))
-                            ))));
+                        Lua.TableIdentifier("InfMain", "GetClosestCp"),
+                        Lua.Table(setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord))));
             }
             else
             {

@@ -18,7 +18,7 @@ namespace SOC.Classes.Lua
         public LuaValue[] Arguments { get; set; }
         public override string Value => GetFunctionCall();
 
-        public LuaFunctionCall() : base() { }
+        public LuaFunctionCall() : base(TemplateRestrictionType.CALL_FUNCTION) { }
         public LuaFunctionCall(string functionVariableName, params LuaValue[] args) : base(TemplateRestrictionType.CALL_FUNCTION)
         {
             FunctionVariableName = functionVariableName;

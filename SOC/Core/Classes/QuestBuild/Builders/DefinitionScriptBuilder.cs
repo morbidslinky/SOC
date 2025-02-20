@@ -45,7 +45,7 @@ namespace SOC.Classes.Lua
             definitionTable.AddOrSet(
                 Lua.TableEntry("locationId", setupDetails.locationID),
                 Lua.TableEntry("areaName", setupDetails.loadArea),
-                Lua.TableEntry("iconPos", Lua.FunctionCall("Vector3", Lua.Values(setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord))),
+                Lua.TableEntry("iconPos", Lua.FunctionCall("Vector3", setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord)),
                 Lua.TableEntry("radius", Lua.Number(setupDetails.radius)),
                 Lua.TableEntry("category", Lua.TableIdentifier("TppQuest", Lua.Values("QUEST_CATEGORIES_ENUM", setupDetails.category))),
                 Lua.TableEntry("questCompleteLangId", setupDetails.progressLangID),

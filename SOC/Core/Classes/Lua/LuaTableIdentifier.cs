@@ -17,7 +17,7 @@ namespace SOC.Classes.Lua
         public LuaValue[] IdentifierKeys { get; set; }
         public override string Value => GetIdentifier();
 
-        public LuaTableIdentifier() : base() { }
+        public LuaTableIdentifier() : base(TemplateRestrictionType.TABLE_IDENTIFIER) { }
         public LuaTableIdentifier(string identifierVariableName, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
         {
             IdentifierVariableName = identifierVariableName;
