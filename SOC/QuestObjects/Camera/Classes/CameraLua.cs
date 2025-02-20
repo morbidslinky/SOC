@@ -10,7 +10,7 @@ namespace SOC.QuestObjects.Camera
 {
     class CameraLua
     {
-        static readonly LuaFunctionOldFormat SetCameraAttributes = new LuaFunctionOldFormat(
+        static readonly LuaTableEntry SetCameraAttributes = LuaFunction.ToTableEntry(
             "SetCameraAttributes", 
             new string[] {},
             "GameObject.SendCommand({{type=\"TppSecurityCamera2\"}}, {{id=\"SetDevelopLevel\", developLevel=6}}); for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do local gameObjectId= GetGameObjectId(cameraInfo.name); if gameObjectId~=GameObject.NULL_ID then if cameraInfo.commands then for j, cameraCommand in ipairs(cameraInfo.commands) do GameObject.SendCommand(gameObjectId, cameraCommand); end; end; end; end; ");
@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.Camera
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.AddToQStep_Start_OnEnter(SetCameraAttributes);
-                mainLua.AddToAuxiliary(SetCameraAttributes);
+                mainLua.AddToQuestVariablesTable(SetCameraAttributes);
 
                 if(detail.cameras.Any(camera => camera.isTarget))
                 {

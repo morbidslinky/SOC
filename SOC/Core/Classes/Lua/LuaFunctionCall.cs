@@ -24,11 +24,6 @@ namespace SOC.Classes.Lua
             FunctionVariableName = functionVariableName;
             Arguments = args;
         }
-        public LuaFunctionCall(LuaVariable functionVariable, params LuaValue[] args) : base(TemplateRestrictionType.CALL_FUNCTION)
-        {
-            FunctionVariableName = functionVariable.GetVarName();
-            Arguments = args;
-        }
 
         public string GetFunctionCall()
         {

@@ -83,7 +83,7 @@ namespace SOC.Classes.Lua
         {
             if (depth == nestedTableKeys.Length - 1)
             {
-                var nestedTableEntry = LuaTableEntry.Create(nestedTableKeys[depth], value, extrude);
+                var nestedTableEntry = Lua.TableEntry(nestedTableKeys[depth], value, extrude);
                 return TryAdd(nestedTableEntry);
             }
 
@@ -96,7 +96,7 @@ namespace SOC.Classes.Lua
             if (!TryGet(key, out LuaValue value, out bool _) || !(value is LuaTable table))
             {
                 table = new LuaTable();
-                var nestedTable = LuaTableEntry.Create(key, table);
+                var nestedTable = Lua.TableEntry(key, table);
                 TryAdd(nestedTable);
             }
             return table;
@@ -253,48 +253,6 @@ namespace SOC.Classes.Lua
         public bool ExtrudeForAssignmentVariable { get; set; }
 
         public LuaTableEntry() { }
-
-        public static LuaTableEntry Create<TableKeyValue, TableValue>(TableKeyValue key, TableValue val, bool extrude = false)
-        {
-            LuaTableEntry tableEntry = new LuaTableEntry();
-            tableEntry.Key = GetEntryValueType(key);
-            tableEntry.Value = GetEntryValueType(val);
-            tableEntry.ExtrudeForAssignmentVariable = extrude;
-
-            return tableEntry;
-        }
-
-        public static LuaTableEntry Create<TableValue>(TableValue val, bool extrude = false)
-        {
-            LuaTableEntry tableEntry = new LuaTableEntry();
-            tableEntry.Value = GetEntryValueType(val);
-            tableEntry.ExtrudeForAssignmentVariable = extrude;
-
-            return tableEntry;
-        }
-
-        private static LuaValue GetEntryValueType<TableValue>(TableValue val)
-        {
-            LuaValue tableEntry;
-
-            switch (val)
-            {
-                case string valueString:
-                    tableEntry = new LuaText(valueString); break;
-                case double valueDouble:
-                    tableEntry = new LuaNumber(valueDouble); break;
-                case int valueInt:
-                    tableEntry = new LuaNumber(valueInt); break;
-                case bool valueBool:
-                    tableEntry = new LuaBoolean(valueBool); break;
-                case LuaValue value:
-                    tableEntry = value; break;
-                default:
-                    tableEntry = new LuaText("Unsupported Value Type"); break;
-            }
-
-            return tableEntry;
-        }
     }
 
 }

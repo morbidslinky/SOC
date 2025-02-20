@@ -10,7 +10,7 @@ namespace SOC.QuestObjects.Item
     class ItemLua
     {
 
-        static readonly LuaFunctionOldFormat checkIsDormantItem = new LuaFunctionOldFormat("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
+        static readonly LuaTableEntry checkIsDormantItem = LuaFunction.ToTableEntry("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
         
         internal static void GetDefinition(ItemsDetail questDetail, DefinitionScriptBuilder definitionLua)
         {

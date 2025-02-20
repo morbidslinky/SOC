@@ -10,7 +10,7 @@ namespace SOC.QuestObjects.Enemy
 {
     static class EnemyLua
     {
-        static readonly LuaFunctionOldFormat CheckIsSoldier = new LuaFunctionOldFormat("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
+        static readonly LuaTableEntry CheckIsSoldier = LuaFunction.ToTableEntry("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
 
         public static void GetDefinition(EnemiesDetail detail, DefinitionScriptBuilder definitionLua)
         {
@@ -112,7 +112,7 @@ namespace SOC.QuestObjects.Enemy
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;
             
-            mainLua.AddToOpeningVariables("SUBTYPE", $@"""{meta.subtype}""");
+            mainLua.AddToQuestVariablesTable(Lua.TableEntry("SUBTYPE", meta.subtype));
 
             mainLua.AddToQuestTable(BuildEnemyList(enemies));
             bool hasSpawn = false;

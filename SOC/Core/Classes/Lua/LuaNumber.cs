@@ -13,10 +13,6 @@ namespace SOC.Classes.Lua
         public override string Value => Number.ToString();
 
         public LuaNumber() : base(TemplateRestrictionType.NUMBER) { }
-        public LuaNumber(string number) : base(TemplateRestrictionType.NUMBER)
-        {
-            Number = double.TryParse(number, out double result) ? result : 0;
-        }
         public LuaNumber(double number) : base(TemplateRestrictionType.NUMBER)
         {
             Number = number;

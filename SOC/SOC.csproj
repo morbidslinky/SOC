@@ -128,6 +128,7 @@
     <Compile Include="Core\Classes\Fox2\EntityClasses\Transform.cs" />
     <Compile Include="Core\Classes\Fox2\Fox2EntityClass.cs" />
     <Compile Include="Core\Classes\InfiniteHeaven\Position.cs" />
+    <Compile Include="Core\Classes\Lua\Lua.cs" />
     <Compile Include="Core\Classes\Lua\LuaBoolean.cs" />
     <Compile Include="Core\Classes\Lua\LuaFunction.cs" />
     <Compile Include="Core\Classes\Lua\LuaFunctionCall.cs" />

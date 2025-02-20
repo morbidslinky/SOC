@@ -11,14 +11,10 @@ namespace SOC.Classes.Lua
 {
     public class MainScriptBuilder
     {
-        public SetupDetails setupDetails;
-        public ObjectsDetails objectsDetails;
+        public SetupDetails SetupDetails;
+        public ObjectsDetails ObjectsDetails;
 
-        List<string> functionList = new List<string>();
-
-        OpeningVariables openingVariables = new OpeningVariables();
-        AuxiliaryCode auxiliaryCode = new AuxiliaryCode();
-        OnAllocate onAllocate = new OnAllocate();
+        List<LuaFunctionCall> onAllocateOnTerminateCalls = new List<LuaFunctionCall>();
         Messages messages = new Messages();
         OnInitialize onInitialize = new OnInitialize();
         QuestTable questTable = new QuestTable();
@@ -29,35 +25,63 @@ namespace SOC.Classes.Lua
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
 
-        public MainScriptBuilder()
-        {
-            
-        }
-        public MainScriptBuilder(SetupDetails _setupDetails, ObjectsDetails _objectsDetails)
-        {
-            setupDetails = _setupDetails; objectsDetails = _objectsDetails;
-        }
-        
-        public void AddToOpeningVariables(string variableName, string value = "")
-        {
-            openingVariables.Add(variableName, value);
-        }
 
-        public void AddToAuxiliary(LuaFunctionOldFormat function)
-        {
-            auxiliaryCode.Add(function.ToLua());
-        }
 
-        public void AddToAuxiliary(string localVar)
-        {
-            auxiliaryCode.Add(localVar);
-        }
+        private LuaTable qvarTable = new LuaTable();
+        private LuaTable mainTable = new LuaTable();
+        private LuaTable stepTable = new LuaTable();
 
-        public void AddToOnTerminate(string call)
+        public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
-            if (!onAllocate.contains(call))
+            SetupDetails = setupDetails; ObjectsDetails = objectsDetails;
+
+            foreach (ObjectsDetail detail in objectsDetails.details)
             {
-                onAllocate.AddOnTerminate(call);
+                detail.AddToMainLua(this);
+            }
+
+            AddToQuestVariablesTable(Lua.TableEntry("StrCode32", Lua.TableIdentifier("Fox", Lua.Text("StrCode32"))));
+            AddToQuestVariablesTable(Lua.TableEntry("StrCode32Table", Lua.TableIdentifier("Tpp", Lua.Text("StrCode32Table"))));
+            AddToQuestVariablesTable(Lua.TableEntry("GetGameObjectId", Lua.TableIdentifier("GameObject", Lua.Text("GetGameObjectId"))));
+            AddToQuestVariablesTable(Lua.TableEntry("ELIMINATE", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("ELIMINATE"))));
+            AddToQuestVariablesTable(Lua.TableEntry("RECOVERED", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("RECOVERED"))));
+            AddToQuestVariablesTable(Lua.TableEntry("KILLREQUIRED", 9));
+
+            if (setupDetails.CPName == "NONE")
+            {
+                AddToQuestVariablesTable(Lua.TableEntry("CPNAME", 
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfMain", Lua.Text("GetClosestCp")).ToString(),
+                        Lua.Table(
+                            Lua.TableEntry(Lua.Number(setupDetails.coords.xCoord)),
+                            Lua.TableEntry(Lua.Number(setupDetails.coords.yCoord)),
+                            Lua.TableEntry(Lua.Number(setupDetails.coords.zCoord))
+                            ))));
+            }
+            else
+            {
+                AddToQuestVariablesTable(Lua.TableEntry("CPNAME", setupDetails.CPName));
+            }
+
+            AddToQuestVariablesTable(Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)));
+            AddToQuestVariablesTable(Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{setupDetails.loadArea}"));
+
+            AddToQuestTable("questType = ELIMINATE");
+            AddToQuestTable("soldierSubType = SUBTYPE");
+
+            mainTable.AddOrSet(OnAllocate.Get(onAllocateOnTerminateCalls));
+        }
+
+        public void AddToQuestVariablesTable(LuaTableEntry tableEntry) // convert to just one generic function
+        {
+            qvarTable.AddOrSet(tableEntry);
+        }
+
+        public void AddToOnTerminate(LuaFunctionCall call)
+        {
+            if (!onAllocateOnTerminateCalls.Contains(call))
+            {
+                onAllocateOnTerminateCalls.Add(call);
             }
         }
 
@@ -67,10 +91,10 @@ namespace SOC.Classes.Lua
                 qStep_start.AddToOnEnter(functionCall);
         }
 
-        public void AddToQStep_Start_OnEnter(params LuaFunctionOldFormat[] auxiliaryFunctions)
+        public void AddToQStep_Start_OnEnter(params LuaTableEntry[] auxiliaryFunctions)
         {
-            foreach (LuaFunctionOldFormat function in auxiliaryFunctions)
-                qStep_start.AddToOnEnter($"InfCore.PCall(this.{function.FunctionName})");
+            foreach (LuaTableEntry function in auxiliaryFunctions)
+                qStep_start.AddToOnEnter($"InfCore.PCall(qvars.{function.Key})");
         }
 
         public void AddToCheckQuestMethod(CheckQuestMethodsPair methodsPair)
@@ -118,198 +142,66 @@ namespace SOC.Classes.Lua
                     qStep_main.Add(message);
         }
 
-        public string GetMainLuaFormatted()
-        {
-            StringBuilder functionBuilder = new StringBuilder();
-
-            functionBuilder.Append(openingVariables.ToLua(this)); // local variables declared before the quest table
-            functionBuilder.Append(questTable.ToLua(this)); // the quest table, which lists information on every lua quest object for the sideop
-            functionBuilder.Append(auxiliaryCode.ToLua(this)); // functions and variables used for setting up quest objects and other misc. purposes
-            functionBuilder.Append(onAllocate.ToLua(this));// onallocate. namely contains OnTerminate logic 
-            functionBuilder.Append(messages.ToLua(this)); // quest messages, not to be confused with qStep_main messages
-            functionBuilder.Append(onInitialize.ToLua(this));
-            functionBuilder.Append(onUpdate.ToLua(this)); // contains calls to frequent checks
-            functionBuilder.Append(onTerminate.ToLua(this));
-            functionBuilder.Append(qStep_start.ToLua(this)); // calls auxiliary setup functions
-            functionBuilder.Append(qStep_main.ToLua(this)); // contains a long list of messages which listen for quest updates
-
-            if (questTable.HasTargets())
-            {
-                functionBuilder.Append(objectiveTypesList.ToLua(this)); // contains logic for how a quest update is determined as well as what object has what objective type
-                functionBuilder.Append(checkQuestMethodList.ToLua(this)); // determines what and how to tally up quest objectives
-                functionBuilder.Append(CheckQuestAllTargetDynamic.function.ToLua());
-            }
-
-            functionBuilder.Append(" return this");
-
-            return functionBuilder.ToString();
-        }
-
         public void Build(string mainLuaFilePath)
         {
-            /*
-            string LuaScriptPath = Path.Combine(dir, setupDetails.FpkName + "_fpkd", "Assets/tpp/level/mission2/quest/ih");
-            string LuaScriptFile = Path.Combine(LuaScriptPath, setupDetails.FpkName + ".lua");
-
-            Directory.CreateDirectory(LuaScriptPath);
-
-            File.WriteAllText(LuaScriptFile, BuildMain(setupDetails, objectsDetails));
-
-            MainLuaBuilder mainLua = new MainLuaBuilder(setupDetails, objectsDetails);
-            mainLua.AddToOpeningVariables("this", "{}");
-            mainLua.AddToOpeningVariables("quest_step", "{}");
-            mainLua.AddToOpeningVariables("StrCode32", "Fox.StrCode32");
-            mainLua.AddToOpeningVariables("StrCode32Table", "Tpp.StrCode32Table");
-            mainLua.AddToOpeningVariables("GetGameObjectId", "GameObject.GetGameObjectId");
-            mainLua.AddToOpeningVariables("ELIMINATE", "TppDefine.QUEST_TYPE.ELIMINATE");
-            mainLua.AddToOpeningVariables("RECOVERED", "TppDefine.QUEST_TYPE.RECOVERED");
-            mainLua.AddToOpeningVariables("KILLREQUIRED", "9");
-
-            string cpNameString = setupDetails.CPName;
-            if (setupDetails.CPName == "NONE")
-            {
-                cpNameString = $"InfMain.GetClosestCp{{{setupDetails.coords.xCoord},{setupDetails.coords.yCoord},{setupDetails.coords.zCoord}}}";
-            }
-            else
-            {
-                cpNameString = $@"""{setupDetails.CPName}""";
-            }
-
-            mainLua.AddToOpeningVariables("CPNAME", cpNameString);
-            mainLua.AddToOpeningVariables("DISTANTCP", $@"""{QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)}""");
-            mainLua.AddToOpeningVariables("questTrapName", $@"""trap_preDeactiveQuestArea_{setupDetails.loadArea}""");
-
-            mainLua.AddToQuestTable("questType = ELIMINATE");
-            mainLua.AddToQuestTable("soldierSubType = SUBTYPE");
-
-            foreach (ObjectsDetail detail in objectsDetails.details)
-            {
-                detail.AddToMainLua(mainLua);
-            }
-
-            return mainLua.GetMainLuaFormatted();
-            */
+            var mainScript = Lua.Function("local |[0|assign_variable]| local |[1|assign_variable]| local |[2|assign_variable]| return |[1|variable]|",
+                    Lua.Variable("qvars",qvarTable),
+                    Lua.Variable("this", mainTable),
+                    Lua.Variable("quest_step", stepTable)
+                );
+            mainScript.WriteToLua(mainLuaFilePath);
+            mainScript.WriteToXml(mainLuaFilePath + ".xml");
         }
     }
 
-    class OpeningVariables
+    static class OnAllocate
     {
-        Dictionary<string, string> variableDictionary = new Dictionary<string, string>();
-
-        public string ToLua(MainScriptBuilder mainLua)
+        public static LuaTableEntry Get(List<LuaFunctionCall> calls)
         {
-            return GetVariablesFormatted();
+            LuaFunctionBuilder onAllocate = new LuaFunctionBuilder();
+            onAllocate.Append($@"TppQuest.RegisterQuestStepList{{ ""QStep_Start"", ""QStep_Main"", nil }}
+              TppEnemy.OnAllocateQuestFova(this.QUEST_TABLE)
+              TppQuest.RegisterQuestStepTable(quest_step)
+              TppQuest.RegisterQuestSystemCallbacks{{
+                OnActivate = function()
+                  TppEnemy.OnActivateQuest(this.QUEST_TABLE)
+                  TppAnimal.OnActivateQuest(this.QUEST_TABLE)
+                end,
+                OnDeactivate = function()
+                  TppEnemy.OnDeactivateQuest(this.QUEST_TABLE)
+                  TppAnimal.OnDeactivateQuest(this.QUEST_TABLE)
+                end,
+                OnOutOfAcitveArea = function() 
+                end,
+            ");
+
+            onAllocate.Append(BuildOnTerminate(calls));
+
+            onAllocate.Append($@",
+              }}
+              mvars.fultonInfo = NONE");
+
+            return onAllocate.ToTableEntry("OnAllocate", true);
         }
 
-        public void Add(string name, string value)
+        private static LuaTableEntry BuildOnTerminate(List<LuaFunctionCall> calls)
         {
-            if (variableDictionary.Keys.Contains(name))
-                variableDictionary[name] = value;
-            else
-                variableDictionary.Add(name, value);
-        }
+            LuaFunctionBuilder onTerminate = new LuaFunctionBuilder();
 
-        private string GetVariablesFormatted()
-        {
-            StringBuilder variablesBuilder = new StringBuilder();
-            foreach (KeyValuePair<string, string> variable in variableDictionary)
+            onTerminate.Append(
+                Lua.FunctionCall(Lua.TableIdentifier("TppEnemy", "OnTerminateQuest"), 
+                    Lua.TableIdentifier("this", "QUEST_TABLE")));
+
+            onTerminate.Append(
+                Lua.FunctionCall(Lua.TableIdentifier("TppAnimal", "OnTerminateQuest"), 
+                    Lua.TableIdentifier("this", "QUEST_TABLE")));
+
+            foreach (LuaFunctionCall call in calls)
             {
-                if (variable.Value == "")
-                    variablesBuilder.Append($@"local {variable.Key}
-");
-                else
-                    variablesBuilder.Append($@"local {variable.Key} = {variable.Value}
-");
-            }
-            return variablesBuilder.ToString();
-        }
-    }
-    class AuxiliaryCode
-    {
-        List<string> auxiliaryCodes = new List<string>();
-
-        public void Add(string code)
-        {
-            auxiliaryCodes.Add(code);
-        }
-
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-
-            foreach (StrCodeBlock strCode in mainLua.qStep_main.strCodes)
-            {
-                foreach (StrCodeMsgBlock msgBlock in strCode.msgBlocks)
-                {
-                    foreach (LuaFunctionOldFormat luaFunction in msgBlock.functions)
-                    {
-                        this.Add(luaFunction.ToLua());
-                    }
-                }
-            }
-            StringBuilder auxCodeBuilder = new StringBuilder();
-            foreach (string auxCode in auxiliaryCodes)
-                auxCodeBuilder.Append($@"
-{auxCode}");
-            return auxCodeBuilder.ToString();
-        }
-    }
-
-    class OnAllocate
-    {
-        List<string> onTerminateCalls = new List<string>();
-
-        public void AddOnTerminate(string call)
-        {
-            onTerminateCalls.Add(call);
-        }
-
-        public bool contains(string call)
-        {
-            return onTerminateCalls.Contains(call);
-        }
-
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-            return $@"
-function this.OnAllocate()
-  TppQuest.RegisterQuestStepList{{
-    ""QStep_Start"",
-    ""QStep_Main"",
-    nil
-  }}
-  TppEnemy.OnAllocateQuestFova(this.QUEST_TABLE)
-  TppQuest.RegisterQuestStepTable(quest_step)
-  TppQuest.RegisterQuestSystemCallbacks{{
-    OnActivate = function()
-      TppEnemy.OnActivateQuest(this.QUEST_TABLE)
-      TppAnimal.OnActivateQuest(this.QUEST_TABLE)
-    end,
-    OnDeactivate = function()
-      TppEnemy.OnDeactivateQuest(this.QUEST_TABLE)
-      TppAnimal.OnDeactivateQuest(this.QUEST_TABLE)
-    end,
-    OnOutOfAcitveArea = function() 
-    end,
-    OnTerminate = function(){BuildOnTerminate()}
-    end,
-  }}
-  mvars.fultonInfo = NONE
-end";
-        }
-
-        private string BuildOnTerminate()
-        {
-            AddOnTerminate("TppEnemy.OnTerminateQuest(this.QUEST_TABLE)");
-            AddOnTerminate("TppAnimal.OnTerminateQuest(this.QUEST_TABLE)");
-
-            StringBuilder terminateBuilder = new StringBuilder();
-            foreach (string call in onTerminateCalls)
-            {
-                terminateBuilder.Append($@"
-      {call}");
+                onTerminate.Append(call);
             }
 
-            return terminateBuilder.ToString();
+            return onTerminate.ToTableEntry("OnTerminate");
         }
     }
     class Messages
@@ -549,13 +441,13 @@ quest_step.QStep_Start = {{
 
         public bool Contains(StrCodeBlock _codeBlock)
         {
-            var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaFunctionOldFormat)>();
+            var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaTableEntry)>();
 
             foreach (StrCodeBlock codeBlock in strCodes)
             {
                 foreach (StrCodeMsgBlock msgBlock in codeBlock.msgBlocks)
                 {
-                    foreach (LuaFunctionOldFormat luaFunction in msgBlock.functions)
+                    foreach (LuaTableEntry luaFunction in msgBlock.functions)
                     {
                         existingMsgFunctionPairs.Add((msgBlock, luaFunction));
                     }
@@ -564,7 +456,7 @@ quest_step.QStep_Start = {{
 
             foreach (StrCodeMsgBlock _msgBlock in _codeBlock.msgBlocks)
             {
-                foreach (LuaFunctionOldFormat _luaFunction in _msgBlock.functions)
+                foreach (LuaTableEntry _luaFunction in _msgBlock.functions)
                 {
                     if (existingMsgFunctionPairs.Contains((_msgBlock, _luaFunction)))
                     {
@@ -607,12 +499,12 @@ quest_step.QStep_Main = {{
             strCode = _strCode; msgBlocks.AddRange(_msgBlocks);
         }
 
-        public StrCodeBlock(string _strCode, string _name, string[] _msgArgs, params LuaFunctionOldFormat[] _functions)
+        public StrCodeBlock(string _strCode, string _name, string[] _msgArgs, params LuaTableEntry[] _functions)
         {
             strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _msgArgs, _functions));
         }
 
-        public StrCodeBlock(string _strCode, string _name, string _sender, string[] _msgArgs, params LuaFunctionOldFormat[] _functions)
+        public StrCodeBlock(string _strCode, string _name, string _sender, string[] _msgArgs, params LuaTableEntry[] _functions)
         {
             strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _sender, _msgArgs, _functions));
         }
@@ -656,29 +548,29 @@ quest_step.QStep_Main = {{
         string msg;
         string sender;
         string[] msgArgs;
-        public List<LuaFunctionOldFormat> functions;
+        public List<LuaTableEntry> functions;
 
         public StrCodeMsgBlock(string _name, string[] _msgArgs)
         {
-            msg = _name; sender = ""; msgArgs = _msgArgs; functions = new List<LuaFunctionOldFormat>();
+            msg = _name; sender = ""; msgArgs = _msgArgs; functions = new List<LuaTableEntry>();
         }
 
         public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs)
         {
-            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = new List<LuaFunctionOldFormat>();
+            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = new List<LuaTableEntry>();
         }
 
-        public StrCodeMsgBlock(string _name, string[] _msgArgs, LuaFunctionOldFormat[] _functions)
+        public StrCodeMsgBlock(string _name, string[] _msgArgs, LuaTableEntry[] _functions)
         {
             msg = _name; sender = ""; msgArgs = _msgArgs; functions = _functions.ToList();
         }
 
-        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs, LuaFunctionOldFormat[] _functions)
+        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs, LuaTableEntry[] _functions)
         {
             msg = _name; sender = _sender; msgArgs = _msgArgs; functions = _functions.ToList();
         }
 
-        public void AddFunctionCalls(List<LuaFunctionOldFormat> calls)
+        public void AddFunctionCalls(List<LuaTableEntry> calls)
         {
             functions.AddRange(calls);
         }
@@ -689,7 +581,7 @@ quest_step.QStep_Main = {{
             msg = ""{msg}"", {(sender == "" ? "" : $@"
             sender = {sender}, ")}
             func = function({string.Join(", ", msgArgs)})
-              {string.Join(" ", functions.Select(func => func.Call(msgArgs)))}
+              {string.Join(" ", functions.Select(func =>  func.Key + $"({msgArgs})"))}
             end";
         }
 
@@ -734,8 +626,8 @@ quest_step.QStep_Main = {{
             StringBuilder checkQuestBuilder = new StringBuilder();
             foreach (CheckQuestMethodsPair pair in CheckQuestMethods)
             {
-                checkQuestBuilder.Append($@"{pair.TargetMessageMethod.ToLua()}
-{pair.TallyMethod.ToLua()}
+                checkQuestBuilder.Append($@"{pair.TargetMessageMethod.Value}
+{pair.TallyMethod.Value}
 ");
             }
             return checkQuestBuilder.ToString();
@@ -759,23 +651,23 @@ quest_step.QStep_Main = {{
 
     public abstract class CheckQuestMethodsPair
     {
-        public LuaFunctionOldFormat TargetMessageMethod, TallyMethod;
+        public LuaTableEntry TargetMessageMethod, TallyMethod;
 
-        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string targetTableName, LuaFunctionOldFormat check, string objective)
+        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaTableEntry a, LuaTableEntry b, string targetTableName, LuaTableEntry check, string objective)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
             mainLua.AddToObjectiveTypes(targetTableName, new GenericTargetPair(check, objective));
         }
 
-        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b, string oneLineObjective)
+        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaTableEntry a, LuaTableEntry b, string oneLineObjective)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
             mainLua.AddToObjectiveTypes(oneLineObjective);
         }
 
-        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaFunctionOldFormat a, LuaFunctionOldFormat b)
+        public CheckQuestMethodsPair(MainScriptBuilder mainLua, LuaTableEntry a, LuaTableEntry b)
         {
             TargetMessageMethod = a; TallyMethod = b;
             mainLua.AddToCheckQuestMethod(this);
@@ -783,7 +675,7 @@ quest_step.QStep_Main = {{
 
         public string GetTableFormat()
         {
-            return $"{{IsTargetSetMessageMethod = this.{TargetMessageMethod.FunctionName}, TallyMethod = this.{TallyMethod.FunctionName}}}";
+            return $"{{IsTargetSetMessageMethod = qvars.{TargetMessageMethod.Key}, TallyMethod = qvars.{TallyMethod.Value}}}";
         }
     }
 
@@ -822,7 +714,7 @@ quest_step.QStep_Main = {{
                 foreach (GenericTargetPair pair in table.GetTargetPairs())
                 {
                     functionsBuilder.Append($@"
-{pair.checkMethod.ToLua()}");
+{pair.checkMethod.Value}");
                 }
             }
             return functionsBuilder.ToString();
@@ -899,17 +791,17 @@ ObjectiveTypeList = {");
     }
     public class GenericTargetPair
     {
-        public LuaFunctionOldFormat checkMethod;
+        public LuaTableEntry checkMethod;
         public string ObjectiveType;
 
-        public GenericTargetPair(LuaFunctionOldFormat check, string type)
+        public GenericTargetPair(LuaTableEntry check, string type)
         {
             checkMethod = check; ObjectiveType = type;
         }
 
         public string GetTableFormat()
         {
-            return $"{{Check = this.{checkMethod.FunctionName}, Type = {ObjectiveType}}}";
+            return $"{{Check = qvars.{checkMethod.Key}, Type = {ObjectiveType}}}";
         }
     }
 
@@ -920,7 +812,7 @@ ObjectiveTypeList = {");
             "Player",
             "OnPickUpWeapon",
             new string[] { "playerIndex", "playerIndex" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "PlayerPickUpWeaponClearCheck",
                 new string[] { "playerIndex", "playerIndex" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpDormant\", equipId); TppQuest.ClearWithSave(isClearType); "));
@@ -929,7 +821,7 @@ ObjectiveTypeList = {");
             "Player",
             "OnPickUpPlaced",
             new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "PlayerPickUpPlacedClearCheck",
                 new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
                 " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpActive\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -938,7 +830,7 @@ ObjectiveTypeList = {");
             "Placed",
             "OnActivatePlaced",
             new string[] { "equipId", "index" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "PlacedActivatePlacedClearCheck",
                 new string[] { "equipId", "index" },
                 " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"Activate\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -947,7 +839,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "Dead",
             new string[] { "gameObjectId", "gameObjectId01", "animalId" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectDeadClearCheck",
                 new string[] { "gameObjectId", "gameObjectId01", "animalId" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"Dead\",gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
@@ -956,7 +848,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "FultonInfo",
             new string[] { "gameObjectId" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectFultonInfoClearCheck",
                 new string[] { "gameObjectId" },
                 " if mvars.fultonInfo ~= NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = NONE; "));
@@ -965,7 +857,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "Fulton",
             new string[] { "gameObjectId", "animalId" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectFultonClearCheck",
                 new string[] { "gameObjectId", "animalId" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"Fulton\", gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
@@ -974,7 +866,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "FultonFailed",
             new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectFultonFailedClearCheck",
                 new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
                 " if failureType == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = this.CheckQuestAllTargetDynamic(\"FultonFailed\", gameObjectId, locatorName); TppQuest.ClearWithSave(isClearType); end;  "));
@@ -983,7 +875,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "PlacedIntoVehicle",
             new string[] { "gameObjectId", "vehicleGameObjectId" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectPlacedIntoHeliClearCheck",
                 new string[] { "gameObjectId", "vehicleGameObjectId" },
                 " if Tpp.IsHelicopter(vehicleGameObjectId) then local isClearType = this.CheckQuestAllTargetDynamic(\"InHelicopter\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -992,7 +884,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "VehicleBroken",
             new string[] { "gameObjectId", "state" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectVehicleBrokenClearCheck",
                 new string[] { "gameObjectId", "state" },
                 " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"VehicleBroken\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -1001,7 +893,7 @@ ObjectiveTypeList = {");
             "GameObject",
             "LostControl",
             new string[] { "gameObjectId", "state" },
-            new LuaFunctionOldFormat(
+            LuaFunction.ToTableEntry(
                 "GameObjectLostControlClearCheck",
                 new string[] { "gameObjectId", "state" },
                 " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"LostControl\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
@@ -1023,7 +915,7 @@ ObjectiveTypeList = {");
 
     class CheckQuestItem : CheckQuestMethodsPair
     {
-        static readonly LuaFunctionOldFormat IsTargetSetMessageIdForItem = new LuaFunctionOldFormat("IsTargetSetMessageIdForItem", new string[] { "gameId", "messageId", "checkAnimalId" },
+        static readonly LuaTableEntry IsTargetSetMessageIdForItem = LuaFunction.ToTableEntry("IsTargetSetMessageIdForItem", new string[] { "gameId", "messageId", "checkAnimalId" },
     @" if messageId == ""PickUpDormant"" then
     for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
       if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == false then
@@ -1041,7 +933,7 @@ ObjectiveTypeList = {");
   end
   return false, false; ");
 
-        static readonly LuaFunctionOldFormat TallyItemTargets = new LuaFunctionOldFormat("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        static readonly LuaTableEntry TallyItemTargets = LuaFunction.ToTableEntry("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @" for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
     local dynamicQuestType = RECOVERED
     for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.itemTargets) do
@@ -1077,12 +969,12 @@ ObjectiveTypeList = {");
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
 
-        public CheckQuestItem(MainScriptBuilder mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
+        public CheckQuestItem(MainScriptBuilder mainLua, LuaTableEntry checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForItem, TallyItemTargets, "itemTargets", checkFunction, objectiveType) { }
     }
     class CheckQuestGenericEnemy : CheckQuestMethodsPair
     {
 
-        static readonly LuaFunctionOldFormat IsTargetSetMessageIdForGenericEnemy = new LuaFunctionOldFormat("IsTargetSetMessageIdForGenericEnemy", new string[] { "gameId", "messageId", "checkAnimalId" },
+        static readonly LuaTableEntry IsTargetSetMessageIdForGenericEnemy = LuaFunction.ToTableEntry("IsTargetSetMessageIdForGenericEnemy", new string[] { "gameId", "messageId", "checkAnimalId" },
             @"if mvars.ene_questTargetList[gameId] then
 	local targetInfo = mvars.ene_questTargetList[gameId]
 	local intended = true
@@ -1096,7 +988,7 @@ ObjectiveTypeList = {");
   end
   return false, false; ");
 
-        static readonly LuaFunctionOldFormat TallyGenericTargets = new LuaFunctionOldFormat("TallyGenericTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        static readonly LuaTableEntry TallyGenericTargets = LuaFunction.ToTableEntry("TallyGenericTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @"for targetGameId, targetInfo in pairs(mvars.ene_questTargetList) do
     local dynamicQuestType = ELIMINATE
     local isTarget = targetInfo.isTarget or false
@@ -1138,13 +1030,13 @@ ObjectiveTypeList = {");
   end
   return totalTargets, objectiveCompleteCount, objectiveFailedCount; ");
 
-        public CheckQuestGenericEnemy(MainScriptBuilder mainLua, LuaFunctionOldFormat checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets, "genericTargets", checkFunction, objectiveType) { }
+        public CheckQuestGenericEnemy(MainScriptBuilder mainLua, LuaTableEntry checkFunction, string objectiveType) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets, "genericTargets", checkFunction, objectiveType) { }
 
         public CheckQuestGenericEnemy(MainScriptBuilder mainLua) : base(mainLua, IsTargetSetMessageIdForGenericEnemy, TallyGenericTargets) { }
     }
     class CheckQuestAnimal : CheckQuestMethodsPair
     {
-        static readonly LuaFunctionOldFormat IsTargetSetMessageIdForAnimal = new LuaFunctionOldFormat("IsTargetSetMessageIdForAnimal", new string[] { "gameId", "messageId", "checkAnimalId" },
+        static readonly LuaTableEntry IsTargetSetMessageIdForAnimal = LuaFunction.ToTableEntry("IsTargetSetMessageIdForAnimal", new string[] { "gameId", "messageId", "checkAnimalId" },
     @"if checkAnimalId ~= nil then
     local databaseId = TppAnimal.GetDataBaseIdFromAnimalId(checkAnimalId)
     local isTarget = false
@@ -1171,7 +1063,7 @@ ObjectiveTypeList = {");
     end
   return false, false");
 
-        static readonly LuaFunctionOldFormat TallyAnimalTargets = new LuaFunctionOldFormat("TallyAnimalTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        static readonly LuaTableEntry TallyAnimalTargets = LuaFunction.ToTableEntry("TallyAnimalTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @" local dynamicQuestType = ObjectiveTypeList.animalObjective
   for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
     local targetMessageId = targetInfo.messageId
@@ -1206,7 +1098,7 @@ ObjectiveTypeList = {");
 
     static class CheckQuestAllTargetDynamic
     {
-        public static readonly LuaFunctionOldFormat function = new LuaFunctionOldFormat("CheckQuestAllTargetDynamic", new string[] { "messageId", "gameId", "checkAnimalId" }, "" +
+        public static readonly LuaTableEntry function = LuaFunction.ToTableEntry("CheckQuestAllTargetDynamic", new string[] { "messageId", "gameId", "checkAnimalId" }, "" +
             @"local currentQuestName=TppQuest.GetCurrentQuestName()
   if TppQuest.IsEnd(currentQuestName) then
     return TppDefine.QUEST_CLEAR_TYPE.NONE
@@ -1247,35 +1139,5 @@ ObjectiveTypeList = {");
     end
   end
   return TppDefine.QUEST_CLEAR_TYPE.NONE");
-    }
-    public class LuaFunctionOldFormat
-    {
-        public string FunctionName { get; set; }
-        public string[] Parameters { get; set; }
-        public string Function { get; set; }
-        public LuaFunctionOldFormat(string functionName, string[] parameters, string function)
-        {
-            FunctionName = functionName;
-            Parameters = parameters ?? Array.Empty<string>();
-            Function = function;
-        }
-        public string Call(string[] args)
-        {
-            return $@"this.{FunctionName}({string.Join(", ", args)})";
-        }
-        public override bool Equals(object obj)
-        {
-            if (!(obj is LuaFunctionOldFormat other))
-                return false;
-            return this.ToLua() == other.ToLua();
-        }
-        public override int GetHashCode()
-        {
-            return this.ToLua().GetHashCode();
-        }
-        public string ToLua()
-        {
-            return $@"this.{FunctionName} = function({string.Join(", ", Parameters)}) {Function} end";
-        }
     }
 }

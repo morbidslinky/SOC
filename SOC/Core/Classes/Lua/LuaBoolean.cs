@@ -8,10 +8,6 @@ namespace SOC.Classes.Lua
         public override string Value => BooleanValue ? "true" : "false";
 
         public LuaBoolean() : base(TemplateRestrictionType.BOOLEAN) { }
-        public LuaBoolean(string value) : base(TemplateRestrictionType.BOOLEAN)
-        {
-            BooleanValue = value == "1" || (bool.TryParse(value, out bool result) && result);
-        }
         public LuaBoolean(bool value) : base(TemplateRestrictionType.BOOLEAN)
         {
             BooleanValue = value;

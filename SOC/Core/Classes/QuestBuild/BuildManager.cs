@@ -61,7 +61,7 @@ namespace SOC.Classes.QuestBuild
                 MainScriptBuilder mainScriptBuilder = new MainScriptBuilder(setupDetails, objectsDetails);
                 Fox2Builder fox2Builder = new Fox2Builder(setupDetails, objectsDetails);
 
-                var questFpkdDir = Path.Combine(buildArchivePath, fpk + "_fpk");
+                var questFpkdDir = Path.Combine(buildArchivePath, fpk + "_fpkd");
                 var mainScriptFilePath = Path.Combine(questFpkdDir, QUESTLEVELPATH, $"{fpk}.lua");
                 var fox2FilePath = Path.Combine(questFpkdDir, QUESTLEVELPATH, $"{fpk}.fox2");
                 var definitionScriptFilePath = Path.Combine(buildGameDirPath, $"ih_quest_q{questNum}.lua");

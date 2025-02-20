@@ -67,6 +67,27 @@ namespace SOC.Classes.Lua
                                 tokenBuilder.Clear();
                             }
                         }
+                        else if (current == ';')
+                        {
+                            if (tokenBuilder.Length > 0)
+                            {
+                                tokens.Add(tokenBuilder.ToString());
+                                tokenBuilder.Clear();
+                            }
+                            tokens.Add("\n");
+                        }
+                        else if (current == ',' || current == '{' || current == '}' || current == '(' || current == ')' || (current == '=' && luaCode[i - 1] != '~'))
+                        {
+                            if (tokenBuilder.Length > 0)
+                            {
+                                tokens.Add(tokenBuilder.ToString());
+                                tokenBuilder.Clear();
+                            }
+
+                            tokenBuilder.Append(current);
+                            tokens.Add(tokenBuilder.ToString());
+                            tokenBuilder.Clear();
+                        }
                         else
                         {
                             tokenBuilder.Append(current);
@@ -154,26 +175,46 @@ namespace SOC.Classes.Lua
             for (int i = 0; i < tokens.Count; i++)
             {
                 string token = tokens[i];
+                string nextToken = i + 1 < tokens.Count ? tokens[i + 1] : null;
+                string prevToken = i - 1 >= 0 ? tokens[i - 1] : null;
+                string prevPrevToken = i - 2 >= 0 ? tokens[i - 2] : null;
+
                 if (token == "\n")
                 {
-                    if (i + 1 < tokens.Count && (tokens[i + 1] == "end" || tokens[i + 1] == "end," || tokens[i + 1] == "until" || tokens[i + 1] == "}" || tokens[i + 1] == "},"))
+                    if (nextToken != null && (nextToken == "end" || nextToken == "until" || nextToken == "}"))
+                    {
+                        indentLevel--;
+                    }
+                    else if (prevToken != null && (prevToken == "end" || prevToken == "until" || prevToken == "}") && prevPrevToken != "\n")
                     {
                         indentLevel--;
                     }
 
                     if (indentLevel < 0)
                     {
-
                         indentLevel = 0;
                     }
-                    formattedCode.Append("\n" + new string('\t', indentLevel));
+                    formattedCode.Append('\n');
+                    formattedCode.Append(new string('\t', indentLevel));
+                }
+                else if ((token == "end" || token == "until" || token == "}") &&
+                         prevToken != "\n" &&
+                         nextToken != "\n")
+                {
+                    formattedCode.Append(token);
+                    formattedCode.Append(" ");
+                    indentLevel--;
                 }
                 else
                 {
-                    formattedCode.Append(token + " ");
+                    formattedCode.Append(token);
+                    if (nextToken != "," && nextToken != ")" && nextToken != "(" && token != "(")
+                    {
+                        formattedCode.Append(" ");
+                    }
                 }
 
-                if (token == "function()" || token == "if" || token == "for" || token == "while" || token == "repeat" || token == "do" || token == "{")
+                if (token == "function" || token == "then" || token == "repeat" || token == "do" || token == "{")
                 {
                     indentLevel++;
                 }

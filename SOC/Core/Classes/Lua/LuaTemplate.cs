@@ -23,6 +23,45 @@ namespace SOC.Classes.Lua
             Template = templateString;
         }
 
+        public static string GetTemplateRestrictionTypeString(LuaValue v, bool ifVariableIsAssign = false)
+        {
+            string restrictionType = "";
+            switch (v)
+            {
+                case LuaBoolean boolean:
+                    restrictionType = "boolean";
+                    break;
+                case LuaFunction func:
+                    restrictionType = "function";
+                    break;
+                case LuaFunctionCall call:
+                    restrictionType = "call_function";
+                    break;
+                case LuaNil nil:
+                    restrictionType = "nil";
+                    break;
+                case LuaNumber num:
+                    restrictionType = "number";
+                    break;
+                case LuaTable table:
+                    restrictionType = "table";
+                    break;
+                case LuaTableIdentifier identifier:
+                    restrictionType = "table_identifier";
+                    break;
+                case LuaText text:
+                    restrictionType = "string";
+                    break;
+                case LuaVariable var:
+                    restrictionType = (ifVariableIsAssign ? "assign_variable" : "variable");
+                    break;
+                default:
+                    restrictionType = "unknown value type";
+                    break;
+            }
+            return restrictionType;
+        }
+
         public static bool TryParse(string templateString, out LuaTemplate luaTemplate)
         {
             luaTemplate = new LuaTemplate();

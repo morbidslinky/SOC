@@ -9,20 +9,19 @@ namespace SOC.QuestObjects.Hostage
 {
     static class HostageLua
     {
-        static readonly LuaFunctionOldFormat InterCall_hostage_pos01 = new LuaFunctionOldFormat("InterCall_hostage_pos01", new string[] { "soldier2GameObjectId", "cpID", "interName" }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList)do if hostageInfo.isTarget then TppMarker.EnableQuestTargetMarker(hostageInfo.hostageName); else TppMarker.Enable(hostageInfo.hostageName,0,\"defend\",\"map_and_world_only_icon\",0,false,true); end; end; ");
+        static readonly LuaTableEntry InterCall_hostage_pos01 = LuaFunction.ToTableEntry("InterCall_hostage_pos01", new string[] { "soldier2GameObjectId", "cpID", "interName" }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nif hostageInfo.isTarget then TppMarker.EnableQuestTargetMarker(hostageInfo.hostageName)\nelse TppMarker.Enable(hostageInfo.hostageName,0,\"defend\",\"map_and_world_only_icon\",0,false,true)\nend\nend");
         // to come before questCpInterrogation
 
-        static readonly string questCpInterrogation = @" this.questCpInterrogation = {{name = ""enqt1000_271b10"", func = this.InterCall_hostage_pos01,}} ";
 
-        static readonly LuaFunctionOldFormat SwitchEnableQuestHighIntTable = new LuaFunctionOldFormat("SwitchEnableQuestHighIntTable",
+        static readonly LuaTableEntry SwitchEnableQuestHighIntTable = LuaFunction.ToTableEntry("SwitchEnableQuestHighIntTable",
             new string[] { "flag", "commandPostName", "questCpInterrogation" },
-            " local commandPostId = GetGameObjectId(\"TppCommandPost2\", commandPostName); if flag then TppInterrogation.SetQuestHighIntTable(commandPostId, questCpInterrogation); else TppInterrogation.RemoveQuestHighIntTable(commandPostId, questCpInterrogation); end; ");
+            " local commandPostId = GetGameObjectId(\"TppCommandPost2\", commandPostName)\nif flag then TppInterrogation.SetQuestHighIntTable(commandPostId, questCpInterrogation)\n else TppInterrogation.RemoveQuestHighIntTable(commandPostId, questCpInterrogation)\n end");
 
-        static readonly LuaFunctionOldFormat WarpHostages = new LuaFunctionOldFormat("WarpHostages", new string[] { }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList)do local gameObjectId= GetGameObjectId(hostageInfo.hostageName); if gameObjectId~=GameObject.NULL_ID then local position=hostageInfo.position; local command={id=\"Warp\",degRotationY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3])}; GameObject.SendCommand(gameObjectId,command); end; end; ");
+        static readonly LuaTableEntry WarpHostages = LuaFunction.ToTableEntry("WarpHostages", new string[] { }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nlocal gameObjectId= GetGameObjectId(hostageInfo.hostageName)\nif gameObjectId~=GameObject.NULL_ID then local position=hostageInfo.position\nlocal command={id=\"Warp\",degRotationY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3])}\nGameObject.SendCommand(gameObjectId,command)\nend\nend");
         
-        static readonly LuaFunctionOldFormat SetHostageAttributes = new LuaFunctionOldFormat("SetHostageAttributes", new string[] { }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList)do local gameObjectId= GetGameObjectId(hostageInfo.hostageName); if gameObjectId~=GameObject.NULL_ID then if hostageInfo.commands then for j,hostageCommand in ipairs(hostageInfo.commands)do GameObject.SendCommand(gameObjectId, hostageCommand); end; end; end; end; ");
+        static readonly LuaTableEntry SetHostageAttributes = LuaFunction.ToTableEntry("SetHostageAttributes", new string[] { }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nlocal gameObjectId= GetGameObjectId(hostageInfo.hostageName)\nif gameObjectId~=GameObject.NULL_ID then if hostageInfo.commands then for j,hostageCommand in ipairs(hostageInfo.commands) do \n GameObject.SendCommand(gameObjectId, hostageCommand)\nend\nend\nend\nend");
 
-        static readonly LuaFunctionOldFormat CheckIsHostage = new LuaFunctionOldFormat("CheckIsHostage", new string[] { "gameId" }, " return Tpp.IsHostage(gameId); ");
+        static readonly LuaTableEntry CheckIsHostage = LuaFunction.ToTableEntry("CheckIsHostage", new string[] { "gameId" }, " return Tpp.IsHostage(gameId)");
 
         public static void GetDefinition(HostagesDetail hostageDetail, DefinitionScriptBuilder definitionLua)
         {
@@ -49,31 +48,42 @@ namespace SOC.QuestObjects.Hostage
             {
                 if (meta.canInterrogate)
                 {
-                    mainLua.AddToAuxiliary(InterCall_hostage_pos01);
-                    mainLua.AddToAuxiliary(questCpInterrogation);
-                    mainLua.AddToAuxiliary(SwitchEnableQuestHighIntTable);
+                    mainLua.AddToQuestVariablesTable(InterCall_hostage_pos01);
 
-                    mainLua.AddToAuxiliary("local hostagei = 0"); // only used for MarkerChangeToEnable's function
+                    var cpInt = new LuaTable(
+                        Lua.TableEntry("name", "enqt1000_271b10"),
+                        Lua.TableEntry("func", "this.InterCall_hostage_pos01")
+                    );
+                    mainLua.AddToQuestVariablesTable(Lua.TableEntry("questCpInterrogation", cpInt));
+                    mainLua.AddToQuestVariablesTable(SwitchEnableQuestHighIntTable);
+
+                    mainLua.AddToQuestVariablesTable(Lua.TableEntry("hostagei", 0));// only used for MarkerChangeToEnable's function
                     mainLua.AddBaseQStep_MainMsgs(new StrCodeBlock(
                         "Marker", 
                         "ChangeToEnable", 
                         new string[] { "arg0", "arg1" },
-                        new LuaFunctionOldFormat(
+                        LuaFunction.ToTableEntry(
                             "OnEnableMarkerCheckIntTable",       
                             new string[] { "arg0", "arg1" },
-                            $@" if arg0 == StrCode32(""Hostage_0"") then hostagei = hostagei + 1; if hostagei >= {hostages.Count} then this.SwitchEnableQuestHighIntTable(false, CPNAME, this.questCpInterrogation); end; end; ")));
+                            $" if arg0 == StrCode32(\"Hostage_0\") then hostagei = hostagei + 1\nif hostagei >= {hostages.Count} then this.SwitchEnableQuestHighIntTable(false, CPNAME, this.questCpInterrogation)\nend\nend")));
                     
                     mainLua.AddToQStep_Start_OnEnter("this.SwitchEnableQuestHighIntTable(true, CPNAME, this.questCpInterrogation)");
-                    mainLua.AddToOnTerminate("this.SwitchEnableQuestHighIntTable(false, CPNAME, this.questCpInterrogation)");
+                    LuaFunctionCall onTerminateCall = Lua.FunctionCall(
+                        Lua.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
+                            Lua.Boolean(false),
+                            Lua.TableIdentifier("qvars", "CPNAME"),
+                            Lua.TableIdentifier("qvars", "questCpInterrogation")
+                        );
+                    mainLua.AddToOnTerminate(onTerminateCall);
                 }
 
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.genericTargetMessages);
                 
                 //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
-                //mainLua.AddToAuxiliary(WarpHostages);
+                //mainLua.AddToQuestVariablesTable(WarpHostages);
 
                 mainLua.AddToQStep_Start_OnEnter(SetHostageAttributes);
-                mainLua.AddToAuxiliary(SetHostageAttributes);
+                mainLua.AddToQuestVariablesTable(SetHostageAttributes);
 
                 if (hostages.Any(hostage => hostage.isTarget))
                 {

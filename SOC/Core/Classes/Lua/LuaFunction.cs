@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Deployment.Internal;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,35 +25,14 @@ namespace SOC.Classes.Lua
 
         public LuaFunction() : base(TemplateRestrictionType.FUNCTION) { }
 
-        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, params string[] parameters) : base(TemplateRestrictionType.FUNCTION)
+        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, string[] parameters) : base(TemplateRestrictionType.FUNCTION)
         {
             Template = template;
             PopulationValues = populationValues;
             Parameters = parameters;
         }
 
-        public LuaFunction(LuaTemplate template, params string[] parameters) : base(TemplateRestrictionType.FUNCTION)
-        {
-            Template = template;
-            PopulationValues = new LuaValue[0];
-            Parameters = parameters;
-        }
-
-        public LuaFunction(LuaTemplate template) : base(TemplateRestrictionType.FUNCTION)
-        {
-            Template = template;
-            PopulationValues = new LuaValue[0];
-            Parameters = new string[0];
-        }
-
-        public LuaFunction(LuaTemplate template, params LuaValue[] populationValues) : base(TemplateRestrictionType.FUNCTION)
-        {
-            Template = template;
-            PopulationValues = populationValues;
-            Parameters = new string[0];
-        }
-
-        private string GetLuaFunction()
+        public string GetLuaFunction()
         {
             return $"function({string.Join(", ", Parameters)})\n{Template.Populate(PopulationValues)}\nend";
         }
@@ -85,6 +66,12 @@ namespace SOC.Classes.Lua
             {
                 return (LuaFunction)serializer.Deserialize(reader);
             }
+        }
+
+        public static LuaTableEntry ToTableEntry(string functionName, string[] functionParameters, string functionBody)
+        {
+            LuaTableEntry entry = new LuaTableEntry();
+            return Lua.TableEntry(functionName, Lua.Function(functionBody, functionParameters));
         }
     }
 }
