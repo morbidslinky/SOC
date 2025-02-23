@@ -34,6 +34,11 @@ namespace SOC.Classes.Lua
             }
         }
 
+        public void AddOrSet(LuaValue[] path, LuaValue entry)
+        {
+                if (!TryAdd(path, entry)) TrySet(path, entry);
+        }
+
         public bool TrySet(LuaTableEntry entry)
         {
             if (TryGetKeyValuePair(entry.Key, out LuaTableEntry existingEntry))

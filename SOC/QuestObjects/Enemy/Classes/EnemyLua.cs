@@ -112,7 +112,7 @@ namespace SOC.QuestObjects.Enemy
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;
             
-            mainLua.AddToQuestVariablesTable(Lua.TableEntry("SUBTYPE", meta.subtype));
+            mainLua.qvars.AddOrSet(Lua.TableEntry("SUBTYPE", meta.subtype));
 
             mainLua.AddToQuestTable(BuildEnemyList(enemies));
             bool hasSpawn = false;

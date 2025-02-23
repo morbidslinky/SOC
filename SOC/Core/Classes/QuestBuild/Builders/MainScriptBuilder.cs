@@ -14,83 +14,71 @@ namespace SOC.Classes.Lua
         public SetupDetails SetupDetails;
         public ObjectsDetails ObjectsDetails;
 
-        List<LuaFunctionCall> onAllocateOnTerminateCalls = new List<LuaFunctionCall>();
-        Messages messages = new Messages();
-        OnInitialize onInitialize = new OnInitialize();
         QuestTable questTable = new QuestTable();
-        OnUpdate onUpdate = new OnUpdate();
-        OnTerminate onTerminate = new OnTerminate();
-        QStep_Start qStep_start = new QStep_Start();
         public QStep_Main qStep_main = new QStep_Main();
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
 
 
+        public OnUpdate OnUpdate = new OnUpdate();
+        public OnAllocate OnAllocate = new OnAllocate();
+        public Messages Messages = new Messages();
+        public OnInitialize OnInitialize = new OnInitialize();
+        public OnTerminate OnTerminate = new OnTerminate();
+        public QStep_Start QStep_Start = new QStep_Start();
 
-        private LuaTable qvarTable = new LuaTable();
-        private LuaTable mainTable = new LuaTable();
-        private LuaTable stepTable = new LuaTable();
+        public LuaTable qvars = new LuaTable();
+        public LuaTable @this = new LuaTable();
+        public LuaTable quest_step = new LuaTable();
 
         public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             SetupDetails = setupDetails; ObjectsDetails = objectsDetails;
 
-            foreach (ObjectsDetail detail in objectsDetails.details)
-            {
-                detail.AddToMainLua(this);
-            }
-
-            AddToQuestVariablesTable(Lua.TableEntry("StrCode32", Lua.TableIdentifier("Fox", Lua.Text("StrCode32"))));
-            AddToQuestVariablesTable(Lua.TableEntry("StrCode32Table", Lua.TableIdentifier("Tpp", Lua.Text("StrCode32Table"))));
-            AddToQuestVariablesTable(Lua.TableEntry("GetGameObjectId", Lua.TableIdentifier("GameObject", Lua.Text("GetGameObjectId"))));
-            AddToQuestVariablesTable(Lua.TableEntry("ELIMINATE", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("ELIMINATE"))));
-            AddToQuestVariablesTable(Lua.TableEntry("RECOVERED", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("RECOVERED"))));
-            AddToQuestVariablesTable(Lua.TableEntry("KILLREQUIRED", 9));
+            qvars.AddOrSet(
+                Lua.TableEntry("StrCode32", Lua.TableIdentifier("Fox", Lua.Text("StrCode32"))),
+                Lua.TableEntry("StrCode32Table", Lua.TableIdentifier("Tpp", Lua.Text("StrCode32Table"))),
+                Lua.TableEntry("GetGameObjectId", Lua.TableIdentifier("GameObject", Lua.Text("GetGameObjectId"))),
+                Lua.TableEntry("ELIMINATE", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("ELIMINATE"))),
+                Lua.TableEntry("RECOVERED", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("RECOVERED"))),
+                Lua.TableEntry("KILLREQUIRED", 9),
+                Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)),
+                Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{setupDetails.loadArea}")
+            );
 
             if (setupDetails.CPName == "NONE")
             {
-                AddToQuestVariablesTable(Lua.TableEntry("CPNAME", 
+                qvars.AddOrSet(Lua.TableEntry("CPNAME", 
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfMain", "GetClosestCp"),
                         Lua.Table(setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord))));
             }
             else
             {
-                AddToQuestVariablesTable(Lua.TableEntry("CPNAME", setupDetails.CPName));
+                qvars.AddOrSet(Lua.TableEntry("CPNAME", setupDetails.CPName));
             }
 
-            AddToQuestVariablesTable(Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)));
-            AddToQuestVariablesTable(Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{setupDetails.loadArea}"));
+            foreach (ObjectsDetail detail in objectsDetails.details)
+            {
+                detail.AddToMainLua(this);
+            }
 
+            @this.AddOrSet(
+                OnAllocate.Get(),
+                Messages.Get(),
+                OnInitialize.Get(),
+                OnUpdate.Get(),
+                OnTerminate.Get()
+            );
+
+            quest_step.AddOrSet(
+                QStep_Start.Get()
+            );
+
+            /*
             AddToQuestTable("questType = ELIMINATE");
             AddToQuestTable("soldierSubType = SUBTYPE");
-
-            mainTable.AddOrSet(OnAllocate.Get(onAllocateOnTerminateCalls));
-        }
-
-        public void AddToQuestVariablesTable(LuaTableEntry tableEntry) // convert to just one generic function
-        {
-            qvarTable.AddOrSet(tableEntry);
-        }
-
-        public void AddToOnTerminate(LuaFunctionCall call)
-        {
-            if (!onAllocateOnTerminateCalls.Contains(call))
-            {
-                onAllocateOnTerminateCalls.Add(call);
-            }
-        }
-
-        public void AddToQStep_Start_OnEnter(params string[] functionCalls)
-        {
-            foreach (string functionCall in functionCalls)
-                qStep_start.AddToOnEnter(functionCall);
-        }
-
-        public void AddToQStep_Start_OnEnter(params LuaTableEntry[] auxiliaryFunctions)
-        {
-            foreach (LuaTableEntry function in auxiliaryFunctions)
-                qStep_start.AddToOnEnter($"InfCore.PCall(qvars.{function.Key})");
+            */
         }
 
         public void AddToCheckQuestMethod(CheckQuestMethodsPair methodsPair)
@@ -108,11 +96,6 @@ namespace SOC.Classes.Lua
         {
             if (!objectiveTypesList.oneLineObjectiveTypes.Contains(oneLineObjective))
                 objectiveTypesList.oneLineObjectiveTypes.Add(oneLineObjective);
-        }
-
-        public void AddToOnUpdate(string code)
-        {
-            onUpdate.Add(code);
         }
 
         public void AddToQuestTable(params object[] tableItems)
@@ -141,280 +124,150 @@ namespace SOC.Classes.Lua
         public void Build(string mainLuaFilePath)
         {
             var mainScript = Lua.Function("local |[0|assign_variable]| local |[1|assign_variable]| local |[2|assign_variable]| return |[1|variable]|",
-                    Lua.Variable("qvars",qvarTable),
-                    Lua.Variable("this", mainTable),
-                    Lua.Variable("quest_step", stepTable)
+                    Lua.Variable("qvars",qvars),
+                    Lua.Variable("this", @this),
+                    Lua.Variable("quest_step", quest_step)
                 );
             mainScript.WriteToLua(mainLuaFilePath);
             mainScript.WriteToXml(mainLuaFilePath + ".xml");
         }
     }
 
-    static class OnAllocate
+    public class OnAllocate
     {
-        public static LuaTableEntry Get(List<LuaFunctionCall> calls)
-        {
-            LuaFunctionBuilder onAllocate = new LuaFunctionBuilder();
-            onAllocate.Append($@"TppQuest.RegisterQuestStepList{{ ""QStep_Start"", ""QStep_Main"", nil }}
-              TppEnemy.OnAllocateQuestFova(this.QUEST_TABLE)
-              TppQuest.RegisterQuestStepTable(quest_step)
-              TppQuest.RegisterQuestSystemCallbacks{{
-                OnActivate = function()
-                  TppEnemy.OnActivateQuest(this.QUEST_TABLE)
-                  TppAnimal.OnActivateQuest(this.QUEST_TABLE)
-                end,
-                OnDeactivate = function()
-                  TppEnemy.OnDeactivateQuest(this.QUEST_TABLE)
-                  TppAnimal.OnDeactivateQuest(this.QUEST_TABLE)
-                end,
-                OnOutOfAcitveArea = function() 
-                end,
-            ");
+        public LuaFunctionBuilder OnActivate = new LuaFunctionBuilder();
+        public LuaFunctionBuilder OnDeactivate = new LuaFunctionBuilder();
+        public LuaFunctionBuilder OnOutOfAcitveArea = new LuaFunctionBuilder();
+        public LuaFunctionBuilder OnTerminateQuest = new LuaFunctionBuilder();
 
-            onAllocate.Append(BuildOnTerminate(calls));
+        public OnAllocate() {
+            OnActivate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppEnemy", "OnActivateQuest"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
+            OnActivate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppAnimal", "OnActivateQuest"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
 
-            onAllocate.Append($@",
-              }}
-              mvars.fultonInfo = NONE");
+            OnDeactivate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppEnemy", "OnDeactivateQuest"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
+            OnDeactivate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppAnimal", "OnDeactivateQuest"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
 
-            return onAllocate.ToTableEntry("OnAllocate", true);
+            OnTerminateQuest.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppEnemy", "OnTerminateQuest"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
+            OnTerminateQuest.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppAnimal", "OnTerminateQuest"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
         }
-
-        private static LuaTableEntry BuildOnTerminate(List<LuaFunctionCall> calls)
+        public LuaTableEntry Get()
         {
-            LuaFunctionBuilder onTerminate = new LuaFunctionBuilder();
+            var registerQuestSystemCallbacks = Lua.Table(
+                OnActivate.ToTableEntry("OnActivate"),
+                OnDeactivate.ToTableEntry("OnDeactivate"),
+                OnOutOfAcitveArea.ToTableEntry("OnOutOfAcitveArea"),
+                OnTerminateQuest.ToTableEntry("OnTerminateQuest")
+            );
 
-            onTerminate.Append(
-                Lua.FunctionCall(Lua.TableIdentifier("TppEnemy", "OnTerminateQuest"), 
-                    Lua.TableIdentifier("this", "QUEST_TABLE")));
+            LuaFunctionBuilder OnAllocate = new LuaFunctionBuilder();
+            OnAllocate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppQuest", "RegisterQuestStepList"),
+                        Lua.Table(new LuaValue[] { Lua.Text("QStep_Start"), Lua.Text("QStep_Main"), Lua.Nil() })));
+            OnAllocate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppEnemy", "OnAllocateQuestFova"),
+                        Lua.TableIdentifier("this", "QUEST_TABLE")));
+            OnAllocate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppQuest", "RegisterQuestStepTable"),
+                        Lua.Variable("quest_step")));
+            OnAllocate.AppendLuaValue(Lua.FunctionCall(
+                        Lua.TableIdentifier("TppQuest", "RegisterQuestSystemCallbacks"),
+                        registerQuestSystemCallbacks));
 
-            onTerminate.Append(
-                Lua.FunctionCall(Lua.TableIdentifier("TppAnimal", "OnTerminateQuest"), 
-                    Lua.TableIdentifier("this", "QUEST_TABLE")));
-
-            foreach (LuaFunctionCall call in calls)
-            {
-                onTerminate.Append(call);
-            }
-
-            return onTerminate.ToTableEntry("OnTerminate");
+            return OnAllocate.ToTableEntry("OnAllocate", true);
         }
     }
-    class Messages
+
+    public class Messages
     {
-        public string ToLua(MainScriptBuilder mainLua)
+        LuaTable StrCode32Table = new LuaTable();
+        
+        public Messages()
         {
-            return @"
-this.Messages = function()
-  return
-    StrCode32Table {
-      Block = {
+            StrCode32Table.AddOrSet(Lua.TableEntry(
+                "Block", Lua.Table(
+                    Lua.TableEntry("msg", "StageBlockCurrentSmallBlockIndexUpdated"),
+                    Lua.TableEntry("func", Lua.Function("")))
+                )
+            );
+        }
+
+        public LuaTableEntry Get()
         {
-          msg = ""StageBlockCurrentSmallBlockIndexUpdated"",
-          func = function() end,
-        },
-      },
-    }
-end";
+            return Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table)), true);
         }
     }
-    class OnInitialize
+
+    public class OnInitialize
     {
-        public string ToLua(MainScriptBuilder mainLua)
+        public LuaFunctionBuilder Function = new LuaFunctionBuilder();
+
+        public OnInitialize()
         {
-            return @"
-function this.OnInitialize()
-	TppQuest.QuestBlockOnInitialize( this )
-end";
+            Function.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "QuestBlockOnInitialize"), Lua.Variable("this")));
+        }
+
+        public LuaTableEntry Get()
+        {
+            return Function.ToTableEntry("OnInitialize", true);
         }
     }
 
-    class QuestTable
+    public class OnUpdate
     {
-        List<Table> Tables = new List<Table>();
-        List<string> variables = new List<string>();
-        List<string> targetNames = new List<string>();
+        public LuaFunctionBuilder Function = new LuaFunctionBuilder();
 
-        public void Add(Table table)
+        public OnUpdate()
         {
-            Table existingTable = Find(table.GetName());
-            if (existingTable != null)
-            {
-                foreach (string entry in table.GetEntries())
-                {
-                    existingTable.Add(entry);
-                }
-            }
-            else
-                Tables.Add(table);
+            Function.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "QuestBlockOnUpdate"), Lua.Variable("this")));
         }
 
-        public void Add(string variable)
+        public LuaTableEntry Get()
         {
-            variables.Add(variable);
-        }
-
-        public void AddTarget(string targetName)
-        {
-            if (!targetNames.Contains(targetName))
-                targetNames.Add(targetName);
-        }
-
-        public bool HasTargets()
-        {
-            return targetNames.Count > 0;
-        }
-
-        public Table Find(string tableName)
-        {
-            foreach (Table table in Tables)
-            {
-                if (table.GetName() == tableName)
-                {
-                    return table;
-                }
-            }
-            return null;
-        }
-
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-            return GetQuestTableFormatted();
-        }
-
-        private string GetQuestTableFormatted()
-        {
-            StringBuilder questTableBuilder = new StringBuilder(@"
-this.QUEST_TABLE = {");
-            foreach (string var in variables)
-            {
-                questTableBuilder.Append($@"
-    {var},");
-            }
-            foreach (Table table in Tables)
-            {
-                questTableBuilder.Append(table.GetTableFormatted());
-            }
-            questTableBuilder.Append(GetTargetList());
-            questTableBuilder.Append(@"
-}");
-
-            return questTableBuilder.ToString();
-        }
-
-        private string GetTargetList()
-        {
-            Table targetList = new Table("targetList");
-            foreach (string targetName in targetNames)
-                targetList.Add($@"""{targetName}""");
-
-            return targetList.GetTableFormatted();
+            return Function.ToTableEntry("OnUpdate", true);
         }
     }
 
-    public class Table
+    public class OnTerminate
     {
-        string Name;
-        List<string> Entries = new List<string>();
+        public LuaFunctionBuilder Function = new LuaFunctionBuilder();
 
-        public Table(string name)
+        public OnTerminate()
         {
-            Name = name;
+            Function.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "QuestBlockOnTerminate"), Lua.Variable("this")));
         }
 
-        public void Add(string entry)
+        public LuaTableEntry Get()
         {
-            Entries.Add(entry);
-        }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public string[] GetEntries()
-        {
-            return Entries.ToArray();
-        }
-
-        public string GetTableFormatted()
-        {
-            StringBuilder tableBuilder = new StringBuilder($@"
-    {Name} = {{");
-            foreach (string entry in Entries)
-            {
-                tableBuilder.Append($@"{entry}, ");
-            }
-            tableBuilder.Append(@"
-    },");
-            return tableBuilder.ToString();
+            return Function.ToTableEntry("OnTerminate", true);
         }
     }
 
-    class OnUpdate
-    {
-        List<string> onUpdateList = new List<string>();
-
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-            StringBuilder onUpdateBuilder = new StringBuilder(@"
-function this.OnUpdate()
-  TppQuest.QuestBlockOnUpdate(this)");
-
-            foreach (string code in onUpdateList)
-            {
-                onUpdateBuilder.Append($@"
-  {code}");
-            }
-            onUpdateBuilder.Append(@"
-end");
-
-            return onUpdateBuilder.ToString();
-        }
-
-        public void Add(string code)
-        {
-            onUpdateList.Add(code);
-        }
-    }
-    class OnTerminate
-    {
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-            return @"
-function this.OnTerminate()
-	TppQuest.QuestBlockOnTerminate(this)
-end";
-        }
-    }
     public class QStep_Start
     {
-        List<string> OnEnterList = new List<string>();
+        public LuaFunctionBuilder Function = new LuaFunctionBuilder();
 
-        public void AddToOnEnter(string code)
+        public QStep_Start()
         {
-            OnEnterList.Add(code);
+            var OnEnter = new LuaFunctionBuilder();
+            OnEnter.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "SetNextQuestStep"), Lua.Text("QStep_Main")));
+            Function.AppendLuaValue(Lua.Table(Lua.TableEntry("OnEnter", OnEnter.ToFunction())));
         }
 
-        public string ToLua(MainScriptBuilder mainLua)
+        public LuaTableEntry Get()
         {
-            return $@"
-quest_step.QStep_Start = {{
-  OnEnter = function(){GetEnterListFormatted()}
-    TppQuest.SetNextQuestStep(""QStep_Main"")
-  end,
-}}";
-        }
-
-        private string GetEnterListFormatted()
-        {
-            StringBuilder EnterListBuilder = new StringBuilder();
-            foreach (string code in OnEnterList)
-            {
-                EnterListBuilder.Append($@"
-    {code}");
-            }
-            return EnterListBuilder.ToString();
+            return Function.ToTableEntry("QStep_Start", true);
         }
     }
 
@@ -592,6 +445,128 @@ quest_step.QStep_Main = {{
         public override int GetHashCode()
         {
             return msg.GetHashCode() + sender.GetHashCode();
+        }
+    }
+
+    class QuestTable
+    {
+        List<Table> Tables = new List<Table>();
+        List<string> variables = new List<string>();
+        List<string> targetNames = new List<string>();
+
+        public void Add(Table table)
+        {
+            Table existingTable = Find(table.GetName());
+            if (existingTable != null)
+            {
+                foreach (string entry in table.GetEntries())
+                {
+                    existingTable.Add(entry);
+                }
+            }
+            else
+                Tables.Add(table);
+        }
+
+        public void Add(string variable)
+        {
+            variables.Add(variable);
+        }
+
+        public void AddTarget(string targetName)
+        {
+            if (!targetNames.Contains(targetName))
+                targetNames.Add(targetName);
+        }
+
+        public bool HasTargets()
+        {
+            return targetNames.Count > 0;
+        }
+
+        public Table Find(string tableName)
+        {
+            foreach (Table table in Tables)
+            {
+                if (table.GetName() == tableName)
+                {
+                    return table;
+                }
+            }
+            return null;
+        }
+
+        public string ToLua(MainScriptBuilder mainLua)
+        {
+            return GetQuestTableFormatted();
+        }
+
+        private string GetQuestTableFormatted()
+        {
+            StringBuilder questTableBuilder = new StringBuilder(@"
+this.QUEST_TABLE = {");
+            foreach (string var in variables)
+            {
+                questTableBuilder.Append($@"
+    {var},");
+            }
+            foreach (Table table in Tables)
+            {
+                questTableBuilder.Append(table.GetTableFormatted());
+            }
+            questTableBuilder.Append(GetTargetList());
+            questTableBuilder.Append(@"
+}");
+
+            return questTableBuilder.ToString();
+        }
+
+        private string GetTargetList()
+        {
+            Table targetList = new Table("targetList");
+            foreach (string targetName in targetNames)
+                targetList.Add($@"""{targetName}""");
+
+            return targetList.GetTableFormatted();
+        }
+    }
+
+    public class Table
+    {
+        string Name;
+        List<string> Entries = new List<string>();
+
+        public Table(string name)
+        {
+            Name = name;
+        }
+
+        public void Add(string entry)
+        {
+            Entries.Add(entry);
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        public string[] GetEntries()
+        {
+            return Entries.ToArray();
+        }
+
+        public string GetTableFormatted()
+        {
+            StringBuilder tableBuilder = new StringBuilder($@"
+    {Name} = {{");
+            foreach (string entry in Entries)
+            {
+                tableBuilder.Append($@"{entry}, ");
+            }
+            tableBuilder.Append(@"
+    },");
+            return tableBuilder.ToString();
         }
     }
 

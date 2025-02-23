@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.Helicopter
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
             {
                 mainLua.AddToQuestTable(BuildHeliList(questDetail));
-                mainLua.AddToQuestVariablesTable(setHelicopterAttributes);
+                mainLua.qvars.AddOrSet(setHelicopterAttributes);
                 if (questDetail.helicopters.Any(helicopter => helicopter.isTarget))
                 {
                     mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);

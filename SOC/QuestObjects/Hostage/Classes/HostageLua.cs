@@ -48,16 +48,16 @@ namespace SOC.QuestObjects.Hostage
             {
                 if (meta.canInterrogate)
                 {
-                    mainLua.AddToQuestVariablesTable(InterCall_hostage_pos01);
+                    mainLua.qvars.AddOrSet(InterCall_hostage_pos01);
 
                     var cpInt = new LuaTable(
                         Lua.TableEntry("name", "enqt1000_271b10"),
                         Lua.TableEntry("func", "this.InterCall_hostage_pos01")
                     );
-                    mainLua.AddToQuestVariablesTable(Lua.TableEntry("questCpInterrogation", cpInt));
-                    mainLua.AddToQuestVariablesTable(SwitchEnableQuestHighIntTable);
+                    mainLua.qvars.AddOrSet(Lua.TableEntry("questCpInterrogation", cpInt));
+                    mainLua.qvars.AddOrSet(SwitchEnableQuestHighIntTable);
 
-                    mainLua.AddToQuestVariablesTable(Lua.TableEntry("hostagei", 0));// only used for MarkerChangeToEnable's function
+                    mainLua.qvars.AddOrSet(Lua.TableEntry("hostagei", 0));// only used for MarkerChangeToEnable's function
                     mainLua.AddBaseQStep_MainMsgs(new StrCodeBlock(
                         "Marker", 
                         "ChangeToEnable", 
@@ -66,24 +66,28 @@ namespace SOC.QuestObjects.Hostage
                             "OnEnableMarkerCheckIntTable",       
                             new string[] { "arg0", "arg1" },
                             $" if arg0 == StrCode32(\"Hostage_0\") then hostagei = hostagei + 1\nif hostagei >= {hostages.Count} then this.SwitchEnableQuestHighIntTable(false, CPNAME, this.questCpInterrogation)\nend\nend")));
-                    
-                    mainLua.AddToQStep_Start_OnEnter("this.SwitchEnableQuestHighIntTable(true, CPNAME, this.questCpInterrogation)");
-                    LuaFunctionCall onTerminateCall = Lua.FunctionCall(
+
+                    mainLua.OnAllocate.OnTerminateQuest.AppendLuaValue(Lua.FunctionCall(
                         Lua.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
                             Lua.Boolean(false),
                             Lua.TableIdentifier("qvars", "CPNAME"),
                             Lua.TableIdentifier("qvars", "questCpInterrogation")
+                            )
                         );
-                    mainLua.AddToOnTerminate(onTerminateCall);
                 }
 
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.genericTargetMessages);
-                
-                //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
-                //mainLua.AddToQuestVariablesTable(WarpHostages);
 
-                mainLua.AddToQStep_Start_OnEnter(SetHostageAttributes);
-                mainLua.AddToQuestVariablesTable(SetHostageAttributes);
+                //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
+                //mainLua.QvarTable.AddOrSet(WarpHostages);
+
+                mainLua.qvars.AddOrSet(SetHostageAttributes);
+                mainLua.QStep_Start.Function.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"),
+                        Lua.TableIdentifier("qvars", "SetHostageAttributes")
+                    )
+                );
 
                 if (hostages.Any(hostage => hostage.isTarget))
                 {

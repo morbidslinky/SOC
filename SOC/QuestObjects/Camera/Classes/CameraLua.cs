@@ -23,10 +23,15 @@ namespace SOC.QuestObjects.Camera
 
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
-                mainLua.AddToQStep_Start_OnEnter(SetCameraAttributes);
-                mainLua.AddToQuestVariablesTable(SetCameraAttributes);
+                mainLua.qvars.AddOrSet(SetCameraAttributes);
+                mainLua.QStep_Start.Function.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"), 
+                        Lua.TableIdentifier("qvars", "SetCameraAttributes")
+                    )
+                );
 
-                if(detail.cameras.Any(camera => camera.isTarget))
+                if (detail.cameras.Any(camera => camera.isTarget))
                 {
                     CheckQuestGenericEnemy cameraCheck = new CheckQuestGenericEnemy(mainLua);
                     foreach (Camera cam in detail.cameras)

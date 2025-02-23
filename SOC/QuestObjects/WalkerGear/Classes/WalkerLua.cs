@@ -41,16 +41,16 @@ namespace SOC.QuestObjects.WalkerGear
 
             if (detail.walkers.Count > 0)
             {
-                mainLua.AddToQuestVariablesTable(Lua.TableEntry("questWalkerGearList", new LuaTable()));
-                mainLua.AddToQuestVariablesTable(Lua.TableEntry("playerWGResetPosition"));
-                mainLua.AddToQuestVariablesTable(Lua.TableEntry("walkerGearGameId"));
-                mainLua.AddToQuestVariablesTable(Lua.TableEntry("inMostActiveQuestArea", true));
-                mainLua.AddToQuestVariablesTable(Lua.TableEntry("exitOnce", true));
+                mainLua.qvars.AddOrSet(Lua.TableEntry("questWalkerGearList", new LuaTable()));
+                mainLua.qvars.AddOrSet(Lua.TableEntry("playerWGResetPosition"));
+                mainLua.qvars.AddOrSet(Lua.TableEntry("walkerGearGameId"));
+                mainLua.qvars.AddOrSet(Lua.TableEntry("inMostActiveQuestArea", true));
+                mainLua.qvars.AddOrSet(Lua.TableEntry("exitOnce", true));
 
                 mainLua.AddToQuestTable(BuildWalkerList(detail));
 
-                mainLua.AddToQuestVariablesTable(OneTimeAnnounce);
-                mainLua.AddToQuestVariablesTable(ReboundWalkerGear);
+                mainLua.qvars.AddOrSet(OneTimeAnnounce);
+                mainLua.qvars.AddOrSet(ReboundWalkerGear);
 
                 WalkerGearsVisualizer visualizer = (WalkerGearsVisualizer)detail.GetVisualizer();
                 StrCodeBlock ExitTrap = new StrCodeBlock("Trap", "Exit", $"trap_preDeactiveQuestArea_{mainLua.SetupDetails.loadArea}", new string[] { }, LuaFunction.ToTableEntry("OnExitQuestTrapArea", new string[] { }, " inMostActiveQuestArea = false; walkerGearGameId = vars.playerVehicleGameObjectId; if questWalkerGearList[walkerGearGameId] then playerWGResetPosition = {pos= {vars.playerPosX, vars.playerPosY + 1, vars.playerPosZ},rotY= 0,}; GkEventTimerManager.Start(\"\"OutOfMostActiveArea\"\", 7); exitOnce = this.OneTimeAnnounce(\"\"The Walker Gear cannot travel beyond this point.\"\", \"\"Return to the Side Op area.\"\", exitOnce); end; "));
@@ -59,12 +59,19 @@ namespace SOC.QuestObjects.WalkerGear
                 mainLua.AddBaseQStep_MainMsgs(ExitTrap, EnterTrap, FinishTimerActiveArea, FinishTimerCooldown);
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaCaptureTargetMessages);
 
-                mainLua.AddToQuestVariablesTable(Lua.TableEntry("setupOnce", true));
-                mainLua.AddToOnUpdate("setupOnce = this.SetupGearsQuest(qvars.setupOnce)");
-                mainLua.AddToQuestVariablesTable(SetupGearsQuest);
+                mainLua.qvars.AddOrSet(Lua.TableEntry("setupOnce", true));
+                mainLua.qvars.AddOrSet(SetupGearsQuest);
+                mainLua.OnUpdate.Function.AppendAssignment(
+                    Lua.TableIdentifier("qvars", "setupOnce"), 
+                    Lua.FunctionCall(Lua.TableIdentifier("qvars", "SetupGearsQuest"), Lua.TableIdentifier("qvars", "setupOnce")));
 
-                mainLua.AddToQStep_Start_OnEnter(BuildWalkerGameObjectIdList);
-                mainLua.AddToQuestVariablesTable(BuildWalkerGameObjectIdList);
+                mainLua.qvars.AddOrSet(BuildWalkerGameObjectIdList);
+                mainLua.QStep_Start.Function.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"),
+                        Lua.TableIdentifier("qvars", "BuildWalkerGameObjectIdList")
+                    )
+                );
 
                 if (walkers.Any(walker => walker.isTarget))
                 {

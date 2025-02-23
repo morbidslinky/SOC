@@ -33,7 +33,7 @@ namespace SOC.Classes.Lua
             TABLE,
             TABLE_IDENTIFIER,
             FUNCTION,
-            CALL_FUNCTION,
+            FUNCTION_CALL,
             VARIABLE,
             ASSIGN_VARIABLE,
             TEMPLATE_ERROR

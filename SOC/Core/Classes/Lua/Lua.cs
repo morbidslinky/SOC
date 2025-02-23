@@ -52,6 +52,11 @@ namespace SOC.Classes.Lua
             }
         }
 
+        public static LuaVariable Variable(string name)
+        {
+            return new LuaVariable(name);
+        }
+
         public static LuaText Text(string text) { return new LuaText(text); }
 
         public static LuaTemplate Template(string text) { return new LuaTemplate(text); }
@@ -59,19 +64,16 @@ namespace SOC.Classes.Lua
         public static LuaTable Table<Entry>(params Entry[] entries) 
         { 
             LuaTable table = new LuaTable();
-
-            if (entries is LuaTableEntry[] explicitTableEntries)
-            {
-                return new LuaTable(explicitTableEntries);
-            }
-
-            LuaTableEntry[] implicitTableEntries = new LuaTableEntry[entries.Length];
+            LuaTableEntry[] tableEntries = new LuaTableEntry[entries.Length];
             for(int i = 0; i < entries.Length; i++)
             {
-                implicitTableEntries[i] = TableEntry(GetEntryValueType(entries[i]));
+                if (entries[i] is LuaTableEntry entry)
+                    tableEntries[i] = entry;
+                else
+                    tableEntries[i] = TableEntry(GetEntryValueType(entries[i]));
             }
 
-            return new LuaTable(implicitTableEntries); 
+            return new LuaTable(tableEntries); 
         }
 
         public static LuaTableIdentifier TableIdentifier<Name, Key>(Name tableVar, params Key[] keys) 
@@ -146,7 +148,7 @@ namespace SOC.Classes.Lua
                 case string s: call.FunctionVariableName = s; break;
                 case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
                 case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
-                case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunction()})"; break;
+                case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunctionValue()})"; break;
                 default: call.FunctionVariableName = $"({new LuaFunction()})"; break;
             }
 
@@ -163,7 +165,7 @@ namespace SOC.Classes.Lua
                 case string s: call.FunctionVariableName = s; break;
                 case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
                 case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
-                case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunction()})"; break;
+                case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunctionValue()})"; break;
                 default: call.FunctionVariableName = $"({new LuaFunction()})"; break;
             }
 
@@ -207,6 +209,8 @@ namespace SOC.Classes.Lua
                     return new LuaNumber(valueInt);
                 case bool valueBool:
                     return new LuaBoolean(valueBool);
+                case LuaFunction function:
+                    return function;
                 case LuaValue value:
                     return value;
                 default:
@@ -214,107 +218,5 @@ namespace SOC.Classes.Lua
             }
         }
 
-    }
-
-    public class LuaFunctionBuilder
-    {
-        List<FunctionToken> Values = new List<FunctionToken>();
-        List<string> Parameters = new List<string>();
-
-        public void Append(string plainText)
-        {
-            Values.Add(new FunctionTokenPlainText(plainText));
-        }
-
-        public void Append(LuaValue luaValue)
-        {
-            Values.Add(new FunctionTokenValue(luaValue));
-        }
-
-        public void Append(LuaTableEntry tableEntry)
-        {
-            Values.Add(new FunctionTokenTableEntry(tableEntry));
-        }
-
-        public LuaFunction ToFunction()
-        {
-            StringBuilder template = new StringBuilder();
-            List<LuaValue> templateValues = new List<LuaValue>();
-
-            int index = 0;
-            foreach (FunctionToken token in Values)
-            {
-                if (token is FunctionTokenPlainText t)
-                {
-                    template.Append($"{t.PlainText} ");
-                }
-                else if (token is FunctionTokenValue v)
-                {
-                    template.Append($"|[{index}|{LuaTemplate.GetTemplateRestrictionTypeString(v.Value, v.isAssign)}]| ");
-                    templateValues.Add(v.Value);
-                    index++;
-                }
-                else if (token is FunctionTokenTableEntry e)
-                {
-                    template.Append($"|[{index}|{LuaTemplate.GetTemplateRestrictionTypeString(e.Entry.Key)}]| = |[{index + 1}|{LuaTemplate.GetTemplateRestrictionTypeString(e.Entry.Value)}]|");
-                    templateValues.Add(e.Entry.Key);
-                    templateValues.Add(e.Entry.Value);
-                    index += 2;
-                }
-            }
-
-            return new LuaFunction(new LuaTemplate(template.ToString()), templateValues.ToArray(), Parameters.ToArray());
-        }
-
-        public LuaTableEntry ToTableEntry(string functionName, bool extrude = false)
-        {
-            LuaTableEntry tableEntry = new LuaTableEntry();
-            return Lua.TableEntry(functionName, ToFunction(), extrude);
-        }
-
-        public LuaVariable ToVariable(string functionName)
-        {
-            LuaVariable var = new LuaVariable(functionName);
-            var.AssignedTo = ToFunction();
-            return var;
-        }
-
-    }
-
-    internal abstract class FunctionToken { }
-
-    internal class FunctionTokenPlainText : FunctionToken
-    {
-        public string PlainText;
-        public FunctionTokenPlainText(string plainText)
-        {
-            PlainText = plainText;
-        }
-    }
-
-    internal class FunctionTokenValue : FunctionToken
-    {
-        public LuaValue Value;
-        public bool isAssign;
-        public FunctionTokenValue(LuaValue value)
-        {
-            Value = value;
-            isAssign = false;
-        }
-
-        public FunctionTokenValue(LuaVariable var, bool isAssignment)
-        {
-            Value = var;
-            isAssign = isAssignment;
-        }
-    }
-
-    internal class FunctionTokenTableEntry : FunctionToken
-    {
-        public LuaTableEntry Entry;
-        public FunctionTokenTableEntry(LuaTableEntry entry)
-        {
-            Entry = entry;
-        }
     }
 }

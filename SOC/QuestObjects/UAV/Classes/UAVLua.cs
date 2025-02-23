@@ -19,8 +19,13 @@ namespace SOC.QuestObjects.UAV
 
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
-                mainLua.AddToQStep_Start_OnEnter(setupUAV);
-                mainLua.AddToQuestVariablesTable(setupUAV);
+                mainLua.qvars.AddOrSet(setupUAV);
+                mainLua.QStep_Start.Function.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"),
+                        Lua.TableIdentifier("qvars", "setupUAV")
+                    )
+                );
 
                 if (detail.UAVs.Any(uav => uav.isTarget))
                 {

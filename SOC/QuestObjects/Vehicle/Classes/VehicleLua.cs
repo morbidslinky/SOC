@@ -9,9 +9,9 @@ namespace SOC.QuestObjects.Vehicle
 {
     class VehicleLua
     {
-        static readonly LuaTableEntry checkVehicle = LuaFunction.ToTableEntry("CheckIsVehicle", new string[] { "gameId" }, " return Tpp.IsVehicle(gameId) ");
+        static readonly LuaTableEntry CheckIsVehicle = LuaFunction.ToTableEntry("CheckIsVehicle", new string[] { "gameId" }, " return Tpp.IsVehicle(gameId) ");
 
-        static readonly LuaTableEntry warpVehicles = LuaFunction.ToTableEntry("WarpVehicles", new string[] { }, " for i,vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList) do \nlocal gameObjectId= GetGameObjectId(vehicleInfo.locator); if gameObjectId~=GameObject.NULL_ID then local position=vehicleInfo.position; local command={id=\"SetPosition\",rotY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3]) } ; GameObject.SendCommand(gameObjectId,command); end; end");
+        static readonly LuaTableEntry WarpVehicles = LuaFunction.ToTableEntry("WarpVehicles", new string[] { }, " for i,vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList) do \nlocal gameObjectId= GetGameObjectId(vehicleInfo.locator); if gameObjectId~=GameObject.NULL_ID then local position=vehicleInfo.position; local command={id=\"SetPosition\",rotY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3]) } ; GameObject.SendCommand(gameObjectId,command); end; end");
         
         public static void GetMain(VehiclesDetail detail, MainScriptBuilder mainLua)
         {
@@ -21,12 +21,17 @@ namespace SOC.QuestObjects.Vehicle
             {
                 mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaCaptureTargetMessages);
 
-                mainLua.AddToQStep_Start_OnEnter(warpVehicles);
-                mainLua.AddToQuestVariablesTable(warpVehicles);
+                mainLua.qvars.AddOrSet(WarpVehicles);
+                mainLua.QStep_Start.Function.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"),
+                        Lua.TableIdentifier("qvars", "WarpVehicles")
+                    )
+                );
 
-                if(detail.vehicles.Any(vehicle => vehicle.isTarget))
+                if (detail.vehicles.Any(vehicle => vehicle.isTarget))
                 {
-                    CheckQuestGenericEnemy checkQuestMethod = new CheckQuestGenericEnemy(mainLua, checkVehicle, detail.vehicleMetadata.ObjectiveType);
+                    CheckQuestGenericEnemy checkQuestMethod = new CheckQuestGenericEnemy(mainLua, CheckIsVehicle, detail.vehicleMetadata.ObjectiveType);
                     foreach (Vehicle vehicle in detail.vehicles)
                     {
                         if (vehicle.isTarget)

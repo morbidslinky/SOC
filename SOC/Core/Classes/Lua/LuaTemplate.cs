@@ -11,7 +11,7 @@ namespace SOC.Classes.Lua
     /// <summary>
     /// Embed |[index,restriction]| into the template string to set placeholders that will be populated when the lua is written to a file from a LuaFunction, assuming the function's populationValues are aligned with the template placeholders.
     /// Example: "This is a string: |[0,string]|, and this is a variable: |[1,variable]|, and this is an error: |[foo,bar]|."
-    /// Accepted placeholder restrictions: boolean, string, number, function, call_function, table, table_identifier, variable, assign_variable, nil 
+    /// Accepted placeholder restrictions: boolean, string, number, function, function_call, table, table_identifier, variable, assign_variable, nil 
     /// </summary>
     public class LuaTemplate
     {
@@ -35,7 +35,7 @@ namespace SOC.Classes.Lua
                     restrictionType = "function";
                     break;
                 case LuaFunctionCall call:
-                    restrictionType = "call_function";
+                    restrictionType = "function_call";
                     break;
                 case LuaNil nil:
                     restrictionType = "nil";
@@ -175,8 +175,8 @@ namespace SOC.Classes.Lua
                 case "function":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION;
                     break;
-                case "call_function":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.CALL_FUNCTION;
+                case "function_call":
+                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION_CALL;
                     break;
                 case "table":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE;

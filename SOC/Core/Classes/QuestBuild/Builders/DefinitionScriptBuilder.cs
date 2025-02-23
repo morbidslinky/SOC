@@ -12,8 +12,8 @@ namespace SOC.Classes.Lua
 {
     public class DefinitionScriptBuilder
     {
-        private LuaTable definitionTable = new LuaTable();
-        private LuaTable questPackList = new LuaTable();
+        private LuaTable definitionTable;
+        private LuaTable questPackList;
         private LuaTable randomFaceListIH = new LuaTable();
         private LuaTable faceIdList = new LuaTable();
         private LuaTable bodyIdList = new LuaTable();
@@ -22,45 +22,35 @@ namespace SOC.Classes.Lua
 
         public DefinitionScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
-            questPackList.AddOrSet(
-                    Lua.TableEntry("randomFaceListIH", randomFaceListIH),
-                    Lua.TableEntry("faceIdList", faceIdList),
-                    Lua.TableEntry("bodyIdList", bodyIdList));
+            questPackList = Lua.Table(
+                Lua.TableEntry("randomFaceListIH", randomFaceListIH),
+                Lua.TableEntry("faceIdList", faceIdList),
+                Lua.TableEntry("bodyIdList", bodyIdList),
+                Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
 
-            definitionTable.AddOrSet(
-                    Lua.TableEntry("questPackList", questPackList),
-                    Lua.TableEntry("disableLzs", disableLzs),
-                    Lua.TableEntry("requestEquipIds", requestEquipIds));
-
-            AddSetupToDefinitionLua(setupDetails);
-
-            foreach (ObjectsDetail detail in objectsDetails.details)
-            {
-                detail.AddToDefinitionLua(this);
-            }
-        }
-
-        private void AddSetupToDefinitionLua(SetupDetails setupDetails)
-        {
-            definitionTable.AddOrSet(
+            definitionTable = Lua.Table(
+                Lua.TableEntry("questPackList", questPackList),
+                Lua.TableEntry("disableLzs", disableLzs),
+                Lua.TableEntry("requestEquipIds", requestEquipIds),
                 Lua.TableEntry("locationId", setupDetails.locationID),
                 Lua.TableEntry("areaName", setupDetails.loadArea),
                 Lua.TableEntry("iconPos", Lua.FunctionCall("Vector3", setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord)),
                 Lua.TableEntry("radius", Lua.Number(setupDetails.radius)),
-                Lua.TableEntry("category", Lua.TableIdentifier("TppQuest", Lua.Values("QUEST_CATEGORIES_ENUM", setupDetails.category))),
+                Lua.TableEntry("category", Lua.TableIdentifier("TppQuest", "QUEST_CATEGORIES_ENUM", setupDetails.category)),
                 Lua.TableEntry("questCompleteLangId", setupDetails.progressLangID),
                 Lua.TableEntry("canOpenQuest", Lua.Function("return true")),
                 Lua.TableEntry("canActiveQuest", Lua.Function("return true")),
-                Lua.TableEntry("questRank", Lua.TableIdentifier("TppDefine", Lua.Values("QUEST_RANK", setupDetails.reward)))
-            );
-
-
+                Lua.TableEntry("questRank", Lua.TableIdentifier("TppDefine", "QUEST_RANK", setupDetails.reward)));
+            
             if (LoadAreas.isMtbs(setupDetails.locationID))
             {
                 definitionTable.AddOrSet(Lua.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
             }
 
-            questPackList.AddOrSet(Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
+            foreach (ObjectsDetail detail in objectsDetails.details)
+            {
+                detail.AddToDefinitionLua(this);
+            }
         }
 
         public void AddFpkPathToQuestPackList(string packPath)
