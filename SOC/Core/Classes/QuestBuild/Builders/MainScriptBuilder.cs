@@ -14,10 +14,9 @@ namespace SOC.Classes.Lua
         public SetupDetails SetupDetails;
         public ObjectsDetails ObjectsDetails;
 
-        QuestTable questTable = new QuestTable();
-        public QStep_Main qStep_main = new QStep_Main();
-        CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList();
-        ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList();
+        QuestTable questTable = new QuestTable(); // TODO
+        CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList(); // TODO
+        ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList(); // TODO
 
 
         public OnUpdate OnUpdate = new OnUpdate();
@@ -26,6 +25,7 @@ namespace SOC.Classes.Lua
         public OnInitialize OnInitialize = new OnInitialize();
         public OnTerminate OnTerminate = new OnTerminate();
         public QStep_Start QStep_Start = new QStep_Start();
+        public QStep_Main QStep_Main = new QStep_Main(); 
 
         public LuaTable qvars = new LuaTable();
         public LuaTable @this = new LuaTable();
@@ -72,7 +72,8 @@ namespace SOC.Classes.Lua
             );
 
             quest_step.AddOrSet(
-                QStep_Start.Get()
+                QStep_Start.Get(),
+                QStep_Main.Get()
             );
 
             /*
@@ -117,8 +118,18 @@ namespace SOC.Classes.Lua
         public void AddBaseQStep_MainMsgs(params StrCodeBlock[] messages)
         {
             foreach (StrCodeBlock message in messages)
-                if (!qStep_main.Contains(message))
-                    qStep_main.Add(message);
+                if (!QStep_Main.Contains(message))
+                {
+                    foreach (StrCodeMsgBlock block in message.msgBlocks)
+                    {
+                        foreach (LuaTableEntry function in block.functions)
+                        {
+                            function.ExtrudeForAssignmentVariable = true;
+                            qvars.AddOrSet(function);
+                        }
+                    }
+                    QStep_Main.AddToMessagesStrCode32Table(message);
+                }
         }
 
         public void Build(string mainLuaFilePath)
@@ -273,11 +284,38 @@ namespace SOC.Classes.Lua
 
     public class QStep_Main
     {
-        public List<StrCodeBlock> strCodes = new List<StrCodeBlock>();
+        public List<StrCodeBlock> StrCode32TableEntries = new List<StrCodeBlock>();
+        LuaTable QStep_Main_Table = new LuaTable();
 
-        public void Add(StrCodeBlock _codeBlock)
+        public LuaFunctionBuilder OnEnterFunction = new LuaFunctionBuilder();
+        public LuaFunctionBuilder OnLeaveFunction = new LuaFunctionBuilder();
+
+        public QStep_Main()
         {
-            foreach (StrCodeBlock codeBlock in strCodes)
+            OnEnterFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnEnter")));
+            OnLeaveFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnLeave")));
+        }
+
+        public LuaTableEntry Get()
+        {
+            LuaTable StrCode32Table = new LuaTable();
+            foreach (StrCodeBlock block in StrCode32TableEntries)
+            {
+                StrCode32Table.AddOrSet(block.Get());
+            }
+
+            QStep_Main_Table.AddOrSet(
+                Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table)), false),
+                Lua.TableEntry("OnEnter", OnEnterFunction.ToFunction()),
+                Lua.TableEntry("OnLeave", OnLeaveFunction.ToFunction())
+            );
+
+            return Lua.TableEntry("QStep_Main", QStep_Main_Table, true);
+        }
+
+        public void AddToMessagesStrCode32Table(StrCodeBlock _codeBlock)
+        {
+            foreach (StrCodeBlock codeBlock in StrCode32TableEntries)
             {
                 if (codeBlock.Equals(_codeBlock))
                 {
@@ -285,14 +323,14 @@ namespace SOC.Classes.Lua
                     return;
                 }
             }
-            strCodes.Add(_codeBlock);
+            StrCode32TableEntries.Add(_codeBlock);
         }
 
         public bool Contains(StrCodeBlock _codeBlock)
         {
             var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaTableEntry)>();
 
-            foreach (StrCodeBlock codeBlock in strCodes)
+            foreach (StrCodeBlock codeBlock in StrCode32TableEntries)
             {
                 foreach (StrCodeMsgBlock msgBlock in codeBlock.msgBlocks)
                 {
@@ -315,20 +353,6 @@ namespace SOC.Classes.Lua
             }
 
             return false;
-        }
-
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-            return $@"
-quest_step.QStep_Main = {{
-  Messages = function( self )
-    return StrCode32Table {{
-        {string.Join(",", strCodes.Select(code => code.ToLua()))}
-      }}
-  end,
-  OnEnter = function() end,
-  OnLeave = function() end,
-}}";
         }
 
     }
@@ -384,11 +408,16 @@ quest_step.QStep_Main = {{
             return strCode.Equals(_code.strCode);
         }
 
-        public string ToLua()
+        public LuaTableEntry Get()
         {
-            return $@"{strCode} = {{
-            {string.Join(", ", msgBlocks.Select(msg => $"{{{msg.ToLua()}}}"))}
-            }}";
+            LuaTable StrCodeTable = new LuaTable();
+
+            foreach (StrCodeMsgBlock msgBlock in msgBlocks)
+            {
+                StrCodeTable.AddOrSet(Lua.TableEntry(msgBlock.Get()));
+            }
+
+            return Lua.TableEntry(strCode, StrCodeTable);
         }
     }
 
@@ -424,14 +453,29 @@ quest_step.QStep_Main = {{
             functions.AddRange(calls);
         }
 
-        public string ToLua()
+        public LuaTable Get()
         {
-            return $@"
-            msg = ""{msg}"", {(sender == "" ? "" : $@"
-            sender = {sender}, ")}
-            func = function({string.Join(", ", msgArgs)})
-              {string.Join(" ", functions.Select(func =>  func.Key + $"({msgArgs})"))}
-            end";
+            LuaTable MsgSenderFuncTuple = new LuaTable();
+            MsgSenderFuncTuple.AddOrSet(
+                Lua.TableEntry("msg", msg));
+
+            if (sender != "")
+            {
+                MsgSenderFuncTuple.AddOrSet(
+                    Lua.TableEntry("sender", sender));
+            }
+
+            LuaFunctionBuilder entryFunctionBuilder = new LuaFunctionBuilder();
+            entryFunctionBuilder.AppendParameter(msgArgs);
+
+            foreach (LuaTableEntry func in functions)
+            {
+                entryFunctionBuilder.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("qvars", func.Key), msgArgs.Select(argString => Lua.Variable(argString)).ToArray()));
+            }
+
+            MsgSenderFuncTuple.AddOrSet(Lua.TableEntry("func", entryFunctionBuilder.ToFunction()));
+
+            return MsgSenderFuncTuple;
         }
 
         public override bool Equals(object obj)

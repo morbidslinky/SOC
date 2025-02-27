@@ -99,6 +99,7 @@ namespace SOC.Classes.Lua
         {
             switch (values)
             {
+                case LuaValue[] v: return v;
                 case string[] stringArray:
                     LuaValue[] luaValues = new LuaValue[stringArray.Length];
                     for (int i = 0; i < luaValues.Length; i++)
@@ -115,7 +116,6 @@ namespace SOC.Classes.Lua
                     return luaValues;
                 case double[] numberArray:
                     return numberArray.Select(n => new LuaNumber(n)).ToArray();
-                case LuaValue[] v: return v;
                 default: return new LuaValue[0];
             }
         }
@@ -149,7 +149,8 @@ namespace SOC.Classes.Lua
                 case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
                 case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
                 case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunctionValue()})"; break;
-                default: call.FunctionVariableName = $"({new LuaFunction()})"; break;
+                case LuaText t: call.FunctionVariableName = t.Text; break;
+                default: call.FunctionVariableName = "Unsupported Function Name Value"; break;
             }
 
             call.Arguments = Values(args);

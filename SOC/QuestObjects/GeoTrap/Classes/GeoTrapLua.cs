@@ -26,7 +26,7 @@ namespace SOC.QuestObjects.GeoTrap
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Enter",
                             new string[] { },
-                            $@" InfCore.DebugPrint(""{geoTrapName} Enter""); "));
+                            $@" InfCore.DebugPrint(""{geoTrapName} Enter""); ")); //todo use function template properly
 
                     StrCodeBlock ExitTrap = new StrCodeBlock(
                         "Trap",

@@ -17,7 +17,7 @@ namespace SOC.Classes.Lua
         [XmlArray("Parameters")]
         [XmlArrayItem("Parameter")]
         public string[] Parameters { get; set; }
-        public LuaTemplate Template { get; set; }
+        public LuaTemplate Body { get; set; }
         [XmlArray("PopulationValues")]
         [XmlArrayItem("Value")]
         public LuaValue[] PopulationValues { get; set; }
@@ -27,19 +27,19 @@ namespace SOC.Classes.Lua
 
         public LuaFunction(LuaTemplate template, LuaValue[] populationValues, string[] parameters) : base(TemplateRestrictionType.FUNCTION)
         {
-            Template = template;
+            Body = template;
             PopulationValues = populationValues;
             Parameters = parameters;
         }
 
         public string GetLuaFunctionValue()
         {
-            return $"function({string.Join(", ", Parameters)})\n{Template.Populate(PopulationValues)}\nend";
+            return $"function({string.Join(", ", Parameters)})\n{Body.Populate(PopulationValues)}\nend";
         }
 
         public void WriteToLua(string filename)
         {
-            string populatedTemplate = Template.Populate(PopulationValues);
+            string populatedTemplate = Body.Populate(PopulationValues);
 
             var directoryPath = Path.GetDirectoryName(filename);
             if (!string.IsNullOrEmpty(directoryPath))
@@ -79,6 +79,11 @@ namespace SOC.Classes.Lua
     {
         List<FunctionToken> Values = new List<FunctionToken>();
         List<string> Parameters = new List<string>();
+
+        public void AppendParameter(params string[] functionParameters)
+        {
+            Parameters.AddRange(functionParameters);
+        }
 
         public void AppendPlainText(string plainText)
         {
