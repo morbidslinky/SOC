@@ -34,7 +34,7 @@ namespace SOC.QuestObjects.Item
             {
                 CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsDormantItem, questDetail.itemMetadata.objectiveType);
                 mainLua.AddToQuestTable(BuildItemTargetList(questDetail.items));
-                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.dormantItemTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.dormantItemTargetMessages);
             }
         }
 

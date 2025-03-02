@@ -76,7 +76,19 @@ namespace SOC.Classes.Lua
                             }
                             tokens.Add("\n");
                         }
-                        else if (current == ',' || current == '{' || current == '}' || current == '(' || current == ')' || (current == '=' && luaCode[i - 1] != '~'))
+                        else if (current == '=' && next != '=' && luaCode[i - 1] != '=' && luaCode[i - 1] != '~'  && luaCode[i - 1] != '>' && luaCode[i - 1] != '<')
+                        {
+                            if (tokenBuilder.Length > 0)
+                            {
+                                tokens.Add(tokenBuilder.ToString());
+                                tokenBuilder.Clear();
+                            }
+
+                            tokenBuilder.Append(current);
+                            tokens.Add(tokenBuilder.ToString());
+                            tokenBuilder.Clear();
+                        }
+                        else if (current == ',' || current == '{' || current == '}' || current == '(' || current == ')')
                         {
                             if (tokenBuilder.Length > 0)
                             {

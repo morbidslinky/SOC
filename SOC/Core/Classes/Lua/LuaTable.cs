@@ -13,16 +13,13 @@ namespace SOC.Classes.Lua
     {
         [XmlArray("Entries")]
         [XmlArrayItem("Entry")]
-        public List<LuaTableEntry> KeyValuePairs { get; set; }
+        public List<LuaTableEntry> KeyValuePairs = new List<LuaTableEntry>();
 
         public LuaTable() : base(TemplateRestrictionType.TABLE)
-        {
-            KeyValuePairs = new List<LuaTableEntry>();
-        }
+        { }
 
         public LuaTable(params LuaTableEntry[] entries) : base(TemplateRestrictionType.TABLE)
         {
-            KeyValuePairs = new List<LuaTableEntry>();
             AddOrSet(entries);
         }
 
@@ -30,13 +27,15 @@ namespace SOC.Classes.Lua
         {
             foreach (LuaTableEntry entry in entries)
             {
-                if (!TryAdd(entry)) TrySet(entry);
+                if (entry.Key is LuaTableIdentifier id)
+                {
+                    if (!TryAdd(id.IdentifierKeys, entry.Value)) TrySet(id.IdentifierKeys, entry.Value);
+                }
+                else
+                {
+                    if (!TryAdd(entry)) TrySet(entry);
+                }
             }
-        }
-
-        public void AddOrSet(LuaValue[] path, LuaValue entry)
-        {
-                if (!TryAdd(path, entry)) TrySet(path, entry);
         }
 
         public bool TrySet(LuaTableEntry entry)
@@ -76,12 +75,17 @@ namespace SOC.Classes.Lua
                     }
                 }
             }
-            if (!TryGetKeyValuePair(entry.Key, out _))
+
+            if (TryGetKeyValuePair(entry.Key, out LuaTableEntry pair))
             {
-                KeyValuePairs.Add(entry);
-                return true;
+                if (pair.Value is LuaTable table)
+                {
+                    return table.TryAdd(Lua.TableEntry(entry.Value));
+                }
+                return false;
             }
-            return false;
+            KeyValuePairs.Add(entry);
+            return true;
         }
 
         public bool TryAdd(LuaValue[] nestedTableKeys, LuaValue value, int depth = 0, bool extrude = false)
@@ -193,7 +197,6 @@ namespace SOC.Classes.Lua
                 if (!distinctPaths) visitedTables.Remove(table);
             }
         }
-
 
         public override string Value => GetFormattedLuaTable();
 

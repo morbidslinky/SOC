@@ -18,27 +18,21 @@ namespace SOC.QuestObjects.GeoTrap
                 var uniqueGeoTraps = shapes.Select(shape => shape.geoTrap).Distinct();
                 foreach (string geoTrapName in uniqueGeoTraps)
                 {
-                    StrCodeBlock EnterTrap = new StrCodeBlock(
-                        "Trap",
-                        "Enter",
-                        geoTrapName,
-                        new string[] { },
+                    StrCode32Script EnterTrap = new StrCode32Script(
+                        new StrCode32Event("Trap", "Enter", geoTrapName),
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Enter",
                             new string[] { },
                             $@" InfCore.DebugPrint(""{geoTrapName} Enter""); ")); //todo use function template properly
 
-                    StrCodeBlock ExitTrap = new StrCodeBlock(
-                        "Trap",
-                        "Exit",
-                        geoTrapName,
-                        new string[] { },
+                    StrCode32Script ExitTrap = new StrCode32Script(
+                        new StrCode32Event("Trap", "Exit", geoTrapName),
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Exit",
                             new string[] { },
                             $@" InfCore.DebugPrint(""{geoTrapName} Exit""); "));
 
-                    mainLua.AddBaseQStep_MainMsgs(EnterTrap, ExitTrap);
+                    mainLua.QStep_Main.StrCode32Table.Add(EnterTrap, ExitTrap);
                 }
             }
         }

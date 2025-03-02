@@ -122,21 +122,21 @@ namespace SOC.Classes.Lua
 
         public static LuaFunction Function(string template, LuaValue[] populationValues, params string[] parameters)
         {
-            return new LuaFunction(new LuaTemplate(template), populationValues, parameters);
+            return new LuaFunction(new LuaTemplate(template), populationValues, parameters.Select(str => Variable(str)).ToArray());
         }
 
         public static LuaFunction Function(string template, params LuaValue[] populationValues)
         {
-            return new LuaFunction(new LuaTemplate(template), populationValues, new string[0]);
+            return new LuaFunction(new LuaTemplate(template), populationValues, new LuaVariable[0]);
         }
 
         public static LuaFunction Function(string template, params string[] parameters)
         {
-            return new LuaFunction(new LuaTemplate(template), new LuaValue[0], parameters);
+            return new LuaFunction(new LuaTemplate(template), new LuaValue[0], parameters.Select(str => Variable(str)).ToArray());
         }
         public static LuaFunction Function(string template)
         {
-            return new LuaFunction(new LuaTemplate(template), new LuaValue[0], new string[0]);
+            return new LuaFunction(new LuaTemplate(template), new LuaValue[0], new LuaVariable[0]);
         }
 
         public static LuaFunctionCall FunctionCall<NameValue, ArgValue>(NameValue name, params ArgValue[] args)
@@ -210,6 +210,8 @@ namespace SOC.Classes.Lua
                     return new LuaNumber(valueInt);
                 case bool valueBool:
                     return new LuaBoolean(valueBool);
+                case LuaTableIdentifier id:
+                    return id;
                 case LuaFunction function:
                     return function;
                 case LuaValue value:

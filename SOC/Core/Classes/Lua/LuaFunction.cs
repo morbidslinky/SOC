@@ -16,7 +16,7 @@ namespace SOC.Classes.Lua
 
         [XmlArray("Parameters")]
         [XmlArrayItem("Parameter")]
-        public string[] Parameters { get; set; }
+        public LuaVariable[] Parameters { get; set; }
         public LuaTemplate Body { get; set; }
         [XmlArray("PopulationValues")]
         [XmlArrayItem("Value")]
@@ -25,7 +25,7 @@ namespace SOC.Classes.Lua
 
         public LuaFunction() : base(TemplateRestrictionType.FUNCTION) { }
 
-        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, string[] parameters) : base(TemplateRestrictionType.FUNCTION)
+        public LuaFunction(LuaTemplate template, LuaValue[] populationValues, LuaVariable[] parameters) : base(TemplateRestrictionType.FUNCTION)
         {
             Body = template;
             PopulationValues = populationValues;
@@ -34,7 +34,7 @@ namespace SOC.Classes.Lua
 
         public string GetLuaFunctionValue()
         {
-            return $"function({string.Join(", ", Parameters)})\n{Body.Populate(PopulationValues)}\nend";
+            return $"function({string.Join(", ", Parameters.Select(p => p.Name))})\n{Body.Populate(PopulationValues)}\nend";
         }
 
         public void WriteToLua(string filename)
@@ -78,9 +78,13 @@ namespace SOC.Classes.Lua
     public class LuaFunctionBuilder
     {
         List<FunctionToken> Values = new List<FunctionToken>();
-        List<string> Parameters = new List<string>();
+        List<LuaVariable> Parameters = new List<LuaVariable>();
 
         public void AppendParameter(params string[] functionParameters)
+        {
+            Parameters.AddRange(functionParameters.Select(parameter => Lua.Variable(parameter)));
+        }
+        public void AppendParameter(params LuaVariable[] functionParameters)
         {
             Parameters.AddRange(functionParameters);
         }
@@ -107,7 +111,7 @@ namespace SOC.Classes.Lua
 
         public LuaFunction ToFunction()
         {
-            StringBuilder template = new StringBuilder();
+            StringBuilder templateBuilder = new StringBuilder();
             List<LuaValue> templateValues = new List<LuaValue>();
 
             int index = 0;
@@ -115,24 +119,25 @@ namespace SOC.Classes.Lua
             {
                 if (token is FunctionTokenPlainText t)
                 {
-                    template.Append($"{t.PlainText} ");
+                    templateBuilder.Append($"{t.PlainText} ");
                 }
                 else if (token is FunctionTokenValue v)
                 {
-                    template.AppendLine($"|[{index}|{LuaTemplate.GetTemplateRestrictionTypeString(v.Value, v.isAssign)}]| ");
+                    templateBuilder.AppendLine($"|[{index}|{LuaTemplate.GetTemplateRestrictionTypeString(v.Value, v.isAssign)}]| ");
                     templateValues.Add(v.Value);
                     index++;
                 }
                 else if (token is FunctionTokenAssignment e)
                 {
-                    template.AppendLine($"|[{index}|{LuaTemplate.GetTemplateRestrictionTypeString(e.Entry.Key)}]| = |[{index + 1}|{LuaTemplate.GetTemplateRestrictionTypeString(e.Entry.Value)}]|");
+                    templateBuilder.AppendLine($"|[{index}|{LuaTemplate.GetTemplateRestrictionTypeString(e.Entry.Key)}]| = |[{index + 1}|{LuaTemplate.GetTemplateRestrictionTypeString(e.Entry.Value)}]|");
                     templateValues.Add(e.Entry.Key);
                     templateValues.Add(e.Entry.Value);
                     index += 2;
                 }
             }
 
-            return new LuaFunction(new LuaTemplate(template.ToString()), templateValues.ToArray(), Parameters.ToArray());
+            string template = templateBuilder.ToString();
+            return new LuaFunction(new LuaTemplate(template.Trim()), templateValues.ToArray(), Parameters.ToArray());
         }
 
         public LuaTableEntry ToTableEntry(string functionName, bool extrude = false)

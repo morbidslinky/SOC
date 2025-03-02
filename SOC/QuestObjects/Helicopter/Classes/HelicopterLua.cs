@@ -27,7 +27,7 @@ namespace SOC.QuestObjects.Helicopter
                 mainLua.qvars.AddOrSet(setHelicopterAttributes);
                 if (questDetail.helicopters.Any(helicopter => helicopter.isTarget))
                 {
-                    mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
                     CheckQuestGenericEnemy helicopterCheck = new CheckQuestGenericEnemy(mainLua);
                     foreach (Helicopter heli in questDetail.helicopters)
                         if (heli.isTarget)

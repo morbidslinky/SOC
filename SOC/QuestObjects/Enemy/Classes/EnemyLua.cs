@@ -140,7 +140,7 @@ namespace SOC.QuestObjects.Enemy
 
                 if (hasTarget)
                 {
-                    mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.genericTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.genericTargetMessages);
                     CheckQuestGenericEnemy CheckEnemy = new CheckQuestGenericEnemy(mainLua, CheckIsSoldier, meta.objectiveType);
                 }
             }

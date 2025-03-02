@@ -15,9 +15,9 @@ namespace SOC.QuestObjects.ActiveItem
         {
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.activeItemTargetMessages);
                 CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsActiveItem, questDetail.activeItemMetadata.objectiveType);
                 mainLua.AddToQuestTable(BuildTargetItemList(questDetail));
-                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.activeItemTargetMessages);
             }
         }
 

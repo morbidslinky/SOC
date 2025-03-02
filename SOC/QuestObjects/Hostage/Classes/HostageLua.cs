@@ -58,10 +58,8 @@ namespace SOC.QuestObjects.Hostage
                     mainLua.qvars.AddOrSet(SwitchEnableQuestHighIntTable);
 
                     mainLua.qvars.AddOrSet(Lua.TableEntry("hostagei", 0));// only used for MarkerChangeToEnable's function
-                    mainLua.AddBaseQStep_MainMsgs(new StrCodeBlock(
-                        "Marker", 
-                        "ChangeToEnable", 
-                        new string[] { "arg0", "arg1" },
+                    mainLua.QStep_Main.StrCode32Table.Add(new StrCode32Script(
+                        new StrCode32Event("Marker", "ChangeToEnable", "", "arg0", "arg1"),
                         LuaFunction.ToTableEntry(
                             "OnEnableMarkerCheckIntTable",       
                             new string[] { "arg0", "arg1" },
@@ -76,7 +74,7 @@ namespace SOC.QuestObjects.Hostage
                         );
                 }
 
-                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.genericTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.genericTargetMessages);
 
                 //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
                 //mainLua.QvarTable.AddOrSet(WarpHostages);

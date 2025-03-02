@@ -21,7 +21,7 @@ namespace SOC.QuestObjects.Camera
             {
                 mainLua.AddToQuestTable(BuildCameraList(detail.cameras));
 
-                mainLua.AddBaseQStep_MainMsgs(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.qvars.AddOrSet(SetCameraAttributes);
                 mainLua.QStep_Start.Function.AppendLuaValue(

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SOC.Classes.Lua
 {
@@ -31,9 +32,19 @@ namespace SOC.Classes.Lua
         public LuaTable @this = new LuaTable();
         public LuaTable quest_step = new LuaTable();
 
+        public LuaTable CommonFunctions = new LuaTable();
+
+
         public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             SetupDetails = setupDetails; ObjectsDetails = objectsDetails;
+            /*
+            XmlSerializer serializer = new XmlSerializer(typeof(LuaTable));
+            using (StreamReader reader = new StreamReader("StaticScriptFunctions.xml"))
+            {
+                CommonFunctions = (LuaTable)serializer.Deserialize(reader);
+            }
+            */
 
             qvars.AddOrSet(
                 Lua.TableEntry("StrCode32", Lua.TableIdentifier("Fox", Lua.Text("StrCode32"))),
@@ -73,7 +84,7 @@ namespace SOC.Classes.Lua
 
             quest_step.AddOrSet(
                 QStep_Start.Get(),
-                QStep_Main.Get()
+                QStep_Main.GetTable()
             );
 
             /*
@@ -115,26 +126,10 @@ namespace SOC.Classes.Lua
             questTable.AddTarget(targetName);
         }
 
-        public void AddBaseQStep_MainMsgs(params StrCodeBlock[] messages)
-        {
-            foreach (StrCodeBlock message in messages)
-                if (!QStep_Main.Contains(message))
-                {
-                    foreach (StrCodeMsgBlock block in message.msgBlocks)
-                    {
-                        foreach (LuaTableEntry function in block.functions)
-                        {
-                            function.ExtrudeForAssignmentVariable = true;
-                            qvars.AddOrSet(function);
-                        }
-                    }
-                    QStep_Main.AddToMessagesStrCode32Table(message);
-                }
-        }
-
         public void Build(string mainLuaFilePath)
         {
-            var mainScript = Lua.Function("local |[0|assign_variable]| local |[1|assign_variable]| local |[2|assign_variable]| return |[1|variable]|",
+            var mainScript = Lua.Function("local |[0|assign_variable]| local |[1|assign_variable]| local |[2|assign_variable]| local |[3|assign_variable]| return |[2|variable]|",
+                    QStep_Main.GetStrCode32DefinitionsVariable(),
                     Lua.Variable("qvars",qvars),
                     Lua.Variable("this", @this),
                     Lua.Variable("quest_step", quest_step)
@@ -284,7 +279,9 @@ namespace SOC.Classes.Lua
 
     public class QStep_Main
     {
-        public List<StrCodeBlock> StrCode32TableEntries = new List<StrCodeBlock>();
+        public StrCode32Table StrCode32Table = new StrCode32Table();
+        public LuaVariable StrCode32TableVariable = new LuaVariable("QStep_Main_StrCode32_Defs");
+
         LuaTable QStep_Main_Table = new LuaTable();
 
         public LuaFunctionBuilder OnEnterFunction = new LuaFunctionBuilder();
@@ -296,16 +293,10 @@ namespace SOC.Classes.Lua
             OnLeaveFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnLeave")));
         }
 
-        public LuaTableEntry Get()
+        public LuaTableEntry GetTable()
         {
-            LuaTable StrCode32Table = new LuaTable();
-            foreach (StrCodeBlock block in StrCode32TableEntries)
-            {
-                StrCode32Table.AddOrSet(block.Get());
-            }
-
             QStep_Main_Table.AddOrSet(
-                Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table)), false),
+                Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(StrCode32TableVariable))), false),
                 Lua.TableEntry("OnEnter", OnEnterFunction.ToFunction()),
                 Lua.TableEntry("OnLeave", OnLeaveFunction.ToFunction())
             );
@@ -313,182 +304,10 @@ namespace SOC.Classes.Lua
             return Lua.TableEntry("QStep_Main", QStep_Main_Table, true);
         }
 
-        public void AddToMessagesStrCode32Table(StrCodeBlock _codeBlock)
+        public LuaVariable GetStrCode32DefinitionsVariable()
         {
-            foreach (StrCodeBlock codeBlock in StrCode32TableEntries)
-            {
-                if (codeBlock.Equals(_codeBlock))
-                {
-                    codeBlock.Add(_codeBlock.msgBlocks);
-                    return;
-                }
-            }
-            StrCode32TableEntries.Add(_codeBlock);
-        }
-
-        public bool Contains(StrCodeBlock _codeBlock)
-        {
-            var existingMsgFunctionPairs = new HashSet<(StrCodeMsgBlock, LuaTableEntry)>();
-
-            foreach (StrCodeBlock codeBlock in StrCode32TableEntries)
-            {
-                foreach (StrCodeMsgBlock msgBlock in codeBlock.msgBlocks)
-                {
-                    foreach (LuaTableEntry luaFunction in msgBlock.functions)
-                    {
-                        existingMsgFunctionPairs.Add((msgBlock, luaFunction));
-                    }
-                }
-            }
-
-            foreach (StrCodeMsgBlock _msgBlock in _codeBlock.msgBlocks)
-            {
-                foreach (LuaTableEntry _luaFunction in _msgBlock.functions)
-                {
-                    if (existingMsgFunctionPairs.Contains((_msgBlock, _luaFunction)))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-    }
-
-    public class StrCodeBlock
-    {
-        public string strCode;
-        public List<StrCodeMsgBlock> msgBlocks = new List<StrCodeMsgBlock>();
-
-        public StrCodeBlock(string _strCode, StrCodeMsgBlock _msgBlock)
-        {
-            strCode = _strCode; msgBlocks.Add(_msgBlock);
-        }
-
-        public StrCodeBlock(string _strCode, List<StrCodeMsgBlock> _msgBlocks)
-        {
-            strCode = _strCode; msgBlocks.AddRange(_msgBlocks);
-        }
-
-        public StrCodeBlock(string _strCode, string _name, string[] _msgArgs, params LuaTableEntry[] _functions)
-        {
-            strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _msgArgs, _functions));
-        }
-
-        public StrCodeBlock(string _strCode, string _name, string _sender, string[] _msgArgs, params LuaTableEntry[] _functions)
-        {
-            strCode = _strCode; msgBlocks.Add(new StrCodeMsgBlock(_name, _sender, _msgArgs, _functions));
-        }
-
-        public void Add(List<StrCodeMsgBlock> _msgBlocks)
-        {
-            foreach (StrCodeMsgBlock msg in _msgBlocks)
-            {
-                this.Add(msg);
-            }
-        }
-
-        public void Add(StrCodeMsgBlock _msgBlock)
-        {
-            foreach (StrCodeMsgBlock msgBlock in msgBlocks)
-            {
-                if (msgBlock.Equals(_msgBlock))
-                {
-                    msgBlock.AddFunctionCalls(_msgBlock.functions);
-                    return;
-                }
-            }
-            msgBlocks.Add(_msgBlock);
-        }
-
-        public bool Equals(StrCodeBlock _code)
-        {
-            return strCode.Equals(_code.strCode);
-        }
-
-        public LuaTableEntry Get()
-        {
-            LuaTable StrCodeTable = new LuaTable();
-
-            foreach (StrCodeMsgBlock msgBlock in msgBlocks)
-            {
-                StrCodeTable.AddOrSet(Lua.TableEntry(msgBlock.Get()));
-            }
-
-            return Lua.TableEntry(strCode, StrCodeTable);
-        }
-    }
-
-    public class StrCodeMsgBlock
-    {
-        string msg;
-        string sender;
-        string[] msgArgs;
-        public List<LuaTableEntry> functions;
-
-        public StrCodeMsgBlock(string _name, string[] _msgArgs)
-        {
-            msg = _name; sender = ""; msgArgs = _msgArgs; functions = new List<LuaTableEntry>();
-        }
-
-        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs)
-        {
-            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = new List<LuaTableEntry>();
-        }
-
-        public StrCodeMsgBlock(string _name, string[] _msgArgs, LuaTableEntry[] _functions)
-        {
-            msg = _name; sender = ""; msgArgs = _msgArgs; functions = _functions.ToList();
-        }
-
-        public StrCodeMsgBlock(string _name, string _sender, string[] _msgArgs, LuaTableEntry[] _functions)
-        {
-            msg = _name; sender = _sender; msgArgs = _msgArgs; functions = _functions.ToList();
-        }
-
-        public void AddFunctionCalls(List<LuaTableEntry> calls)
-        {
-            functions.AddRange(calls);
-        }
-
-        public LuaTable Get()
-        {
-            LuaTable MsgSenderFuncTuple = new LuaTable();
-            MsgSenderFuncTuple.AddOrSet(
-                Lua.TableEntry("msg", msg));
-
-            if (sender != "")
-            {
-                MsgSenderFuncTuple.AddOrSet(
-                    Lua.TableEntry("sender", sender));
-            }
-
-            LuaFunctionBuilder entryFunctionBuilder = new LuaFunctionBuilder();
-            entryFunctionBuilder.AppendParameter(msgArgs);
-
-            foreach (LuaTableEntry func in functions)
-            {
-                entryFunctionBuilder.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("qvars", func.Key), msgArgs.Select(argString => Lua.Variable(argString)).ToArray()));
-            }
-
-            MsgSenderFuncTuple.AddOrSet(Lua.TableEntry("func", entryFunctionBuilder.ToFunction()));
-
-            return MsgSenderFuncTuple;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is StrCodeMsgBlock other))
-                return false;
-
-            return msg.Equals(other.msg) && sender.Equals(other.sender);
-        }
-
-        public override int GetHashCode()
-        {
-            return msg.GetHashCode() + sender.GetHashCode();
+            StrCode32Table.AssignFunctionDefinitions(StrCode32TableVariable);
+            return StrCode32TableVariable;
         }
     }
 
@@ -822,110 +641,90 @@ ObjectiveTypeList = {");
 
     public static class QStep_MainCommonMessages
     {
-
-        static readonly StrCodeBlock PlayerPickUpWeapon = new StrCodeBlock(
-            "Player",
-            "OnPickUpWeapon",
-            new string[] { "playerIndex", "playerIndex" },
+        static readonly StrCode32Script PlayerPickUpWeapon = new StrCode32Script(
+            new StrCode32Event("Player", "OnPickUpWeapon", "", "playerIndex", "playerIndex"),
             LuaFunction.ToTableEntry(
                 "PlayerPickUpWeaponClearCheck",
                 new string[] { "playerIndex", "playerIndex" },
-                " local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpDormant\", equipId); TppQuest.ClearWithSave(isClearType); "));
+                " local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpDormant\", equipId); TppQuest.ClearWithSave(isClearType); ")
+            );
 
-        static readonly StrCodeBlock PlayerPickUpPlaced = new StrCodeBlock(
-            "Player",
-            "OnPickUpPlaced",
-            new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
+        static readonly StrCode32Script PlayerPickUpPlaced = new StrCode32Script(
+            new StrCode32Event("Player", "OnPickUpPlaced", "", "playerGameObjectId", "equipId", "index", "isPlayer"),
             LuaFunction.ToTableEntry(
                 "PlayerPickUpPlacedClearCheck",
                 new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
                 " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpActive\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
 
-        static readonly StrCodeBlock PlacedActivatePlaced = new StrCodeBlock(
-            "Placed",
-            "OnActivatePlaced",
-            new string[] { "equipId", "index" },
+        static readonly StrCode32Script PlacedActivatePlaced = new StrCode32Script(
+            new StrCode32Event("Placed", "OnActivatePlaced", "", "equipId", "index"),
             LuaFunction.ToTableEntry(
                 "PlacedActivatePlacedClearCheck",
                 new string[] { "equipId", "index" },
                 " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"Activate\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
 
-        static readonly StrCodeBlock GameObjectDead = new StrCodeBlock(
-            "GameObject",
-            "Dead",
-            new string[] { "gameObjectId", "gameObjectId01", "animalId" },
+        static readonly StrCode32Script GameObjectDead = new StrCode32Script(
+            new StrCode32Event("GameObject", "Dead", "", "gameObjectId", "gameObjectId01", "animalId"),
             LuaFunction.ToTableEntry(
                 "GameObjectDeadClearCheck",
                 new string[] { "gameObjectId", "gameObjectId01", "animalId" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"Dead\",gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
 
-        static readonly StrCodeBlock GameObjectFultonInfo = new StrCodeBlock(
-            "GameObject",
-            "FultonInfo",
-            new string[] { "gameObjectId" },
+        static readonly StrCode32Script GameObjectFultonInfo = new StrCode32Script(
+            new StrCode32Event("GameObject", "FultonInfo", "", "gameObjectId"),
             LuaFunction.ToTableEntry(
                 "GameObjectFultonInfoClearCheck",
                 new string[] { "gameObjectId" },
                 " if mvars.fultonInfo ~= NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = NONE; "));
 
-        static readonly StrCodeBlock GameObjectFulton = new StrCodeBlock(
-            "GameObject",
-            "Fulton",
-            new string[] { "gameObjectId", "animalId" },
+        static readonly StrCode32Script GameObjectFulton = new StrCode32Script(
+            new StrCode32Event("GameObject", "Fulton", "", "gameObjectId", "animalId"),
             LuaFunction.ToTableEntry(
                 "GameObjectFultonClearCheck",
                 new string[] { "gameObjectId", "animalId" },
                 " local isClearType = this.CheckQuestAllTargetDynamic(\"Fulton\", gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
 
-        static readonly StrCodeBlock GameObjectFultonFailed = new StrCodeBlock(
-            "GameObject",
-            "FultonFailed",
-            new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
+        static readonly StrCode32Script GameObjectFultonFailed = new StrCode32Script(
+            new StrCode32Event("GameObject", "FultonFailed", "", "gameObjectId", "locatorName", "locatorNameUpper", "failureType"),
             LuaFunction.ToTableEntry(
                 "GameObjectFultonFailedClearCheck",
                 new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
                 " if failureType == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = this.CheckQuestAllTargetDynamic(\"FultonFailed\", gameObjectId, locatorName); TppQuest.ClearWithSave(isClearType); end;  "));
 
-        static readonly StrCodeBlock GameObjectPlacedIntoHeli = new StrCodeBlock(
-            "GameObject",
-            "PlacedIntoVehicle",
-            new string[] { "gameObjectId", "vehicleGameObjectId" },
+        static readonly StrCode32Script GameObjectPlacedIntoHeli = new StrCode32Script(
+            new StrCode32Event("GameObject", "PlacedIntoVehicle", "", "gameObjectId", "vehicleGameObjectId"),
             LuaFunction.ToTableEntry(
                 "GameObjectPlacedIntoHeliClearCheck",
                 new string[] { "gameObjectId", "vehicleGameObjectId" },
                 " if Tpp.IsHelicopter(vehicleGameObjectId) then local isClearType = this.CheckQuestAllTargetDynamic(\"InHelicopter\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
 
-        static readonly StrCodeBlock GameObjectVehicleBroken = new StrCodeBlock(
-            "GameObject",
-            "VehicleBroken",
-            new string[] { "gameObjectId", "state" },
+        static readonly StrCode32Script GameObjectVehicleBroken = new StrCode32Script(
+            new StrCode32Event("GameObject", "VehicleBroken", "", "gameObjectId", "state"),
             LuaFunction.ToTableEntry(
                 "GameObjectVehicleBrokenClearCheck",
                 new string[] { "gameObjectId", "state" },
                 " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"VehicleBroken\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
 
-        static readonly StrCodeBlock GameObjectLostControl = new StrCodeBlock(
-            "GameObject",
-            "LostControl",
-            new string[] { "gameObjectId", "state" },
+        static readonly StrCode32Script GameObjectLostControl = new StrCode32Script(
+            new StrCode32Event("GameObject", "LostControl", "", "gameObjectId", "state"),
             LuaFunction.ToTableEntry(
                 "GameObjectLostControlClearCheck",
                 new string[] { "gameObjectId", "state" },
                 " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"LostControl\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
 
-        public static readonly StrCodeBlock[] allCommonMessages = { PlayerPickUpWeapon, PlayerPickUpPlaced, PlacedActivatePlaced, GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
+        public static readonly StrCode32Script[] allCommonMessages = { PlayerPickUpWeapon, PlayerPickUpPlaced, PlacedActivatePlaced, GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
 
-        public static readonly StrCodeBlock[] genericTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
+        public static readonly StrCode32Script[] genericTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
 
-        public static readonly StrCodeBlock[] dormantItemTargetMessages = { PlayerPickUpWeapon };
+        public static readonly StrCode32Script[] dormantItemTargetMessages = { PlayerPickUpWeapon };
 
-        public static readonly StrCodeBlock[] activeItemTargetMessages = { PlayerPickUpPlaced, PlacedActivatePlaced };
+        public static readonly StrCode32Script[] activeItemTargetMessages = { PlayerPickUpPlaced, PlacedActivatePlaced };
 
-        public static readonly StrCodeBlock[] mechaCaptureTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectVehicleBroken };
+        public static readonly StrCode32Script[] mechaCaptureTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectVehicleBroken };
 
-        public static readonly StrCodeBlock[] mechaNoCaptureTargetMessages = { GameObjectDead, GameObjectVehicleBroken, GameObjectLostControl };
+        public static readonly StrCode32Script[] mechaNoCaptureTargetMessages = { GameObjectDead, GameObjectVehicleBroken, GameObjectLostControl };
 
-        public static readonly StrCodeBlock[] animalTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed };
+        public static readonly StrCode32Script[] animalTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed };
     }
 
     class CheckQuestItem : CheckQuestMethodsPair
