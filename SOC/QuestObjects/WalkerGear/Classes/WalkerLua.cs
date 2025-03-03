@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SOC.Classes.Common;
 using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.Vehicle;
 
 namespace SOC.QuestObjects.WalkerGear
 {
@@ -51,7 +53,7 @@ namespace SOC.QuestObjects.WalkerGear
                 mainLua.qvars.AddOrSet(Lua.TableEntry("inMostActiveQuestArea", true));
                 mainLua.qvars.AddOrSet(Lua.TableEntry("exitOnce", true));
 
-                mainLua.AddToQuestTable(BuildWalkerList(detail));
+                mainLua.QUEST_TABLE.AddOrSet(BuildWalkerList(walkers));
 
                 mainLua.qvars.AddOrSet(OneTimeAnnounce);
                 mainLua.qvars.AddOrSet(ReboundWalkerGear);
@@ -87,30 +89,45 @@ namespace SOC.QuestObjects.WalkerGear
                     foreach (WalkerGear walker in walkers)
                     {
                         if (walker.isTarget)
-                            mainLua.AddToTargetList(walker.GetObjectName());
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), walker.GetObjectName()));
                     }
                 }
             }
         }
 
-        private static Table BuildWalkerList(WalkerGearsDetail walkerDetail)
+        private static LuaTableEntry BuildWalkerList(List<WalkerGear> walkers)
         {
-            Table walkerList = new Table("walkerList");
-            List<WalkerGear> walkers = walkerDetail.walkers;
-            WalkerGearsMetadata meta = walkerDetail.walkerMetadata;
+            LuaTable walkerList = new LuaTable();
 
             foreach (WalkerGear walker in walkers)
             {
-                walkerList.Add($@"
-        {{
-            walkerName = ""{walker.GetObjectName()}"",{(walker.pilot.Equals("NONE") ? "" : $@"
-            riderName = ""{walker.pilot}"",")}
-            colorType = {GetEnum(walker.paint)},
-            primaryWeapon = {GetEnum(walker.weapon)},
-            position = {{pos = {{{walker.position.coords.xCoord},{walker.position.coords.yCoord},{walker.position.coords.zCoord}}}, rotY = {walker.position.rotation.GetDegreeRotY()},}},
-        }}");
+                LuaTable walkerTable = Lua.Table(
+                    Lua.TableEntry("walkerName", walker.GetObjectName()),
+                    Lua.TableEntry("colorType", GetEnum(walker.paint)),
+                    Lua.TableEntry("primaryWeapon", GetEnum(walker.weapon)),
+                    Lua.TableEntry("position",
+                        Lua.Table(
+                            Lua.TableEntry("pos",
+                                Lua.Table(
+                                    Lua.TableEntry(walker.position.coords.xCoord),
+                                    Lua.TableEntry(walker.position.coords.yCoord),
+                                    Lua.TableEntry(walker.position.coords.zCoord)
+                                )
+                            ),
+                            Lua.TableEntry("rotY", walker.position.rotation.GetRadianRotY())
+                        )
+                    )
+                );
+
+                if (walker.pilot != "NONE")
+                {
+                    walkerTable.AddOrSet(Lua.TableEntry("riderName", walker.pilot));
+                }
+
+                walkerList.AddOrSet(Lua.TableEntry(walkerTable));
             }
-            return walkerList;
+
+            return Lua.TableEntry("walkerList", walkerList);
         }
 
         private static int GetEnum(string value)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using SOC.Classes.Lua;
 
 namespace SOC.QuestObjects.Helicopter
@@ -23,7 +24,7 @@ namespace SOC.QuestObjects.Helicopter
         {
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
             {
-                mainLua.AddToQuestTable(BuildHeliList(questDetail));
+                mainLua.QUEST_TABLE.AddOrSet(BuildHeliList(questDetail));
                 mainLua.qvars.AddOrSet(setHelicopterAttributes);
                 if (questDetail.helicopters.Any(helicopter => helicopter.isTarget))
                 {
@@ -31,45 +32,50 @@ namespace SOC.QuestObjects.Helicopter
                     CheckQuestGenericEnemy helicopterCheck = new CheckQuestGenericEnemy(mainLua);
                     foreach (Helicopter heli in questDetail.helicopters)
                         if (heli.isTarget)
-                            mainLua.AddToTargetList(heli.GetObjectName());
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), heli.GetObjectName()));
                 }
             }
         }
 
-        private static Table BuildHeliList(HelicoptersDetail questDetail)
+        private static LuaTableEntry BuildHeliList(HelicoptersDetail questDetail)
         {
-            Table heliList = new Table("heliList");
-
+            LuaTable heliList = new LuaTable();
             foreach (Helicopter heli in questDetail.helicopters)
             {
                 if (!heli.isSpawn)
                     continue;
 
-                string DRouteString;
-                uint route;
-                if (uint.TryParse(heli.dRoute, out route)) // no quotations if the route is hashed
-                    DRouteString = heli.dRoute;
-                else
-                    DRouteString = $@"""{heli.dRoute}""";
+                LuaTable heliTable = Lua.Table(
+                    Lua.TableEntry("heliName", heli.GetObjectName()),
+                    Lua.TableEntry("routeName", heli.dRoute),
+                    Lua.TableEntry("commands",
+                        Lua.Table(
+                            Lua.TableEntry(
+                                Lua.Table(
+                                    Lua.TableEntry("id", "SetSneakRoute"),
+                                    Lua.TableEntry("route", heli.dRoute)
+                                )
+                            ),
+                            Lua.TableEntry(
+                                Lua.Table(
+                                    Lua.TableEntry("id", "SetCautionRoute"),
+                                    Lua.TableEntry("route", heli.cRoute)
+                                )
+                            )
+                        )
+                    )
+                );
 
-                string CRouteString;
-                if (uint.TryParse(heli.cRoute, out route))
-                    CRouteString = heli.cRoute;
-                else
-                    CRouteString = $@"""{heli.cRoute}""";
+                if (heli.heliClass != "DEFAULT")
+                {
+                    heliTable.AddOrSet(Lua.TableEntry("coloringType", Lua.TableIdentifier("TppDefine", "ENEMY_HELI_COLORING_TYPE", heli.heliClass)));
+                }
 
-                string dRouteCommand = $@"{{id = ""SetSneakRoute"", route = {DRouteString}}}";
-                string cRouteCommand = $@"{{id = ""SetCautionRoute"", route = {CRouteString}}}";
-
-                heliList.Add($@"
-        {{
-            heliName = ""{heli.GetObjectName()}"",
-            routeName = {DRouteString},
-            commands = {{{dRouteCommand},{cRouteCommand}}},{((heli.heliClass == "DEFAULT") ? "" : $@"
-            coloringType = TppDefine.ENEMY_HELI_COLORING_TYPE.{heli.heliClass},")}
-        }}");
+                heliList.AddOrSet(Lua.TableEntry(heliTable));
             }
-            return heliList;
+
+            return Lua.TableEntry("heliList", heliList);
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace SOC.QuestObjects.Camera
         {
             if (detail.cameras.Count > 0)
             {
-                mainLua.AddToQuestTable(BuildCameraList(detail.cameras));
+                mainLua.QUEST_TABLE.AddOrSet(BuildCameraList(detail.cameras));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
@@ -37,31 +37,49 @@ namespace SOC.QuestObjects.Camera
                     foreach (Camera cam in detail.cameras)
                     {
                         if (cam.isTarget)
-                            mainLua.AddToTargetList(cam.GetObjectName());
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), cam.GetObjectName()));
                     }
                 }
             }
         }
 
-        private static Table BuildCameraList(List<Camera> cameras)
+        private static LuaTableEntry BuildCameraList(List<Camera> cameras)
         {
-            Table cameraList = new Table("cameraList");
-            string setCPCommand = @"{id = ""SetCommandPost"", cp=CPNAME}";
-            string typeCommand = @"{id=""NormalCamera""}";
-            string enabledCommand = @"{id=""SetEnabled"", enabled=true}";
+            LuaTable cameraList = new LuaTable();
+
+            LuaTable setCPCommand = Lua.Table(
+                Lua.TableEntry("id", "SetCommandPost"),
+                Lua.TableEntry("cp", Lua.TableIdentifier("qvars","CPNAME"))
+            );
+
+            LuaTable enabledCommand = Lua.Table(
+                Lua.TableEntry("id", "SetEnabled"),
+                Lua.TableEntry("enabled", true, false)
+            );
 
             foreach (Camera camera in cameras)
             {
-                typeCommand = $@"{{id=""{(camera.weapon ? "SetGunCamera" : "NormalCamera")}""}} ";
-                
-                cameraList.Add($@"
-        {{
-            name = ""{camera.GetObjectName()}"",
-            commands = {{{setCPCommand}, {typeCommand}, {enabledCommand}}},
-        }}");
+                LuaTable typeCommand = Lua.Table(
+                    Lua.TableEntry("id", camera.weapon ? "SetGunCamera" : "NormalCamera")
+                );
+
+                cameraList.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("name", camera.GetObjectName()),
+                            Lua.TableEntry("commands", 
+                                Lua.Table(
+                                    Lua.TableEntry(setCPCommand),
+                                    Lua.TableEntry(typeCommand),
+                                    Lua.TableEntry(enabledCommand)
+                                )
+                            )
+                        )
+                    )
+                );
             }
 
-            return cameraList;
+            return Lua.TableEntry("cameraList", cameraList);
         }
     }
 }

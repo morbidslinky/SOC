@@ -1,4 +1,5 @@
 ﻿using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace SOC.QuestObjects.Vehicle
         
         public static void GetMain(VehiclesDetail detail, MainScriptBuilder mainLua)
         {
-            mainLua.AddToQuestTable(BuildVehicleList(detail.vehicles));
+            mainLua.QUEST_TABLE.AddOrSet(BuildVehicleList(detail.vehicles));
 
             if (detail.vehicles.Count > 0)
             {
@@ -35,46 +36,70 @@ namespace SOC.QuestObjects.Vehicle
                     foreach (Vehicle vehicle in detail.vehicles)
                     {
                         if (vehicle.isTarget)
-                            mainLua.AddToTargetList(vehicle.GetObjectName());
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), vehicle.GetObjectName()));
                     }
                 }
             }
         }
 
-        private static Table BuildVehicleList(List<Vehicle> vehicles)
+        private static LuaTableEntry BuildVehicleList(List<Vehicle> vehicles)
         {
-            Table vehicleList = new Table("vehicleList");
+            LuaTable vehicleList = new LuaTable();
 
-            if (vehicles.Count == 0)
-                vehicleList.Add(@"
-        nil");
-            else
-                foreach (Vehicle vehicle in vehicles)
+            foreach (Vehicle vehicle in vehicles)
+            {
+
+                LuaTableIdentifier vehicleType;
+                LuaTableIdentifier subType;
+
+                if (VehicleInfo.vehicleLuaName[vehicle.vehicle] == "EASTERN_WHEELED_ARMORED_VEHICLE_ROCKET_ARTILLERY")
                 {
-                    string vehicleType = "NONE"; string subType = "NONE";
-                    if (VehicleInfo.vehicleLuaName[vehicle.vehicle] == "EASTERN_WHEELED_ARMORED_VEHICLE_ROCKET_ARTILLERY")
-                    {
-                        vehicleType = "Vehicle.type.EASTERN_WHEELED_ARMORED_VEHICLE"; subType = "Vehicle.subType.EASTERN_WHEELED_ARMORED_VEHICLE_ROCKET_ARTILLERY";
-                    }
-                    else if (VehicleInfo.vehicleLuaName[vehicle.vehicle] == "WESTERN_WHEELED_ARMORED_VEHICLE_TURRET_MACHINE_GUN")
-                    {
-                        vehicleType = "Vehicle.type.WESTERN_WHEELED_ARMORED_VEHICLE"; subType = "Vehicle.subType.WESTERN_WHEELED_ARMORED_VEHICLE_TURRET_MACHINE_GUN";
-                    }
-                    else
-                    {
-                        vehicleType = "Vehicle.type." + VehicleInfo.vehicleLuaName[vehicle.vehicle];
-                    }
-                    vehicleList.Add($@"
-        {{
-            id = ""Spawn"",
-            locator = ""{vehicle.GetObjectName()}"",
-            type = {vehicleType}, {(subType == "NONE" ? "" : $@"
-            subType = {subType}, ")}{(vehicle.vehicleClass == "DEFAULT" ? "" : $@"
-            class = Vehicle.class.{vehicle.vehicleClass}, ")}
-            position = {{pos = {{{vehicle.position.coords.xCoord},{vehicle.position.coords.yCoord},{vehicle.position.coords.zCoord}}}, rotY = {vehicle.position.rotation.GetRadianRotY()},}},
-        }}");
+                    vehicleType = Lua.TableIdentifier("Vehicle", "type", "EASTERN_WHEELED_ARMORED_VEHICLE"); 
+                    subType = Lua.TableIdentifier("Vehicle", "subType", "EASTERN_WHEELED_ARMORED_VEHICLE_ROCKET_ARTILLERY");
                 }
-            return vehicleList;
+                else if (VehicleInfo.vehicleLuaName[vehicle.vehicle] == "WESTERN_WHEELED_ARMORED_VEHICLE_TURRET_MACHINE_GUN")
+                {
+                    vehicleType = Lua.TableIdentifier("Vehicle", "type", "WESTERN_WHEELED_ARMORED_VEHICLE");
+                    subType = Lua.TableIdentifier("Vehicle", "subType", "WESTERN_WHEELED_ARMORED_VEHICLE_TURRET_MACHINE_GUN");
+                }
+                else
+                {
+                    vehicleType = Lua.TableIdentifier("Vehicle", "type", VehicleInfo.vehicleLuaName[vehicle.vehicle]);
+                    subType = null;
+                }
+
+                LuaTable vehicleTable = Lua.Table(
+                    Lua.TableEntry("id", "Spawn"),
+                    Lua.TableEntry("locator", vehicle.GetObjectName()),
+                    Lua.TableEntry("type", vehicleType),
+                    Lua.TableEntry("position", 
+                        Lua.Table(
+                            Lua.TableEntry("pos", 
+                                Lua.Table(
+                                    Lua.TableEntry(vehicle.position.coords.xCoord),
+                                    Lua.TableEntry(vehicle.position.coords.yCoord),
+                                    Lua.TableEntry(vehicle.position.coords.zCoord)
+                                )
+                            ),
+                            Lua.TableEntry("rotY", vehicle.position.rotation.GetRadianRotY())
+                        )
+                    )
+                );
+
+                if (subType != null)
+                {
+                    vehicleTable.AddOrSet(Lua.TableEntry("subType", subType));
+                }
+
+                if (vehicle.vehicleClass != "DEFAULT")
+                {
+                    vehicleTable.AddOrSet(Lua.TableEntry("class", Lua.TableIdentifier("Vehicle", "class", vehicle.vehicleClass)));
+                }
+
+                vehicleList.AddOrSet(Lua.TableEntry(vehicleTable));
+            }
+
+            return Lua.TableEntry("vehicleList", vehicleList);
         }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using SOC.Classes.Common;
 using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.Vehicle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SOC.QuestObjects.Hostage
 {
@@ -42,7 +45,7 @@ namespace SOC.QuestObjects.Hostage
             List<Hostage> hostages = hostageDetail.hostages;
             HostageMetadata meta = hostageDetail.hostageMetadata;
 
-            mainLua.AddToQuestTable(BuildHostageList(hostageDetail));
+            mainLua.QUEST_TABLE.AddOrSet(BuildHostageList(hostages, meta));
 
             if (hostages.Count > 0)
             {
@@ -93,44 +96,127 @@ namespace SOC.QuestObjects.Hostage
                     foreach (Hostage hostage in hostages)
                     {
                         if (hostage.isTarget)
-                            mainLua.AddToTargetList(hostage.GetObjectName());
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), hostage.GetObjectName()));
                     }
                 }
             }
         }
 
-        private static Table BuildHostageList(HostagesDetail hostageDetail)
+        private static LuaTableEntry BuildHostageList(List<Hostage> hostages, HostageMetadata meta)
         {
-            Table hostageList = new Table("hostageList");
-            List<Hostage> hostages = hostageDetail.hostages;
-            HostageMetadata meta = hostageDetail.hostageMetadata;
+            LuaTable hostageList = new LuaTable();
 
-            string scaredCommand = @"{id = ""SetForceScared"",   scared=true, ever=true }";
-            string braveCommand = @"{id = ""SetHostage2Flag"",  flag=""disableScared"", on=true }";
-            string injuredCommand = @"{id = ""SetHostage2Flag"",  flag=""disableFulton"",on=true }";
-            string untiedCommand = @"{id = ""SetHostage2Flag"",  flag=""unlocked"",   on=true,}";
+            foreach (Hostage hostage in hostages)
+            {
+                LuaTable hostageTable = Lua.Table(
+                    Lua.TableEntry("hostageName", hostage.GetObjectName()),
+                    Lua.TableEntry("isFaceRandom", true, false),
+                    Lua.TableEntry("isTarget", hostage.isTarget, false),
+                    Lua.TableEntry("voiceType", GetVoiceTable(hostage)),
+                    Lua.TableEntry("commands", GetCommandTable(hostage)),
+                    Lua.TableEntry("position",
+                        Lua.Table(
+                            Lua.TableEntry("pos",
+                                Lua.Table(
+                                    Lua.TableEntry(hostage.position.coords.xCoord),
+                                    Lua.TableEntry(hostage.position.coords.yCoord),
+                                    Lua.TableEntry(hostage.position.coords.zCoord)
+                                )
+                            ),
+                            Lua.TableEntry("rotY", hostage.position.rotation.GetRadianRotY())
+                        )
+                    ),
+                    Lua.TableEntry("langType", hostage.language),
+                    Lua.TableEntry("bodyId", NPCBodyInfo.GetBodyInfo(meta.hostageBodyName).gameId)
+                );
 
-            if (hostages.Count == 0)
-                hostageList.Add(@"
-        nil ");
-            else
-                foreach (Hostage hostage in hostages)
+                if (hostage.skill != "NONE")
                 {
-                    hostageList.Add($@"
-        {{
-            hostageName = ""{hostage.GetObjectName()}"",
-            isFaceRandom = true,
-            isTarget = {hostage.isTarget.ToString().ToLower()},
-            voiceType = {{""hostage_a"", ""hostage_b"", {(hostage.language.Equals("english") ? @" ""hostage_c"", ""hostage_d""," : "")}}},
-            langType = ""{hostage.language}"", {(hostage.staffType.Equals("NONE") ? "" : $@"
-            staffTypeId = TppDefine.STAFF_TYPE_ID.{hostage.staffType},")} {(hostage.skill.Equals("NONE") ? "" : $@"
-            skill = ""{hostage.skill}"", ")}
-            bodyId = {NPCBodyInfo.GetBodyInfo(meta.hostageBodyName).gameId},
-            position = {{pos = {{{hostage.position.coords.xCoord},{hostage.position.coords.yCoord},{hostage.position.coords.zCoord}}}, rotY = {hostage.position.rotation.GetDegreeRotY()},}},
-            commands = {{{(hostage.scared.Equals("ALWAYS") ? scaredCommand + "," : (hostage.scared.Equals("NEVER") ? braveCommand + "," : ""))}{(hostage.isInjured ? injuredCommand + "," : "")}{(hostage.isUntied ? untiedCommand + "," : "")}}},
-        }}");
+                    hostageTable.AddOrSet(Lua.TableEntry("skill", hostage.skill));
                 }
-            return hostageList;
+
+                if (hostage.staffType != "NONE")
+                {
+                    hostageTable.AddOrSet(Lua.TableEntry("staffTypeId", Lua.TableIdentifier("TppDefine", "STAFF_TYPE_ID", hostage.staffType)));
+                }
+
+                hostageList.AddOrSet(Lua.TableEntry(hostageTable));
+            }
+
+            return Lua.TableEntry("hostageList", hostageList);
+        }
+
+        private static LuaTable GetVoiceTable(Hostage hostage)
+        {
+            LuaTable voiceTable = Lua.Table(
+                    Lua.TableEntry("hostage_a"),
+                    Lua.TableEntry("hostage_b")
+                );
+
+            if (hostage.language.Equals("english"))
+            {
+                voiceTable.AddOrSet(
+                    Lua.TableEntry("hostage_c"),
+                    Lua.TableEntry("hostage_d")
+                );
+            }
+
+            return voiceTable;
+        }
+
+        private static LuaTable GetCommandTable(Hostage hostage)
+        {
+            LuaTable commandTable = new LuaTable();
+
+            if (hostage.scared == "ALWAYS") {
+                commandTable.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("id", "SetForceScared"),
+                            Lua.TableEntry("scared", true, false),
+                            Lua.TableEntry("ever", true, false)
+                        )
+                    )
+                );
+            } else if (hostage.scared == "NEVER") {
+                commandTable.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("id", "SetHostage2Flag"),
+                            Lua.TableEntry("flag", "disableScared"),
+                            Lua.TableEntry("on", true, false)
+                        )
+                    )
+                );
+            }
+
+            if (hostage.isInjured)
+            {
+                commandTable.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("id", "SetHostage2Flag"),
+                            Lua.TableEntry("flag", "disableFulton"),
+                            Lua.TableEntry("on", true, false)
+                        )
+                    )
+                );
+            }
+
+            if (hostage.isUntied)
+            {
+                commandTable.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("id", "SetHostage2Flag"),
+                            Lua.TableEntry("flag", "unlocked"),
+                            Lua.TableEntry("on", true, false)
+                        )
+                    )
+                );
+            }
+
+            return commandTable;
         }
     }
 }

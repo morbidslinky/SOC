@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.UAV
 {
@@ -15,7 +16,7 @@ namespace SOC.QuestObjects.UAV
         {
             if (detail.UAVs.Count > 0)
             {
-                mainLua.AddToQuestTable(BuildUAVList(detail.UAVs));
+                mainLua.QUEST_TABLE.AddOrSet(BuildUAVList(detail.UAVs));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
 
@@ -33,43 +34,45 @@ namespace SOC.QuestObjects.UAV
                     foreach (UAV drone in detail.UAVs)
                     {
                         if (drone.isTarget)
-                            mainLua.AddToTargetList(drone.GetObjectName());
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), drone.GetObjectName()));
                     }
                 }
             }
         }
 
-        private static Table BuildUAVList(List<UAV> UAVs)
+        private static LuaTableEntry BuildUAVList(List<UAV> UAVs)
         {
-            Table UAVList = new Table("UAVList");
+            LuaTable UAVList = new LuaTable();
 
             foreach (UAV drone in UAVs)
             {
-                string dRouteString;
-                uint route;
-                if (uint.TryParse(drone.dRoute, out route))
-                    dRouteString = drone.dRoute;
-                else
-                    dRouteString = $@"""{drone.dRoute}""";
+                LuaTable UAVTable = Lua.Table(
+                    Lua.TableEntry("name", drone.GetObjectName()),
+                    Lua.TableEntry("weapon", Lua.TableIdentifier("TppUav", drone.weapon)),
+                    Lua.TableEntry("docile", drone.docile, false)
+                );
 
-                string aRouteString;
-                if (uint.TryParse(drone.aRoute, out route))
-                    aRouteString = drone.aRoute;
-                else
-                    aRouteString = $@"""{drone.aRoute}""";
 
-                UAVList.Add($@"
-        {{
-            name = ""{drone.GetObjectName()}"", {(dRouteString == @"""NONE""" ? "" : $@"
-            dRoute = {dRouteString}, ")} {(aRouteString == @"""NONE""" ? "" : $@"
-            aRoute = {aRouteString}, ")} {(drone.defenseGrade == "DEFAULT" ? "" : $@"
-            defenseGrade = {drone.defenseGrade},")}
-            weapon = TppUav.{drone.weapon},
-            docile = {(drone.docile ? "true" : "false")},
-        }}");
+                if (drone.dRoute != "NONE")
+                {
+                    UAVTable.AddOrSet(Lua.TableEntry("dRoute", drone.dRoute));
+                }
+
+                if (drone.aRoute != "NONE")
+                {
+                    UAVTable.AddOrSet(Lua.TableEntry("aRoute", drone.aRoute));
+                }
+
+                if (drone.defenseGrade != "DEFAULT")
+                {
+                    UAVTable.AddOrSet(Lua.TableEntry("defenseGrade", drone.defenseGrade));
+                }
+
+
+                UAVList.AddOrSet(Lua.TableEntry(UAVTable));
             }
 
-            return UAVList;
+            return Lua.TableEntry("UAVList", UAVList);
         }
     }
 }

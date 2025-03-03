@@ -13,61 +13,54 @@ namespace SOC.QuestObjects.Animal
         {
             if (detail.animals.Count > 0)
             {
-                mainLua.AddToQuestTable(BuildAnimalList(detail.animals));
+                mainLua.QUEST_TABLE.AddOrSet(BuildAnimalList(detail.animals));
                 if (detail.animals.Any(animal => animal.target))
                 {
                     CheckQuestAnimal checkAnimal = new CheckQuestAnimal(mainLua, detail.animalMetadata.objectiveType);
-                    mainLua.AddToQuestTable(BuildAnimalTargetList(detail.animals));
+                    mainLua.QUEST_TABLE.AddOrSet(BuildAnimalTargetList(detail.animals));
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.animalTargetMessages);
                 }
             }
         }
 
-        private static Table BuildAnimalList(List<Animal> animals)
+        private static LuaTableEntry BuildAnimalList(List<Animal> animals)
         {
-            Table animalList = new Table("animalList");
+            LuaTable animalList = new LuaTable();
+
             foreach (Animal animal in animals)
             {
-                animalList.Add($@"
-        {{
-            animalName = ""{animal.GetObjectName()}"",
-            animalType = ""{animal.typeID}"",
-        }}");
+                animalList.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("animalName", animal.GetObjectName()), 
+                            Lua.TableEntry("animalType", animal.typeID)
+                        )
+                    )
+                );
             }
-            return animalList;
+
+            return Lua.TableEntry("animalList", animalList);
         }
 
-        private static Table BuildAnimalTargetList(List<Animal> animals)
+        private static LuaTableEntry BuildAnimalTargetList(List<Animal> animals)
         {
-            Table targetAnimalList = new Table("targetAnimalList");
-
-            StringBuilder animalTargetListBuilder = new StringBuilder(@"
-        markerList = {");
+            LuaTable targetAnimalList = new LuaTable();
+            List<LuaTableEntry> nameList = new List<LuaTableEntry>();
 
             foreach (Animal animal in animals)
             {
                 if (animal.target)
-                    animalTargetListBuilder.Append($@"
-            ""{animal.GetObjectName()}"",");
+                {
+                    nameList.Add(Lua.TableEntry(animal.GetObjectName()));
+                }
             }
-            animalTargetListBuilder.Append(@"
-        }");
-            targetAnimalList.Add(animalTargetListBuilder.ToString());
-            animalTargetListBuilder.Clear();
 
-            animalTargetListBuilder.Append(@"
-        nameList = {");
-            foreach (Animal animal in animals)
-            {
-                if (animal.target)
-                    animalTargetListBuilder.Append($@"
-            ""{animal.GetObjectName()}"",");
-            }
-            animalTargetListBuilder.Append(@"
-        }");
-            targetAnimalList.Add(animalTargetListBuilder.ToString());
+            targetAnimalList.AddOrSet(
+                Lua.TableEntry("markerList", Lua.Table(nameList)), 
+                Lua.TableEntry("nameList", Lua.Table(nameList))
+            );
 
-            return targetAnimalList;
+            return Lua.TableEntry("targetAnimalList", targetAnimalList);
         }
     }
 }

@@ -33,31 +33,29 @@ namespace SOC.QuestObjects.Item
             if (questDetail.items.Any(item => item.isTarget))
             {
                 CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsDormantItem, questDetail.itemMetadata.objectiveType);
-                mainLua.AddToQuestTable(BuildItemTargetList(questDetail.items));
+                mainLua.QUEST_TABLE.AddOrSet(BuildItemTargetList(questDetail.items));
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.dormantItemTargetMessages);
             }
         }
 
-        private static Table BuildItemTargetList(List<Item> items)
+        private static LuaTableEntry BuildItemTargetList(List<Item> items)
         {
-            Table targetItemList = new Table("targetItemList");
-            int targetItemCount = 0;
+            LuaTable targetItemList = new LuaTable();
 
             foreach (Item item in items)
             {
-                if (!item.isTarget)
-                    continue;
-
-                targetItemCount++;
-                targetItemList.Add($@"
-        {{
-            equipId = TppEquip.{item.item},
-            messageId = ""None"",
-            active = false,
-        }}");
+                targetItemList.AddOrSet(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("equipID", Lua.TableIdentifier("TppEquip", item.item)), 
+                            Lua.TableEntry("messageId", "None"), 
+                            Lua.TableEntry("active", false, false)
+                        )
+                    )
+                );
             }
 
-            return targetItemList;
+            return Lua.TableEntry("targetItemList", targetItemList);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace SOC.QuestObjects.Enemy
         private static List<string> GetBodies(List<Enemy> enemies)
         {
             List<string> uniqueBodies = new List<string>();
-            foreach(Enemy enemy in enemies)
+            foreach (Enemy enemy in enemies)
             {
                 if (enemy.body != "DEFAULT" && !enemy.armored && !uniqueBodies.Contains(enemy.body))
                 {
@@ -93,7 +93,7 @@ namespace SOC.QuestObjects.Enemy
 
         private static string GetRegion(string subtype)
         {
-            switch(subtype)
+            switch (subtype)
             {
                 case "SOVIET_A":
                 case "SOVIET_B":
@@ -111,10 +111,10 @@ namespace SOC.QuestObjects.Enemy
         {
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;
-            
+
             mainLua.qvars.AddOrSet(Lua.TableEntry("SUBTYPE", meta.subtype));
 
-            mainLua.AddToQuestTable(BuildEnemyList(enemies));
+            mainLua.QUEST_TABLE.AddOrSet(BuildEnemyList(enemies));
             bool hasSpawn = false;
             bool hasTarget = false;
 
@@ -126,17 +126,18 @@ namespace SOC.QuestObjects.Enemy
                     if (enemy.isTarget)
                     {
                         hasTarget = true;
-                        mainLua.AddToTargetList(enemy.GetObjectName());
+                        mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), enemy.GetObjectName()));
                     }
                 }
             }
 
             if (hasSpawn)
             {
-                string questarmor = $"isQuestArmor = {(HasArmors(enemies) ? "true" : "false")}";
-                string questZombie = $"isQuestZombie = {(HasZombie(enemies) ? "true" : "false")}";
-                string questBalaclava = $"isQuestBalaclava = {(HasBalaclavas(enemies) ? "true" : "false")}";
-                mainLua.AddToQuestTable(questarmor, questZombie, questBalaclava);
+                mainLua.QUEST_TABLE.AddOrSet(
+                    Lua.TableEntry("isQuestArmor", HasArmors(enemies), false),
+                    Lua.TableEntry("isQuestZombie", HasZombie(enemies), false),
+                    Lua.TableEntry("isQuestBalaclava", HasBalaclavas(enemies), false)
+                );
 
                 if (hasTarget)
                 {
@@ -146,64 +147,62 @@ namespace SOC.QuestObjects.Enemy
             }
         }
 
-        private static Table BuildEnemyList(List<Enemy> enemies)
+        private static LuaTableEntry BuildEnemyList(List<Enemy> enemies)
         {
-            Table enemyList = new Table("enemyList");
-            int enemyCount = 0;
+            LuaTable enemyList = new LuaTable();
 
             foreach (Enemy enemy in enemies)
             {
                 if (!enemy.spawn)
                     continue;
-                enemyCount++;
 
-                string DRouteString;
-                uint route;
-                if (uint.TryParse(enemy.dRoute, out route)) // no quotations if the route is hashed
-                    DRouteString = enemy.dRoute;
-                else
-                    DRouteString = $@"""{enemy.dRoute}""";
-                
-                string CRouteString;
-                if (uint.TryParse(enemy.cRoute, out route))
-                    CRouteString = enemy.cRoute;
-                else
-                    CRouteString = $@"""{enemy.cRoute}""";
+                LuaTable enemyTable = Lua.Table(
+                    Lua.TableEntry("enemyName", enemy.name),
+                    Lua.TableEntry("cpName", Lua.TableIdentifier("qvars", "CPNAME")),
+                    Lua.TableEntry("soldierSubType", Lua.TableIdentifier("qvars", "SUBTYPE")),
+                    Lua.TableEntry("isBalaclava", enemy.balaclava, false),
+                    Lua.TableEntry("isZombie", enemy.zombie, false)
+                );
 
-                string powerSetting = "";
-                if (enemy.powers.Length > 0)
+                if (enemy.dRoute != "DEFAULT")
                 {
-                    powerSetting = "powerSetting = {";
-                    foreach (string power in enemy.powers)
-                    {
-                        powerSetting += $@"""{power}"", ";
-                    }
-                    powerSetting += "},";
+                    enemyTable.AddOrSet(Lua.TableEntry("route_d", enemy.dRoute));
                 }
 
-                enemyList.Add($@"
-        {{
-            enemyName = ""{enemy.name}"",{(DRouteString == @"""DEFAULT""" ? "" : $@"
-            route_d = {DRouteString}, ")}{(CRouteString == @"""DEFAULT""" ? "" : $@"
-            route_c = {CRouteString}, ")}
-            cpName = CPNAME,
-            soldierSubType = SUBTYPE, {(enemy.skill.Equals("NONE") ? "" : $@"
-            skill = ""{enemy.skill}"", ")}{powerSetting}{(enemy.staffType.Equals("NONE") ? "" : $@"
-            staffTypeId = TppDefine.STAFF_TYPE_ID.{enemy.staffType}, ")}{(enemy.body.Equals("DEFAULT") || enemy.armored ? "" : $@"
-            bodyId = TppEnemyBodyId.{enemy.body}, ")}
-            isBalaclava = {(enemy.balaclava ? "true" : "false")},
-            isZombie = {(enemy.zombie ? "true" : "false")},{(enemy.zombie ? $@"
-            isZombieUseRoute = true," : "")}
-        }}");
+                if (enemy.cRoute != "DEFAULT")
+                {
+                    enemyTable.AddOrSet(Lua.TableEntry("route_c", enemy.cRoute));
+                }
+
+                if (enemy.powers.Length > 0)
+                {
+                    enemyTable.AddOrSet(Lua.TableEntry("powerSetting", Lua.Table(enemy.powers.Select(power => Lua.TableEntry(power)).ToArray())));
+                }
+
+                if (enemy.skill != "NONE")
+                {
+                    enemyTable.AddOrSet(Lua.TableEntry("skill", enemy.skill));
+                }
+
+                if (enemy.staffType != "NONE")
+                {
+                    enemyTable.AddOrSet(Lua.TableEntry("staffTypeId", Lua.TableIdentifier("TppDefine", "STAFF_TYPE_ID", enemy.staffType)));
+                }
+
+                if (enemy.body != "DEFAULT" && !enemy.armored)
+                {
+                    enemyTable.AddOrSet(Lua.TableEntry("bodyId", Lua.TableIdentifier("TppEnemyBodyId", enemy.body)));
+                }
+
+                if (enemy.zombie)
+                {
+                    enemyTable.AddOrSet(Lua.TableEntry("isZombieUseRoute", true, false));
+                }
+
+                enemyList.AddOrSet(Lua.TableEntry(enemyTable));
             }
 
-            if (enemyCount == 0)
-            {
-                enemyList.Add(@"
-        nil");
-            }
-
-            return enemyList;
+            return Lua.TableEntry("enemyList", enemyList);
         }
     }
 }

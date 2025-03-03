@@ -17,26 +17,30 @@ namespace SOC.QuestObjects.ActiveItem
             {
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.activeItemTargetMessages);
                 CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsActiveItem, questDetail.activeItemMetadata.objectiveType);
-                mainLua.AddToQuestTable(BuildTargetItemList(questDetail));
+                mainLua.QUEST_TABLE.AddOrSet(BuildTargetItemList(questDetail));
             }
         }
 
-        private static Table BuildTargetItemList(ActiveItemsDetail detail)
+        private static LuaTableEntry BuildTargetItemList(ActiveItemsDetail detail)
         {
-            Table targetItemList = new Table("targetItemList");
+            LuaTable targetItemList = new LuaTable();
             foreach (ActiveItem activeItem in detail.activeItems)
             {
-                if (!activeItem.isTarget)
-                    continue;
-                
-                targetItemList.Add($@"
-        {{
-            equipId = TppEquip.{activeItem.activeItem},
-            messageId = ""None"",
-            active = true,
-        }}");
+                if (activeItem.isTarget)
+                {
+                    targetItemList.AddOrSet(
+                        Lua.TableEntry(
+                            Lua.Table(
+                                Lua.TableEntry("equipId", Lua.TableIdentifier("TppEquip", activeItem.activeItem)),
+                                Lua.TableEntry("messageId", "None"),
+                                Lua.TableEntry("active", true, false)
+                            )
+                        )    
+                    );
+                }
             }
-            return targetItemList;
+            
+            return Lua.TableEntry("targetItemList", targetItemList);
         }
     }
 }

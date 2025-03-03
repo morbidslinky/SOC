@@ -15,7 +15,6 @@ namespace SOC.Classes.Lua
         public SetupDetails SetupDetails;
         public ObjectsDetails ObjectsDetails;
 
-        QuestTable questTable = new QuestTable(); // TODO
         CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList(); // TODO
         ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList(); // TODO
 
@@ -26,8 +25,9 @@ namespace SOC.Classes.Lua
         public OnInitialize OnInitialize = new OnInitialize();
         public OnTerminate OnTerminate = new OnTerminate();
         public QStep_Start QStep_Start = new QStep_Start();
-        public QStep_Main QStep_Main = new QStep_Main(); 
+        public QStep_Main QStep_Main = new QStep_Main();
 
+        public LuaTable QUEST_TABLE = new LuaTable();
         public LuaTable qvars = new LuaTable();
         public LuaTable @this = new LuaTable();
         public LuaTable quest_step = new LuaTable();
@@ -38,7 +38,8 @@ namespace SOC.Classes.Lua
         public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             SetupDetails = setupDetails; ObjectsDetails = objectsDetails;
-            /*
+
+            /*TODO
             XmlSerializer serializer = new XmlSerializer(typeof(LuaTable));
             using (StreamReader reader = new StreamReader("StaticScriptFunctions.xml"))
             {
@@ -69,6 +70,10 @@ namespace SOC.Classes.Lua
                 qvars.AddOrSet(Lua.TableEntry("CPNAME", setupDetails.CPName));
             }
 
+            QUEST_TABLE.AddOrSet(
+                Lua.TableEntry("questType", Lua.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
+            );
+
             foreach (ObjectsDetail detail in objectsDetails.details)
             {
                 detail.AddToMainLua(this);
@@ -79,18 +84,14 @@ namespace SOC.Classes.Lua
                 Messages.Get(),
                 OnInitialize.Get(),
                 OnUpdate.Get(),
-                OnTerminate.Get()
+                OnTerminate.Get(),
+                Lua.TableEntry("QUEST_TABLE", QUEST_TABLE)
             );
 
             quest_step.AddOrSet(
                 QStep_Start.Get(),
-                QStep_Main.GetTable()
+                QStep_Main.Get()
             );
-
-            /*
-            AddToQuestTable("questType = ELIMINATE");
-            AddToQuestTable("soldierSubType = SUBTYPE");
-            */
         }
 
         public void AddToCheckQuestMethod(CheckQuestMethodsPair methodsPair)
@@ -108,22 +109,6 @@ namespace SOC.Classes.Lua
         {
             if (!objectiveTypesList.oneLineObjectiveTypes.Contains(oneLineObjective))
                 objectiveTypesList.oneLineObjectiveTypes.Add(oneLineObjective);
-        }
-
-        public void AddToQuestTable(params object[] tableItems)
-        {
-            foreach(object tableItem in tableItems)
-            {
-                if (tableItem is Table)
-                    questTable.Add(tableItem as Table);
-                else if (tableItem is string)
-                    questTable.Add(tableItem as string);
-            }
-        }
-
-        public void AddToTargetList(string targetName)
-        {
-            questTable.AddTarget(targetName);
         }
 
         public void Build(string mainLuaFilePath)
@@ -293,7 +278,7 @@ namespace SOC.Classes.Lua
             OnLeaveFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnLeave")));
         }
 
-        public LuaTableEntry GetTable()
+        public LuaTableEntry Get()
         {
             QStep_Main_Table.AddOrSet(
                 Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(StrCode32TableVariable))), false),
@@ -308,128 +293,6 @@ namespace SOC.Classes.Lua
         {
             StrCode32Table.AssignFunctionDefinitions(StrCode32TableVariable);
             return StrCode32TableVariable;
-        }
-    }
-
-    class QuestTable
-    {
-        List<Table> Tables = new List<Table>();
-        List<string> variables = new List<string>();
-        List<string> targetNames = new List<string>();
-
-        public void Add(Table table)
-        {
-            Table existingTable = Find(table.GetName());
-            if (existingTable != null)
-            {
-                foreach (string entry in table.GetEntries())
-                {
-                    existingTable.Add(entry);
-                }
-            }
-            else
-                Tables.Add(table);
-        }
-
-        public void Add(string variable)
-        {
-            variables.Add(variable);
-        }
-
-        public void AddTarget(string targetName)
-        {
-            if (!targetNames.Contains(targetName))
-                targetNames.Add(targetName);
-        }
-
-        public bool HasTargets()
-        {
-            return targetNames.Count > 0;
-        }
-
-        public Table Find(string tableName)
-        {
-            foreach (Table table in Tables)
-            {
-                if (table.GetName() == tableName)
-                {
-                    return table;
-                }
-            }
-            return null;
-        }
-
-        public string ToLua(MainScriptBuilder mainLua)
-        {
-            return GetQuestTableFormatted();
-        }
-
-        private string GetQuestTableFormatted()
-        {
-            StringBuilder questTableBuilder = new StringBuilder(@"
-this.QUEST_TABLE = {");
-            foreach (string var in variables)
-            {
-                questTableBuilder.Append($@"
-    {var},");
-            }
-            foreach (Table table in Tables)
-            {
-                questTableBuilder.Append(table.GetTableFormatted());
-            }
-            questTableBuilder.Append(GetTargetList());
-            questTableBuilder.Append(@"
-}");
-
-            return questTableBuilder.ToString();
-        }
-
-        private string GetTargetList()
-        {
-            Table targetList = new Table("targetList");
-            foreach (string targetName in targetNames)
-                targetList.Add($@"""{targetName}""");
-
-            return targetList.GetTableFormatted();
-        }
-    }
-
-    public class Table
-    {
-        string Name;
-        List<string> Entries = new List<string>();
-
-        public Table(string name)
-        {
-            Name = name;
-        }
-
-        public void Add(string entry)
-        {
-            Entries.Add(entry);
-        }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public string[] GetEntries()
-        {
-            return Entries.ToArray();
-        }
-
-        public string GetTableFormatted()
-        {
-            StringBuilder tableBuilder = new StringBuilder($@"
-    {Name} = {{");
-            foreach (string entry in Entries)
-            {
-                tableBuilder.Append($@"{entry}, ");
-            }
-            tableBuilder.Append(@"
-    },");
-            return tableBuilder.ToString();
         }
     }
 
