@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.Animal
                 {
                     CheckQuestAnimal checkAnimal = new CheckQuestAnimal(mainLua, detail.animalMetadata.objectiveType);
                     mainLua.QUEST_TABLE.AddOrSet(BuildAnimalTargetList(detail.animals));
-                    mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.animalTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.animalTargetMessages);
                 }
             }
         }

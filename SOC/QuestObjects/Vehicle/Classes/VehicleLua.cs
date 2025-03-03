@@ -20,7 +20,7 @@ namespace SOC.QuestObjects.Vehicle
 
             if (detail.vehicles.Count > 0)
             {
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.mechaCaptureTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
 
                 mainLua.qvars.AddOrSet(WarpVehicles);
                 mainLua.QStep_Start.Function.AppendLuaValue(

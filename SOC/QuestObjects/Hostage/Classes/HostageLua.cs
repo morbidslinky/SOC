@@ -77,7 +77,7 @@ namespace SOC.QuestObjects.Hostage
                         );
                 }
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.genericTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
 
                 //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
                 //mainLua.QvarTable.AddOrSet(WarpHostages);

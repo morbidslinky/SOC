@@ -145,6 +145,15 @@
     <Compile Include="Core\Classes\Lua\LuaVariable.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\CheckQuestMethodsList.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\Messages.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\ObjectiveTypesList.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnAllocate.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnInitialize.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnTerminate.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnUpdate.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\QStep_Main.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\QStep_Start.cs" />
     <Compile Include="Core\Classes\QuestBuild\BuildManager.cs" />
     <Compile Include="Core\Classes\Common\LoadAreas.cs" />
     <Compile Include="Core\Classes\Common\NPCMtbsInfo.cs" />

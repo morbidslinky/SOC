@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.UAV
             {
                 mainLua.QUEST_TABLE.AddOrSet(BuildUAVList(detail.UAVs));
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.qvars.AddOrSet(setupUAV);
                 mainLua.QStep_Start.Function.AppendLuaValue(
