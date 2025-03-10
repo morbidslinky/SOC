@@ -12,7 +12,7 @@ namespace SOC.QuestObjects.Hostage
 {
     static class HostageLua
     {
-        static readonly LuaTableEntry InterCall_hostage_pos01 = LuaFunction.ToTableEntry("InterCall_hostage_pos01", new string[] { "soldier2GameObjectId", "cpID", "interName" }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nif hostageInfo.isTarget then TppMarker.EnableQuestTargetMarker(hostageInfo.hostageName)\nelse TppMarker.Enable(hostageInfo.hostageName,0,\"defend\",\"map_and_world_only_icon\",0,false,true)\nend\nend");
+        static readonly LuaTableEntry InterCall_hostage_pos01 = LuaFunction.ToTableEntry("InterCall_hostage_pos01", new string[] { "soldier2GameObjectId", "cpID", "interName" }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nif hostageInfo.isTarget then \nTppMarker.EnableQuestTargetMarker(hostageInfo.hostageName)\nelse \nTppMarker.Enable(hostageInfo.hostageName,0,\"defend\",\"map_and_world_only_icon\",0,false,true)\nend\nend");
         // to come before questCpInterrogation
 
 
@@ -51,16 +51,16 @@ namespace SOC.QuestObjects.Hostage
             {
                 if (meta.canInterrogate)
                 {
-                    mainLua.qvars.AddOrSet(InterCall_hostage_pos01);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(InterCall_hostage_pos01);
 
                     var cpInt = new LuaTable(
                         Lua.TableEntry("name", "enqt1000_271b10"),
                         Lua.TableEntry("func", "this.InterCall_hostage_pos01")
                     );
-                    mainLua.qvars.AddOrSet(Lua.TableEntry("questCpInterrogation", cpInt));
-                    mainLua.qvars.AddOrSet(SwitchEnableQuestHighIntTable);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("questCpInterrogation", cpInt));
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SwitchEnableQuestHighIntTable);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("hostagei", 0));
 
-                    mainLua.qvars.AddOrSet(Lua.TableEntry("hostagei", 0));// only used for MarkerChangeToEnable's function
                     mainLua.QStep_Main.StrCode32Table.Add(new StrCode32Script(
                         new StrCode32Event("Marker", "ChangeToEnable", "", "arg0", "arg1"),
                         LuaFunction.ToTableEntry(
@@ -82,7 +82,7 @@ namespace SOC.QuestObjects.Hostage
                 //mainLua.AddToQStep_Start_OnEnter(WarpHostages);
                 //mainLua.QvarTable.AddOrSet(WarpHostages);
 
-                mainLua.qvars.AddOrSet(SetHostageAttributes);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetHostageAttributes);
                 mainLua.QStep_Start.Function.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"),
@@ -92,7 +92,20 @@ namespace SOC.QuestObjects.Hostage
 
                 if (hostages.Any(hostage => hostage.isTarget))
                 {
-                    CheckQuestGenericEnemy hostageCheck = new CheckQuestGenericEnemy(mainLua, CheckIsHostage, meta.objectiveType);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        Lua.TableEntry(
+                            Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
+                            Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsHostage(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))       
+                        ),
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(
+                                Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (Hostage hostage in hostages)
                     {
                         if (hostage.isTarget)

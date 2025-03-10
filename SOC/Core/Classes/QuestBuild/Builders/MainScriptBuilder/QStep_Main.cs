@@ -5,7 +5,6 @@ namespace SOC.Classes.Lua
     public class QStep_Main
     {
         public StrCode32Table StrCode32Table = new StrCode32Table();
-        public LuaVariable StrCode32TableVariable = new LuaVariable("QStep_Main_StrCode32_Defs");
 
         LuaTable QStep_Main_Table = new LuaTable();
 
@@ -18,21 +17,15 @@ namespace SOC.Classes.Lua
             OnLeaveFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnLeave")));
         }
 
-        public LuaTableEntry Get()
+        public LuaTableEntry Get(string strCode32TableVariableName)
         {
             QStep_Main_Table.AddOrSet(
-                Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(StrCode32TableVariable))), false),
+                Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(strCode32TableVariableName))), false),
                 Lua.TableEntry("OnEnter", OnEnterFunction.ToFunction()),
                 Lua.TableEntry("OnLeave", OnLeaveFunction.ToFunction())
             );
 
             return Lua.TableEntry("QStep_Main", QStep_Main_Table, true);
-        }
-
-        public LuaVariable GetStrCode32DefinitionsVariable()
-        {
-            StrCode32Table.AssignFunctionDefinitions(StrCode32TableVariable);
-            return StrCode32TableVariable;
         }
     }
 }

@@ -22,7 +22,8 @@ namespace SOC.QuestObjects.Vehicle
             {
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
 
-                mainLua.qvars.AddOrSet(WarpVehicles);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(WarpVehicles);
+
                 mainLua.QStep_Start.Function.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"),
@@ -32,7 +33,20 @@ namespace SOC.QuestObjects.Vehicle
 
                 if (detail.vehicles.Any(vehicle => vehicle.isTarget))
                 {
-                    CheckQuestGenericEnemy checkQuestMethod = new CheckQuestGenericEnemy(mainLua, CheckIsVehicle, detail.vehicleMetadata.ObjectiveType);
+                    //CheckQuestGenericEnemy checkQuestMethod = new CheckQuestGenericEnemy(mainLua, CheckIsVehicle, detail.vehicleMetadata.ObjectiveType);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        Lua.TableEntry(
+                            Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
+                            Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsVehicle(gameId)", "gameId")), Lua.TableEntry("Type", detail.vehicleMetadata.ObjectiveType))))
+                        ),
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            Lua.TableIdentifier("qvars", "CheckQuestMethodPairs"),
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (Vehicle vehicle in detail.vehicles)
                     {
                         if (vehicle.isTarget)

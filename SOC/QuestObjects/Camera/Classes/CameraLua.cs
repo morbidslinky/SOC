@@ -22,8 +22,8 @@ namespace SOC.QuestObjects.Camera
                 mainLua.QUEST_TABLE.AddOrSet(BuildCameraList(detail.cameras));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetCameraAttributes);
 
-                mainLua.qvars.AddOrSet(SetCameraAttributes);
                 mainLua.QStep_Start.Function.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), 
@@ -33,7 +33,15 @@ namespace SOC.QuestObjects.Camera
 
                 if (detail.cameras.Any(camera => camera.isTarget))
                 {
-                    CheckQuestGenericEnemy cameraCheck = new CheckQuestGenericEnemy(mainLua);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (Camera cam in detail.cameras)
                     {
                         if (cam.isTarget)

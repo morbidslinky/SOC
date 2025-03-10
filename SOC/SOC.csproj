@@ -145,9 +145,8 @@
     <Compile Include="Core\Classes\Lua\LuaVariable.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\CheckQuestMethodsList.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\Messages.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\ObjectiveTypesList.cs" />
+    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\StaticObjectiveFunctions.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnAllocate.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnInitialize.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnTerminate.cs" />

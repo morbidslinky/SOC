@@ -32,7 +32,19 @@ namespace SOC.QuestObjects.Item
         {
             if (questDetail.items.Any(item => item.isTarget))
             {
-                CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsDormantItem, questDetail.itemMetadata.objectiveType);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                    Lua.TableEntry(
+                        Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
+                        Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return (targetItemInfo.active == false)", "targetItemInfo")), Lua.TableEntry("Type", questDetail.itemMetadata.objectiveType))))    
+                    ),
+                    StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
+                    StaticObjectiveFunctions.TallyItemTargets,
+                    Lua.TableEntry(
+                        "CheckQuestMethodPairs",
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.TallyItemTargets")))
+                    ),
+                    StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                );
                 mainLua.QUEST_TABLE.AddOrSet(BuildItemTargetList(questDetail.items));
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.dormantItemTargetMessages);
             }

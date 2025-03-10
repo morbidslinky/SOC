@@ -20,7 +20,7 @@ namespace SOC.QuestObjects.UAV
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
-                mainLua.qvars.AddOrSet(setupUAV);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(setupUAV);
                 mainLua.QStep_Start.Function.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"),
@@ -30,7 +30,15 @@ namespace SOC.QuestObjects.UAV
 
                 if (detail.UAVs.Any(uav => uav.isTarget))
                 {
-                    CheckQuestGenericEnemy checkUAV = new CheckQuestGenericEnemy(mainLua);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (UAV drone in detail.UAVs)
                     {
                         if (drone.isTarget)

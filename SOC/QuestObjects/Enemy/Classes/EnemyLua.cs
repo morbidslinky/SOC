@@ -112,7 +112,7 @@ namespace SOC.QuestObjects.Enemy
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;
 
-            mainLua.qvars.AddOrSet(Lua.TableEntry("SUBTYPE", meta.subtype));
+            mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("SUBTYPE", meta.subtype));
 
             mainLua.QUEST_TABLE.AddOrSet(BuildEnemyList(enemies));
             bool hasSpawn = false;
@@ -142,7 +142,19 @@ namespace SOC.QuestObjects.Enemy
                 if (hasTarget)
                 {
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
-                    CheckQuestGenericEnemy CheckEnemy = new CheckQuestGenericEnemy(mainLua, CheckIsSoldier, meta.objectiveType);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        Lua.TableEntry(
+                            Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
+                            Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsSoldier(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))
+                        ),
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                 }
             }
         }

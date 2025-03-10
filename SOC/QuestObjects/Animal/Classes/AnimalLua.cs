@@ -16,7 +16,19 @@ namespace SOC.QuestObjects.Animal
                 mainLua.QUEST_TABLE.AddOrSet(BuildAnimalList(detail.animals));
                 if (detail.animals.Any(animal => animal.target))
                 {
-                    CheckQuestAnimal checkAnimal = new CheckQuestAnimal(mainLua, detail.animalMetadata.objectiveType);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        Lua.TableEntry(
+                            "ObjectiveTypeList",
+                            Lua.Table(Lua.TableEntry("animalObjective", detail.animalMetadata.objectiveType))
+                        ),
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForAnimal,
+                        StaticObjectiveFunctions.TallyAnimalTargets,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.TallyItemTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     mainLua.QUEST_TABLE.AddOrSet(BuildAnimalTargetList(detail.animals));
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.animalTargetMessages);
                 }

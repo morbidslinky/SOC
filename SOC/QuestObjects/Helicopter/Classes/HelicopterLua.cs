@@ -25,11 +25,19 @@ namespace SOC.QuestObjects.Helicopter
             if (questDetail.helicopters.Any(helicopter => helicopter.isSpawn))
             {
                 mainLua.QUEST_TABLE.AddOrSet(BuildHeliList(questDetail));
-                mainLua.qvars.AddOrSet(setHelicopterAttributes);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(setHelicopterAttributes);
                 if (questDetail.helicopters.Any(helicopter => helicopter.isTarget))
                 {
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
-                    CheckQuestGenericEnemy helicopterCheck = new CheckQuestGenericEnemy(mainLua);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (Helicopter heli in questDetail.helicopters)
                         if (heli.isTarget)
                             mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), heli.GetObjectName()));

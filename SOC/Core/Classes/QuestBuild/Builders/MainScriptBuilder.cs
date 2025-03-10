@@ -16,15 +16,12 @@ namespace SOC.Classes.Lua
         public QStep_Start QStep_Start = new QStep_Start();
         public QStep_Main QStep_Main = new QStep_Main();
 
-        public CheckQuestMethodsList checkQuestMethodList = new CheckQuestMethodsList(); // TODO
-        public ObjectiveTypesList objectiveTypesList = new ObjectiveTypesList(); // TODO
-
         public LuaTable QUEST_TABLE = new LuaTable();
-        public LuaTable qvars = new LuaTable();
         public LuaTable @this = new LuaTable();
         public LuaTable quest_step = new LuaTable();
 
-        public LuaTable CommonFunctions = new LuaTable();
+        public LuaVariable StrCode32TableDefinitionsVariable = new LuaVariable("StrCode32TableDefinitions");
+        public LuaVariable CommonDefinitionsVariable = new LuaVariable("CommonDefinitions");
 
 
         public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
@@ -39,10 +36,7 @@ namespace SOC.Classes.Lua
             }
             */
 
-            qvars.AddOrSet(
-                Lua.TableEntry("StrCode32", Lua.TableIdentifier("Fox", Lua.Text("StrCode32"))),
-                Lua.TableEntry("StrCode32Table", Lua.TableIdentifier("Tpp", Lua.Text("StrCode32Table"))),
-                Lua.TableEntry("GetGameObjectId", Lua.TableIdentifier("GameObject", Lua.Text("GetGameObjectId"))),
+            QStep_Main.StrCode32Table.AddCommonDefinitions( // TODO create a qvars table first, add these, and merge it with the CommonDefinitions table?
                 Lua.TableEntry("ELIMINATE", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("ELIMINATE"))),
                 Lua.TableEntry("RECOVERED", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("RECOVERED"))),
                 Lua.TableEntry("KILLREQUIRED", 9),
@@ -52,15 +46,16 @@ namespace SOC.Classes.Lua
 
             if (setupDetails.CPName == "NONE")
             {
-                qvars.AddOrSet(Lua.TableEntry("CPNAME", 
+                QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", 
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfMain", "GetClosestCp"),
                         Lua.Table(setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord))));
             }
             else
             {
-                qvars.AddOrSet(Lua.TableEntry("CPNAME", setupDetails.CPName));
+                QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", setupDetails.CPName));
             }
+
 
             QUEST_TABLE.AddOrSet(
                 Lua.TableEntry("questType", Lua.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
@@ -77,45 +72,35 @@ namespace SOC.Classes.Lua
                 OnInitialize.Get(),
                 OnUpdate.Get(),
                 OnTerminate.Get(),
-                Lua.TableEntry("QUEST_TABLE", QUEST_TABLE)
+                Lua.TableEntry("QUEST_TABLE", QUEST_TABLE, true)
             );
-/*
-            @this.AddOrSet(checkQuestMethodList.GetCheckFunctions());
-            @this.AddOrSet(checkQuestMethodList.GetCheckQuestMethodList());
-            @this.AddOrSet(objectiveTypesList.GetObjectiveFunctions());
-            @this.AddOrSet(objectiveTypesList.GetObjectiveTypesList());
-*/
+
             quest_step.AddOrSet(
                 QStep_Start.Get(),
-                QStep_Main.Get()
+                QStep_Main.Get(StrCode32TableDefinitionsVariable.Name)
             );
-        }
 
-        public void AddToCheckQuestMethod(CheckQuestMethodsPair methodsPair)
-        {
-            if (!checkQuestMethodList.Contains(methodsPair))
-                checkQuestMethodList.Add(methodsPair);
-        }
-
-        public void AddToObjectiveTypes(string tableName, GenericTargetPair objectivePair)
-        {
-            objectiveTypesList.Add(tableName, objectivePair);
-        }
-
-        public void AddToObjectiveTypes(string oneLineObjective)
-        {
-            if (!objectiveTypesList.oneLineObjectiveTypes.Contains(oneLineObjective))
-                objectiveTypesList.oneLineObjectiveTypes.Add(oneLineObjective);
+            StrCode32TableDefinitionsVariable.AssignedTo = QStep_Main.StrCode32Table.GetStrCode32DefinitionsTable(StrCode32TableDefinitionsVariable.Name);
+            CommonDefinitionsVariable.AssignedTo = QStep_Main.StrCode32Table.GetCommonDefinitionsTable();
         }
 
         public void Build(string mainLuaFilePath)
         {
-            var mainScript = Lua.Function("local |[0|assign_variable]| local |[1|assign_variable]| local |[2|assign_variable]| local |[3|assign_variable]| return |[2|variable]|",
-                    QStep_Main.GetStrCode32DefinitionsVariable(),
-                    Lua.Variable("qvars",qvars),
+            var mainScript = Lua.Function(
+                "local StrCode32 = Fox.StrCode32 \n" +
+                "local StrCode32Table = Tpp.StrCode32Table \n" +
+                "local GetGameObjectId = GameObject.GetGameObjectId \n\n" +
+                "local |[0|assign_variable]| " +
+                "local |[1|assign_variable]| " +
+                "local |[2|assign_variable]| " +
+                "local |[3|assign_variable]| " +
+                "return |[2|variable]|",
+                    CommonDefinitionsVariable,
+                    StrCode32TableDefinitionsVariable,
                     Lua.Variable("this", @this),
                     Lua.Variable("quest_step", quest_step)
                 );
+
             mainScript.WriteToLua(mainLuaFilePath);
             mainScript.WriteToXml(mainLuaFilePath + ".xml");
         }

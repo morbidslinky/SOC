@@ -16,7 +16,19 @@ namespace SOC.QuestObjects.ActiveItem
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.activeItemTargetMessages);
-                CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsActiveItem, questDetail.activeItemMetadata.objectiveType);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                    Lua.TableEntry(
+                        Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
+                        Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return (targetItemInfo.active == true)", "targetItemInfo")), Lua.TableEntry("Type", questDetail.activeItemMetadata.objectiveType))))
+                    ),
+                    StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
+                    StaticObjectiveFunctions.TallyItemTargets,
+                    Lua.TableEntry(
+                        "CheckQuestMethodPairs",
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.TallyItemTargets")))
+                    ),
+                    StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                );
                 mainLua.QUEST_TABLE.AddOrSet(BuildTargetItemList(questDetail));
             }
         }

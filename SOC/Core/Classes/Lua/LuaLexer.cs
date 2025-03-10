@@ -193,7 +193,7 @@ namespace SOC.Classes.Lua
 
                 if (token == "\n")
                 {
-                    if (nextToken != null && (nextToken == "end" || nextToken == "until" || nextToken == "}"))
+                    if (nextToken != null && (nextToken == "end" || nextToken == "until" || nextToken == "}" || nextToken == "else" || nextToken == "elseif"))
                     {
                         indentLevel--;
                     }
@@ -209,7 +209,7 @@ namespace SOC.Classes.Lua
                     formattedCode.Append('\n');
                     formattedCode.Append(new string('\t', indentLevel));
                 }
-                else if ((token == "end" || token == "until" || token == "}") &&
+                else if ((token == "end" || token == "until" || token == "}" || token == "else" || token == "elseif") &&
                          prevToken != "\n" &&
                          nextToken != "\n")
                 {
@@ -226,7 +226,7 @@ namespace SOC.Classes.Lua
                     }
                 }
 
-                if (token == "function" || token == "then" || token == "repeat" || token == "do" || token == "{")
+                if (token == "function" || token == "then" || token == "repeat" || token == "do" || token == "{" || token == "else")
                 {
                     indentLevel++;
                 }

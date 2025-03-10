@@ -47,16 +47,16 @@ namespace SOC.QuestObjects.WalkerGear
 
             if (detail.walkers.Count > 0)
             {
-                mainLua.qvars.AddOrSet(Lua.TableEntry("questWalkerGearList", new LuaTable()));
-                mainLua.qvars.AddOrSet(Lua.TableEntry("playerWGResetPosition"));
-                mainLua.qvars.AddOrSet(Lua.TableEntry("walkerGearGameId"));
-                mainLua.qvars.AddOrSet(Lua.TableEntry("inMostActiveQuestArea", true));
-                mainLua.qvars.AddOrSet(Lua.TableEntry("exitOnce", true));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("questWalkerGearList", new LuaTable()));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("playerWGResetPosition"));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("walkerGearGameId"));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("inMostActiveQuestArea", true));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("exitOnce", true));
 
                 mainLua.QUEST_TABLE.AddOrSet(BuildWalkerList(walkers));
 
-                mainLua.qvars.AddOrSet(OneTimeAnnounce);
-                mainLua.qvars.AddOrSet(ReboundWalkerGear);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(OneTimeAnnounce);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(ReboundWalkerGear);
 
                 WalkerGearsVisualizer visualizer = (WalkerGearsVisualizer)detail.GetVisualizer();
                 StrCode32Script ExitTrap = new StrCode32Script(
@@ -69,13 +69,13 @@ namespace SOC.QuestObjects.WalkerGear
                 mainLua.QStep_Main.StrCode32Table.Add(ExitTrap, EnterTrap, FinishTimerActiveArea, FinishTimerCooldown);
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
 
-                mainLua.qvars.AddOrSet(Lua.TableEntry("setupOnce", true));
-                mainLua.qvars.AddOrSet(SetupGearsQuest);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("setupOnce", true));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetupGearsQuest);
                 mainLua.OnUpdate.Function.AppendAssignment(
                     Lua.TableIdentifier("qvars", "setupOnce"), 
                     Lua.FunctionCall(Lua.TableIdentifier("qvars", "SetupGearsQuest"), Lua.TableIdentifier("qvars", "setupOnce")));
 
-                mainLua.qvars.AddOrSet(BuildWalkerGameObjectIdList);
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(BuildWalkerGameObjectIdList);
                 mainLua.QStep_Start.Function.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"),
@@ -85,7 +85,19 @@ namespace SOC.QuestObjects.WalkerGear
 
                 if (walkers.Any(walker => walker.isTarget))
                 {
-                    CheckQuestGenericEnemy checkQuestMethod = new CheckQuestGenericEnemy(mainLua, checkWalkerGear, meta.objectiveType);
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        Lua.TableEntry(
+                            Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
+                            Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsEnemyWalkerGear(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))
+                        ),
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                        StaticObjectiveFunctions.TallyGenericTargets,
+                        Lua.TableEntry(
+                            Lua.TableIdentifier("qvars", "CheckQuestMethodPairs"),
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (WalkerGear walker in walkers)
                     {
                         if (walker.isTarget)

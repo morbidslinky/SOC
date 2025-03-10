@@ -23,6 +23,27 @@ namespace SOC.Classes.Lua
             AddOrSet(entries);
         }
 
+        public void PrependOrMove(LuaTableEntry newEntry)
+        {
+            if (TryGetKeyValuePair(newEntry.Key, out LuaTableEntry existingEntry))
+            {
+                KeyValuePairs.Remove(existingEntry);
+            }
+            else if (newEntry.Key == null)
+            {
+                foreach (var entry in KeyValuePairs)
+                {
+                    if (entry.Key is LuaNumber num)
+                    {
+                        entry.Key = new LuaNumber(num.Number + 1);
+                    }
+                }
+                newEntry.Key = new LuaNumber(1);
+            }
+
+            KeyValuePairs.Insert(0, newEntry);
+        }
+
         public void AddOrSet(params LuaTableEntry[] entries)
         {
             foreach (LuaTableEntry entry in entries)
@@ -80,11 +101,30 @@ namespace SOC.Classes.Lua
             {
                 if (pair.Value is LuaTable table)
                 {
-                    return table.TryAdd(Lua.TableEntry(entry.Value));
+                    if (entry.Value is LuaTable entryTable)
+                        return table.TryMerge(entryTable);
+                    else 
+                        return table.TryAdd(Lua.TableEntry(entry.Value));
                 }
                 return false;
             }
             KeyValuePairs.Add(entry);
+            return true;
+        }
+
+        public bool TryMerge(LuaTable mergeTable)
+        {
+            foreach (LuaTableEntry entry in mergeTable.KeyValuePairs)
+            {
+                if (entry.Key is LuaNumber)
+                {
+                    entry.Key = null;
+                }
+                if (!TryAdd(entry))
+                {
+                    return false;
+                }
+            }
             return true;
         }
 
