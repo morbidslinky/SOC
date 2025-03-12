@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.Camera
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetCameraAttributes);
 
-                mainLua.QStep_Start.Function.AppendLuaValue(
+                mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), 
                         Lua.TableIdentifier("qvars", "SetCameraAttributes")

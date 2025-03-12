@@ -36,7 +36,7 @@ public static class QStep_Main_CommonMessages
         LuaFunction.ToTableEntry(
             "PlayerPickUpWeaponClearCheck",
             new string[] { "playerIndex", "playerIndex" },
-            " local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpDormant\", equipId); TppQuest.ClearWithSave(isClearType); ")
+            " local isClearType = qvars.CheckQuestAllTargetDynamic(\"PickUpDormant\", equipId); TppQuest.ClearWithSave(isClearType); ")
         );
 
     static readonly StrCode32Script PlayerPickUpPlaced = new StrCode32Script(
@@ -44,21 +44,21 @@ public static class QStep_Main_CommonMessages
         LuaFunction.ToTableEntry(
             "PlayerPickUpPlacedClearCheck",
             new string[] { "playerGameObjectId", "equipId", "index", "isPlayer" },
-            " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"PickUpActive\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
+            " if TppPlaced.IsQuestBlock(index) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"PickUpActive\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly StrCode32Script PlacedActivatePlaced = new StrCode32Script(
         new StrCode32Event("Placed", "OnActivatePlaced", "", "equipId", "index"),
         LuaFunction.ToTableEntry(
             "PlacedActivatePlacedClearCheck",
             new string[] { "equipId", "index" },
-            " if TppPlaced.IsQuestBlock(index) then local isClearType = this.CheckQuestAllTargetDynamic(\"Activate\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
+            " if TppPlaced.IsQuestBlock(index) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"Activate\", equipId); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly StrCode32Script GameObjectDead = new StrCode32Script(
         new StrCode32Event("GameObject", "Dead", "", "gameObjectId", "gameObjectId01", "animalId"),
         LuaFunction.ToTableEntry(
             "GameObjectDeadClearCheck",
             new string[] { "gameObjectId", "gameObjectId01", "animalId" },
-            " local isClearType = this.CheckQuestAllTargetDynamic(\"Dead\",gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
+            " local isClearType = qvars.CheckQuestAllTargetDynamic(\"Dead\",gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
 
     static readonly StrCode32Script GameObjectFultonInfo = new StrCode32Script(
         new StrCode32Event("GameObject", "FultonInfo", "", "gameObjectId"),
@@ -72,35 +72,35 @@ public static class QStep_Main_CommonMessages
         LuaFunction.ToTableEntry(
             "GameObjectFultonClearCheck",
             new string[] { "gameObjectId", "animalId" },
-            " local isClearType = this.CheckQuestAllTargetDynamic(\"Fulton\", gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
+            " local isClearType = qvars.CheckQuestAllTargetDynamic(\"Fulton\", gameObjectId, animalId); TppQuest.ClearWithSave(isClearType); "));
 
     static readonly StrCode32Script GameObjectFultonFailed = new StrCode32Script(
         new StrCode32Event("GameObject", "FultonFailed", "", "gameObjectId", "locatorName", "locatorNameUpper", "failureType"),
         LuaFunction.ToTableEntry(
             "GameObjectFultonFailedClearCheck",
             new string[] { "gameObjectId", "locatorName", "locatorNameUpper", "failureType" },
-            " if failureType == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = this.CheckQuestAllTargetDynamic(\"FultonFailed\", gameObjectId, locatorName); TppQuest.ClearWithSave(isClearType); end;  "));
+            " if failureType == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = qvars.CheckQuestAllTargetDynamic(\"FultonFailed\", gameObjectId, locatorName); TppQuest.ClearWithSave(isClearType); end;  "));
 
     static readonly StrCode32Script GameObjectPlacedIntoHeli = new StrCode32Script(
         new StrCode32Event("GameObject", "PlacedIntoVehicle", "", "gameObjectId", "vehicleGameObjectId"),
         LuaFunction.ToTableEntry(
             "GameObjectPlacedIntoHeliClearCheck",
             new string[] { "gameObjectId", "vehicleGameObjectId" },
-            " if Tpp.IsHelicopter(vehicleGameObjectId) then local isClearType = this.CheckQuestAllTargetDynamic(\"InHelicopter\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
+            " if Tpp.IsHelicopter(vehicleGameObjectId) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"InHelicopter\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly StrCode32Script GameObjectVehicleBroken = new StrCode32Script(
         new StrCode32Event("GameObject", "VehicleBroken", "", "gameObjectId", "state"),
         LuaFunction.ToTableEntry(
             "GameObjectVehicleBrokenClearCheck",
             new string[] { "gameObjectId", "state" },
-            " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"VehicleBroken\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
+            " if state == StrCode32(\"End\") then local isClearType = qvars.CheckQuestAllTargetDynamic(\"VehicleBroken\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly StrCode32Script GameObjectLostControl = new StrCode32Script(
         new StrCode32Event("GameObject", "LostControl", "", "gameObjectId", "state"),
         LuaFunction.ToTableEntry(
             "GameObjectLostControlClearCheck",
             new string[] { "gameObjectId", "state" },
-            " if state == StrCode32(\"End\") then local isClearType = this.CheckQuestAllTargetDynamic(\"LostControl\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
+            " if state == StrCode32(\"End\") then local isClearType = qvars.CheckQuestAllTargetDynamic(\"LostControl\", gameObjectId); TppQuest.ClearWithSave(isClearType); end; "));
 
     public static readonly StrCode32Script[] allCommonMessages = { PlayerPickUpWeapon, PlayerPickUpPlaced, PlacedActivatePlaced, GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
 

@@ -24,7 +24,7 @@ namespace SOC.QuestObjects.Vehicle
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(WarpVehicles);
 
-                mainLua.QStep_Start.Function.AppendLuaValue(
+                mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"),
                         Lua.TableIdentifier("qvars", "WarpVehicles")

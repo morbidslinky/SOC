@@ -51,11 +51,9 @@ namespace SOC.QuestObjects.Hostage
             {
                 if (meta.canInterrogate)
                 {
-                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(InterCall_hostage_pos01);
-
                     var cpInt = new LuaTable(
                         Lua.TableEntry("name", "enqt1000_271b10"),
-                        Lua.TableEntry("func", "this.InterCall_hostage_pos01")
+                        Lua.TableEntry("func", InterCall_hostage_pos01.Value)
                     );
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("questCpInterrogation", cpInt));
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SwitchEnableQuestHighIntTable);
@@ -66,7 +64,7 @@ namespace SOC.QuestObjects.Hostage
                         LuaFunction.ToTableEntry(
                             "OnEnableMarkerCheckIntTable",       
                             new string[] { "arg0", "arg1" },
-                            $" if arg0 == StrCode32(\"Hostage_0\") then hostagei = hostagei + 1\nif hostagei >= {hostages.Count} then this.SwitchEnableQuestHighIntTable(false, CPNAME, this.questCpInterrogation)\nend\nend")));
+                            $" if arg0 == StrCode32(\"Hostage_0\") then qvars.hostagei = qvars.hostagei + 1\nif qvars.hostagei >= {hostages.Count} then qvars.SwitchEnableQuestHighIntTable(false, CPNAME, qvars.questCpInterrogation)\nend\nend")));
 
                     mainLua.OnAllocate.OnTerminateQuest.AppendLuaValue(Lua.FunctionCall(
                         Lua.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
@@ -83,7 +81,7 @@ namespace SOC.QuestObjects.Hostage
                 //mainLua.QvarTable.AddOrSet(WarpHostages);
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetHostageAttributes);
-                mainLua.QStep_Start.Function.AppendLuaValue(
+                mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"),
                         Lua.TableIdentifier("qvars", "SetHostageAttributes")

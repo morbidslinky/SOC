@@ -20,8 +20,8 @@ namespace SOC.Classes.Lua
         public LuaTable @this = new LuaTable();
         public LuaTable quest_step = new LuaTable();
 
-        public LuaVariable StrCode32TableDefinitionsVariable = new LuaVariable("StrCode32TableDefinitions");
-        public LuaVariable CommonDefinitionsVariable = new LuaVariable("CommonDefinitions");
+        public LuaVariable StrCode32TableDefinitionsVariable = new LuaVariable("StrCode32Defs");
+        public LuaVariable CommonDefinitionsVariable = new LuaVariable("qvars");
 
 
         public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
@@ -37,9 +37,6 @@ namespace SOC.Classes.Lua
             */
 
             QStep_Main.StrCode32Table.AddCommonDefinitions( // TODO create a qvars table first, add these, and merge it with the CommonDefinitions table?
-                Lua.TableEntry("ELIMINATE", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("ELIMINATE"))),
-                Lua.TableEntry("RECOVERED", Lua.TableIdentifier("TppDefine", Lua.Text("QUEST_TYPE"), Lua.Text("RECOVERED"))),
-                Lua.TableEntry("KILLREQUIRED", 9),
                 Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)),
                 Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{setupDetails.loadArea}")
             );
@@ -67,12 +64,12 @@ namespace SOC.Classes.Lua
             }
 
             @this.AddOrSet(
+                Lua.TableEntry("QUEST_TABLE", QUEST_TABLE, true),
                 OnAllocate.Get(),
                 Messages.Get(),
                 OnInitialize.Get(),
                 OnUpdate.Get(),
-                OnTerminate.Get(),
-                Lua.TableEntry("QUEST_TABLE", QUEST_TABLE, true)
+                OnTerminate.Get()
             );
 
             quest_step.AddOrSet(
@@ -102,7 +99,6 @@ namespace SOC.Classes.Lua
                 );
 
             mainScript.WriteToLua(mainLuaFilePath);
-            mainScript.WriteToXml(mainLuaFilePath + ".xml");
         }
     }
 }

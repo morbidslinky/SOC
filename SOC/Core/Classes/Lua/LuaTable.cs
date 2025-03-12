@@ -50,7 +50,7 @@ namespace SOC.Classes.Lua
             {
                 if (entry.Key is LuaTableIdentifier id)
                 {
-                    if (!TryAdd(id.IdentifierKeys, entry.Value)) TrySet(id.IdentifierKeys, entry.Value);
+                    if (!TryAdd(id.IdentifierKeys, entry.Value, entry.ExtrudeForAssignmentVariable)) TrySet(id.IdentifierKeys, entry.Value, entry.ExtrudeForAssignmentVariable);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace SOC.Classes.Lua
                     if (entry.Value is LuaTable entryTable)
                         return table.TryMerge(entryTable);
                     else 
-                        return table.TryAdd(Lua.TableEntry(entry.Value));
+                        return table.TryAdd(Lua.TableEntry(entry.Value, entry.ExtrudeForAssignmentVariable));
                 }
                 return false;
             }
@@ -128,7 +128,7 @@ namespace SOC.Classes.Lua
             return true;
         }
 
-        public bool TryAdd(LuaValue[] nestedTableKeys, LuaValue value, int depth = 0, bool extrude = false)
+        public bool TryAdd(LuaValue[] nestedTableKeys, LuaValue value, bool extrude = false, int depth = 0)
         {
             if (depth == nestedTableKeys.Length - 1)
             {
@@ -136,16 +136,16 @@ namespace SOC.Classes.Lua
                 return TryAdd(nestedTableEntry);
             }
 
-            LuaTable nextTable = EnsureOrCreateTable(nestedTableKeys[depth]);
-            return nextTable.TryAdd(nestedTableKeys, value, depth + 1, extrude);
+            LuaTable nextTable = EnsureOrCreateTable(nestedTableKeys[depth], extrude);
+            return nextTable.TryAdd(nestedTableKeys, value, extrude, depth + 1);
         }
 
-        private LuaTable EnsureOrCreateTable(LuaValue key)
+        private LuaTable EnsureOrCreateTable(LuaValue key, bool extrude = false)
         {
             if (!TryGet(key, out LuaValue value, out bool _) || !(value is LuaTable table))
             {
                 table = new LuaTable();
-                var nestedTable = Lua.TableEntry(key, table);
+                var nestedTable = Lua.TableEntry(key, table, extrude);
                 TryAdd(nestedTable);
             }
             return table;

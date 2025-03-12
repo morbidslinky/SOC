@@ -35,6 +35,9 @@ namespace SOC.Classes.Lua
 
         public void AddCommonDefinitions(params LuaTableEntry[] definitionEntries)
         {
+            foreach (LuaTableEntry entry in definitionEntries)
+                entry.ExtrudeForAssignmentVariable = true;
+
             CommonDefinitionsTable.AddOrSet(definitionEntries);
         }
 
@@ -89,7 +92,8 @@ namespace SOC.Classes.Lua
                         functionDefinitionsTable.AddOrSet(
                             Lua.TableEntry(
                                 Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaText(), subscript.Identifier, conditional.Key),
-                                conditional.Value
+                                conditional.Value,
+                                true
                             )
                         );
                     }
@@ -98,7 +102,8 @@ namespace SOC.Classes.Lua
                         functionDefinitionsTable.AddOrSet(
                             Lua.TableEntry(
                                 Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaText(), subscript.Identifier, operational.Key),
-                                operational.Value
+                                operational.Value,
+                                true
                             )
                         );
                     }
@@ -107,7 +112,8 @@ namespace SOC.Classes.Lua
                     functionDefinitionsTable.AddOrSet(
                         Lua.TableEntry(
                             subscriptCallableIdentifier,
-                            subscript.ToFunction(definitionTableVariableName)
+                            subscript.ToFunction(definitionTableVariableName),
+                            true
                         )
                     );
                 }

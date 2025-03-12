@@ -25,8 +25,8 @@ namespace SOC.Classes.Lua
 
         public static readonly LuaTableEntry TallyItemTargets = LuaFunction.ToTableEntry("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @" for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
-    local dynamicQuestType = RECOVERED
-    for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.itemTargets) do
+    local dynamicQuestType = ""RECOVERED""
+    for _, ObjectiveTypeInfo in ipairs(qvars.ObjectiveTypeList.itemTargets) do
       if ObjectiveTypeInfo.Check(targetInfo) then
         dynamicQuestType = ObjectiveTypeInfo.Type
         break
@@ -35,19 +35,19 @@ namespace SOC.Classes.Lua
     local targetMessageId = targetInfo.messageId
 
     if targetMessageId ~= ""None"" then
-        if dynamicQuestType == RECOVERED then
+        if dynamicQuestType == ""RECOVERED"" then
           if (targetMessageId == ""PickUpDormant"" or targetMessageId == ""PickUpActive"") then
             objectiveCompleteCount = objectiveCompleteCount + 1
           elseif (targetMessageId == ""Activate"") then
             objectiveFailedCount = objectiveFailedCount + 1
           end
 
-        elseif dynamicQuestType == ELIMINATE then
+        elseif dynamicQuestType == ""ELIMINATE"" then
           if (targetMessageId == ""PickUpActive"" or targetMessageId == ""Activate"") then
             objectiveCompleteCount = objectiveCompleteCount + 1
           end
 
-        elseif dynamicQuestType == KILLREQUIRED then
+        elseif dynamicQuestType == ""KILLREQUIRED"" then
           if (targetMessageId == ""Activate"") then
             objectiveCompleteCount = objectiveCompleteCount + 1
           elseif (targetMessageId == ""PickUpActive"") then
@@ -75,13 +75,13 @@ namespace SOC.Classes.Lua
 
         public static readonly LuaTableEntry TallyGenericTargets = LuaFunction.ToTableEntry("TallyGenericTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
             @"for targetGameId, targetInfo in pairs(mvars.ene_questTargetList) do
-    local dynamicQuestType = ELIMINATE
+    local dynamicQuestType = ""ELIMINATE""
     local isTarget = targetInfo.isTarget or false
     local targetMessageId = targetInfo.messageId
 
     if isTarget == true then
-      if ObjectiveTypeList.genericTargets ~= nil then
-        for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.genericTargets) do
+      if qvars.ObjectiveTypeList.genericTargets ~= nil then
+        for _, ObjectiveTypeInfo in ipairs(qvars.ObjectiveTypeList.genericTargets) do
           if ObjectiveTypeInfo.Check(targetGameId) then
             dynamicQuestType = ObjectiveTypeInfo.Type
             break
@@ -90,19 +90,19 @@ namespace SOC.Classes.Lua
       end
 
       if targetMessageId ~= ""None"" then
-        if dynamicQuestType == RECOVERED then
+        if dynamicQuestType == ""RECOVERED"" then
           if (targetMessageId == ""Fulton"") or (targetMessageId == ""InHelicopter"") then
             objectiveCompleteCount = objectiveCompleteCount + 1
           elseif (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") or (targetMessageId == ""VehicleBroken"") or (targetMessageId == ""LostControl"") then
             objectiveFailedCount = objectiveFailedCount + 1
           end
 
-        elseif dynamicQuestType == ELIMINATE then
+        elseif dynamicQuestType == ""ELIMINATE"" then
           if (targetMessageId == ""Fulton"") or (targetMessageId == ""InHelicopter"") or (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") or (targetMessageId == ""VehicleBroken"") or (targetMessageId == ""LostControl"") then
             objectiveCompleteCount = objectiveCompleteCount + 1
           end
 
-        elseif dynamicQuestType == KILLREQUIRED then
+        elseif dynamicQuestType == ""KILLREQUIRED"" then
           if (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") or (targetMessageId == ""VehicleBroken"") or (targetMessageId == ""LostControl"") then
             objectiveCompleteCount = objectiveCompleteCount + 1
           elseif (targetMessageId == ""Fulton"") or (targetMessageId == ""InHelicopter"")  then
@@ -143,24 +143,24 @@ namespace SOC.Classes.Lua
   return false, false");
 
         public static readonly LuaTableEntry TallyAnimalTargets = LuaFunction.ToTableEntry("TallyAnimalTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
-            @" local dynamicQuestType = ObjectiveTypeList.animalObjective
+            @" local dynamicQuestType = qvars.ObjectiveTypeList.animalObjective
   for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
     local targetMessageId = targetInfo.messageId
 
     if targetMessageId ~= ""None"" then
-      if dynamicQuestType == RECOVERED then
+      if dynamicQuestType == ""RECOVERED"" then
         if (targetMessageId == ""Fulton"") then
           objectiveCompleteCount = objectiveCompleteCount + 1
         elseif (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") then
           objectiveFailedCount = objectiveFailedCount + 1
         end
 
-      elseif dynamicQuestType == ELIMINATE then
+      elseif dynamicQuestType == ""ELIMINATE"" then
         if (targetMessageId == ""Fulton"") or (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") then
           objectiveCompleteCount = objectiveCompleteCount + 1
         end
 
-      elseif dynamicQuestType == KILLREQUIRED then
+      elseif dynamicQuestType == ""KILLREQUIRED"" then
         if (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") then
           objectiveCompleteCount = objectiveCompleteCount + 1
         elseif (targetMessageId == ""Fulton"") then
@@ -180,7 +180,7 @@ namespace SOC.Classes.Lua
 
   local inTargetList = false
   local intendedTarget = true
-  for IsTargetSetMethod, _ in pairs(CheckQuestMethodPairs) do 
+  for IsTargetSetMethod, _ in pairs(qvars.CheckQuestMethodPairs) do 
     inTargetList, intendedTarget = IsTargetSetMethod(gameId, messageId, checkAnimalId) 
     if inTargetList == true then 
         break 
@@ -194,7 +194,7 @@ namespace SOC.Classes.Lua
   local totalTargets = 0
   local objectiveCompleteCount = 0
   local objectiveFailedCount = 0
-  for _, TallyMethod in pairs(CheckQuestMethodPairs) do 
+  for _, TallyMethod in pairs(qvars.CheckQuestMethodPairs) do 
     totalTargets, objectiveCompleteCount, objectiveFailedCount = TallyMethod(totalTargets, objectiveCompleteCount, objectiveFailedCount) 
   end 
 
