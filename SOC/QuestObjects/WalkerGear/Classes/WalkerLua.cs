@@ -24,9 +24,9 @@ namespace SOC.QuestObjects.WalkerGear
         
         static readonly LuaTableEntry ReboundWalkerGear = LuaFunction.ToTableEntry("ReboundWalkerGear", new string[] { "walkerGearGameObjectId" }, @" local commandPos={ id = ""SetPosition"", rotY = qvars.playerWGResetPosition.rotY, pos = qvars.playerWGResetPosition.pos}; GameObject.SendCommand(walkerGearGameObjectId,commandPos); ");
         
-        static readonly LuaTableEntry SetupGearsQuest = LuaFunction.ToTableEntry("SetupGearsQuest", new string[] { "setupOnce" }, " if setupOnce == true then for i,walkerInfo in ipairs(this.QUEST_TABLE.walkerList) do \nlocal walkerId = GetGameObjectId(\"TppCommonWalkerGear2\",walkerInfo.walkerName); if walkerId ~= GameObject.NULL_ID then local commandWeapon={ id = \"SetMainWeapon\", weapon = walkerInfo.primaryWeapon}; GameObject.SendCommand(walkerId, commandWeapon); local commandColor = { id = \"SetColoringType\", type = walkerInfo.colorType }; GameObject.SendCommand(walkerId, commandColor); if walkerInfo.riderName then local soldierId = GetGameObjectId( \"TppSoldier2\", walkerInfo.riderName ); local commandRide = { id = \"SetRelativeVehicle\", targetId = walkerId, rideFromBeginning = true  }; GameObject.SendCommand( soldierId, commandRide ); end; local position = walkerInfo.position; local commandPos={ id = \"SetPosition\", rotY = position.rotY, pos = position.pos}; GameObject.SendCommand(walkerId,commandPos); end; end; end; return false; ");
+        static readonly LuaFunction SetupGearsQuest = Lua.Function("for i,walkerInfo in ipairs(this.QUEST_TABLE.walkerList) do \nlocal walkerId = GetGameObjectId(\"TppCommonWalkerGear2\",walkerInfo.walkerName); if walkerId ~= GameObject.NULL_ID then local commandWeapon={ id = \"SetMainWeapon\", weapon = walkerInfo.primaryWeapon}; GameObject.SendCommand(walkerId, commandWeapon); local commandColor = { id = \"SetColoringType\", type = walkerInfo.colorType }; GameObject.SendCommand(walkerId, commandColor); if walkerInfo.riderName then local soldierId = GetGameObjectId( \"TppSoldier2\", walkerInfo.riderName ); local commandRide = { id = \"SetRelativeVehicle\", targetId = walkerId, rideFromBeginning = true  }; GameObject.SendCommand( soldierId, commandRide ); end; local position = walkerInfo.position; local commandPos={ id = \"SetPosition\", rotY = position.rotY, pos = position.pos}; GameObject.SendCommand(walkerId,commandPos); end; end;");
         
-        static readonly LuaTableEntry BuildWalkerGameObjectIdList = LuaFunction.ToTableEntry("BuildWalkerGameObjectIdList", new string[] { }, " for i,walkerInfo in ipairs(this.QUEST_TABLE.walkerList) do \nlocal walkerId = GetGameObjectId(\"\"TppCommonWalkerGear2\"\",walkerInfo.walkerName); if walkerId ~= GameObject.NULL_ID then qvars.questWalkerGearList[walkerId] = walkerInfo.walkerName; end; end; ");
+        static readonly LuaFunction BuildWalkerGameObjectIdList = Lua.Function("for i,walkerInfo in ipairs(this.QUEST_TABLE.walkerList) do \nlocal walkerId = GetGameObjectId(\"TppCommonWalkerGear2\",walkerInfo.walkerName); if walkerId ~= GameObject.NULL_ID then qvars.questWalkerGearList[walkerId] = walkerInfo.walkerName; end; end; ");
 
         static readonly LuaTableEntry checkWalkerGear = LuaFunction.ToTableEntry("CheckIsWalkerGear", new string[] { "gameId" }, " return Tpp.IsEnemyWalkerGear(gameId); ");
 
@@ -48,10 +48,10 @@ namespace SOC.QuestObjects.WalkerGear
             if (detail.walkers.Count > 0)
             {
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("questWalkerGearList", new LuaTable()));
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("playerWGResetPosition"));
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("walkerGearGameId"));
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("inMostActiveQuestArea", true));
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("exitOnce", true));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("playerWGResetPosition", new LuaTable()));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("walkerGearGameId", Lua.Nil()));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("inMostActiveQuestArea", true, false));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("exitOnce", true, false));
 
                 mainLua.QUEST_TABLE.AddOrSet(BuildWalkerList(walkers));
 
@@ -61,7 +61,7 @@ namespace SOC.QuestObjects.WalkerGear
                 WalkerGearsVisualizer visualizer = (WalkerGearsVisualizer)detail.GetVisualizer();
                 StrCode32Script ExitTrap = new StrCode32Script(
                     new StrCode32Event("Trap", "Exit", $"trap_preDeactiveQuestArea_{mainLua.SetupDetails.loadArea}"),
-                    LuaFunction.ToTableEntry("OnExitQuestTrapArea", new string[] { }, " qvars.inMostActiveQuestArea = false; qvars.walkerGearGameId = vars.playerVehicleGameObjectId; if qvars.questWalkerGearList[qvars.walkerGearGameId] then qvars.playerWGResetPosition = {pos= {vars.playerPosX, vars.playerPosY + 1, vars.playerPosZ},rotY= 0,}; GkEventTimerManager.Start(\"\"OutOfMostActiveArea\"\", 7); qvars.exitOnce = qvars.OneTimeAnnounce(\"\"The Walker Gear cannot travel beyond this point.\"\", \"\"Return to the Side Op area.\"\", qvars.exitOnce); end; "));
+                    LuaFunction.ToTableEntry("OnExitQuestTrapArea", new string[] { }, " qvars.inMostActiveQuestArea = false; qvars.walkerGearGameId = vars.playerVehicleGameObjectId; if qvars.questWalkerGearList[qvars.walkerGearGameId] then qvars.playerWGResetPosition = {pos= {vars.playerPosX, vars.playerPosY + 1, vars.playerPosZ},rotY= 0,}; GkEventTimerManager.Start(\"OutOfMostActiveArea\", 7); qvars.exitOnce = qvars.OneTimeAnnounce(\"The Walker Gear cannot travel beyond this point.\", \"Return to the Side Op area.\", qvars.exitOnce); end; "));
                 StrCode32Script EnterTrap = new StrCode32Script(
                     new StrCode32Event("Trap", "Enter", $"trap_preDeactiveQuestArea_{mainLua.SetupDetails.loadArea}"), 
                     LuaFunction.ToTableEntry("OnEnterQuestTrapArea", new string[] { }, " qvars.inMostActiveQuestArea = true; if GkEventTimerManager.IsTimerActive(\"OutOfMostActiveArea\") and qvars.walkerGearGameId == vars.playerVehicleGameObjectId then GkEventTimerManager.Stop(\"OutOfMostActiveArea\"); GkEventTimerManager.Start(\"AnnounceOnceCooldown\", 3); end; "));
@@ -69,17 +69,15 @@ namespace SOC.QuestObjects.WalkerGear
                 mainLua.QStep_Main.StrCode32Table.Add(ExitTrap, EnterTrap, FinishTimerActiveArea, FinishTimerCooldown);
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
 
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("setupOnce", true));
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetupGearsQuest);
-                mainLua.OnUpdate.Function.AppendAssignment(
-                    Lua.TableIdentifier("qvars", "setupOnce"), 
-                    Lua.FunctionCall(Lua.TableIdentifier("qvars", "SetupGearsQuest"), Lua.TableIdentifier("qvars", "setupOnce")));
-
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(BuildWalkerGameObjectIdList);
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
-                        Lua.TableIdentifier("InfCore", "PCall"),
-                        Lua.TableIdentifier("qvars", "BuildWalkerGameObjectIdList")
+                        Lua.TableIdentifier("InfCore", "PCall"), BuildWalkerGameObjectIdList
+                    )
+                );
+
+                mainLua.QStep_Start.OnEnter.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"), SetupGearsQuest
                     )
                 );
 
@@ -101,7 +99,7 @@ namespace SOC.QuestObjects.WalkerGear
                     foreach (WalkerGear walker in walkers)
                     {
                         if (walker.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), walker.GetObjectName()));
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(walker.GetObjectName()))));
                     }
                 }
             }

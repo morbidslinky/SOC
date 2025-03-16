@@ -25,8 +25,7 @@ namespace SOC.Classes.Lua
             questPackList = Lua.Table(
                 Lua.TableEntry("randomFaceListIH", randomFaceListIH),
                 Lua.TableEntry("faceIdList", faceIdList),
-                Lua.TableEntry("bodyIdList", bodyIdList),
-                Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
+                Lua.TableEntry("bodyIdList", bodyIdList));
 
             definitionTable = Lua.Table(
                 Lua.TableEntry("questPackList", questPackList),
@@ -51,6 +50,8 @@ namespace SOC.Classes.Lua
             {
                 detail.AddToDefinitionLua(this);
             }
+
+            questPackList.AddOrSet(Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
         }
 
         public void AddFpkPathToQuestPackList(string packPath)

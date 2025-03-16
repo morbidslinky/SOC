@@ -112,9 +112,6 @@ namespace SOC.QuestObjects.Enemy
             List<Enemy> enemies = detail.enemies;
             EnemiesMetadata meta = detail.enemyMetadata;
 
-            mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("SUBTYPE", meta.subtype));
-
-            mainLua.QUEST_TABLE.AddOrSet(BuildEnemyList(enemies));
             bool hasSpawn = false;
             bool hasTarget = false;
 
@@ -126,17 +123,22 @@ namespace SOC.QuestObjects.Enemy
                     if (enemy.isTarget)
                     {
                         hasTarget = true;
-                        mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), enemy.GetObjectName()));
+                        mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(enemy.GetObjectName()))));
                     }
                 }
             }
 
             if (hasSpawn)
             {
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("SUBTYPE", meta.subtype));
+
                 mainLua.QUEST_TABLE.AddOrSet(
+                    Lua.TableEntry("soldierSubType", Lua.TableIdentifier("qvars", "SUBTYPE")),
+                    BuildCPList(enemies),
                     Lua.TableEntry("isQuestArmor", HasArmors(enemies), false),
                     Lua.TableEntry("isQuestZombie", HasZombie(enemies), false),
-                    Lua.TableEntry("isQuestBalaclava", HasBalaclavas(enemies), false)
+                    Lua.TableEntry("isQuestBalaclava", HasBalaclavas(enemies), false),
+                    BuildEnemyList(enemies)
                 );
 
                 if (hasTarget)
@@ -215,6 +217,11 @@ namespace SOC.QuestObjects.Enemy
             }
 
             return Lua.TableEntry("enemyList", enemyList);
+        }
+
+        private static LuaTableEntry BuildCPList(List<Enemy> enemies)
+        {
+            return Lua.TableEntry("cpList", Lua.Table(Lua.Nil()));
         }
     }
 }

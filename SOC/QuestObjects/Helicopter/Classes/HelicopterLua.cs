@@ -40,7 +40,7 @@ namespace SOC.QuestObjects.Helicopter
                     );
                     foreach (Helicopter heli in questDetail.helicopters)
                         if (heli.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), heli.GetObjectName()));
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(heli.GetObjectName()))));
                 }
             }
         }

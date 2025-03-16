@@ -20,7 +20,8 @@ namespace SOC.Classes.Lua
         public LuaTable @this = new LuaTable();
         public LuaTable quest_step = new LuaTable();
 
-        public LuaVariable StrCode32TableDefinitionsVariable = new LuaVariable("StrCode32Defs");
+        public LuaVariable QStep_Main_MessagesDefVariable = new LuaVariable("QStep_Defs");
+        public LuaVariable Quest_MessagesDefVariable = new LuaVariable(Messages.TABLE_VAR_NAME);
         public LuaVariable CommonDefinitionsVariable = new LuaVariable("qvars");
 
 
@@ -63,8 +64,14 @@ namespace SOC.Classes.Lua
                 detail.AddToMainLua(this);
             }
 
+            quest_step.AddOrSet(
+                QStep_Start.Get(),
+                QStep_Main.Get(QStep_Main_MessagesDefVariable.Name)
+            );
+
             @this.AddOrSet(
                 Lua.TableEntry("QUEST_TABLE", QUEST_TABLE, true),
+                Lua.TableEntry("quest_step", quest_step, true),
                 OnAllocate.Get(),
                 Messages.Get(),
                 OnInitialize.Get(),
@@ -72,12 +79,8 @@ namespace SOC.Classes.Lua
                 OnTerminate.Get()
             );
 
-            quest_step.AddOrSet(
-                QStep_Start.Get(),
-                QStep_Main.Get(StrCode32TableDefinitionsVariable.Name)
-            );
-
-            StrCode32TableDefinitionsVariable.AssignedTo = QStep_Main.StrCode32Table.GetStrCode32DefinitionsTable(StrCode32TableDefinitionsVariable.Name);
+            QStep_Main_MessagesDefVariable.AssignedTo = QStep_Main.StrCode32Table.GetStrCode32DefinitionsTable(QStep_Main_MessagesDefVariable.Name);
+            Quest_MessagesDefVariable.AssignedTo = Messages.GetMessagesDefs();
             CommonDefinitionsVariable.AssignedTo = QStep_Main.StrCode32Table.GetCommonDefinitionsTable();
         }
 
@@ -91,11 +94,11 @@ namespace SOC.Classes.Lua
                 "local |[1|assign_variable]| " +
                 "local |[2|assign_variable]| " +
                 "local |[3|assign_variable]| " +
-                "return |[2|variable]|",
+                "return |[3|variable]|",
                     CommonDefinitionsVariable,
-                    StrCode32TableDefinitionsVariable,
-                    Lua.Variable("this", @this),
-                    Lua.Variable("quest_step", quest_step)
+                    Quest_MessagesDefVariable,
+                    QStep_Main_MessagesDefVariable,
+                    Lua.Variable("this", @this)
                 );
 
             mainScript.WriteToLua(mainLuaFilePath);

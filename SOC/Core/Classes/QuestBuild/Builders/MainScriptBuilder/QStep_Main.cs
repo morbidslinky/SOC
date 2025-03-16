@@ -65,7 +65,7 @@ public static class QStep_Main_CommonMessages
         LuaFunction.ToTableEntry(
             "GameObjectFultonInfoClearCheck",
             new string[] { "gameObjectId" },
-            " if mvars.fultonInfo ~= NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = NONE; "));
+            " if mvars.fultonInfo ~= TppDefine.QUEST_CLEAR_TYPE.NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = TppDefine.QUEST_CLEAR_TYPE.NONE; "));
 
     static readonly StrCode32Script GameObjectFulton = new StrCode32Script(
         new StrCode32Event("GameObject", "Fulton", "", "gameObjectId", "animalId"),

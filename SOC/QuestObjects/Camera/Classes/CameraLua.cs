@@ -10,10 +10,7 @@ namespace SOC.QuestObjects.Camera
 {
     class CameraLua
     {
-        static readonly LuaTableEntry SetCameraAttributes = LuaFunction.ToTableEntry(
-            "SetCameraAttributes", 
-            new string[] {},
-            "GameObject.SendCommand({{type=\"TppSecurityCamera2\"}}, {{id=\"SetDevelopLevel\", developLevel=6}}); for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do local gameObjectId= GetGameObjectId(cameraInfo.name); if gameObjectId~=GameObject.NULL_ID then if cameraInfo.commands then for j, cameraCommand in ipairs(cameraInfo.commands) do GameObject.SendCommand(gameObjectId, cameraCommand); end; end; end; end; ");
+        static readonly LuaFunction SetCameraAttributes = Lua.Function("GameObject.SendCommand({{type=\"TppSecurityCamera2\"}}, {{id=\"SetDevelopLevel\", developLevel=6}}); for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do local gameObjectId= GetGameObjectId(cameraInfo.name); if gameObjectId~=GameObject.NULL_ID then if cameraInfo.commands then for j, cameraCommand in ipairs(cameraInfo.commands) do GameObject.SendCommand(gameObjectId, cameraCommand); end; end; end; end; ");
         
         internal static void GetMain(CamerasDetail detail, MainScriptBuilder mainLua)
         {
@@ -22,12 +19,10 @@ namespace SOC.QuestObjects.Camera
                 mainLua.QUEST_TABLE.AddOrSet(BuildCameraList(detail.cameras));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SetCameraAttributes);
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
-                        Lua.TableIdentifier("InfCore", "PCall"), 
-                        Lua.TableIdentifier("qvars", "SetCameraAttributes")
+                        Lua.TableIdentifier("InfCore", "PCall"), SetCameraAttributes
                     )
                 );
 
@@ -45,7 +40,7 @@ namespace SOC.QuestObjects.Camera
                     foreach (Camera cam in detail.cameras)
                     {
                         if (cam.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), cam.GetObjectName()));
+                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(cam.GetObjectName()))));
                     }
                 }
             }

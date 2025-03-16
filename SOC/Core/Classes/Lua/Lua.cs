@@ -214,6 +214,8 @@ namespace SOC.Classes.Lua
                     return id;
                 case LuaFunction function:
                     return function;
+                case LuaNil nil:
+                    return nil;
                 case LuaValue value:
                     return value;
                 default:
