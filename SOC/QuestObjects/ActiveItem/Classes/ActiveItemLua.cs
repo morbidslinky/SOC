@@ -16,6 +16,8 @@ namespace SOC.QuestObjects.ActiveItem
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.activeItemTargetMessages);
+
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(BuildTargetItemList(questDetail));
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                     Lua.TableEntry(
                         Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
@@ -29,7 +31,6 @@ namespace SOC.QuestObjects.ActiveItem
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                 );
-                mainLua.QUEST_TABLE.AddOrSet(BuildTargetItemList(questDetail));
             }
         }
 

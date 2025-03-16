@@ -7,14 +7,14 @@ namespace SOC.Classes.Lua
     {
         public static readonly LuaTableEntry IsTargetSetMessageIdForItem = LuaFunction.ToTableEntry("IsTargetSetMessageIdForItem", new string[] { "gameId", "messageId", "checkAnimalId" },
     @" if messageId == ""PickUpDormant"" then
-    for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+    for i, targetInfo in pairs(qvars.targetItemList) do
       if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == false then
         targetInfo.messageId = messageId
         return true, true
       end
     end
   elseif messageId == ""PickUpActive"" or messageId == ""Activate"" then
-    for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+    for i, targetInfo in pairs(qvars.targetItemList) do
       if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == true then
         targetInfo.messageId = messageId
         return true, true
@@ -24,7 +24,7 @@ namespace SOC.Classes.Lua
   return false, false; ");
 
         public static readonly LuaTableEntry TallyItemTargets = LuaFunction.ToTableEntry("TallyItemTargets", new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
-            @" for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+            @" for i, targetInfo in pairs(qvars.targetItemList) do
     local dynamicQuestType = ""RECOVERED""
     for _, ObjectiveTypeInfo in ipairs(qvars.ObjectiveTypeList.itemTargets) do
       if ObjectiveTypeInfo.Check(targetInfo) then

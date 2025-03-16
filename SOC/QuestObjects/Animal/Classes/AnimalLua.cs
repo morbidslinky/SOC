@@ -25,7 +25,7 @@ namespace SOC.QuestObjects.Animal
                         StaticObjectiveFunctions.TallyAnimalTargets,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.TallyItemTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.TallyAnimalTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
@@ -68,8 +68,8 @@ namespace SOC.QuestObjects.Animal
             }
 
             targetAnimalList.AddOrSet(
-                Lua.TableEntry("markerList", Lua.Table(nameList)), 
-                Lua.TableEntry("nameList", Lua.Table(nameList))
+                Lua.TableEntry("markerList", Lua.Table(nameList.ToArray())), 
+                Lua.TableEntry("nameList", Lua.Table(nameList.ToArray()))
             );
 
             return Lua.TableEntry("targetAnimalList", targetAnimalList);
