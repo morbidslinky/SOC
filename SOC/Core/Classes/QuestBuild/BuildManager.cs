@@ -6,6 +6,8 @@ using SOC.Classes.Assets;
 using System.Linq;
 using System.Collections.Generic;
 using SOC.Classes.QuestBuild.Assets;
+using SOC.Classes.Lua;
+using SOC.Classes.QuestBuild.Fox2;
 
 namespace SOC.Classes.QuestBuild
 {
@@ -15,7 +17,18 @@ namespace SOC.Classes.QuestBuild
         private const string BATCHBUILDDIR = "Sideop_Batch_Build";
 
         private const string QUESTARCHIVEPATH = "Assets/tpp/pack/mission2/quest/ih";
+        private const string QUESTLEVELPATH = "Assets/tpp/level/mission2/quest/ih";
         private const string QUESTGAMEDIRPATH = "GameDir/mod/quests";
+
+        /*
+        checklist for building a quest:
+        - Clear possible existing fpk directories first
+        - Copy common asset files
+        - Write definition lua file
+        - Write main quest lua file
+        - Write fox2 file
+        - Write lang file (ideally all custom quest langs are stored in a single file)
+        */
 
         internal static bool Build(params Quest[] quests)
         {
@@ -30,47 +43,48 @@ namespace SOC.Classes.QuestBuild
                 initDir = SINGLEBUILDDIR;
             }
 
-            Lang.LangBuilder.WriteQuestLangs(initDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
-            
-            foreach(Quest quest in quests)
+            foreach (Quest quest in quests)
             {
                 SetupDetails setupDetails = quest.setupDetails;
                 ObjectsDetails objectsDetails = new ObjectsDetails(quest.questObjectDetails);
 
+                var fpk = setupDetails.FpkName;
+                var questNum = setupDetails.QuestNum;
+
                 var buildArchivePath = Path.Combine(initDir, QUESTARCHIVEPATH);
                 var buildGameDirPath = Path.Combine(initDir, QUESTGAMEDIRPATH);
 
-                ClearQuestFolders(buildArchivePath, setupDetails.FpkName);
+                ClearFolders(buildArchivePath, fpk);
 
-                CommonAssetsBuilder assetsBuilder = new CommonAssetsBuilder();
-                assetsBuilder.Build(buildArchivePath, setupDetails, objectsDetails);
+                CommonAssetsBuilder assetsBuilder = new CommonAssetsBuilder(setupDetails, objectsDetails);
+                DefinitionScriptBuilder definitionScriptBuilder = new DefinitionScriptBuilder(setupDetails, objectsDetails);
+                MainScriptBuilder mainScriptBuilder = new MainScriptBuilder(setupDetails, objectsDetails);
+                Fox2Builder fox2Builder = new Fox2Builder(setupDetails, objectsDetails);
 
-                Lua.LuaBuilder.WriteDefinitionLua(buildGameDirPath, setupDetails, objectsDetails);
-                Lua.LuaBuilder.WriteMainQuestLua(buildArchivePath, setupDetails, objectsDetails);
-                Fox2.Fox2Builder.WriteQuestFox2(buildArchivePath, setupDetails.FpkName, objectsDetails);
+                var questFpkdDir = Path.Combine(buildArchivePath, fpk + "_fpkd");
+                var mainScriptFilePath = Path.Combine(questFpkdDir, QUESTLEVELPATH, $"{fpk}.lua");
+                var fox2FilePath = Path.Combine(questFpkdDir, QUESTLEVELPATH, $"{fpk}.fox2");
+                var definitionScriptFilePath = Path.Combine(buildGameDirPath, $"ih_quest_q{questNum}.lua");
+
+                assetsBuilder.Build(buildArchivePath);
+                definitionScriptBuilder.Build(definitionScriptFilePath);
+                mainScriptBuilder.Build(mainScriptFilePath);
+                fox2Builder.Build(fox2FilePath);
             }
 
-            /*
-            steps to building a quest:
-            1. Clear possible existing fpk directories
-            2. Write lang files (preferably all custom quest langs would be stored in a single file)
-            3. write definition lua
-            4. write main quest lua
-            5. write fox2 file
-            6. Add necessary common asset files
-            */
+            Lang.LangBuilder.WriteQuestLangs(initDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
             return true;
         }
 
-        public static void ClearQuestFolders(string buildDir, string fpkName)
+        public static void ClearFolders(string buildArchivePath, string fpkName)
         {
-            string questFPKPath = Path.Combine(buildDir, fpkName + "_fpk");
-            if (Directory.Exists(questFPKPath))
-                DeleteDirectory(questFPKPath);
+            string fpkDir = Path.Combine(buildArchivePath, fpkName + "_fpk");
+            if (Directory.Exists(fpkDir))
+                DeleteDirectory(fpkDir);
 
-            string questFPKDPath = Path.Combine(buildDir, fpkName + "_fpkd");
-            if (Directory.Exists(questFPKDPath))
-                DeleteDirectory(questFPKDPath);
+            string fpkdDir = Path.Combine(buildArchivePath, fpkName + "_fpkd");
+            if (Directory.Exists(fpkdDir))
+                DeleteDirectory(fpkdDir);
         }
 
         private static void ClearBatchFolder()
@@ -94,7 +108,7 @@ namespace SOC.Classes.QuestBuild
             {
                 Directory.Delete(dir, true);
             }
-            catch (System.UnauthorizedAccessException)
+            catch (UnauthorizedAccessException)
             {
                 Directory.Delete(dir, true);
             }

@@ -54,7 +54,7 @@ namespace SOC.QuestObjects.UAV
             UAVAssets.GetUAVAssets(this, assetsBuilder);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             UAVLua.GetMain(this, mainLua);
         }

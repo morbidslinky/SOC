@@ -55,7 +55,7 @@ namespace SOC.QuestObjects.Animal
             AnimalFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             AnimalLua.GetMain(this, mainLua);
         }

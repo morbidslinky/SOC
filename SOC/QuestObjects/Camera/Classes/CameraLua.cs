@@ -10,63 +10,85 @@ namespace SOC.QuestObjects.Camera
 {
     class CameraLua
     {
-        static readonly LuaFunction SetCameraAttributes = new LuaFunction("SetCameraAttributes", @"
-function this.SetCameraAttributes()
-  GameObject.SendCommand({{type=""TppSecurityCamera2""}}, {{id=""SetDevelopLevel"", developLevel=6}})
-  for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList)do
-    local gameObjectId= GetGameObjectId(cameraInfo.name)
-    if gameObjectId~=GameObject.NULL_ID then
-	  if cameraInfo.commands then
-        for j,cameraCommand in ipairs(cameraInfo.commands)do
-	      GameObject.SendCommand(gameObjectId, cameraCommand)
-	    end
-	  end
-    end
-  end
-end");
-
-        internal static void GetMain(CamerasDetail detail, MainLua mainLua)
+        static readonly LuaFunction SetCameraAttributes = Lua.Function("GameObject.SendCommand({{type=\"TppSecurityCamera2\"}}, {{id=\"SetDevelopLevel\", developLevel=6}}); for i,cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do local gameObjectId= GetGameObjectId(cameraInfo.name); if gameObjectId~=GameObject.NULL_ID then if cameraInfo.commands then for j, cameraCommand in ipairs(cameraInfo.commands) do GameObject.SendCommand(gameObjectId, cameraCommand); end; end; end; end; ");
+        
+        internal static void GetMain(CamerasDetail detail, MainScriptBuilder mainLua)
         {
             if (detail.cameras.Count > 0)
             {
-                mainLua.AddToQuestTable(BuildCameraList(detail.cameras));
+                mainLua.QUEST_TABLE.Add(BuildCameraList(detail.cameras));
 
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.mechaNoCaptureTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
-                mainLua.AddToQStep_Start_OnEnter(SetCameraAttributes);
-                mainLua.AddToAuxiliary(SetCameraAttributes);
+                mainLua.QStep_Start.OnEnter.AppendLuaValue(
+                    Lua.FunctionCall(
+                        Lua.TableIdentifier("InfCore", "PCall"), SetCameraAttributes
+                    )
+                );
 
-                if(detail.cameras.Any(camera => camera.isTarget))
+                if (detail.cameras.Any(camera => camera.isTarget))
                 {
-                    CheckQuestGenericEnemy cameraCheck = new CheckQuestGenericEnemy(mainLua);
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                            StaticObjectiveFunctions.TallyGenericTargets
+                        )
+                    );
+
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                        methodPair,
+                        Lua.TableEntry(
+                            "CheckQuestMethodPairs",
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
+                        ),
+                        StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                    );
                     foreach (Camera cam in detail.cameras)
                     {
                         if (cam.isTarget)
-                            mainLua.AddToTargetList(cam.GetObjectName());
+                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(cam.GetObjectName()))));
                     }
                 }
             }
         }
 
-        private static Table BuildCameraList(List<Camera> cameras)
+        private static LuaTableEntry BuildCameraList(List<Camera> cameras)
         {
-            Table cameraList = new Table("cameraList");
-            string setCPCommand = @"{id = ""SetCommandPost"", cp=CPNAME}";
-            string typeCommand = @"{id=""NormalCamera""}";
-            string enabledCommand = @"{id=""SetEnabled"", enabled=true}";
+            LuaTable cameraList = new LuaTable();
+
+            LuaTable setCPCommand = Lua.Table(
+                Lua.TableEntry("id", "SetCommandPost"),
+                Lua.TableEntry("cp", Lua.TableIdentifier("qvars","CPNAME"))
+            );
+
+            LuaTable enabledCommand = Lua.Table(
+                Lua.TableEntry("id", "SetEnabled"),
+                Lua.TableEntry("enabled", true, false)
+            );
 
             foreach (Camera camera in cameras)
             {
-                typeCommand = $@"{{id=""{(camera.weapon ? "SetGunCamera" : "NormalCamera")}""}} ";
-                
-                cameraList.Add($@"
-        {{
-            name = ""{camera.GetObjectName()}"",
-            commands = {{{setCPCommand}, {typeCommand}, {enabledCommand}}},
-        }}");
+                LuaTable typeCommand = Lua.Table(
+                    Lua.TableEntry("id", camera.weapon ? "SetGunCamera" : "NormalCamera")
+                );
+
+                cameraList.Add(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("name", camera.GetObjectName()),
+                            Lua.TableEntry("commands", 
+                                Lua.Table(
+                                    Lua.TableEntry(setCPCommand),
+                                    Lua.TableEntry(typeCommand),
+                                    Lua.TableEntry(enabledCommand)
+                                )
+                            )
+                        )
+                    )
+                );
             }
 
-            return cameraList;
+            return Lua.TableEntry("cameraList", cameraList);
         }
     }
 }

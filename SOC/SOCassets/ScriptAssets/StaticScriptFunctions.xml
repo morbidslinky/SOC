@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LuaTable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Entries>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="PlayerPickUpWeaponClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>playerIndex</Parameter>
+          <Parameter>playerIndex</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local isClearType = this.CheckQuestAllTargetDynamic("PickUpDormant", equipId)
+TppQuest.ClearWithSave(isClearType)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="PlayerPickUpPlacedClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>playerGameObjectId</Parameter>
+          <Parameter>equipId</Parameter>
+          <Parameter>index</Parameter>
+          <Parameter>isPlayer</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if TppPlaced.IsQuestBlock(index) then
+    local isClearType = this.CheckQuestAllTargetDynamic("PickUpActive", equipId)
+    TppQuest.ClearWithSave(isClearType)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="PlacedActivatePlacedClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>equipId</Parameter>
+          <Parameter>index</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if TppPlaced.IsQuestBlock(index) then
+    local isClearType = this.CheckQuestAllTargetDynamic("Activate", equipId)
+    TppQuest.ClearWithSave(isClearType)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectDeadClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+          <Parameter>gameObjectId01</Parameter>
+          <Parameter>animalId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local isClearType = this.CheckQuestAllTargetDynamic("Dead", gameObjectId, animalId)
+TppQuest.ClearWithSave(isClearType)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectFultonInfoClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if mvars.fultonInfo ~= NONE then
+    TppQuest.ClearWithSave(mvars.fultonInfo)
+end
+mvars.fultonInfo = NONE</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectFultonClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+          <Parameter>animalId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local isClearType = this.CheckQuestAllTargetDynamic("Fulton", gameObjectId, animalId)
+TppQuest.ClearWithSave(isClearType)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectFultonFailedClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+          <Parameter>locatorName</Parameter>
+          <Parameter>locatorNameUpper</Parameter>
+          <Parameter>failureType</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if failureType == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then
+    local isClearType = this.CheckQuestAllTargetDynamic("FultonFailed", gameObjectId, locatorName)
+    TppQuest.ClearWithSave(isClearType)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectPlacedIntoHeliClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+          <Parameter>vehicleGameObjectId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if Tpp.IsHelicopter(vehicleGameObjectId) then
+    local isClearType = this.CheckQuestAllTargetDynamic("InHelicopter", gameObjectId)
+    TppQuest.ClearWithSave(isClearType)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectVehicleBrokenClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+          <Parameter>state</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if state == StrCode32("End") then
+    local isClearType = this.CheckQuestAllTargetDynamic("VehicleBroken", gameObjectId)
+    TppQuest.ClearWithSave(isClearType)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="GameObjectLostControlClearCheck" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameObjectId</Parameter>
+          <Parameter>state</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if state == StrCode32("End") then
+    local isClearType = this.CheckQuestAllTargetDynamic("LostControl", gameObjectId)
+    TppQuest.ClearWithSave(isClearType)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="IsTargetSetMessageIdForItem" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+          <Parameter>messageId</Parameter>
+          <Parameter>checkAnimalId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if messageId == "PickUpDormant" then
+    for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+        if gameId == targetInfo.equipId and targetInfo.messageId == "None" and targetInfo.active == false then
+            targetInfo.messageId = messageId
+            return true, true
+        end
+    end
+elseif messageId == "PickUpActive" or messageId == "Activate" then
+    for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+        if gameId == targetInfo.equipId and targetInfo.messageId == "None" and targetInfo.active == true then
+            targetInfo.messageId = messageId
+            return true, true
+        end
+    end
+end
+return false, false</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="TallyItemTargets" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>totalTargets</Parameter>
+          <Parameter>objectiveCompleteCount</Parameter>
+          <Parameter>objectiveFailedCount</Parameter>
+        </Parameters>
+        <Body>
+          <Template>for i, targetInfo in pairs(this.QUEST_TABLE.targetItemList) do
+    local dynamicQuestType = RECOVERED
+    for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.itemTargets) do
+        if ObjectiveTypeInfo.Check(targetInfo) then
+            dynamicQuestType = ObjectiveTypeInfo.Type
+            break
+        end
+    end
+    local targetMessageId = targetInfo.messageId
+
+    if targetMessageId ~= "None" then
+        if dynamicQuestType == RECOVERED then
+            if (targetMessageId == "PickUpDormant" or targetMessageId == "PickUpActive") then
+                objectiveCompleteCount = objectiveCompleteCount + 1
+            elseif (targetMessageId == "Activate") then
+                objectiveFailedCount = objectiveFailedCount + 1
+            end
+        elseif dynamicQuestType == ELIMINATE then
+            if (targetMessageId == "PickUpActive" or targetMessageId == "Activate") then
+                objectiveCompleteCount = objectiveCompleteCount + 1
+            end
+        elseif dynamicQuestType == KILLREQUIRED then
+            if (targetMessageId == "Activate") then
+                objectiveCompleteCount = objectiveCompleteCount + 1
+            elseif (targetMessageId == "PickUpActive") then
+                objectiveFailedCount = objectiveFailedCount + 1
+            end
+        end
+    end
+    totalTargets = totalTargets + 1
+end
+return totalTargets, objectiveCompleteCount, objectiveFailedCount</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="IsTargetSetMessageIdForGenericEnemy" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+          <Parameter>messageId</Parameter>
+          <Parameter>checkAnimalId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if mvars.ene_questTargetList[gameId] then
+    local targetInfo = mvars.ene_questTargetList[gameId]
+    local intended = true
+    if targetInfo.messageId ~= "None" and targetInfo.isTarget == true then
+        intended = false
+    elseif targetInfo.isTarget == false then
+        intended = false
+    end
+    targetInfo.messageId = messageId or "None"
+    return true, intended
+end
+return false, false</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="TallyGenericTargets" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>totalTargets</Parameter>
+          <Parameter>objectiveCompleteCount</Parameter>
+          <Parameter>objectiveFailedCount</Parameter>
+        </Parameters>
+        <Body>
+          <Template>for targetGameId, targetInfo in pairs(mvars.ene_questTargetList) do
+    local dynamicQuestType = ELIMINATE
+    local isTarget = targetInfo.isTarget or false
+    local targetMessageId = targetInfo.messageId
+
+    if isTarget == true then
+        if ObjectiveTypeList.genericTargets ~= nil then
+            for _, ObjectiveTypeInfo in ipairs(ObjectiveTypeList.genericTargets) do
+                if ObjectiveTypeInfo.Check(targetGameId) then
+                    dynamicQuestType = ObjectiveTypeInfo.Type
+                    break
+                end
+            end
+        end
+
+        if targetMessageId ~= "None" then
+            if dynamicQuestType == RECOVERED then
+                if (targetMessageId == "Fulton") or (targetMessageId == "InHelicopter") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                elseif
+                    (targetMessageId == "FultonFailed") or (targetMessageId == "Dead") or
+                        (targetMessageId == "VehicleBroken") or
+                        (targetMessageId == "LostControl")
+                 then
+                    objectiveFailedCount = objectiveFailedCount + 1
+                end
+            elseif dynamicQuestType == ELIMINATE then
+                if
+                    (targetMessageId == "Fulton") or (targetMessageId == "InHelicopter") or
+                        (targetMessageId == "FultonFailed") or
+                        (targetMessageId == "Dead") or
+                        (targetMessageId == "VehicleBroken") or
+                        (targetMessageId == "LostControl")
+                 then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                end
+            elseif dynamicQuestType == KILLREQUIRED then
+                if
+                    (targetMessageId == "FultonFailed") or (targetMessageId == "Dead") or
+                        (targetMessageId == "VehicleBroken") or
+                        (targetMessageId == "LostControl")
+                 then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                elseif (targetMessageId == "Fulton") or (targetMessageId == "InHelicopter") then
+                    objectiveFailedCount = objectiveFailedCount + 1
+                end
+            end
+        end
+        totalTargets = totalTargets + 1
+    end
+end
+return totalTargets, objectiveCompleteCount, objectiveFailedCount</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="IsTargetSetMessageIdForAnimal" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+          <Parameter>messageId</Parameter>
+          <Parameter>checkAnimalId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if checkAnimalId ~= nil then
+    local databaseId = TppAnimal.GetDataBaseIdFromAnimalId(checkAnimalId)
+    local isTarget = false
+    for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
+        if targetInfo.idType == "animalId" then
+            if animalId == checkAnimalId then
+                targetInfo.messageId = messageId or "None"
+                isTarget = true
+            end
+        elseif targetInfo.idType == "databaseId" then
+            if animalId == databaseId then
+                targetInfo.messageId = messageId or "None"
+                isTarget = true
+            end
+        elseif targetInfo.idType == "targetName" then
+            local animalGameId = GetGameObjectId(animalId)
+            if animalGameId == gameId then
+                targetInfo.messageId = messageId
+                isTarget = true
+            end
+        end
+    end
+    return isTarget, true
+end
+return false, false</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="TallyAnimalTargets" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>totalTargets</Parameter>
+          <Parameter>objectiveCompleteCount</Parameter>
+          <Parameter>objectiveFailedCount</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local dynamicQuestType = ObjectiveTypeList.animalObjective
+for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
+    local targetMessageId = targetInfo.messageId
+
+    if targetMessageId ~= "None" then
+        if dynamicQuestType == RECOVERED then
+            if (targetMessageId == "Fulton") then
+                objectiveCompleteCount = objectiveCompleteCount + 1
+            elseif (targetMessageId == "FultonFailed") or (targetMessageId == "Dead") then
+                objectiveFailedCount = objectiveFailedCount + 1
+            end
+        elseif dynamicQuestType == ELIMINATE then
+            if (targetMessageId == "Fulton") or (targetMessageId == "FultonFailed") or (targetMessageId == "Dead") then
+                objectiveCompleteCount = objectiveCompleteCount + 1
+            end
+        elseif dynamicQuestType == KILLREQUIRED then
+            if (targetMessageId == "FultonFailed") or (targetMessageId == "Dead") then
+                objectiveCompleteCount = objectiveCompleteCount + 1
+            elseif (targetMessageId == "Fulton") then
+                objectiveFailedCount = objectiveFailedCount + 1
+            end
+        end
+    end
+    totalTargets = totalTargets + 1
+end
+return totalTargets, objectiveCompleteCount, objectiveFailedCount</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="CheckQuestAllTargetDynamic" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>messageId</Parameter>
+          <Parameter>gameId</Parameter>
+          <Parameter>checkAnimalId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local currentQuestName = TppQuest.GetCurrentQuestName()
+if TppQuest.IsEnd(currentQuestName) then
+    return TppDefine.QUEST_CLEAR_TYPE.NONE
+end
+
+local inTargetList = false
+local intendedTarget = true
+for _, CheckMethods in ipairs(CheckQuestMethodList) do
+    inTargetList, intendedTarget = CheckMethods.IsTargetSetMessageMethod(gameId, messageId, checkAnimalId)
+    if inTargetList == true then
+        break
+    end
+end
+
+if inTargetList == false then
+    return TppDefine.QUEST_CLEAR_TYPE.NONE
+end
+
+local totalTargets = 0
+local objectiveCompleteCount = 0
+local objectiveFailedCount = 0
+for _, CheckMethods in ipairs(CheckQuestMethodList) do
+    totalTargets, objectiveCompleteCount, objectiveFailedCount =
+        CheckMethods.TallyMethod(totalTargets, objectiveCompleteCount, objectiveFailedCount)
+end
+
+if totalTargets &gt; 0 then
+    if objectiveCompleteCount &gt;= totalTargets then
+        return TppDefine.QUEST_CLEAR_TYPE.CLEAR
+    elseif objectiveFailedCount &gt; 0 then
+        return TppDefine.QUEST_CLEAR_TYPE.FAILURE
+    elseif objectiveCompleteCount &gt; 0 then
+        if intendedTarget == true then
+            local showAnnounceLogId = TppQuest.questCompleteLangIds[TppQuest.GetCurrentQuestName()]
+            if showAnnounceLogId then
+                TppUI.ShowAnnounceLog(showAnnounceLogId, objectiveCompleteCount, totalTargets)
+            end
+        end
+    end
+end
+return TppDefine.QUEST_CLEAR_TYPE.NONE</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="OnExitQuestTrapArea" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>inMostActiveQuestArea = false
+walkerGearGameId = vars.playerVehicleGameObjectId
+if questWalkerGearList[walkerGearGameId] then
+    playerWGResetPosition = {pos = {vars.playerPosX, vars.playerPosY + 1, vars.playerPosZ}, rotY = 0}
+    GkEventTimerManager.Start("OutOfMostActiveArea", 7)
+    exitOnce =
+        this.OneTimeAnnounce(
+        "The Walker Gear cannot travel beyond this point.",
+        "Return to the Side Op area.",
+        exitOnce
+    )
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="OnEnterQuestTrapArea" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>inMostActiveQuestArea = true
+if GkEventTimerManager.IsTimerActive("OutOfMostActiveArea") and walkerGearGameId == vars.playerVehicleGameObjectId then
+    GkEventTimerManager.Stop("OutOfMostActiveArea")
+    GkEventTimerManager.Start("AnnounceOnceCooldown", 3)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="CheckIsWalkerGear" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>return Tpp.IsEnemyWalkerGear(gameId)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="BuildWalkerGameObjectIdList" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>for i, walkerInfo in ipairs(this.QUEST_TABLE.walkerList) do
+    local walkerId = GetGameObjectId("TppCommonWalkerGear2", walkerInfo.walkerName)
+    if walkerId ~= GameObject.NULL_ID then
+        questWalkerGearList[walkerId] = walkerInfo.walkerName
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="SetupGearsQuest" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>setupOnce</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if setupOnce == true then
+    for i, walkerInfo in ipairs(this.QUEST_TABLE.walkerList) do
+        local walkerId = GetGameObjectId("TppCommonWalkerGear2", walkerInfo.walkerName)
+        if walkerId ~= GameObject.NULL_ID then
+            local commandWeapon = {id = "SetMainWeapon", weapon = walkerInfo.primaryWeapon}
+            GameObject.SendCommand(walkerId, commandWeapon)
+            local commandColor = {id = "SetColoringType", type = walkerInfo.colorType}
+            GameObject.SendCommand(walkerId, commandColor)
+            if walkerInfo.riderName then
+                local soldierId = GetGameObjectId("TppSoldier2", walkerInfo.riderName)
+                local commandRide = {id = "SetRelativeVehicle", targetId = walkerId, rideFromBeginning = true}
+                GameObject.SendCommand(soldierId, commandRide)
+            end
+            local position = walkerInfo.position
+            local commandPos = {id = "SetPosition", rotY = position.rotY, pos = position.pos}
+            GameObject.SendCommand(walkerId, commandPos)
+        end
+    end
+end
+return false</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="ReboundWalkerGear" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>walkerGearGameObjectId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local commandPos = {id = "SetPosition", rotY = playerWGResetPosition.rotY, pos = playerWGResetPosition.pos}
+GameObject.SendCommand(walkerGearGameObjectId, commandPos)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="OneTimeAnnounce" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>announceString1</Parameter>
+          <Parameter>announceString2</Parameter>
+          <Parameter>isFresh</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if isFresh == true then
+    InfCore.DebugPrint(announceString1)
+    InfCore.DebugPrint(announceString2)
+end
+return false</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="OnAnnounceOnceCooldownSetExitOnce" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>exitOnce = true</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="OutOfMostActiveAreaReboundWalkerGear" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>if inMostActiveQuestArea == false then
+    InfCore.DebugPrint("Returning Walker Gear to Side Op area...")
+    this.ReboundWalkerGear(walkerGearGameId)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="CheckIsVehicle" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>return Tpp.IsVehicle(gameId) </Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="WarpVehicles" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>for i, vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList) do
+    local gameObjectId = GetGameObjectId(vehicleInfo.locator)
+    if gameObjectId ~= GameObject.NULL_ID then
+        local position = vehicleInfo.position
+        local command = {
+            id = "SetPosition",
+            rotY = position.rotY,
+            position = Vector3(position.pos[1], position.pos[2], position.pos[3])
+        }
+        GameObject.SendCommand(gameObjectId, command)
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="SetupUAV" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>for index, uavInfo in pairs(this.QUEST_TABLE.UAVList) do
+    local gameObjectId = GameObject.GetGameObjectId(uavInfo.name)
+    if gameObjectId ~= GameObject.NULL_ID then
+        GameObject.SendCommand(gameObjectId, {id = "SetEnabled", enabled = true})
+        GameObject.SendCommand(gameObjectId, {id = "SetDevelopLevel", developLevel = uavInfo.weapon, empLevel = 0})
+        if uavInfo.dRoute then
+            GameObject.SendCommand(gameObjectId, {id = "SetPatrolRoute", route = uavInfo.dRoute})
+        end
+        if uavInfo.aRoute then
+            GameObject.SendCommand(gameObjectId, {id = "SetCombatRoute", route = uavInfo.aRoute})
+        end
+        if uavInfo.defenseGrade then
+            GameObject.SendCommand(gameObjectId, {id = "SetCombatGrade", defenseGrade = uavInfo.defenseGrade})
+        end
+        if uavInfo.docile == true then
+            GameObject.SendCommand(gameObjectId, {id = "SetFriendly"})
+            GameObject.SendCommand(gameObjectId, {id = "SetCommandPost", cp = DISTANTCP})
+        else
+            GameObject.SendCommand(gameObjectId, {id = "SetCommandPost", cp = CPNAME})
+        end
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="checkIsDormantItem" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>targetItemInfo</Parameter>
+        </Parameters>
+        <Body>
+          <Template>return (targetItemInfo.active == false)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="OnEnableMarkerCheckIntTable" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>arg0</Parameter>
+          <Parameter>arg1</Parameter>
+        </Parameters>
+        <Body>
+          <Template>if arg0 == StrCode32("Hostage_0") then
+    hostageMarkerCount = hostageMarkerCount + 1
+    if hostageMarkerCount &gt;= totalHostageCount then
+        this.SwitchEnableQuestHighIntTable(false, CPNAME, this.questCpInterrogation)
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="CheckIsHostage" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>return Tpp.IsHostage(gameId)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="SetHostageAttributes" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>for i, hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do
+    local gameObjectId = GetGameObjectId(hostageInfo.hostageName)
+    if gameObjectId ~= GameObject.NULL_ID then
+        if hostageInfo.commands then
+            for j, hostageCommand in ipairs(hostageInfo.commands) do
+                GameObject.SendCommand(gameObjectId, hostageCommand)
+            end
+        end
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="WarpHostages" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>for i, hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do
+    local gameObjectId = GetGameObjectId(hostageInfo.hostageName)
+    if gameObjectId ~= GameObject.NULL_ID then
+        local position = hostageInfo.position
+        local command = {
+            id = "Warp",
+            degRotationY = position.rotY,
+            position = Vector3(position.pos[1], position.pos[2], position.pos[3])
+        }
+        GameObject.SendCommand(gameObjectId, command)
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="SwitchEnableQuestHighIntTable" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>flag</Parameter>
+          <Parameter>commandPostName</Parameter>
+          <Parameter>questCpInterrogation</Parameter>
+        </Parameters>
+        <Body>
+          <Template>local commandPostId = GetGameObjectId("TppCommandPost2", commandPostName)
+if flag then
+    TppInterrogation.SetQuestHighIntTable(commandPostId, questCpInterrogation)
+else
+    TppInterrogation.RemoveQuestHighIntTable(commandPostId, questCpInterrogation)
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="InterCall_hostage_pos01" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>soldier2GameObjectId</Parameter>
+          <Parameter>cpID</Parameter>
+          <Parameter>interName</Parameter>
+        </Parameters>
+        <Body>
+          <Template>for i, hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do
+    if hostageInfo.isTarget then
+        TppMarker.EnableQuestTargetMarker(hostageInfo.hostageName)
+    else
+        TppMarker.Enable(hostageInfo.hostageName, 0, "defend", "map_and_world_only_icon", 0, false, true)
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="SetHeliAttributes" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>for i, heliInfo in ipairs(this.QUEST_TABLE.heliList) do
+    local gameObjectId = GetGameObjectId(heliInfo.heliName)
+    if gameObjectId ~= GameObject.NULL_ID then
+        if heliInfo.commands then
+            for j, heliCommand in ipairs(heliInfo.commands) do
+                GameObject.SendCommand(gameObjectId, heliCommand)
+            end
+        end
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="CheckIsSoldier" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>gameId</Parameter>
+        </Parameters>
+        <Body>
+          <Template>return Tpp.IsSoldier(gameId)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="SetCameraAttributes" />
+      <Value xsi:type="LuaFunction">
+        <Parameters />
+        <Body>
+          <Template>GameObject.SendCommand({{type = "TppSecurityCamera2"}}, {{id = "SetDevelopLevel", developLevel = 6}})
+for i, cameraInfo in ipairs(this.QUEST_TABLE.cameraList) do
+    local gameObjectId = GetGameObjectId(cameraInfo.name)
+    if gameObjectId ~= GameObject.NULL_ID then
+        if cameraInfo.commands then
+            for j, cameraCommand in ipairs(cameraInfo.commands) do
+                GameObject.SendCommand(gameObjectId, cameraCommand)
+            end
+        end
+    end
+end</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+    <Entry Extrude="false">
+      <Key xsi:type="LuaText" Text="checkIsActiveItem" />
+      <Value xsi:type="LuaFunction">
+        <Parameters>
+          <Parameter>targetItemInfo</Parameter>
+        </Parameters>
+        <Body>
+          <Template>return (targetItemInfo.active == true)</Template>
+        </Body>
+        <PopulationValues />
+      </Value>
+    </Entry>
+  </Entries>
+</LuaTable>

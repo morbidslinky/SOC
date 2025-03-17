@@ -45,7 +45,7 @@ namespace SOC.QuestObjects.Helicopter
             helicopters = qObjects.Cast<Helicopter>().ToList();
         }
 
-        public override void AddToDefinitionLua(DefinitionLua definitionLua)
+        public override void AddToDefinitionLua(DefinitionScriptBuilder definitionLua)
         {
             HelicopterLua.GetDefinition(this, definitionLua);
         }
@@ -55,7 +55,7 @@ namespace SOC.QuestObjects.Helicopter
             HelicopterFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             HelicopterLua.GetMain(this, mainLua);
         }

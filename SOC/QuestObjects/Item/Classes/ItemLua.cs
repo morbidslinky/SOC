@@ -9,60 +9,73 @@ namespace SOC.QuestObjects.Item
 {
     class ItemLua
     {
-        static readonly LuaFunction checkIsDormantItem = new LuaFunction("checkIsDormantItem", @"
-function this.checkIsDormantItem(targetItemInfo)
-  return (targetItemInfo.active == false)
-end");
 
-        internal static void GetDefinition(ItemsDetail questDetail, DefinitionLua definitionLua)
+        static readonly LuaTableEntry checkIsDormantItem = LuaFunction.ToTableEntry("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
+        
+        internal static void GetDefinition(ItemsDetail questDetail, DefinitionScriptBuilder definitionLua)
         {
             List<string> requestList = new List<string>();
-            StringBuilder requestEquipBuilder = new StringBuilder("requestEquipIds = {");
             foreach(Item item in questDetail.items)
             {
                 if (requestList.Contains(item.item))
                     continue;
                 else if(item.item.Contains("EQP_WP_"))
                 {
-                    requestEquipBuilder.Append($@"""{item.item}"", ");
                     requestList.Add(item.item);
                 }
             }
-            requestEquipBuilder.Append("}");
 
-            definitionLua.AddDefinition(requestEquipBuilder.ToString());
+            definitionLua.AddToRequestEquipIds(requestList);
         }
 
-        internal static void GetMain(ItemsDetail questDetail, MainLua mainLua)
+        internal static void GetMain(ItemsDetail questDetail, MainScriptBuilder mainLua)
         {
             if (questDetail.items.Any(item => item.isTarget))
             {
-                CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsDormantItem, questDetail.itemMetadata.objectiveType);
-                mainLua.AddToQuestTable(BuildItemTargetList(questDetail.items));
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.dormantItemTargetMessages);
+                var methodPair = Lua.TableEntry("methodPair",
+                    Lua.Table(
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
+                        StaticObjectiveFunctions.TallyItemTargets
+                    )
+                );
+
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.dormantItemTargetMessages);
+
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                    Lua.TableEntry(
+                        Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
+                        Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return (targetItemInfo.active == false)", "targetItemInfo")), Lua.TableEntry("Type", questDetail.itemMetadata.objectiveType))))    
+                    ),
+                    BuildItemTargetList(questDetail.items),
+
+                    methodPair,
+                    Lua.TableEntry(
+                        "CheckQuestMethodPairs",
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets")))
+                    ),
+                    StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                );
             }
         }
 
-        private static Table BuildItemTargetList(List<Item> items)
+        private static LuaTableEntry BuildItemTargetList(List<Item> items)
         {
-            Table targetItemList = new Table("targetItemList");
-            int targetItemCount = 0;
+            LuaTable targetItemList = new LuaTable();
 
             foreach (Item item in items)
             {
-                if (!item.isTarget)
-                    continue;
-
-                targetItemCount++;
-                targetItemList.Add($@"
-        {{
-            equipId = TppEquip.{item.item},
-            messageId = ""None"",
-            active = false,
-        }}");
+                targetItemList.Add(
+                    Lua.TableEntry(
+                        Lua.Table(
+                            Lua.TableEntry("equipID", Lua.TableIdentifier("TppEquip", item.item)), 
+                            Lua.TableEntry("messageId", "None"), 
+                            Lua.TableEntry("active", false, false)
+                        )
+                    )
+                );
             }
 
-            return targetItemList;
+            return Lua.TableEntry(Lua.TableIdentifier("qvars", "ObjectiveTypeList", "targetItemList"), targetItemList);
         }
     }
 }

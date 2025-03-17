@@ -1,4 +1,4 @@
-I changed some variable names around for 7.2 and xml savefiles that were generated on earlier versions of SOC won't be directly compatible with 7.2.
+I changed some variable names around for 7.2 and xml savefiles that were generated on earlier versions of SOC won't be directly compatible with 7.2 and onward.
 Additionally. 7.2 is a checkpoint for SOC. There will be drastic changes to the project in the future. Future versions of SOC won't be save-compatible with 7.2 either.
 
 The savefile changes between 7.1 and 7.2 were pedantic and you could make previous saves compatible by replacing the following text (compare the example savefiles from 7.1 and 7.2):

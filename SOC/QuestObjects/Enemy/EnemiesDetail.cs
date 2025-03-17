@@ -50,12 +50,12 @@ namespace SOC.QuestObjects.Enemy
             enemies = qObjects.Cast<Enemy>().ToList();
         }
 
-        public override void AddToDefinitionLua(DefinitionLua definitionLua)
+        public override void AddToDefinitionLua(DefinitionScriptBuilder definitionLua)
         {
             EnemyLua.GetDefinition(this, definitionLua);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             EnemyLua.GetMain(this, mainLua);
         }

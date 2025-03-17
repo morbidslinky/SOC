@@ -54,7 +54,7 @@ namespace SOC.QuestObjects.Camera
             CameraAssets.GetCameraAssets(this, assetsBuilder);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             CameraLua.GetMain(this, mainLua);
         }

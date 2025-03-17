@@ -15,29 +15,23 @@ namespace SOC.Classes.QuestBuild.Assets
     {
         private List<string> fpkAssetPaths = new List<string>();
         private List<string> fpkdAssetPaths = new List<string>();
+        private string fpkName;
 
-        public void AddFPKAssetPath(string fpkAssetPath)
-        {
-            if (!fpkAssetPaths.Contains(fpkAssetPath))
-                fpkAssetPaths.Add(fpkAssetPath);
-        }
-
-        public void AddFPKDAssetPath(string fpkdAssetPath)
-        {
-            if (!fpkdAssetPaths.Contains(fpkdAssetPath))
-                fpkdAssetPaths.Add(fpkdAssetPath);
-        }
-
-        public void Build(string buildDir, SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public CommonAssetsBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
         {
             setupDetails.addToAssets(this);
 
-            foreach(ObjectsDetail objectsDetail in objectsDetails.details)
+            foreach (ObjectsDetail objectsDetail in objectsDetails.details)
             {
                 objectsDetail.AddToAssets(this);
             }
 
-            CopyAssets(buildDir, setupDetails.FpkName);
+            fpkName = setupDetails.FpkName;
+        }
+
+        public void Build(string buildDir)
+        {
+            CopyAssets(buildDir, fpkName);
         }
 
         public void CopyAssets(string buildDir, string name)
@@ -111,6 +105,18 @@ namespace SOC.Classes.QuestBuild.Assets
                     return Path.Combine("Assets", fileInfo.Name);
             }
             return Path.Combine("Assets", assetPathBuilder, fileInfo.Name);
+        }
+
+        public void AddFPKAssetPath(string fpkAssetPath)
+        {
+            if (!fpkAssetPaths.Contains(fpkAssetPath))
+                fpkAssetPaths.Add(fpkAssetPath);
+        }
+
+        public void AddFPKDAssetPath(string fpkdAssetPath)
+        {
+            if (!fpkdAssetPaths.Contains(fpkdAssetPath))
+                fpkdAssetPaths.Add(fpkdAssetPath);
         }
     }
 }

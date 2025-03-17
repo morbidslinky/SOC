@@ -9,37 +9,58 @@ namespace SOC.QuestObjects.ActiveItem
 {
     class ActiveItemLua
     {
-        static readonly LuaFunction checkIsActiveItem = new LuaFunction("checkIsActiveItem", @"
-function this.checkIsActiveItem(targetItemInfo)
-  return (targetItemInfo.active == true)
-end");
+        static readonly LuaTableEntry checkIsActiveItem = LuaFunction.ToTableEntry("checkIsActiveItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == true); ");
 
-        internal static void GetMain(ActiveItemsDetail questDetail, MainLua mainLua)
+        internal static void GetMain(ActiveItemsDetail questDetail, MainScriptBuilder mainLua)
         {
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {
-                CheckQuestItem checkQuestItem = new CheckQuestItem(mainLua, checkIsActiveItem, questDetail.activeItemMetadata.objectiveType);
-                mainLua.AddToQuestTable(BuildTargetItemList(questDetail));
-                mainLua.AddToQStep_Main(QStep_MainCommonMessages.activeItemTargetMessages);
+                var methodPair = Lua.TableEntry("methodPair",
+                    Lua.Table(
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
+                        StaticObjectiveFunctions.TallyItemTargets
+                    )
+                );
+
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.activeItemTargetMessages);
+
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
+                    Lua.TableEntry(
+                        Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
+                        Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return (targetItemInfo.active == true)", "targetItemInfo")), Lua.TableEntry("Type", questDetail.activeItemMetadata.objectiveType))))
+                    ),
+                    BuildTargetItemList(questDetail),
+
+                    methodPair,
+                    Lua.TableEntry(
+                        "CheckQuestMethodPairs",
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets")))
+                    ),
+                    StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
+                );
             }
         }
 
-        private static Table BuildTargetItemList(ActiveItemsDetail detail)
+        private static LuaTableEntry BuildTargetItemList(ActiveItemsDetail detail)
         {
-            Table targetItemList = new Table("targetItemList");
+            LuaTable targetItemList = new LuaTable();
             foreach (ActiveItem activeItem in detail.activeItems)
             {
-                if (!activeItem.isTarget)
-                    continue;
-                
-                targetItemList.Add($@"
-        {{
-            equipId = TppEquip.{activeItem.activeItem},
-            messageId = ""None"",
-            active = true,
-        }}");
+                if (activeItem.isTarget)
+                {
+                    targetItemList.Add(
+                        Lua.TableEntry(
+                            Lua.Table(
+                                Lua.TableEntry("equipId", Lua.TableIdentifier("TppEquip", activeItem.activeItem)),
+                                Lua.TableEntry("messageId", "None"),
+                                Lua.TableEntry("active", true, false)
+                            )
+                        )    
+                    );
+                }
             }
-            return targetItemList;
+            
+            return Lua.TableEntry(Lua.TableIdentifier("qvars", "ObjectiveTypeList", "targetItemList"), targetItemList);
         }
     }
 }

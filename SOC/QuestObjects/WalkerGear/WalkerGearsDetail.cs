@@ -52,12 +52,12 @@ namespace SOC.QuestObjects.WalkerGear
             WalkerFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             WalkerLua.GetMain(this, mainLua);
         }
 
-        public override void AddToDefinitionLua(DefinitionLua definitionLua)
+        public override void AddToDefinitionLua(DefinitionScriptBuilder definitionLua)
         {
             WalkerLua.GetDefinition(this, definitionLua);
         }

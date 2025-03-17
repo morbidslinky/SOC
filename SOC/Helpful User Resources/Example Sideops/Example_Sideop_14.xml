@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.2.0">
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.3.0">
   <setupDetails FpkName="Example_Sideop_14" QuestNum="30203">
     <QuestTitle>Example: Extract the Prisoners, Eliminate the Soldier</QuestTitle>
     <QuestDesc>Extract the two prisoners at the Serak Power Plant, and eliminate the enemy soldier.</QuestDesc>

@@ -58,7 +58,7 @@ namespace SOC.QuestObjects.Vehicle
             VehicleFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainLua mainLua)
+        public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             VehicleLua.GetMain(this, mainLua);
         }

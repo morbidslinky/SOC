@@ -9,7 +9,7 @@ namespace SOC.QuestObjects.GeoTrap
 {
     class GeoTrapLua
     {
-        internal static void GetMain(GeoTrapsDetail detail, MainLua mainLua)
+        internal static void GetMain(GeoTrapsDetail detail, MainScriptBuilder mainLua)
         {
             List<GeoTrap> shapes = detail.trapShapes;
 
@@ -18,13 +18,21 @@ namespace SOC.QuestObjects.GeoTrap
                 var uniqueGeoTraps = shapes.Select(shape => shape.geoTrap).Distinct();
                 foreach (string geoTrapName in uniqueGeoTraps)
                 {
-                    QStep_Message EnterTrap = new QStep_Message("Trap", @"""Enter""", $@"""{geoTrapName}""", $@"function()
-              InfCore.DebugPrint(""{geoTrapName} Enter"")
-            end");
-                    QStep_Message ExitTrap = new QStep_Message("Trap", @"""Exit""", $@"""{geoTrapName}""", $@"function()
-              InfCore.DebugPrint(""{geoTrapName} Exit"")
-            end");
-                    mainLua.AddToQStep_Main(EnterTrap, ExitTrap);
+                    StrCode32Script EnterTrap = new StrCode32Script(
+                        new StrCode32Event("Trap", "Enter", geoTrapName),
+                        LuaFunction.ToTableEntry(
+                            $"{geoTrapName}Enter",
+                            new string[] { },
+                            $@" InfCore.DebugPrint(""{geoTrapName} Enter""); ")); //todo use function template properly
+
+                    StrCode32Script ExitTrap = new StrCode32Script(
+                        new StrCode32Event("Trap", "Exit", geoTrapName),
+                        LuaFunction.ToTableEntry(
+                            $"{geoTrapName}Exit",
+                            new string[] { },
+                            $@" InfCore.DebugPrint(""{geoTrapName} Exit""); "));
+
+                    mainLua.QStep_Main.StrCode32Table.Add(EnterTrap, ExitTrap);
                 }
             }
         }
