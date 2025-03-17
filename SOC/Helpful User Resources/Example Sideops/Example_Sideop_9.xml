@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.2.0">
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.3.0">
   <setupDetails FpkName="Example_Sideop_9" QuestNum="30358">
     <QuestTitle>Example: Extract the Cliffside Pilots</QuestTitle>
     <QuestDesc>Extract the two pilots marooned on a cliff.</QuestDesc>

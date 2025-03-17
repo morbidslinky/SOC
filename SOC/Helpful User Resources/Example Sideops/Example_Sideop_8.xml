@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.2.0">
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.3.0">
   <setupDetails FpkName="Example_Sideop_8" QuestNum="30357">
     <QuestTitle>Example: Extract the Mother Base Slackers</QuestTitle>
     <QuestDesc>Extract the slacking soldiers on the main Development platform.</QuestDesc>

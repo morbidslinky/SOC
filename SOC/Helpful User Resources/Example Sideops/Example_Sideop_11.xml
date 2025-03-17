@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.2.0">
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.3.0">
   <setupDetails FpkName="Example_Sideop_11" QuestNum="30200">
     <QuestTitle>Example: Eliminate the Oilfield Walker Gears</QuestTitle>
     <QuestDesc>Eliminate the three Walker Gears parket at Mfinda Oilfield.</QuestDesc>
