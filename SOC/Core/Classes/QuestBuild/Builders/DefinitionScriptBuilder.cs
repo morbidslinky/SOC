@@ -43,7 +43,7 @@ namespace SOC.Classes.Lua
             
             if (LoadAreas.isMtbs(setupDetails.locationID))
             {
-                definitionTable.AddOrSet(Lua.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
+                definitionTable.Add(Lua.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
             }
 
             foreach (ObjectsDetail detail in objectsDetails.details)
@@ -51,19 +51,19 @@ namespace SOC.Classes.Lua
                 detail.AddToDefinitionLua(this);
             }
 
-            questPackList.AddOrSet(Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
+            questPackList.Add(Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
         }
 
         public void AddFpkPathToQuestPackList(string packPath)
         {
-            questPackList.AddOrSet(Lua.TableEntry(packPath));
+            questPackList.Add(Lua.TableEntry(packPath));
         }
 
         public void AddToFaceIdList(params LuaValue[] faceIds)
         {
             foreach (var id in faceIds)
             {
-                faceIdList.AddOrSet(Lua.TableEntry(id));
+                faceIdList.Add(Lua.TableEntry(id));
             }
         }
 
@@ -71,25 +71,25 @@ namespace SOC.Classes.Lua
         {
             foreach (var id in bodyIds)
             {
-                bodyIdList.AddOrSet(Lua.TableEntry(id));
+                bodyIdList.Add(Lua.TableEntry(id));
             }
         }
 
         public void SetRandomFaceListIH(string gender, int count)
         {
-            randomFaceListIH.AddOrSet(Lua.TableEntry("gender", gender), Lua.TableEntry("count", count));
+            randomFaceListIH.Add(Lua.TableEntry("gender", gender), Lua.TableEntry("count", count));
         }
 
         public void SetHasEnemyHeli(bool hasEnemyHeli)
         {
-            definitionTable.AddOrSet(Lua.TableEntry("hasEnemyHeli", hasEnemyHeli, false));
+            definitionTable.Add(Lua.TableEntry("hasEnemyHeli", hasEnemyHeli, false));
         }
 
         public void AddToRequestEquipIds(List<string> ids)
         {
             foreach (var id in ids)
             {
-                requestEquipIds.AddOrSet(Lua.TableEntry(id));
+                requestEquipIds.Add(Lua.TableEntry(id));
             }
         }
 

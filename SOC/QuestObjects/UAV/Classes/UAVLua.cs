@@ -16,7 +16,7 @@ namespace SOC.QuestObjects.UAV
         {
             if (detail.UAVs.Count > 0)
             {
-                mainLua.QUEST_TABLE.AddOrSet(BuildUAVList(detail.UAVs));
+                mainLua.QUEST_TABLE.Add(BuildUAVList(detail.UAVs));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
@@ -28,19 +28,25 @@ namespace SOC.QuestObjects.UAV
 
                 if (detail.UAVs.Any(uav => uav.isTarget))
                 {
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                            StaticObjectiveFunctions.TallyGenericTargets
+                        )
+                    );
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
-                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
-                        StaticObjectiveFunctions.TallyGenericTargets,
+                        methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
                     foreach (UAV drone in detail.UAVs)
                     {
                         if (drone.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(drone.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(drone.GetObjectName()))));
                     }
                 }
             }
@@ -61,21 +67,21 @@ namespace SOC.QuestObjects.UAV
 
                 if (drone.dRoute != "NONE")
                 {
-                    UAVTable.AddOrSet(Lua.TableEntry("dRoute", drone.dRoute));
+                    UAVTable.Add(Lua.TableEntry("dRoute", drone.dRoute));
                 }
 
                 if (drone.aRoute != "NONE")
                 {
-                    UAVTable.AddOrSet(Lua.TableEntry("aRoute", drone.aRoute));
+                    UAVTable.Add(Lua.TableEntry("aRoute", drone.aRoute));
                 }
 
                 if (drone.defenseGrade != "DEFAULT")
                 {
-                    UAVTable.AddOrSet(Lua.TableEntry("defenseGrade", drone.defenseGrade));
+                    UAVTable.Add(Lua.TableEntry("defenseGrade", drone.defenseGrade));
                 }
 
 
-                UAVList.AddOrSet(Lua.TableEntry(UAVTable));
+                UAVList.Add(Lua.TableEntry(UAVTable));
             }
 
             return Lua.TableEntry("UAVList", UAVList);

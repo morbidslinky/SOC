@@ -16,7 +16,7 @@ namespace SOC.QuestObjects.Camera
         {
             if (detail.cameras.Count > 0)
             {
-                mainLua.QUEST_TABLE.AddOrSet(BuildCameraList(detail.cameras));
+                mainLua.QUEST_TABLE.Add(BuildCameraList(detail.cameras));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
@@ -28,19 +28,25 @@ namespace SOC.QuestObjects.Camera
 
                 if (detail.cameras.Any(camera => camera.isTarget))
                 {
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                            StaticObjectiveFunctions.TallyGenericTargets
+                        )
+                    );
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
-                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
-                        StaticObjectiveFunctions.TallyGenericTargets,
+                        methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
                     foreach (Camera cam in detail.cameras)
                     {
                         if (cam.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(cam.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(cam.GetObjectName()))));
                     }
                 }
             }
@@ -66,7 +72,7 @@ namespace SOC.QuestObjects.Camera
                     Lua.TableEntry("id", camera.weapon ? "SetGunCamera" : "NormalCamera")
                 );
 
-                cameraList.AddOrSet(
+                cameraList.Add(
                     Lua.TableEntry(
                         Lua.Table(
                             Lua.TableEntry("name", camera.GetObjectName()),

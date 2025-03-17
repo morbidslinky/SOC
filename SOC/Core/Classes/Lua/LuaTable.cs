@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
 
         public LuaTable(params LuaTableEntry[] entries) : base(TemplateRestrictionType.TABLE)
         {
-            AddOrSet(entries);
+            Add(entries);
         }
 
         public void PrependOrMove(LuaTableEntry newEntry)
@@ -44,6 +44,22 @@ namespace SOC.Classes.Lua
             KeyValuePairs.Insert(0, newEntry);
         }
 
+        public void Add(params LuaTableEntry[] entries)
+        {
+            foreach (LuaTableEntry entry in entries)
+            {
+                if (entry.Key is LuaTableIdentifier id)
+                {
+                    TryAdd(id.IdentifierKeys, entry.Value, entry.ExtrudeForAssignmentVariable);
+                }
+                else
+                {
+                    TryAdd(entry);
+                }
+            }
+        }
+
+        /* Flawed set logic- ambiguity exists when setting to tables containing nested tables, while setting tables also containing nested tables.
         public void AddOrSet(params LuaTableEntry[] entries)
         {
             foreach (LuaTableEntry entry in entries)
@@ -58,7 +74,6 @@ namespace SOC.Classes.Lua
                 }
             }
         }
-
         public bool TrySet(LuaTableEntry entry)
         {
             if (TryGetKeyValuePair(entry.Key, out LuaTableEntry existingEntry))
@@ -80,6 +95,7 @@ namespace SOC.Classes.Lua
             }
             return false;
         }
+        */
 
         public bool TryAdd(LuaTableEntry entry)
         {

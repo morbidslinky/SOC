@@ -123,7 +123,7 @@ namespace SOC.QuestObjects.Enemy
                     if (enemy.isTarget)
                     {
                         hasTarget = true;
-                        mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(enemy.GetObjectName()))));
+                        mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(enemy.GetObjectName()))));
                     }
                 }
             }
@@ -132,7 +132,7 @@ namespace SOC.QuestObjects.Enemy
             {
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("SUBTYPE", meta.subtype));
 
-                mainLua.QUEST_TABLE.AddOrSet(
+                mainLua.QUEST_TABLE.Add(
                     Lua.TableEntry("soldierSubType", Lua.TableIdentifier("qvars", "SUBTYPE")),
                     BuildCPList(enemies),
                     Lua.TableEntry("isQuestArmor", HasArmors(enemies), false),
@@ -143,17 +143,23 @@ namespace SOC.QuestObjects.Enemy
 
                 if (hasTarget)
                 {
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                            StaticObjectiveFunctions.TallyGenericTargets
+                        )
+                    );
+
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
                             Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsSoldier(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))
                         ),
-                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
-                        StaticObjectiveFunctions.TallyGenericTargets,
+                        methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
@@ -180,40 +186,40 @@ namespace SOC.QuestObjects.Enemy
 
                 if (enemy.dRoute != "DEFAULT")
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("route_d", enemy.dRoute));
+                    enemyTable.Add(Lua.TableEntry("route_d", enemy.dRoute));
                 }
 
                 if (enemy.cRoute != "DEFAULT")
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("route_c", enemy.cRoute));
+                    enemyTable.Add(Lua.TableEntry("route_c", enemy.cRoute));
                 }
 
                 if (enemy.powers.Length > 0)
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("powerSetting", Lua.Table(enemy.powers.Select(power => Lua.TableEntry(power)).ToArray())));
+                    enemyTable.Add(Lua.TableEntry("powerSetting", Lua.Table(enemy.powers.Select(power => Lua.TableEntry(power)).ToArray())));
                 }
 
                 if (enemy.skill != "NONE")
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("skill", enemy.skill));
+                    enemyTable.Add(Lua.TableEntry("skill", enemy.skill));
                 }
 
                 if (enemy.staffType != "NONE")
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("staffTypeId", Lua.TableIdentifier("TppDefine", "STAFF_TYPE_ID", enemy.staffType)));
+                    enemyTable.Add(Lua.TableEntry("staffTypeId", Lua.TableIdentifier("TppDefine", "STAFF_TYPE_ID", enemy.staffType)));
                 }
 
                 if (enemy.body != "DEFAULT" && !enemy.armored)
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("bodyId", Lua.TableIdentifier("TppEnemyBodyId", enemy.body)));
+                    enemyTable.Add(Lua.TableEntry("bodyId", Lua.TableIdentifier("TppEnemyBodyId", enemy.body)));
                 }
 
                 if (enemy.zombie)
                 {
-                    enemyTable.AddOrSet(Lua.TableEntry("isZombieUseRoute", true, false));
+                    enemyTable.Add(Lua.TableEntry("isZombieUseRoute", true, false));
                 }
 
-                enemyList.AddOrSet(Lua.TableEntry(enemyTable));
+                enemyList.Add(Lua.TableEntry(enemyTable));
             }
 
             return Lua.TableEntry("enemyList", enemyList);

@@ -13,23 +13,29 @@ namespace SOC.QuestObjects.Animal
         {
             if (detail.animals.Count > 0)
             {
-                mainLua.QUEST_TABLE.AddOrSet(BuildAnimalList(detail.animals));
+                mainLua.QUEST_TABLE.Add(BuildAnimalList(detail.animals));
                 if (detail.animals.Any(animal => animal.target))
                 {
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForAnimal,
+                            StaticObjectiveFunctions.TallyAnimalTargets
+                        )
+                    );
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
                             "ObjectiveTypeList",
                             Lua.Table(Lua.TableEntry("animalObjective", detail.animalMetadata.objectiveType))
                         ),
-                        StaticObjectiveFunctions.IsTargetSetMessageIdForAnimal,
-                        StaticObjectiveFunctions.TallyAnimalTargets,
+                        methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.TallyAnimalTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.methodPair.TallyAnimalTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
-                    mainLua.QUEST_TABLE.AddOrSet(BuildAnimalTargetList(detail.animals));
+                    mainLua.QUEST_TABLE.Add(BuildAnimalTargetList(detail.animals));
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.animalTargetMessages);
                 }
             }
@@ -41,7 +47,7 @@ namespace SOC.QuestObjects.Animal
 
             foreach (Animal animal in animals)
             {
-                animalList.AddOrSet(
+                animalList.Add(
                     Lua.TableEntry(
                         Lua.Table(
                             Lua.TableEntry("animalName", animal.GetObjectName()), 
@@ -67,7 +73,7 @@ namespace SOC.QuestObjects.Animal
                 }
             }
 
-            targetAnimalList.AddOrSet(
+            targetAnimalList.Add(
                 Lua.TableEntry("markerList", Lua.Table(nameList.ToArray())), 
                 Lua.TableEntry("nameList", Lua.Table(nameList.ToArray()))
             );

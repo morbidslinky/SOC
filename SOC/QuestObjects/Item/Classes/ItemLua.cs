@@ -32,21 +32,29 @@ namespace SOC.QuestObjects.Item
         {
             if (questDetail.items.Any(item => item.isTarget))
             {
+                var methodPair = Lua.TableEntry("methodPair",
+                    Lua.Table(
+                        StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
+                        StaticObjectiveFunctions.TallyItemTargets
+                    )
+                );
+
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.dormantItemTargetMessages);
+
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                     Lua.TableEntry(
                         Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
                         Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return (targetItemInfo.active == false)", "targetItemInfo")), Lua.TableEntry("Type", questDetail.itemMetadata.objectiveType))))    
                     ),
-                    StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
-                    StaticObjectiveFunctions.TallyItemTargets,
+                    BuildItemTargetList(questDetail.items),
+
+                    methodPair,
                     Lua.TableEntry(
                         "CheckQuestMethodPairs",
-                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.TallyItemTargets")))
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets")))
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                 );
-                mainLua.QUEST_TABLE.AddOrSet(BuildItemTargetList(questDetail.items));
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.dormantItemTargetMessages);
             }
         }
 
@@ -56,7 +64,7 @@ namespace SOC.QuestObjects.Item
 
             foreach (Item item in items)
             {
-                targetItemList.AddOrSet(
+                targetItemList.Add(
                     Lua.TableEntry(
                         Lua.Table(
                             Lua.TableEntry("equipID", Lua.TableIdentifier("TppEquip", item.item)), 
@@ -67,7 +75,7 @@ namespace SOC.QuestObjects.Item
                 );
             }
 
-            return Lua.TableEntry("targetItemList", targetItemList);
+            return Lua.TableEntry(Lua.TableIdentifier("qvars", "ObjectiveTypeList", "targetItemList"), targetItemList);
         }
     }
 }

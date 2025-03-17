@@ -53,7 +53,7 @@ namespace SOC.QuestObjects.WalkerGear
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("inMostActiveQuestArea", true, false));
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("exitOnce", true, false));
 
-                mainLua.QUEST_TABLE.AddOrSet(BuildWalkerList(walkers));
+                mainLua.QUEST_TABLE.Add(BuildWalkerList(walkers));
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(OneTimeAnnounce);
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(ReboundWalkerGear);
@@ -83,23 +83,29 @@ namespace SOC.QuestObjects.WalkerGear
 
                 if (walkers.Any(walker => walker.isTarget))
                 {
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                            StaticObjectiveFunctions.TallyGenericTargets
+                        )
+                    );
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
                             Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsEnemyWalkerGear(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))
                         ),
-                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
-                        StaticObjectiveFunctions.TallyGenericTargets,
+                        methodPair,
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "CheckQuestMethodPairs"),
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
                     foreach (WalkerGear walker in walkers)
                     {
                         if (walker.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(walker.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(walker.GetObjectName()))));
                     }
                 }
             }
@@ -131,10 +137,10 @@ namespace SOC.QuestObjects.WalkerGear
 
                 if (walker.pilot != "NONE")
                 {
-                    walkerTable.AddOrSet(Lua.TableEntry("riderName", walker.pilot));
+                    walkerTable.Add(Lua.TableEntry("riderName", walker.pilot));
                 }
 
-                walkerList.AddOrSet(Lua.TableEntry(walkerTable));
+                walkerList.Add(Lua.TableEntry(walkerTable));
             }
 
             return Lua.TableEntry("walkerList", walkerList);

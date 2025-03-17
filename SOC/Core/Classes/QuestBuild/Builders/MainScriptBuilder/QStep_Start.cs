@@ -12,7 +12,7 @@
 
         public LuaTableEntry Get()
         {
-            Table.AddOrSet(Lua.TableEntry("OnEnter", OnEnter.ToFunction()));
+            Table.Add(Lua.TableEntry("OnEnter", OnEnter.ToFunction()));
             return Lua.TableEntry("QStep_Start", Table, true);
         }
     }

@@ -38,7 +38,7 @@ namespace SOC.Classes.Lua
             foreach (LuaTableEntry entry in definitionEntries)
                 entry.ExtrudeForAssignmentVariable = true;
 
-            CommonDefinitionsTable.AddOrSet(definitionEntries);
+            CommonDefinitionsTable.Add(definitionEntries);
         }
 
         private bool TryGetScript(StrCode32Event codeEvent, out StrCode32Script script)
@@ -57,7 +57,7 @@ namespace SOC.Classes.Lua
 
                 if (!string.IsNullOrEmpty(root.CodeEvent.sender.Text))
                 {
-                    eventTable.AddOrSet(Lua.TableEntry("sender", root.CodeEvent.sender));
+                    eventTable.Add(Lua.TableEntry("sender", root.CodeEvent.sender));
                 }
 
                 LuaFunctionBuilder funcBuilder = new LuaFunctionBuilder();
@@ -68,10 +68,10 @@ namespace SOC.Classes.Lua
                     funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, subscript.CodeEvent.Parameters));
                 }
 
-                eventTable.AddOrSet(Lua.TableEntry("func", funcBuilder.ToFunction()));
+                eventTable.Add(Lua.TableEntry("func", funcBuilder.ToFunction()));
 
 
-                strCode32Table.AddOrSet(
+                strCode32Table.Add(
                     Lua.TableEntry(root.CodeEvent.StrCode32, Lua.Table(Lua.TableEntry(eventTable)))
                 );
             }
@@ -89,7 +89,7 @@ namespace SOC.Classes.Lua
                 {
                     foreach (LuaTableEntry conditional in subscript.Conditions)
                     {
-                        functionDefinitionsTable.AddOrSet(
+                        functionDefinitionsTable.Add(
                             Lua.TableEntry(
                                 Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaText(), subscript.Identifier, conditional.Key),
                                 conditional.Value,
@@ -99,7 +99,7 @@ namespace SOC.Classes.Lua
                     }
                     foreach (LuaTableEntry operational in subscript.Operations)
                     {
-                        functionDefinitionsTable.AddOrSet(
+                        functionDefinitionsTable.Add(
                             Lua.TableEntry(
                                 Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaText(), subscript.Identifier, operational.Key),
                                 operational.Value,
@@ -109,7 +109,7 @@ namespace SOC.Classes.Lua
                     }
 
                     var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaText(), subscript.Identifier, Lua.Text($"SUBSCRIPT_{subscript.Identifier.Text}"));
-                    functionDefinitionsTable.AddOrSet(
+                    functionDefinitionsTable.Add(
                         Lua.TableEntry(
                             subscriptCallableIdentifier,
                             subscript.ToFunction(definitionTableVariableName),

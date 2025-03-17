@@ -19,7 +19,7 @@ namespace SOC.Classes.Lua
 
         public LuaTableEntry Get(string strCode32TableVariableName)
         {
-            QStep_Main_Table.AddOrSet(
+            QStep_Main_Table.Add(
                 Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(strCode32TableVariableName))), false),
                 Lua.TableEntry("OnEnter", OnEnterFunction.ToFunction()),
                 Lua.TableEntry("OnLeave", OnLeaveFunction.ToFunction())

@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.Vehicle
         {
             if (detail.vehicles.Count > 0)
             {
-                mainLua.QUEST_TABLE.AddOrSet(BuildVehicleList(detail.vehicles));
+                mainLua.QUEST_TABLE.Add(BuildVehicleList(detail.vehicles));
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
 
@@ -30,24 +30,29 @@ namespace SOC.QuestObjects.Vehicle
 
                 if (detail.vehicles.Any(vehicle => vehicle.isTarget))
                 {
-                    //CheckQuestGenericEnemy checkQuestMethod = new CheckQuestGenericEnemy(mainLua, CheckIsVehicle, detail.vehicleMetadata.ObjectiveType);
+                    var methodPair = Lua.TableEntry("methodPair",
+                        Lua.Table(
+                            StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
+                            StaticObjectiveFunctions.TallyGenericTargets
+                        )
+                    );
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
                             Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsVehicle(gameId)", "gameId")), Lua.TableEntry("Type", detail.vehicleMetadata.ObjectiveType))))
                         ),
-                        StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
-                        StaticObjectiveFunctions.TallyGenericTargets,
+                        methodPair,
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "CheckQuestMethodPairs"),
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
                     foreach (Vehicle vehicle in detail.vehicles)
                     {
                         if (vehicle.isTarget)
-                            mainLua.QUEST_TABLE.AddOrSet(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(vehicle.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(vehicle.GetObjectName()))));
                     }
                 }
             }
@@ -99,15 +104,15 @@ namespace SOC.QuestObjects.Vehicle
 
                 if (subType != null)
                 {
-                    vehicleTable.AddOrSet(Lua.TableEntry("subType", subType));
+                    vehicleTable.Add(Lua.TableEntry("subType", subType));
                 }
 
                 if (vehicle.vehicleClass != "DEFAULT")
                 {
-                    vehicleTable.AddOrSet(Lua.TableEntry("class", Lua.TableIdentifier("Vehicle", "class", vehicle.vehicleClass)));
+                    vehicleTable.Add(Lua.TableEntry("class", Lua.TableIdentifier("Vehicle", "class", vehicle.vehicleClass)));
                 }
 
-                vehicleList.AddOrSet(Lua.TableEntry(vehicleTable));
+                vehicleList.Add(Lua.TableEntry(vehicleTable));
             }
 
             return Lua.TableEntry("vehicleList", vehicleList);

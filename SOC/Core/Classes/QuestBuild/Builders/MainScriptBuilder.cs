@@ -55,7 +55,7 @@ namespace SOC.Classes.Lua
             }
 
 
-            QUEST_TABLE.AddOrSet(
+            QUEST_TABLE.Add(
                 Lua.TableEntry("questType", Lua.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
             );
 
@@ -64,12 +64,12 @@ namespace SOC.Classes.Lua
                 detail.AddToMainLua(this);
             }
 
-            quest_step.AddOrSet(
+            quest_step.Add(
                 QStep_Start.Get(),
                 QStep_Main.Get(QStep_Main_MessagesDefVariable.Name)
             );
 
-            @this.AddOrSet(
+            @this.Add(
                 Lua.TableEntry("QUEST_TABLE", QUEST_TABLE, true),
                 Lua.TableEntry("quest_step", quest_step, true),
                 OnAllocate.Get(),
