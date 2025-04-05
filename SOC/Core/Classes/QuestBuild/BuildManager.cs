@@ -45,26 +45,21 @@ namespace SOC.Classes.QuestBuild
 
             foreach (Quest quest in quests)
             {
-                SetupDetails setupDetails = quest.setupDetails;
-                ObjectsDetails objectsDetails = new ObjectsDetails(quest.questObjectDetails);
-
-                var fpk = setupDetails.FpkName;
-                var questNum = setupDetails.QuestNum;
-
                 var buildArchivePath = Path.Combine(initDir, QUESTARCHIVEPATH);
-                var buildGameDirPath = Path.Combine(initDir, QUESTGAMEDIRPATH);
-
-                ClearFolders(buildArchivePath, fpk);
-
-                CommonAssetsBuilder assetsBuilder = new CommonAssetsBuilder(setupDetails, objectsDetails);
-                DefinitionScriptBuilder definitionScriptBuilder = new DefinitionScriptBuilder(setupDetails, objectsDetails);
-                MainScriptBuilder mainScriptBuilder = new MainScriptBuilder(setupDetails, objectsDetails);
-                Fox2Builder fox2Builder = new Fox2Builder(setupDetails, objectsDetails);
+                var fpk = quest.SetupDetails.FpkName;
 
                 var questFpkdDir = Path.Combine(buildArchivePath, fpk + "_fpkd");
                 var mainScriptFilePath = Path.Combine(questFpkdDir, QUESTLEVELPATH, $"{fpk}.lua");
                 var fox2FilePath = Path.Combine(questFpkdDir, QUESTLEVELPATH, $"{fpk}.fox2");
-                var definitionScriptFilePath = Path.Combine(buildGameDirPath, $"ih_quest_q{questNum}.lua");
+
+                var definitionScriptFilePath = Path.Combine(initDir, QUESTGAMEDIRPATH, $"ih_quest_q{quest.SetupDetails.QuestNum}.lua");
+
+                ClearFolders(buildArchivePath, fpk);
+
+                CommonAssetsBuilder assetsBuilder = new CommonAssetsBuilder(quest);
+                DefinitionScriptBuilder definitionScriptBuilder = new DefinitionScriptBuilder(quest);
+                MainScriptBuilder mainScriptBuilder = new MainScriptBuilder(quest);
+                Fox2Builder fox2Builder = new Fox2Builder(quest);
 
                 assetsBuilder.Build(buildArchivePath);
                 definitionScriptBuilder.Build(definitionScriptFilePath);
@@ -72,7 +67,7 @@ namespace SOC.Classes.QuestBuild
                 fox2Builder.Build(fox2FilePath);
             }
 
-            Lang.LangBuilder.WriteQuestLangs(initDir, quests.Select(singleQuest => singleQuest.setupDetails).ToArray());
+            Lang.LangBuilder.WriteQuestLangs(initDir, quests.Select(singleQuest => singleQuest.SetupDetails).ToArray());
             return true;
         }
 

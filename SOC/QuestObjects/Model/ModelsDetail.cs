@@ -31,7 +31,7 @@ namespace SOC.QuestObjects.Model
 
         static ModelControl modelControl = new ModelControl();
 
-        static ModelsVisualizer modelsVisualizer = new ModelsVisualizer(modelStub, modelControl);
+        static ModelsControlPanel modelsControlPanel = new ModelsControlPanel(modelStub, modelControl);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -58,9 +58,9 @@ namespace SOC.QuestObjects.Model
             ModelFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return modelsVisualizer;
+            return modelsControlPanel;
         }
     }
 }

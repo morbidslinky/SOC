@@ -1,6 +1,6 @@
 ﻿namespace SOC.UI
 {
-    partial class Waiting
+    partial class WaitingControl
     {
         /// <summary> 
         /// Required designer variable.

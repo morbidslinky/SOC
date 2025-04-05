@@ -33,7 +33,7 @@ namespace SOC.QuestObjects.Animal
 
         static AnimalControl control = new AnimalControl();
 
-        static AnimalsVisualizer visualizer = new AnimalsVisualizer(stub, control);
+        static AnimalsControlPanel controlPanel = new AnimalsControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -65,9 +65,9 @@ namespace SOC.QuestObjects.Animal
             AnimalAssets.GetAnimalAssets(this, assetsBuilder);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
         }
     }
 }

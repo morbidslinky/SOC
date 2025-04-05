@@ -164,6 +164,12 @@
     <Compile Include="Core\Classes\LangTool\LangEntry.cs" />
     <Compile Include="Core\Classes\LangTool\LangFile.cs" />
     <Compile Include="Core\Classes\Common\Quest.cs" />
+    <Compile Include="Core\Forms\Pages\ScriptDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptDisplay.Designer.cs">
+      <DependentUpon>ScriptDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\Forms\PanelScroll.cs" />
     <Compile Include="Core\Forms\QuestObjectBox.cs">
       <SubType>UserControl</SubType>
@@ -209,11 +215,10 @@
     <Compile Include="QuestObjects\Camera\Classes\CameraFox2.cs" />
     <Compile Include="QuestObjects\Camera\Classes\CameraLua.cs" />
     <Compile Include="QuestObjects\Camera\CamerasVisualizer.cs" />
-    <Compile Include="QuestObjects\Common\DetailTypes.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetailLocational.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetails.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetail.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetailVisualizer.cs" />
+    <Compile Include="QuestObjects\Common\ObjectsDetailControlPanel.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetailVisualizerLocational.cs" />
     <Compile Include="QuestObjects\Common\ObjectsMetadata.cs" />
     <Compile Include="QuestObjects\Common\QuestObject.cs" />
@@ -463,6 +468,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\ScriptDisplay.resx">
+      <DependentUpon>ScriptDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\SetupDisplay.resx">
       <DependentUpon>SetupDisplay.cs</DependentUpon>

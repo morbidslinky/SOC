@@ -6,18 +6,18 @@ using System.Windows.Forms;
 
 namespace SOC.QuestObjects.Common
 {
-    public abstract class ObjectsDetailVisualizer
+    public abstract class ObjectsDetailControlPanel
     {
         public UserControl detailControl { get; }
 
         public FlowLayoutPanel flowPanel { get; }
 
-        public ObjectsDetailVisualizer(UserControl control, FlowLayoutPanel panel)
+        public ObjectsDetailControlPanel(UserControl control, FlowLayoutPanel panel)
         {
             detailControl = control; flowPanel = panel;
         }
 
-        public void VisualizeDetail(ObjectsDetail detail)
+        public void RedrawControl(ObjectsDetail detail)
         {
             DrawMetadata(detail.GetMetadata());
             DrawObjectsControls(detail.GetQuestObjects());
@@ -35,11 +35,11 @@ namespace SOC.QuestObjects.Common
 
         public abstract void DrawMetadata(ObjectsMetadata meta);
 
-        public void DrawObjectsControls(List<QuestObject> questObjects)
+        private void DrawObjectsControls(List<QuestObject> questObjects)
         {
             var questObjectBoxes = questObjects.Select(objects => NewQuestObjectBox(objects)).ToArray();
             flowPanel.Controls.Clear();
-            flowPanel.Controls.AddRange(questObjectBoxes);
+            //flowPanel.Controls.AddRange(questObjectBoxes);
         }
 
         public ObjectsDetail GetDetailFromControl()

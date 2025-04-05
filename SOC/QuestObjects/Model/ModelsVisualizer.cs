@@ -13,9 +13,9 @@ using SOC.Classes.Common;
 
 namespace SOC.QuestObjects.Model
 {
-    class ModelsVisualizer : ObjectsDetailVisualizerLocational
+    class ModelsControlPanel : ObjectsDetailControlPanelLocational
     {
-        public ModelsVisualizer(LocationalDataStub stub, ModelControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public ModelsControlPanel(LocationalDataStub stub, ModelControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta)
         {

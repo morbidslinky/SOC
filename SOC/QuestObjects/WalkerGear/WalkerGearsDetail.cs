@@ -30,7 +30,7 @@ namespace SOC.QuestObjects.WalkerGear
 
         static WalkerControl walkerControl = new WalkerControl();
 
-        static WalkerGearsVisualizer walkerVisualizer = new WalkerGearsVisualizer(walkerStub, walkerControl);
+        static WalkerGearsControlPanel walkerControlPanel = new WalkerGearsControlPanel(walkerStub, walkerControl);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -62,9 +62,9 @@ namespace SOC.QuestObjects.WalkerGear
             WalkerLua.GetDefinition(this, definitionLua);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return walkerVisualizer;
+            return walkerControlPanel;
         }
     }
 }

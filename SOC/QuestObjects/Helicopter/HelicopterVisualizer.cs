@@ -14,9 +14,9 @@ using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.Helicopter
 {
-    class HelicopterVisualizer : ObjectsDetailVisualizer
+    class HelicopterControlPanel : ObjectsDetailControlPanel
     {
-        public HelicopterVisualizer(HelicopterControl control) : base(control, control.panelQuestBoxes) { }
+        public HelicopterControlPanel(HelicopterControl control) : base(control, control.panelQuestBoxes) { }
 
         private List<string> routes = new List<string>();
 

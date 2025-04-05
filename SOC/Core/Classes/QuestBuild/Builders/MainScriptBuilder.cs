@@ -5,8 +5,7 @@ namespace SOC.Classes.Lua
 {
     public class MainScriptBuilder
     {
-        public SetupDetails SetupDetails;
-        public ObjectsDetails ObjectsDetails;
+        public Quest Quest;
 
         public OnUpdate OnUpdate = new OnUpdate();
         public OnAllocate OnAllocate = new OnAllocate();
@@ -25,9 +24,9 @@ namespace SOC.Classes.Lua
         public LuaVariable CommonDefinitionsVariable = new LuaVariable("qvars");
 
 
-        public MainScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public MainScriptBuilder(Quest quest)
         {
-            SetupDetails = setupDetails; ObjectsDetails = objectsDetails;
+            Quest = quest;
 
             /*TODO
             XmlSerializer serializer = new XmlSerializer(typeof(LuaTable));
@@ -38,20 +37,20 @@ namespace SOC.Classes.Lua
             */
 
             QStep_Main.StrCode32Table.AddCommonDefinitions( // TODO create a qvars table first, add these, and merge it with the CommonDefinitions table?
-                Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(setupDetails.CPName, setupDetails.locationID)),
-                Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{setupDetails.loadArea}")
+                Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(Quest.SetupDetails.CPName, Quest.SetupDetails.locationID)),
+                Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}")
             );
 
-            if (setupDetails.CPName == "NONE")
+            if (Quest.SetupDetails.CPName == "NONE")
             {
                 QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", 
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfMain", "GetClosestCp"),
-                        Lua.Table(setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord))));
+                        Lua.Table(Quest.SetupDetails.coords.xCoord, Quest.SetupDetails.coords.yCoord, Quest.SetupDetails.coords.zCoord))));
             }
             else
             {
-                QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", setupDetails.CPName));
+                QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", Quest.SetupDetails.CPName));
             }
 
 
@@ -59,7 +58,7 @@ namespace SOC.Classes.Lua
                 Lua.TableEntry("questType", Lua.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
             );
 
-            foreach (ObjectsDetail detail in objectsDetails.details)
+            foreach (ObjectsDetail detail in Quest.ObjectsDetails.Details)
             {
                 detail.AddToMainLua(this);
             }

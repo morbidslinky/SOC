@@ -32,7 +32,7 @@ namespace SOC.QuestObjects.Camera
 
         static CameraControl control = new CameraControl();
 
-        static CamerasVisualizer visualizer = new CamerasVisualizer(stub, control);
+        static CamerasControlPanel controlPanel = new CamerasControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -64,9 +64,9 @@ namespace SOC.QuestObjects.Camera
             CameraFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
         }
     }
 }

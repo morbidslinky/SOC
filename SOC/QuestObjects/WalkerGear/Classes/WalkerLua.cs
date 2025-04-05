@@ -58,12 +58,12 @@ namespace SOC.QuestObjects.WalkerGear
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(OneTimeAnnounce);
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(ReboundWalkerGear);
 
-                WalkerGearsVisualizer visualizer = (WalkerGearsVisualizer)detail.GetVisualizer();
+                WalkerGearsControlPanel controlPanel = (WalkerGearsControlPanel)detail.GetControlPanel();
                 StrCode32Script ExitTrap = new StrCode32Script(
-                    new StrCode32Event("Trap", "Exit", $"trap_preDeactiveQuestArea_{mainLua.SetupDetails.loadArea}"),
+                    new StrCode32Event("Trap", "Exit", $"trap_preDeactiveQuestArea_{mainLua.Quest.SetupDetails.loadArea}"),
                     LuaFunction.ToTableEntry("OnExitQuestTrapArea", new string[] { }, " qvars.inMostActiveQuestArea = false; qvars.walkerGearGameId = vars.playerVehicleGameObjectId; if qvars.questWalkerGearList[qvars.walkerGearGameId] then qvars.playerWGResetPosition = {pos= {vars.playerPosX, vars.playerPosY + 1, vars.playerPosZ},rotY= 0,}; GkEventTimerManager.Start(\"OutOfMostActiveArea\", 7); qvars.exitOnce = qvars.OneTimeAnnounce(\"The Walker Gear cannot travel beyond this point.\", \"Return to the Side Op area.\", qvars.exitOnce); end; "));
                 StrCode32Script EnterTrap = new StrCode32Script(
-                    new StrCode32Event("Trap", "Enter", $"trap_preDeactiveQuestArea_{mainLua.SetupDetails.loadArea}"), 
+                    new StrCode32Event("Trap", "Enter", $"trap_preDeactiveQuestArea_{mainLua.Quest.SetupDetails.loadArea}"), 
                     LuaFunction.ToTableEntry("OnEnterQuestTrapArea", new string[] { }, " qvars.inMostActiveQuestArea = true; if GkEventTimerManager.IsTimerActive(\"OutOfMostActiveArea\") and qvars.walkerGearGameId == vars.playerVehicleGameObjectId then GkEventTimerManager.Stop(\"OutOfMostActiveArea\"); GkEventTimerManager.Start(\"AnnounceOnceCooldown\", 3); end; "));
 
                 mainLua.QStep_Main.StrCode32Table.Add(ExitTrap, EnterTrap, FinishTimerActiveArea, FinishTimerCooldown);

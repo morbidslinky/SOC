@@ -17,16 +17,16 @@ namespace SOC.Classes.QuestBuild.Assets
         private List<string> fpkdAssetPaths = new List<string>();
         private string fpkName;
 
-        public CommonAssetsBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public CommonAssetsBuilder(Quest quest)
         {
-            setupDetails.addToAssets(this);
+            quest.SetupDetails.addToAssets(this);
 
-            foreach (ObjectsDetail objectsDetail in objectsDetails.details)
+            foreach (ObjectsDetail objectsDetail in quest.ObjectsDetails.Details)
             {
                 objectsDetail.AddToAssets(this);
             }
 
-            fpkName = setupDetails.FpkName;
+            fpkName = quest.SetupDetails.FpkName;
         }
 
         public void Build(string buildDir)

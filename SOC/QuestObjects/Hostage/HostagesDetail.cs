@@ -31,7 +31,7 @@ namespace SOC.QuestObjects.Hostage
 
         static HostageControl hostageControl = new HostageControl();
 
-        static HostagesVisualizer hostageVisualizer = new HostagesVisualizer(hostageStub, hostageControl);
+        static HostagesControlPanel hostageControlPanel = new HostagesControlPanel(hostageStub, hostageControl);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -63,9 +63,9 @@ namespace SOC.QuestObjects.Hostage
             HostageLua.GetDefinition(this, definitionLua);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return hostageVisualizer;
+            return hostageControlPanel;
         }
     }
 }

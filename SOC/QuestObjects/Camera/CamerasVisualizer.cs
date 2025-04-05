@@ -13,9 +13,9 @@ using SOC.Classes.Common;
 
 namespace SOC.QuestObjects.Camera
 {
-    class CamerasVisualizer : ObjectsDetailVisualizerLocational
+    class CamerasControlPanel : ObjectsDetailControlPanelLocational
     {
-        public CamerasVisualizer(LocationalDataStub stub, CameraControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public CamerasControlPanel(LocationalDataStub stub, CameraControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta)
         {

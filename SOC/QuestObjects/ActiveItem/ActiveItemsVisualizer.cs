@@ -13,9 +13,9 @@ using SOC.Core.Classes.Route;
 
 namespace SOC.QuestObjects.ActiveItem
 {
-    class ActiveItemsVisualizer : ObjectsDetailVisualizerLocational
+    class ActiveItemsControlPanel : ObjectsDetailControlPanelLocational
     {
-        public ActiveItemsVisualizer(LocationalDataStub stub, ActiveItemControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public ActiveItemsControlPanel(LocationalDataStub stub, ActiveItemControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta)
         {

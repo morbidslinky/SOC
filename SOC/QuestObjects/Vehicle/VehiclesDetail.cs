@@ -36,7 +36,7 @@ namespace SOC.QuestObjects.Vehicle
 
         static VehicleControl vehiclePanel = new VehicleControl();
 
-        static VehiclesVisualizer vehicleVisualizer = new VehiclesVisualizer(vehicleStub, vehiclePanel);
+        static VehiclesControlPanel vehicleControlPanel = new VehiclesControlPanel(vehicleStub, vehiclePanel);
 
         public override List<QuestObject> GetQuestObjects()
         {
@@ -68,9 +68,9 @@ namespace SOC.QuestObjects.Vehicle
             VehicleAssets.GetVehicleAssets(this, assetsBuilder);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return vehicleVisualizer;
+            return vehicleControlPanel;
         }
     }
 }

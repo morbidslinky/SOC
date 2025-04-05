@@ -33,7 +33,7 @@ namespace SOC.QuestObjects.GeoTrap
 
         static GeoTrapControl control = new GeoTrapControl();
 
-        static GeoTrapsVisualizer visualizer = new GeoTrapsVisualizer(stub, control);
+        static GeoTrapsControlPanel controlPanel = new GeoTrapsControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -50,9 +50,9 @@ namespace SOC.QuestObjects.GeoTrap
             trapShapes = qObjects.Cast<GeoTrap>().ToList();
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
         }
 
         public override void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList)

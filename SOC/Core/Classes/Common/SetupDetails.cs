@@ -81,7 +81,7 @@ namespace SOC.Classes.Common
             GetRoutesFromFile();
         }
 
-        public SetupDetails(SetupDisplay setupPage)
+        public SetupDetails(SetupControl setupPage)
         {
             QuestTitle = setupPage.textBoxQuestTitle.Text;
             QuestDesc = setupPage.textBoxQuestDesc.Text;

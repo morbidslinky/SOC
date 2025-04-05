@@ -9,9 +9,9 @@ using SOC.Classes.Common;
 
 namespace SOC.QuestObjects.Hostage
 {
-    class HostagesVisualizer : ObjectsDetailVisualizerLocational
+    class HostagesControlPanel : ObjectsDetailControlPanelLocational
     {
-        public HostagesVisualizer(LocationalDataStub hostageStub, HostageControl hostageControl) : base(hostageStub, hostageControl, hostageControl.panelQuestBoxes)
+        public HostagesControlPanel(LocationalDataStub hostageStub, HostageControl hostageControl) : base(hostageStub, hostageControl, hostageControl.panelQuestBoxes)
         {
             hostageControl.comboBox_Body.SelectedIndexChanged += OnBodyIndexChanged;
         }

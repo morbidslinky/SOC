@@ -1,7 +1,10 @@
-﻿using SOC.QuestObjects.Common;
+﻿using SOC.Forms.Pages;
+using SOC.QuestObjects.Common;
+using SOC.UI;
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace SOC.Classes.Common
@@ -9,30 +12,42 @@ namespace SOC.Classes.Common
     [XmlType("Quest")]
     public class Quest
     {
+        [XmlAttribute]
+        public string Version { get; set; }
 
-        public Quest() { }
+        [XmlElement]
+        public SetupDetails SetupDetails { get; set; }
 
-        public Quest(SetupDetails setup, List<ObjectsDetail> details)
-        {
-            version = GetSOCVersion().ToString();
-            setupDetails = setup;
-            questObjectDetails = details;
+        [XmlElement]
+        public ObjectsDetails ObjectsDetails { get; set; }
+
+        public Quest() {
+            SetupDetails = new SetupDetails();
+            ObjectsDetails = new ObjectsDetails();
+            Version = GetSOCVersion().ToString();
         }
 
-        public void Save(string fileName)
+        public bool Save(string fileName)
         {
-
-            using (FileStream stream = new FileStream(fileName, FileMode.Create))
+            try
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(Quest),  DetailTypes.GetAllDetailTypes());
-                serializer.Serialize(stream, this);
-            }
+                using (FileStream stream = new FileStream(fileName, FileMode.Create))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Quest), ObjectsDetails.GetAllDetailTypes());
+                    serializer.Serialize(stream, this);
+                }
 
+                MessageBox.Show("Done!", "Sideop Companion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            } catch (Exception e) {
+                MessageBox.Show("An error occurred while attempting to save the sideop to xml: " + e.Message, "Sideop Companion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+            return true;
         }
 
         public bool Load(string fileName)
         {
-
             if (!File.Exists(fileName))
             {
                 return false;
@@ -40,11 +55,11 @@ namespace SOC.Classes.Common
 
             using (FileStream stream = new FileStream(fileName, FileMode.Open))
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(Quest), DetailTypes.GetAllDetailTypes());
+                XmlSerializer deserializer = new XmlSerializer(typeof(Quest), ObjectsDetails.GetAllDetailTypes());
                 try
                 {
                     Quest loadedQuest = (Quest)deserializer.Deserialize(stream);
-                    if (loadedQuest.version == null)
+                    if (loadedQuest.Version == null)
                     {
                         System.Windows.Forms.MessageBox.Show("The selected xml file does not contain a version number. \n\nThe save file is likely earlier than SOC 0.7.0.0 and no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                         return false;
@@ -53,14 +68,14 @@ namespace SOC.Classes.Common
                     System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
                     System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
                     string version = fvi.FileVersion;
-                    if (version != loadedQuest.version)
+                    if (version != loadedQuest.Version)
                     {
                         System.Windows.Forms.MessageBox.Show("The selected xml file is from an earlier version of SOC. \n\nThe save file is no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                         return false;
                     }
 
-                    setupDetails = loadedQuest.setupDetails;
-                    questObjectDetails = loadedQuest.questObjectDetails;
+                    SetupDetails = loadedQuest.SetupDetails;
+                    ObjectsDetails = loadedQuest.ObjectsDetails;
                     return true;
                 }
                 catch (InvalidOperationException e)
@@ -77,14 +92,47 @@ namespace SOC.Classes.Common
             return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
         }
 
-        [XmlAttribute]
-        public string version { get; set; }
+        public void RefreshAllStubTexts()
+        {
+            foreach (ObjectsDetail detail in ObjectsDetails.Details)
+            {
+                if (detail is ObjectsDetailLocational locDetail)
+                {
+                    locDetail.RefreshStub();
+                }
+            }
+        }
 
-        [XmlElement]
-        public SetupDetails setupDetails { get; set; }
+        public LocationalDataStub[] GetLocationalStubs()
+        {
+            return ObjectsDetails.Details.OfType<ObjectsDetailLocational>().Select(detail => detail.GetStub()).ToArray();
+        }
 
-        [XmlArray]
-        public List<ObjectsDetail> questObjectDetails { get; set; }
+        internal void DisableObjectTypeStub(Type objectType, string reason)
+        {
+            foreach (ObjectsDetail detail in ObjectsDetails.Details)
+            {
+                if (detail is ObjectsDetailLocational locDetail && locDetail.GetType() == objectType)
+                {
+                    locDetail.GetStub().DisableStub(reason);
+                }
+            }
+        }
 
+        internal void EnableObjectTypeStub(Type objectType)
+        {
+            foreach (ObjectsDetail detail in ObjectsDetails.Details)
+            {
+                if (detail is ObjectsDetailLocational locDetail && locDetail.GetType() == objectType)
+                {
+                    locDetail.GetStub().EnableStub();
+                }
+            }
+        }
+
+        internal void UpdateFromSetup(SetupControl setupControl)
+        {
+            
+        }
     }
 }

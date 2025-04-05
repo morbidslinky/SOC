@@ -2,30 +2,37 @@
 using SOC.QuestObjects.Common;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using System.Linq;
 
 namespace SOC.UI
 {
-    public partial class DetailsDisplay : UserControl
+    public partial class DetailsControl : UserControl
     {
-        ObjectsDetails objectsDetails;
+        Quest Quest;
 
-        public DetailsDisplay(ObjectsDetails _managers)
+        public DetailsControl(Quest quest)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            objectsDetails = _managers;
-            flowPanelDetails.Controls.AddRange(objectsDetails.GetModulePanels());
+            Quest = quest;
+            flowPanelDetails.Controls.AddRange(GetDetailPanels());
         }
 
-        public void RefreshObjectPanels(SetupDetails setupDetails, ObjectsDetails _objectsDetails)
+        private UserControl[] GetDetailPanels()
         {
-            objectsDetails = _objectsDetails;
-            objectsDetails.RefreshAllPanels(setupDetails);
+            return Quest.ObjectsDetails.Details.Select(detail => detail.GetControlPanel().detailControl).ToArray();
         }
 
         private void flowPanelDetails_Layout(object sender, LayoutEventArgs e)
         {
             labelFlowHeight.Height = flowPanelDetails.Height - 18;
+        }
+
+        public void SyncQuestDataToUserInput()
+        {
+            Quest.ObjectsDetails.Details = Quest.ObjectsDetails.Details.Select(detail => detail.GetControlPanel().GetDetailFromControl()).ToList();
+            Quest.RefreshAllStubTexts();
         }
     }
 }

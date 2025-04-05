@@ -20,19 +20,19 @@ namespace SOC.UI
             Build
         }
 
-        private ObjectsDetails objectsDetails;
-        private SetupDisplay setupPage;
-        private DetailsDisplay detailPage;
-        private Waiting waitingPage;
-        private Step currentStep;
+        private Quest Quest;
+        private SetupControl SetupControl;
+        private DetailsControl DetailControl;
+        private WaitingControl WaitingControl;
+        private Step CurrentStep;
 
         public FormMain()
         {
-            objectsDetails = new ObjectsDetails();
-            setupPage = new SetupDisplay(objectsDetails);
-            detailPage = new DetailsDisplay(objectsDetails);
-            waitingPage = new Waiting();
-            currentStep = Step.NONE;
+            Quest = new Quest();
+            SetupControl = new SetupControl(Quest);
+            DetailControl = new DetailsControl(Quest);
+            WaitingControl = new WaitingControl();
+            CurrentStep = Step.NONE;
 
             InitializeComponent();
 
@@ -41,36 +41,22 @@ namespace SOC.UI
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            GoToPage(currentStep + 1);
+            GoToPage(CurrentStep + 1);
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
-            GoToPage(currentStep - 1);
-        }
-
-        private bool isFilled()
-        {
-            //return true; // FOR DEBUG
-            if (string.IsNullOrEmpty(setupPage.textBoxFPKName.Text) || string.IsNullOrEmpty(setupPage.textBoxQuestNum.Text) || string.IsNullOrEmpty(setupPage.textBoxQuestTitle.Text) || string.IsNullOrEmpty(setupPage.textBoxQuestDesc.Text))
-                return false;
-            if (setupPage.comboBoxCategory.SelectedIndex == -1 || setupPage.comboBoxReward.SelectedIndex == -1 || setupPage.comboBoxProgressNotifs.SelectedIndex == -1 || setupPage.comboBoxRegion.SelectedIndex == -1)
-                return false;
-            if (setupPage.comboBoxCP.Enabled)
-                if (setupPage.comboBoxCP.SelectedIndex == -1 || setupPage.comboBoxLoadArea.SelectedIndex == -1 || setupPage.comboBoxRadius.SelectedIndex == -1 || string.IsNullOrEmpty(setupPage.textBoxXCoord.Text) || string.IsNullOrEmpty(setupPage.textBoxYCoord.Text) || string.IsNullOrEmpty(setupPage.textBoxZCoord.Text))
-                    return false;
-
-            return true;
+            GoToPage(CurrentStep - 1);
         }
 
         private void GoToPage(Step step)
         {
-            if (step == currentStep)
+            if (step == CurrentStep)
             {
                 return;
             }
 
-            currentStep = step;
+            CurrentStep = step;
             switch (step)
             {
                 case Step.Setup:
@@ -78,7 +64,7 @@ namespace SOC.UI
                     break;
 
                 case Step.Detail:
-                    if (isFilled())
+                    if (SetupControl.IsFilled())
                     {
                         ShowWait();
                         ShowDetails();
@@ -86,26 +72,25 @@ namespace SOC.UI
                     else
                     {
                         MessageBox.Show("Please fill in the remaining Setup and Flavor Text fields.", "Missing Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        currentStep--;
+                        CurrentStep--;
                         return;
                     }
                     break;
 
                 case Step.Build:
                     BuildQuest();
-                    currentStep--;
+                    CurrentStep--;
                     break;
             }
         }
 
         private void ShowSetup()
         {
-            objectsDetails.UpdateAllDetailsFromVisualizers();
-            objectsDetails.RefreshAllStubTexts();
+            DetailControl.SyncQuestDataToUserInput();
 
             panelMain.Controls.Clear();
-            setupPage.EnableScrolling(); 
-            panelMain.Controls.Add(setupPage);
+            SetupControl.EnableScrolling(); 
+            panelMain.Controls.Add(SetupControl);
 
             buttonNext.Text = "Next >>";
             buttonBack.Visible = false;
@@ -114,21 +99,20 @@ namespace SOC.UI
         private void ShowWait()
         {
             panelMain.Controls.Clear(); 
-            setupPage.DisableScrolling();
+            SetupControl.DisableScrolling();
 
             buttonNext.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
-            panelMain.Controls.Add(waitingPage);
-            waitingPage.Refresh();
+            panelMain.Controls.Add(WaitingControl);
+            WaitingControl.Refresh();
         }
 
         private async void ShowDetails()
         {
-            SetupDetails setupDetails = setupPage.GetSetupDetails();
-            detailPage.RefreshObjectPanels(setupDetails, objectsDetails);
+            SetupControl.SyncQuestDataToUserInput();
 
-            panelMain.Controls.Add(detailPage);
-            panelMain.Controls.Remove(waitingPage);
+            panelMain.Controls.Add(DetailControl);
+            panelMain.Controls.Remove(WaitingControl);
 
             buttonBack.Visible = true;
             buttonNext.Text = "Build";
@@ -141,10 +125,9 @@ namespace SOC.UI
 
         private void BuildQuest()
         {
-            objectsDetails.UpdateAllDetailsFromVisualizers();
-            Quest quest = new Quest(setupPage.GetSetupDetails(), objectsDetails.GetQuestObjectDetails());
+            DetailControl.SyncQuestDataToUserInput();
             
-            if (BuildManager.Build(quest))
+            if (BuildManager.Build(Quest))
             {
                 MessageBox.Show("Build Complete", "Sideop Companion", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -156,7 +139,7 @@ namespace SOC.UI
 
         private void FormMain_Activated(object sender, EventArgs e)
         {
-            setupPage.refreshNotifsList();
+            SetupControl.refreshNotifsList();
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
@@ -169,47 +152,44 @@ namespace SOC.UI
 
             GoToPage(Step.Setup);
 
-            Quest quest = new Quest();
-
-            if (quest.Load(loadFile.FileName))
+            if (Quest.Load(loadFile.FileName))
             {
-                objectsDetails = new ObjectsDetails(quest.questObjectDetails);
-                setupPage.managers.ToString();
-                setupPage.SetForm(quest.setupDetails);
-                objectsDetails.RefreshAllStubTexts();
+                SetupControl.SyncUserInputToQuestData();
             }
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Save();
+            DoSave();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isFilled())
+            if (SetupControl.IsFilled())
             {
                 DialogResult result = MessageBox.Show("Do you want to save this Sideop to an Xml file?", "SOC", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
-                    Save();
+                {
+                    if (!DoSave())
+                        e.Cancel = true;
+                }
                 else if (result == DialogResult.Cancel)
                     e.Cancel = true;
             }
         }
 
-        private void Save()
+        private bool DoSave()
         {
-            SetupDetails setup = setupPage.GetSetupDetails();
+            SetupControl.SyncQuestDataToUserInput();
+            GoToPage(Step.Setup); // Syncs details and avoids time spent reloading ObjectsDetails control panels.
+
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
-            saveFile.FileName = setup.FpkName;
+            saveFile.FileName = Quest.SetupDetails.FpkName;
             DialogResult saveResult = saveFile.ShowDialog();
-            if (saveResult != DialogResult.OK) return;
+            if (saveResult != DialogResult.OK) return true;
 
-            GoToPage(Step.Setup);
-
-            Quest quest = new Quest(setup, objectsDetails.GetQuestObjectDetails());
-            quest.Save(saveFile.FileName);
+            return Quest.Save(saveFile.FileName);
         }
 
         private void buttonOpenFolder_Click(object sender, EventArgs e)
@@ -238,8 +218,8 @@ namespace SOC.UI
                 Quest quest = new Quest();
                 if (quest.Load(filePath))
                 {
-                    if (!quests.Exists(questInList => questInList.setupDetails.FpkName == quest.setupDetails.FpkName)
-                        && !quests.Exists(questInList => questInList.setupDetails.QuestNum == quest.setupDetails.QuestNum))
+                    if (!quests.Exists(questInList => questInList.SetupDetails.FpkName == quest.SetupDetails.FpkName)
+                        && !quests.Exists(questInList => questInList.SetupDetails.QuestNum == quest.SetupDetails.QuestNum))
                         quests.Add(quest);
                     else failedCount++;
                 }
