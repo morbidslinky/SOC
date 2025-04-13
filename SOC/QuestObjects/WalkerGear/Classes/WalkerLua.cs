@@ -67,7 +67,6 @@ namespace SOC.QuestObjects.WalkerGear
                     LuaFunction.ToTableEntry("OnEnterQuestTrapArea", new string[] { }, " qvars.inMostActiveQuestArea = true; if GkEventTimerManager.IsTimerActive(\"OutOfMostActiveArea\") and qvars.walkerGearGameId == vars.playerVehicleGameObjectId then GkEventTimerManager.Stop(\"OutOfMostActiveArea\"); GkEventTimerManager.Start(\"AnnounceOnceCooldown\", 3); end; "));
 
                 mainLua.QStep_Main.StrCode32Table.Add(ExitTrap, EnterTrap, FinishTimerActiveArea, FinishTimerCooldown);
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
@@ -89,6 +88,8 @@ namespace SOC.QuestObjects.WalkerGear
                             StaticObjectiveFunctions.TallyGenericTargets
                         )
                     );
+
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaCaptureTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(

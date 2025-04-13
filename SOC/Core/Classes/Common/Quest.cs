@@ -1,11 +1,25 @@
 ﻿using SOC.Forms.Pages;
+using SOC.QuestObjects.ActiveItem;
+using SOC.QuestObjects.Animal;
+using SOC.QuestObjects.Camera;
 using SOC.QuestObjects.Common;
+using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.GeoTrap;
+using SOC.QuestObjects.Helicopter;
+using SOC.QuestObjects.Hostage;
+using SOC.QuestObjects.Item;
+using SOC.QuestObjects.Model;
+using SOC.QuestObjects.UAV;
+using SOC.QuestObjects.Vehicle;
+using SOC.QuestObjects.WalkerGear;
 using SOC.UI;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.Classes.Common
 {
@@ -21,10 +35,47 @@ namespace SOC.Classes.Common
         [XmlElement]
         public ObjectsDetails ObjectsDetails { get; set; }
 
+        [XmlElement]
+        public ScriptDetails ScriptDetails { get; set; }
+
         public Quest() {
-            SetupDetails = new SetupDetails();
-            ObjectsDetails = new ObjectsDetails();
             Version = GetSOCVersion().ToString();
+        }
+
+        public static Quest Create()
+        {
+            Quest quest = new Quest();
+
+            quest.SetupDetails = new SetupDetails();
+            quest.ObjectsDetails = new ObjectsDetails();
+            quest.ScriptDetails = new ScriptDetails();
+
+            foreach (Type type in GetAllDetailTypes())
+            {
+                ObjectsDetail questDetail = (ObjectsDetail)Activator.CreateInstance(type);
+                quest.ObjectsDetails.Details.Add(questDetail);
+            }
+
+            return quest;
+        }
+
+        public static Type[] GetAllDetailTypes()
+        {
+            Type[] AllDetailTypes = {
+                typeof(EnemiesDetail),
+                typeof(HostagesDetail),
+                typeof(VehiclesDetail),
+                typeof(HelicoptersDetail),
+                typeof(UAVsDetail),
+                typeof(CamerasDetail),
+                typeof(WalkerGearsDetail),
+                typeof(AnimalsDetail),
+                typeof(ItemsDetail),
+                typeof(ActiveItemsDetail),
+                typeof(ModelsDetail),
+                typeof(GeoTrapsDetail),
+            };
+            return AllDetailTypes;
         }
 
         public bool Save(string fileName)
@@ -33,7 +84,7 @@ namespace SOC.Classes.Common
             {
                 using (FileStream stream = new FileStream(fileName, FileMode.Create))
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(Quest), ObjectsDetails.GetAllDetailTypes());
+                    XmlSerializer serializer = new XmlSerializer(typeof(Quest));
                     serializer.Serialize(stream, this);
                 }
 
@@ -55,13 +106,13 @@ namespace SOC.Classes.Common
 
             using (FileStream stream = new FileStream(fileName, FileMode.Open))
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(Quest), ObjectsDetails.GetAllDetailTypes());
+                XmlSerializer deserializer = new XmlSerializer(typeof(Quest));
                 try
                 {
                     Quest loadedQuest = (Quest)deserializer.Deserialize(stream);
                     if (loadedQuest.Version == null)
                     {
-                        System.Windows.Forms.MessageBox.Show("The selected xml file does not contain a version number. \n\nThe save file is likely earlier than SOC 0.7.0.0 and no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        MessageBox.Show("The selected xml file does not contain a version number. \n\nThe save file is likely earlier than SOC 0.7.0.0 and no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                         return false;
                     }
 
@@ -70,17 +121,18 @@ namespace SOC.Classes.Common
                     string version = fvi.FileVersion;
                     if (version != loadedQuest.Version)
                     {
-                        System.Windows.Forms.MessageBox.Show("The selected xml file is from an earlier version of SOC. \n\nThe save file is no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                        MessageBox.Show("The selected xml file is from an earlier version of SOC. \n\nThe save file is no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                         return false;
                     }
 
                     SetupDetails = loadedQuest.SetupDetails;
                     ObjectsDetails = loadedQuest.ObjectsDetails;
+                    ScriptDetails = loadedQuest.ScriptDetails;
                     return true;
                 }
                 catch (InvalidOperationException e)
                 {
-                    System.Windows.Forms.MessageBox.Show(string.Format("An Exception has occurred and the selected xml file could not be loaded. \n\nInnerException message: \n{0}", e.InnerException), "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    MessageBox.Show(string.Format("An Exception has occurred and the selected xml file could not be loaded. \n\nInnerException message: \n{0}", e.InnerException), "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
                 }
             }
 
@@ -128,11 +180,6 @@ namespace SOC.Classes.Common
                     locDetail.GetStub().EnableStub();
                 }
             }
-        }
-
-        internal void UpdateFromSetup(SetupControl setupControl)
-        {
-            
         }
     }
 }

@@ -28,6 +28,9 @@ namespace SOC.Classes.Lua
         {
             Quest = quest;
 
+            QStep_Main.StrCode32Table.AddCommonDefinitions(Quest.ScriptDetails.VariableDeclarations);
+            QStep_Main.StrCode32Table.Add(Quest.ScriptDetails.QStep_Main);
+
             /*TODO
             XmlSerializer serializer = new XmlSerializer(typeof(LuaTable));
             using (StreamReader reader = new StreamReader("StaticScriptFunctions.xml"))
@@ -89,11 +92,11 @@ namespace SOC.Classes.Lua
                 "local StrCode32 = Fox.StrCode32 \n" +
                 "local StrCode32Table = Tpp.StrCode32Table \n" +
                 "local GetGameObjectId = GameObject.GetGameObjectId \n\n" +
-                "local |[0|assign_variable]| " +
-                "local |[1|assign_variable]| " +
-                "local |[2|assign_variable]| " +
-                "local |[3|assign_variable]| " +
-                "return |[3|variable]|",
+                "local |[0|ASSIGN_VARIABLE]| " +
+                "local |[1|ASSIGN_VARIABLE]| " +
+                "local |[2|ASSIGN_VARIABLE]| " +
+                "local |[3|ASSIGN_VARIABLE]| " +
+                "return |[3|VARIABLE]|",
                     CommonDefinitionsVariable,
                     Quest_MessagesDefVariable,
                     QStep_Main_MessagesDefVariable,

@@ -20,8 +20,6 @@ namespace SOC.QuestObjects.Vehicle
             {
                 mainLua.QUEST_TABLE.Add(BuildVehicleList(detail.vehicles));
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
-
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), WarpVehicles
@@ -36,6 +34,8 @@ namespace SOC.QuestObjects.Vehicle
                             StaticObjectiveFunctions.TallyGenericTargets
                         )
                     );
+
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaCaptureTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(

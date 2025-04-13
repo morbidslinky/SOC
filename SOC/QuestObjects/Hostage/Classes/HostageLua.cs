@@ -74,8 +74,6 @@ namespace SOC.QuestObjects.Hostage
                     );
                 }
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
-
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), SetHostageAttributes
@@ -90,6 +88,8 @@ namespace SOC.QuestObjects.Hostage
                             StaticObjectiveFunctions.TallyGenericTargets
                         )
                     );
+
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(

@@ -36,7 +36,7 @@ namespace SOC.QuestObjects.Animal
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
                     mainLua.QUEST_TABLE.Add(BuildAnimalTargetList(detail.animals));
-                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.animalTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.animalTargetMessages);
                 }
             }
         }

@@ -39,7 +39,7 @@ namespace SOC.QuestObjects.Common
         {
             var questObjectBoxes = questObjects.Select(objects => NewQuestObjectBox(objects)).ToArray();
             flowPanel.Controls.Clear();
-            //flowPanel.Controls.AddRange(questObjectBoxes);
+            flowPanel.Controls.AddRange(questObjectBoxes); // TODO this sucks on the loading time for the detail page. Gotta figure out some kind of optimization.
         }
 
         public ObjectsDetail GetDetailFromControl()

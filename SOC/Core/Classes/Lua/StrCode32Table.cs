@@ -33,7 +33,20 @@ namespace SOC.Classes.Lua
             foreach (StrCode32Script script in subscripts) { Add(script); }
         }
 
+        public void Add(List<StrCode32Script> subscripts)
+        {
+            foreach (StrCode32Script script in subscripts) { Add(script); }
+        }
+
         public void AddCommonDefinitions(params LuaTableEntry[] definitionEntries)
+        {
+            foreach (LuaTableEntry entry in definitionEntries)
+                entry.ExtrudeForAssignmentVariable = true;
+
+            CommonDefinitionsTable.Add(definitionEntries);
+        }
+
+        public void AddCommonDefinitions(List<LuaTableEntry> definitionEntries)
         {
             foreach (LuaTableEntry entry in definitionEntries)
                 entry.ExtrudeForAssignmentVariable = true;
@@ -133,7 +146,7 @@ namespace SOC.Classes.Lua
         [XmlElement]
         public StrCode32Event CodeEvent;
 
-        [XmlAttribute]
+        [XmlElement]
         public LuaText Identifier;
 
         [XmlArray("Conditions")]

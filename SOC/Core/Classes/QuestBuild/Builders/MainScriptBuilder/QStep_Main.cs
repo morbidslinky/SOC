@@ -20,7 +20,7 @@ namespace SOC.Classes.Lua
         public LuaTableEntry Get(string strCode32TableVariableName)
         {
             QStep_Main_Table.Add(
-                Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(strCode32TableVariableName))), false),
+                Lua.TableEntry("Messages", Lua.Function("return |[0|FUNCTION_CALL]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(strCode32TableVariableName))), false),
                 Lua.TableEntry("OnEnter", OnEnterFunction.ToFunction()),
                 Lua.TableEntry("OnLeave", OnLeaveFunction.ToFunction())
             );
@@ -29,7 +29,8 @@ namespace SOC.Classes.Lua
         }
     }
 }
-public static class QStep_Main_CommonMessages
+
+public static class QStep_Main_TargetMessages
 {
     static readonly StrCode32Script PlayerPickUpWeapon = new StrCode32Script(
         new StrCode32Event("Player", "OnPickUpWeapon", "", "playerIndex", "playerIndex"),

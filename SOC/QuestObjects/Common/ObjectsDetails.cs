@@ -2,6 +2,7 @@
 using SOC.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace SOC.QuestObjects.Common
@@ -20,35 +21,6 @@ namespace SOC.QuestObjects.Common
         [XmlElement(typeof(ActiveItem.ActiveItemsDetail))]
         [XmlElement(typeof(Model.ModelsDetail))]
         [XmlElement(typeof(GeoTrap.GeoTrapsDetail))]
-        public List<ObjectsDetail> Details;
-
-        public static Type[] GetAllDetailTypes()
-        {
-            Type[] AllDetailTypes = {
-                typeof(Enemy.EnemiesDetail),
-                typeof(Hostage.HostagesDetail),
-                typeof(Vehicle.VehiclesDetail),
-                typeof(Helicopter.HelicoptersDetail),
-                typeof(UAV.UAVsDetail),
-                typeof(Camera.CamerasDetail),
-                typeof(WalkerGear.WalkerGearsDetail),
-                typeof(Animal.AnimalsDetail),
-                typeof(Item.ItemsDetail),
-                typeof(ActiveItem.ActiveItemsDetail),
-                typeof(Model.ModelsDetail),
-                typeof(GeoTrap.GeoTrapsDetail),
-            };
-            return AllDetailTypes;
-        }
-
-        public ObjectsDetails()
-        {
-            Details = new List<ObjectsDetail>();
-            foreach (Type type in GetAllDetailTypes())
-            {
-                ObjectsDetail questDetail = (ObjectsDetail)Activator.CreateInstance(type);
-                Details.Add(questDetail);
-            }
-        }
+        public List<ObjectsDetail> Details = new List<ObjectsDetail>();
     }
 }

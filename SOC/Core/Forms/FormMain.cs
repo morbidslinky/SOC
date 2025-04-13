@@ -1,6 +1,5 @@
 ﻿using SOC.Classes.Common;
 using SOC.Classes.QuestBuild;
-using SOC.QuestObjects.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,20 +16,23 @@ namespace SOC.UI
             NONE,
             Setup,
             Detail,
+            Script,
             Build
         }
 
         private Quest Quest;
         private SetupControl SetupControl;
         private DetailsControl DetailControl;
+        private ScriptControl ScriptControl;
         private WaitingControl WaitingControl;
         private Step CurrentStep;
 
         public FormMain()
         {
-            Quest = new Quest();
+            Quest = Quest.Create();
             SetupControl = new SetupControl(Quest);
             DetailControl = new DetailsControl(Quest);
+            ScriptControl = new ScriptControl(Quest);
             WaitingControl = new WaitingControl();
             CurrentStep = Step.NONE;
 
@@ -60,6 +62,8 @@ namespace SOC.UI
             switch (step)
             {
                 case Step.Setup:
+                    DetailControl.SyncQuestDataToUserInput();
+
                     ShowSetup();
                     break;
 
@@ -67,6 +71,9 @@ namespace SOC.UI
                     if (SetupControl.IsFilled())
                     {
                         ShowWait();
+                        ScriptControl.SyncQuestDataToUserInput();
+                        SetupControl.SyncQuestDataToUserInput();
+
                         ShowDetails();
                     }
                     else
@@ -77,7 +84,16 @@ namespace SOC.UI
                     }
                     break;
 
+                case Step.Script:
+                    ShowWait();
+                    DetailControl.SyncQuestDataToUserInput();
+
+                    ShowScript();
+                    break;
+
                 case Step.Build:
+                    ScriptControl.SyncQuestDataToUserInput();
+
                     BuildQuest();
                     CurrentStep--;
                     break;
@@ -86,8 +102,6 @@ namespace SOC.UI
 
         private void ShowSetup()
         {
-            DetailControl.SyncQuestDataToUserInput();
-
             panelMain.Controls.Clear();
             SetupControl.EnableScrolling(); 
             panelMain.Controls.Add(SetupControl);
@@ -109,9 +123,21 @@ namespace SOC.UI
 
         private async void ShowDetails()
         {
-            SetupControl.SyncQuestDataToUserInput();
-
             panelMain.Controls.Add(DetailControl);
+            panelMain.Controls.Remove(WaitingControl);
+
+            buttonBack.Visible = true;
+            buttonNext.Text = "Next >>";
+            this.Cursor = Cursors.Default;
+
+            await Task.Delay(100);
+
+            buttonNext.Enabled = true;
+        }
+
+        private async void ShowScript()
+        {
+            panelMain.Controls.Add(ScriptControl);
             panelMain.Controls.Remove(WaitingControl);
 
             buttonBack.Visible = true;
@@ -125,8 +151,6 @@ namespace SOC.UI
 
         private void BuildQuest()
         {
-            DetailControl.SyncQuestDataToUserInput();
-            
             if (BuildManager.Build(Quest))
             {
                 MessageBox.Show("Build Complete", "Sideop Companion", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -155,6 +179,7 @@ namespace SOC.UI
             if (Quest.Load(loadFile.FileName))
             {
                 SetupControl.SyncUserInputToQuestData();
+                ScriptControl = new ScriptControl(Quest);
             }
         }
 
@@ -181,7 +206,8 @@ namespace SOC.UI
         private bool DoSave()
         {
             SetupControl.SyncQuestDataToUserInput();
-            GoToPage(Step.Setup); // Syncs details and avoids time spent reloading ObjectsDetails control panels.
+            ScriptControl.SyncQuestDataToUserInput();
+            GoToPage(Step.Setup);
 
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";

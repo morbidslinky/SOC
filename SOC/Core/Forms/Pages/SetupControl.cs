@@ -1,8 +1,6 @@
-﻿using SOC.Classes;
-using SOC.QuestObjects.Common;
+﻿using SOC.QuestObjects.Common;
 using SOC.Core.Classes.Route;
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -102,11 +100,6 @@ namespace SOC.UI
                 comboBoxRoute.SelectedItem = "NONE";
 
             Quest.RefreshAllStubTexts();
-        }
-
-        public SetupDetails GetSetupDetails()
-        {
-            return new SetupDetails(this);
         }
 
         public void refreshNotifsList()

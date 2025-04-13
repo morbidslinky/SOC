@@ -39,7 +39,7 @@ namespace SOC.QuestObjects.Item
                     )
                 );
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.dormantItemTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.dormantItemTargetMessages);
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                     Lua.TableEntry(

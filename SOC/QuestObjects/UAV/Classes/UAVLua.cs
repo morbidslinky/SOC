@@ -18,8 +18,6 @@ namespace SOC.QuestObjects.UAV
             {
                 mainLua.QUEST_TABLE.Add(BuildUAVList(detail.UAVs));
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
-
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), setupUAV
@@ -34,6 +32,8 @@ namespace SOC.QuestObjects.UAV
                             StaticObjectiveFunctions.TallyGenericTargets
                         )
                     );
+
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaNoCaptureTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,

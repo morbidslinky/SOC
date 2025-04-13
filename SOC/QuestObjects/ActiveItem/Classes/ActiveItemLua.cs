@@ -22,7 +22,7 @@ namespace SOC.QuestObjects.ActiveItem
                     )
                 );
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.activeItemTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.activeItemTargetMessages);
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                     Lua.TableEntry(

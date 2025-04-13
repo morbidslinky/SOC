@@ -9,9 +9,9 @@ using System.Xml.Serialization;
 namespace SOC.Classes.Lua
 {
     /// <summary>
-    /// Embed |[index,restriction]| into the template string to set placeholders that will be populated when the lua is written to a file from a LuaFunction, assuming the function's populationValues are aligned with the template placeholders.
-    /// Example: "This is a string: |[0,string]|, and this is a variable: |[1,variable]|, and this is an error: |[foo,bar]|."
-    /// Accepted placeholder restrictions: boolean, string, number, function, function_call, table, table_identifier, variable, assign_variable, nil 
+    /// Embed |[index,RESTRICTION]| into the template string to set placeholders that will be populated when the lua is written to a file from a LuaFunction, assuming the function's populationValues are aligned with the template placeholders.
+    /// Example: "This is a string: |[0,STRING]|, and this is a variable: |[1,VARIABLE]|, and this is an error: |[foo,bar]|."
+    /// Accepted placeholder restrictions: BOOLEAN, STRING, NUMBER, FUNCTION, FUNCTION_CALL, TABLE, TABLE_IDENTIFIER, VARIABLE, ASSIGN_VARIABLE, NIL 
     /// </summary>
     public class LuaTemplate
     {
@@ -29,31 +29,31 @@ namespace SOC.Classes.Lua
             switch (v)
             {
                 case LuaBoolean boolean:
-                    restrictionType = "boolean";
+                    restrictionType = "BOOLEAN";
                     break;
                 case LuaFunction func:
-                    restrictionType = "function";
+                    restrictionType = "FUNCTION";
                     break;
                 case LuaFunctionCall call:
-                    restrictionType = "function_call";
+                    restrictionType = "FUNCTION_CALL";
                     break;
                 case LuaNil nil:
-                    restrictionType = "nil";
+                    restrictionType = "NIL";
                     break;
                 case LuaNumber num:
-                    restrictionType = "number";
+                    restrictionType = "NUMBER";
                     break;
                 case LuaTable table:
-                    restrictionType = "table";
+                    restrictionType = "TABLE";
                     break;
                 case LuaTableIdentifier identifier:
-                    restrictionType = "table_identifier";
+                    restrictionType = "TABLE_IDENTIFIER";
                     break;
                 case LuaText text:
-                    restrictionType = "string";
+                    restrictionType = "STRING";
                     break;
                 case LuaVariable var:
-                    restrictionType = (ifVariableIsAssign ? "assign_variable" : "variable");
+                    restrictionType = (ifVariableIsAssign ? "ASSIGN_VARIABLE" : "VARIABLE");
                     break;
                 default:
                     restrictionType = "unknown value type";
@@ -161,36 +161,36 @@ namespace SOC.Classes.Lua
 
             string typeRestriction = splitPlaceholderTokens[1];
 
-            switch (typeRestriction.Trim().ToLower())
+            switch (typeRestriction.Trim().ToUpper())
             {
-                case "boolean":
+                case "BOOLEAN":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.BOOLEAN;
                     break;
-                case "string":
+                case "STRING":
                     placeholder.AllowedType  = LuaValue.TemplateRestrictionType.TEXT;
                     break;
-                case "number":
+                case "NUMBER":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.NUMBER;
                     break;
-                case "function":
+                case "FUNCTION":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION;
                     break;
-                case "function_call":
+                case "FUNCTION_CALL":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION_CALL;
                     break;
-                case "table":
+                case "TABLE":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE;
                     break;
-                case "table_identifier":
+                case "TABLE_IDENTIFIER":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE_IDENTIFIER;
                     break;
-                case "variable":
+                case "VARIABLE":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.VARIABLE;
                     break;
-                case "assign_variable":
+                case "ASSIGN_VARIABLE":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE;
                     break;
-                case "nil":
+                case "NIL":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.NIL;
                     break;
                 default:

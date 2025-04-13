@@ -150,7 +150,8 @@ namespace SOC.QuestObjects.Enemy
                         )
                     );
 
-                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),

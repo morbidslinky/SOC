@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Classes\Assets\FileAssets.cs" />
+    <Compile Include="Core\Classes\Common\ScriptDetails.cs" />
     <Compile Include="Core\Classes\Common\SetupDetails.cs" />
     <Compile Include="Core\Classes\Fox2\EntityClasses\BoxShape.cs" />
     <Compile Include="Core\Classes\Fox2\EntityClasses\DataSet.cs" />
@@ -164,11 +165,11 @@
     <Compile Include="Core\Classes\LangTool\LangEntry.cs" />
     <Compile Include="Core\Classes\LangTool\LangFile.cs" />
     <Compile Include="Core\Classes\Common\Quest.cs" />
-    <Compile Include="Core\Forms\Pages\ScriptDisplay.cs">
+    <Compile Include="Core\Forms\Pages\ScriptControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\ScriptDisplay.Designer.cs">
-      <DependentUpon>ScriptDisplay.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\ScriptControl.Designer.cs">
+      <DependentUpon>ScriptControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Forms\PanelScroll.cs" />
     <Compile Include="Core\Forms\QuestObjectBox.cs">
@@ -287,11 +288,11 @@
       <DependentUpon>formCustomProgressLang.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Classes\QuestBuild\Builders\Fox2Builder.cs" />
-    <Compile Include="Core\Forms\Pages\DetailsDisplay.cs">
+    <Compile Include="Core\Forms\Pages\DetailsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\DetailsDisplay.Designer.cs">
-      <DependentUpon>DetailsDisplay.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\DetailsControl.Designer.cs">
+      <DependentUpon>DetailsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Forms\Pages\LocationalDataStub.cs">
       <SubType>UserControl</SubType>
@@ -414,17 +415,17 @@
     <Compile Include="QuestObjects\WalkerGear\Forms\WalkerBox.Designer.cs">
       <DependentUpon>WalkerBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Forms\Pages\SetupDisplay.cs">
+    <Compile Include="Core\Forms\Pages\SetupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Setup.Designer.cs">
-      <DependentUpon>SetupDisplay.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\SetupControl.Designer.cs">
+      <DependentUpon>SetupControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Waiting.cs">
+    <Compile Include="Core\Forms\Pages\WaitingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Waiting.Designer.cs">
-      <DependentUpon>Waiting.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\WaitingControl.Designer.cs">
+      <DependentUpon>WaitingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -463,20 +464,20 @@
       <DependentUpon>formCustomProgressLang.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\DetailsDisplay.resx">
-      <DependentUpon>DetailsDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\DetailsControl.resx">
+      <DependentUpon>DetailsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\ScriptDisplay.resx">
-      <DependentUpon>ScriptDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\ScriptControl.resx">
+      <DependentUpon>ScriptControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\SetupDisplay.resx">
-      <DependentUpon>SetupDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\SetupControl.resx">
+      <DependentUpon>SetupControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\Waiting.resx">
-      <DependentUpon>Waiting.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\WaitingControl.resx">
+      <DependentUpon>WaitingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

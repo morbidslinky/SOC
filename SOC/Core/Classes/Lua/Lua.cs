@@ -194,7 +194,7 @@ namespace SOC.Classes.Lua
             return tableEntry;
         }
 
-        private static LuaValue GetEntryValueType<TableValue>(TableValue val)
+        public static LuaValue GetEntryValueType<TableValue>(TableValue val)
         {
             switch (val)
             {
@@ -222,6 +222,5 @@ namespace SOC.Classes.Lua
                     return new LuaText("Unsupported Value Type");
             }
         }
-
     }
 }

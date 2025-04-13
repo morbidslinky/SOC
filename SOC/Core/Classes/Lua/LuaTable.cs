@@ -59,6 +59,21 @@ namespace SOC.Classes.Lua
             }
         }
 
+        public void Add(List<LuaTableEntry> entries)
+        {
+            foreach (LuaTableEntry entry in entries)
+            {
+                if (entry.Key is LuaTableIdentifier id)
+                {
+                    TryAdd(id.IdentifierKeys, entry.Value, entry.ExtrudeForAssignmentVariable);
+                }
+                else
+                {
+                    TryAdd(entry);
+                }
+            }
+        }
+
         /* Flawed set logic- ambiguity exists when setting to tables containing nested tables, while setting tables also containing nested tables.
         public void AddOrSet(params LuaTableEntry[] entries)
         {

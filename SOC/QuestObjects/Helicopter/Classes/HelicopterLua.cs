@@ -38,7 +38,8 @@ namespace SOC.QuestObjects.Helicopter
                         )
                     );
 
-                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaNoCaptureTargetMessages);
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,
                         Lua.TableEntry(
