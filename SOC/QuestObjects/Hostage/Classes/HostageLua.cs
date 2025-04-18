@@ -41,10 +41,10 @@ namespace SOC.QuestObjects.Hostage
             List<Hostage> hostages = hostageDetail.hostages;
             HostageMetadata meta = hostageDetail.hostageMetadata;
 
-            mainLua.QUEST_TABLE.Add(BuildHostageList(hostages, meta));
-
             if (hostages.Count > 0)
             {
+                mainLua.QUEST_TABLE.Add(BuildHostageList(hostages, meta));
+
                 if (meta.canInterrogate)
                 {
                     var cpInt = new LuaTable(

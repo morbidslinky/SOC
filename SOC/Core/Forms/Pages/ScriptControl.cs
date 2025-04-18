@@ -15,7 +15,10 @@ namespace SOC.UI
 {
     public partial class ScriptControl : UserControl
     {
+        private bool userPressedBackspace = false;
         public Quest Quest;
+
+        Str32TableNode qstep_main = new Str32TableNode("qstep_main");
 
         public ScriptControl(Quest quest)
         {
@@ -26,48 +29,54 @@ namespace SOC.UI
             treeViewVariables.Nodes.Clear();
             foreach (var entry in Quest.ScriptDetails.VariableDeclarations)
             {
-                treeViewVariables.Nodes.Add(new TreeVariableNode(entry));
+                treeViewVariables.Nodes.Add(new VariableNode(entry));
             }
 
-            // todo populate script panel boxes with quest scripts
+            treeViewScripts.Nodes.Clear();
+            foreach (var entry in Quest.ScriptDetails.QStep_Main)
+            {
+                qstep_main.Add(entry);
+            }
+            treeViewScripts.Nodes.Add(qstep_main);
         }
 
         internal void SyncQuestDataToUserInput()
         {
             Quest.ScriptDetails.VariableDeclarations.Clear();
-            foreach (TreeVariableNode node in treeViewVariables.Nodes)
+            foreach (VariableNode node in treeViewVariables.Nodes)
             {
-                ClearTables(node);
-                AddNodesToTable(node);
+                ClearVarTables(node);
+                AddVarNodesToVarTable(node);
                 Quest.ScriptDetails.VariableDeclarations.Add(node.Entry);
             }
 
-            //todo populate quest scripts with script panel boxes
+            Quest.ScriptDetails.QStep_Main.Clear();
+            Quest.ScriptDetails.QStep_Main.AddRange(qstep_main.ConvertToScripts());
         }
 
-        private void ClearTables(TreeVariableNode node)
+        private void ClearVarTables(VariableNode node)
         {
-            foreach (TreeVariableNode child in node.Nodes)
+            foreach (VariableNode child in node.Nodes)
             {
-                ClearTables(child);
+                ClearVarTables(child);
             }
 
             if (node.Parent != null)
             {
-                var parentNode = (TreeVariableNode)node.Parent;
+                var parentNode = (VariableNode)node.Parent;
                 parentNode.Entry.Value = new LuaTable();
             }
         }
 
-        private void AddNodesToTable(TreeVariableNode node)
+        private void AddVarNodesToVarTable(VariableNode node)
         {
-            foreach (TreeVariableNode child in node.Nodes) {
-                AddNodesToTable(child);
+            foreach (VariableNode child in node.Nodes) {
+                AddVarNodesToVarTable(child);
             }
 
             if (node.Parent != null)
             {
-                var parentNode = (TreeVariableNode)node.Parent;
+                var parentNode = (VariableNode)node.Parent;
                 var parentNodeEntry = (LuaTable)parentNode.Entry.Value;
                 parentNodeEntry.TryAdd(node.Entry);
             }
@@ -80,7 +89,7 @@ namespace SOC.UI
             {
                 i++;
             }
-            TreeVariableNode node = new TreeVariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.Number(0)));
+            VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.Number(0)));
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
             treeViewVariables.Focus();
@@ -88,7 +97,7 @@ namespace SOC.UI
 
         private void buttonRemoveVariableIdentifier_Click(object sender, EventArgs e)
         {
-            textBoxName.Text = "";
+            textBoxVarName.Text = "";
             TreeNode prevNode = treeViewVariables.SelectedNode.PrevNode;
             TreeNode parentNode = treeViewVariables.SelectedNode.Parent;
 
@@ -108,15 +117,15 @@ namespace SOC.UI
             } 
             else
             {
-                textBoxName.Enabled = false;
-                comboBoxType.Enabled = false;
-                HideAllValueControls();
+                textBoxVarName.Enabled = false;
+                comboBoxVarType.Enabled = false;
+                HideAllVarValueControls();
             }
         }
 
         private void buttonNewIdentifier_Click(object sender, EventArgs e)
         {
-            TreeVariableNode parentNode = (TreeVariableNode)treeViewVariables.SelectedNode;
+            VariableNode parentNode = (VariableNode)treeViewVariables.SelectedNode;
             parentNode.Entry.Value = new LuaTable();
             parentNode.UpdateText();
 
@@ -126,46 +135,46 @@ namespace SOC.UI
                 i++;
             }
 
-            TreeVariableNode node = new TreeVariableNode(Lua.TableEntry(i, Lua.Number(0)));
+            VariableNode node = new VariableNode(Lua.TableEntry(i, Lua.Number(0)));
             parentNode.Nodes.Add(node);
             parentNode.Expand();
         }
 
         private void treeViewVariables_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            TreeVariableNode node = (TreeVariableNode)treeViewVariables.SelectedNode;
-            comboBoxType.Enabled = true;
-            textBoxName.Enabled = true;
+            VariableNode node = (VariableNode)treeViewVariables.SelectedNode;
+            comboBoxVarType.Enabled = true;
+            textBoxVarName.Enabled = true;
 
             switch (node.Entry.Value.Type)
             {
                 case TemplateRestrictionType.TEXT:
-                    ShowTypeValueControl(textBoxTextValue);
-                    textBoxTextValue.Text = node.Entry.Value.Value.Trim('"');
-                    comboBoxType.Text = "TEXT";
+                    ShowVarTypeValueControl(textBoxVarTextValue);
+                    textBoxVarTextValue.Text = node.Entry.Value.Value.Trim('"');
+                    comboBoxVarType.Text = "TEXT";
                     break;
                 case TemplateRestrictionType.NUMBER:
-                    ShowTypeValueControl(numericUpDownNumberValue);
-                    numericUpDownNumberValue.Value = decimal.Parse(node.Entry.Value.Value);
-                    comboBoxType.Text = "NUMBER";
+                    ShowVarTypeValueControl(numericUpDownVarNumberValue);
+                    numericUpDownVarNumberValue.Value = decimal.Parse(node.Entry.Value.Value);
+                    comboBoxVarType.Text = "NUMBER";
                     break;
                 case TemplateRestrictionType.BOOLEAN:
-                    ShowTypeValueControl(comboBoxBooleanValue);
-                    comboBoxBooleanValue.Text = node.Entry.Value.Value;
-                    comboBoxType.Text = "BOOLEAN";
+                    ShowVarTypeValueControl(comboBoxVarBooleanValue);
+                    comboBoxVarBooleanValue.Text = node.Entry.Value.Value;
+                    comboBoxVarType.Text = "BOOLEAN";
                     break;
                 case TemplateRestrictionType.TABLE:
-                    ShowTypeValueControl(buttonNewIdentifier);
-                    comboBoxType.Text = "TABLE";
+                    ShowVarTypeValueControl(buttonNewIdentifier);
+                    comboBoxVarType.Text = "TABLE";
                     break;
             }
 
-            textBoxName.Text = node.Name.Trim('"');
+            textBoxVarName.Text = node.Name.Trim('"');
         }
 
-        private void ShowTypeValueControl(Control control)
+        private void ShowVarTypeValueControl(Control control)
         {
-            Control[] valueControls = { textBoxTextValue, numericUpDownNumberValue, comboBoxBooleanValue, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarTextValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
 
             foreach (Control valueControl in valueControls)
             {
@@ -180,43 +189,43 @@ namespace SOC.UI
             }
         }
 
-        private void HideAllValueControls()
+        private void HideAllVarValueControls()
         {
-            Control[] valueControls = { textBoxTextValue, numericUpDownNumberValue, comboBoxBooleanValue, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarTextValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
             foreach (Control valueControl in valueControls)
             {
                     valueControl.Visible = false;
             }
         }
 
-        private void comboBoxType_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxVarType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBoxType.Text)
+            switch (comboBoxVarType.Text)
             {
                 case "TEXT":
-                    ShowTypeValueControl(textBoxTextValue);
+                    ShowVarTypeValueControl(textBoxVarTextValue);
                     break;
                 case "NUMBER":
-                    ShowTypeValueControl(numericUpDownNumberValue);
+                    ShowVarTypeValueControl(numericUpDownVarNumberValue);
                     break;
                 case "BOOLEAN":
-                    ShowTypeValueControl(comboBoxBooleanValue);
+                    ShowVarTypeValueControl(comboBoxVarBooleanValue);
                     break;
                 case "TABLE":
-                    ShowTypeValueControl(buttonNewIdentifier);
+                    ShowVarTypeValueControl(buttonNewIdentifier);
                     break;
             }
         }
 
-        private void textBoxName_TextChanged(object sender, EventArgs e)
+        private void textBoxVarName_TextChanged(object sender, EventArgs e)
         {
-            string userInputText = textBoxName.Text.Trim();
+            string userInputText = textBoxVarName.Text.Trim();
 
-            TreeVariableNode currentNode = (TreeVariableNode)treeViewVariables.SelectedNode; 
+            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode; 
             TreeNodeCollection siblings = currentNode.Parent != null ? currentNode.Parent.Nodes : treeViewVariables.Nodes;
 
             bool found = false;
-            foreach (TreeVariableNode node in siblings)
+            foreach (VariableNode node in siblings)
             {
                 if (node.Entry.Key.Value.Trim('"') == userInputText && node != currentNode)
                 {
@@ -225,23 +234,30 @@ namespace SOC.UI
                 }
             }
 
+            currentNode.Entry.Key = Lua.GetEntryValueType(userInputText);
+            currentNode.Name = currentNode.Entry.Key.Value;
+            currentNode.UpdateText();
+
             if (found)
             {
                 string newName = GenerateNewNameForDuplicate(userInputText, siblings, currentNode);
-                int addedCharCount = newName.Length - textBoxName.Text.Length;
+                int addedCharCount = newName.Length - textBoxVarName.Text.Length;
 
-                textBoxName.Text = newName;
-                textBoxName.SelectionStart = textBoxName.Text.Length - addedCharCount;
-                textBoxName.SelectionLength = addedCharCount;
-            } 
-            else
-            {
-                currentNode.Entry.Key = Lua.GetEntryValueType(userInputText);
-                currentNode.Name = currentNode.Entry.Key.Value;
-                currentNode.UpdateText();
+                textBoxVarName.Text = newName; 
+                int selectionStart = newName.Length - addedCharCount;
+                int selectionLength = addedCharCount;
+
+                if (userPressedBackspace && selectionStart > 0)
+                {
+                    selectionStart--;
+                    selectionLength++;
+                }
+
+                textBoxVarName.SelectionStart = selectionStart;
+                textBoxVarName.SelectionLength = selectionLength;
             }
         }
-        private string GenerateNewNameForDuplicate(string baseName, TreeNodeCollection siblingNodes, TreeVariableNode currentNode)
+        private string GenerateNewNameForDuplicate(string baseName, TreeNodeCollection siblingNodes, VariableNode currentNode)
         {
             int i = 1;
             while (treeViewVariables.Nodes.ContainsKey($@"""{baseName} ({i})"""))
@@ -252,35 +268,34 @@ namespace SOC.UI
             return $"{baseName} ({i})";
         }
 
-        private void textBoxTextValue_TextChanged(object sender, EventArgs e)
+        private void textBoxTextVarValue_TextChanged(object sender, EventArgs e)
         {
-            TreeVariableNode currentNode = (TreeVariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.Text(textBoxTextValue.Text);
+            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
+            currentNode.Entry.Value = Lua.Text(textBoxVarTextValue.Text);
             currentNode.Nodes.Clear();
             currentNode.UpdateText();
         }
 
-        private void comboBoxBooleanValue_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxVarBooleanValue_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TreeVariableNode currentNode = (TreeVariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.Boolean(comboBoxBooleanValue.Text);
+            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
+            currentNode.Entry.Value = Lua.Boolean(comboBoxVarBooleanValue.Text);
             currentNode.Nodes.Clear();
             currentNode.UpdateText();
         }
 
-        private void numericUpDownNumberValue_ValueChanged(object sender, EventArgs e)
+        private void numericUpDownVarNumberValue_ValueChanged(object sender, EventArgs e)
         {
-            TreeVariableNode currentNode = (TreeVariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.Number((double)numericUpDownNumberValue.Value);
+            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
+            currentNode.Entry.Value = Lua.Number((double)numericUpDownVarNumberValue.Value);
             currentNode.Nodes.Clear();
             currentNode.UpdateText();
         }
 
-        public class TreeVariableNode : TreeNode
+        public class VariableNode : TreeNode
         {
             public LuaTableEntry Entry;
-            public string UserEnteredName { get; set; }
-            public TreeVariableNode(LuaTableEntry entry)
+            public VariableNode(LuaTableEntry entry)
             {
                 Entry = entry;
                 Name = Entry.Key.Value;
@@ -288,7 +303,7 @@ namespace SOC.UI
                 {
                     foreach (var nestedEntry in table.KeyValuePairs)
                     {
-                        Nodes.Add(new TreeVariableNode(nestedEntry));
+                        Nodes.Add(new VariableNode(nestedEntry));
                     }
                 }
                 UpdateText();
@@ -305,6 +320,262 @@ namespace SOC.UI
                     Text = $"{Entry.Key.Value} :: {LuaTemplate.GetTemplateRestrictionTypeString(Entry.Value)} :: {Entry.Value.Value}";
                 }
             }
+        }
+
+        private void textBoxName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                userPressedBackspace = true;
+            }
+            else
+            {
+                userPressedBackspace = false;
+            }
+        }
+
+        public class Str32TableNode : TreeNode
+        {
+            public Str32TableNode(string tableName) : base(tableName) { }
+
+            public void Add(StrCode32Script script)
+            {
+                Add(ConvertToNodeFamily(script));
+            }
+            public static CodeNode ConvertToNodeFamily(StrCode32Script script)
+            {
+                CodeNode codeNode = new CodeNode(script.CodeEvent.StrCode32);
+                MsgSenderNode msgSenderNode = new MsgSenderNode(script.CodeEvent.msg, script.CodeEvent.sender);
+                UnEventedScriptNode scriptNode = new UnEventedScriptNode(script.Identifier, script.Conditions, script.Operations);
+
+                msgSenderNode.Nodes.Add(scriptNode);
+                codeNode.Nodes.Add(msgSenderNode);
+
+                return codeNode;
+            }
+
+            public void Add(CodeNode incomingCodeNode)
+            {
+                if (Nodes.ContainsKey(incomingCodeNode.Name)) 
+                {
+                    CodeNode existingCodeNode = (CodeNode)Nodes[incomingCodeNode.Name];
+                    foreach (MsgSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
+                    {
+                        if (existingCodeNode.Nodes.ContainsKey(incomingMsgSenderNode.Name))
+                        {
+                            MsgSenderNode existingMsgSenderNode = (MsgSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
+                            foreach (UnEventedScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
+                            {
+                                if (existingMsgSenderNode.Nodes.ContainsKey(incomingScriptNode.Name))
+                                {
+                                    string baseName = incomingScriptNode.Identifier.Text;
+                                    int suffix = 1;
+                                    string newName;
+                                    do
+                                    {
+                                        newName = $"{baseName} ({suffix++})";
+                                    } while (existingMsgSenderNode.Nodes.ContainsKey($@"{newName}"));
+
+                                    incomingScriptNode.UpdateIdentifier(Lua.Text(newName));
+                                }
+                                existingMsgSenderNode.Nodes.Add(incomingScriptNode);
+                            }
+                        }
+                        else
+                        {
+                            existingCodeNode.Nodes.Add(incomingMsgSenderNode);
+                        }
+                    }
+                } 
+                else
+                {
+                    Nodes.Add(incomingCodeNode);
+                }  
+            }
+
+            public void DeleteScriptNode(UnEventedScriptNode selectedScriptNode)
+            {
+                MsgSenderNode msgSenderNode = (MsgSenderNode)selectedScriptNode.Parent;
+                CodeNode codeNode = (CodeNode)msgSenderNode?.Parent;
+
+                if (msgSenderNode == null || codeNode == null)
+                    return;
+
+                msgSenderNode.Nodes.Remove(selectedScriptNode);
+
+                if (msgSenderNode.Nodes.Count == 0)
+                {
+                    codeNode.Nodes.Remove(msgSenderNode);
+
+                    if (codeNode.Nodes.Count == 0)
+                    {
+                        Nodes.Remove(codeNode);
+                    }
+                }
+            }
+
+            public List<StrCode32Script> ConvertToScripts()
+            {
+                List<StrCode32Script> result = new List<StrCode32Script>();
+
+                foreach (CodeNode codeNode in Nodes)
+                {
+                    foreach (MsgSenderNode msgSenderNode in codeNode.Nodes)
+                    {
+                        foreach (UnEventedScriptNode scriptNode in msgSenderNode.Nodes)
+                        {
+                            result.Add(ConvertToScript(scriptNode));
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            public StrCode32Script ConvertToScript(UnEventedScriptNode selectedScriptNode)
+            {
+                MsgSenderNode msgSenderNode = (MsgSenderNode)selectedScriptNode.Parent;
+                CodeNode codeNode = (CodeNode)msgSenderNode?.Parent;
+
+                if (msgSenderNode == null || codeNode == null)
+                    throw new InvalidOperationException("Script node is not in a valid tree structure.");
+
+                return new StrCode32Script
+                {
+                    CodeEvent = new StrCode32Event
+                    {
+                        StrCode32 = codeNode.Code,
+                        msg = msgSenderNode.Msg,
+                        sender = msgSenderNode.Sender,
+                    },
+
+                    Identifier = selectedScriptNode.Identifier,
+                    Conditions = selectedScriptNode.Conditions,
+                    Operations = selectedScriptNode.Operations
+                };
+            }
+
+            public void MoveScript(UnEventedScriptNode selectedScriptNode, string newCode, string newMessage, string newSender)
+            {
+                StrCode32Script script = ConvertToScript(selectedScriptNode);
+                DeleteScriptNode(selectedScriptNode);
+
+                script.CodeEvent = new StrCode32Event(newCode, newMessage, newSender);
+
+                Add(script);
+            }
+        }
+
+        public class UnEventedScriptNode : TreeNode
+        {
+            public LuaText Identifier;
+
+            public List<LuaTableEntry> Conditions;
+
+            public List<LuaTableEntry> Operations;
+
+            public UnEventedScriptNode(LuaText identifier, List<LuaTableEntry> conditions, List<LuaTableEntry> operations)
+            {
+                Conditions = conditions;
+                Operations = operations;
+                UpdateIdentifier(identifier);
+            }
+
+            public void UpdateIdentifier(LuaText identifier)
+            {
+                Identifier = identifier;
+
+                Name = identifier.Text;
+                Text = $"{identifier.Text}";
+            }
+        }
+
+        public class MsgSenderNode : TreeNode
+        {
+            public LuaText Msg;
+
+            public LuaText Sender;
+
+            public MsgSenderNode(LuaText msg, LuaText sender)
+            {
+                Msg = msg;
+                Sender = sender;
+
+                if (Sender.Text != "")
+                {
+                    Name = $"{Msg.ToString()} :: {Sender.ToString()}";
+                    Text = Name;
+                } 
+                else
+                {
+                    Name = Msg.ToString();
+                    Text = Name;
+                }
+            }
+        }
+
+        public class CodeNode : TreeNode
+        {
+            public LuaText Code;
+
+            public CodeNode(LuaText code)
+            {
+                Code = code;
+
+                Name = code.Text;
+                Text = code.Text;
+            }
+        }
+
+        private void buttonNewScript_Click(object sender, EventArgs e)
+        {
+            qstep_main.Add(new StrCode32Script(
+        new StrCode32Event("GameObject", "TestMsg", "TestSender", "gameObjectId", "gameObjectId01", "animalId"),
+        LuaFunction.ToTableEntry(
+            "SomeUserScript",
+            new string[] { "gameObjectId", "gameObjectId01", "animalId" },
+            "")));
+            qstep_main.Add(new StrCode32Script(
+        new StrCode32Event("Marker", "TestMsg", "", "gameObjectId", "gameObjectId01", "animalId"),
+        LuaFunction.ToTableEntry(
+            "SomeOtherUserScript",
+            new string[] { "gameObjectId", "gameObjectId01", "animalId" },
+            "")));
+        }
+
+        private void textBoxScriptName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxScriptName_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void comboBoxStrCodes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxStrMsgs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxStrSenders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonRemoveScript_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void treeViewScripts_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }
