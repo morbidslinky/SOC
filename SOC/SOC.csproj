@@ -171,6 +171,13 @@
     <Compile Include="Core\Forms\Pages\ScriptControl.Designer.cs">
       <DependentUpon>ScriptControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.ScriptTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.VariableTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.cs" />
     <Compile Include="Core\Forms\PanelScroll.cs" />
     <Compile Include="Core\Forms\QuestObjectBox.cs">
       <SubType>UserControl</SubType>

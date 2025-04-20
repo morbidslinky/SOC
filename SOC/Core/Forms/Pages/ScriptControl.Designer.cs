@@ -227,6 +227,7 @@
             this.comboBoxStrSenders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxStrSenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStrSenders.Enabled = false;
             this.comboBoxStrSenders.FormattingEnabled = true;
             this.comboBoxStrSenders.Location = new System.Drawing.Point(130, 395);
             this.comboBoxStrSenders.Name = "comboBoxStrSenders";
@@ -263,6 +264,7 @@
             // 
             this.comboBoxStrMsgs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.comboBoxStrMsgs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStrMsgs.Enabled = false;
             this.comboBoxStrMsgs.FormattingEnabled = true;
             this.comboBoxStrMsgs.Location = new System.Drawing.Point(3, 395);
             this.comboBoxStrMsgs.Name = "comboBoxStrMsgs";
@@ -274,6 +276,7 @@
             // 
             this.comboBoxStrCodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxStrCodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStrCodes.Enabled = false;
             this.comboBoxStrCodes.FormattingEnabled = true;
             this.comboBoxStrCodes.Location = new System.Drawing.Point(187, 369);
             this.comboBoxStrCodes.Name = "comboBoxStrCodes";
@@ -302,6 +305,7 @@
             this.treeViewScripts.HideSelection = false;
             this.treeViewScripts.Location = new System.Drawing.Point(3, 19);
             this.treeViewScripts.Name = "treeViewScripts";
+            this.treeViewScripts.ShowRootLines = false;
             this.treeViewScripts.Size = new System.Drawing.Size(305, 315);
             this.treeViewScripts.TabIndex = 0;
             this.treeViewScripts.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewScripts_AfterSelect);
@@ -373,6 +377,7 @@
             this.Controls.Add(this.panelScripting);
             this.Name = "ScriptControl";
             this.Size = new System.Drawing.Size(1160, 450);
+            this.Load += new System.EventHandler(this.ScriptControl_Load);
             this.groupBoxVariables.ResumeLayout(false);
             this.groupBoxVariables.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();

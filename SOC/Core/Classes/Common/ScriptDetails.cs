@@ -12,11 +12,11 @@ namespace SOC.Classes.Common
     public class ScriptDetails
     {
         [XmlArray("QStep_Main")]
-        [XmlArrayItem("Script")]
+        [XmlArrayItem("UserScript")]
         public List<StrCode32Script> QStep_Main = new List<StrCode32Script>();
 
         [XmlArray("Variables")]
-        [XmlArrayItem("Variable")]
+        [XmlArrayItem("UserVariable")]
         public List<LuaTableEntry> VariableDeclarations = new List<LuaTableEntry>();
     }
 }

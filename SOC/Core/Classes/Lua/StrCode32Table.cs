@@ -157,8 +157,7 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Entry")]
         public List<LuaTableEntry> Operations = new List<LuaTableEntry>();
 
-        [XmlArray("Subscripts")]
-        [XmlArrayItem("Subscript")]
+        [XmlIgnore]
         public List<StrCode32Script> Subscripts = new List<StrCode32Script>();
 
         public StrCode32Script() { }
