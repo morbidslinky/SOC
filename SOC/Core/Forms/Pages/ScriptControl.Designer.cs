@@ -50,6 +50,7 @@
             this.splitContainerOuter = new System.Windows.Forms.SplitContainer();
             this.splitContainerInner = new System.Windows.Forms.SplitContainer();
             this.groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
+            this.panelComponentDetails = new System.Windows.Forms.Panel();
             this.groupBoxVariables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.groupBoxScripts.SuspendLayout();
@@ -62,6 +63,7 @@
             this.splitContainerInner.Panel1.SuspendLayout();
             this.splitContainerInner.Panel2.SuspendLayout();
             this.splitContainerInner.SuspendLayout();
+            this.groupBoxScriptDetails.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxVariables
@@ -361,6 +363,7 @@
             // 
             // groupBoxScriptDetails
             // 
+            this.groupBoxScriptDetails.Controls.Add(this.panelComponentDetails);
             this.groupBoxScriptDetails.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxScriptDetails.Location = new System.Drawing.Point(0, 0);
             this.groupBoxScriptDetails.Name = "groupBoxScriptDetails";
@@ -368,6 +371,14 @@
             this.groupBoxScriptDetails.TabIndex = 7;
             this.groupBoxScriptDetails.TabStop = false;
             this.groupBoxScriptDetails.Text = "Script Component Details";
+            // 
+            // panelComponentDetails
+            // 
+            this.panelComponentDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelComponentDetails.Location = new System.Drawing.Point(3, 16);
+            this.panelComponentDetails.Name = "panelComponentDetails";
+            this.panelComponentDetails.Size = new System.Drawing.Size(575, 431);
+            this.panelComponentDetails.TabIndex = 0;
             // 
             // ScriptControl
             // 
@@ -392,6 +403,7 @@
             this.splitContainerInner.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).EndInit();
             this.splitContainerInner.ResumeLayout(false);
+            this.groupBoxScriptDetails.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,5 +433,6 @@
         private System.Windows.Forms.ComboBox comboBoxStrSenders;
         private System.Windows.Forms.SplitContainer splitContainerOuter;
         private System.Windows.Forms.SplitContainer splitContainerInner;
+        private System.Windows.Forms.Panel panelComponentDetails;
     }
 }

@@ -165,6 +165,12 @@
     <Compile Include="Core\Classes\LangTool\LangEntry.cs" />
     <Compile Include="Core\Classes\LangTool\LangFile.cs" />
     <Compile Include="Core\Classes\Common\Quest.cs" />
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.Designer.cs">
+      <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\Forms\Pages\ScriptControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -473,6 +479,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\DetailsControl.resx">
       <DependentUpon>DetailsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptControl.resx">
+      <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>

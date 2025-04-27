@@ -85,5 +85,14 @@ namespace SOC.UI
             Quest.ScriptDetails.QStep_Main.Clear();
             Quest.ScriptDetails.QStep_Main.AddRange(qstep_main.ConvertToScripts());
         }
+
+        internal void SetDetail(UserControl control)
+        {
+            panelComponentDetails.Controls.Clear();
+            if (control != null)
+            {
+                panelComponentDetails.Controls.Add(control);
+            }
+        }
     }
 }

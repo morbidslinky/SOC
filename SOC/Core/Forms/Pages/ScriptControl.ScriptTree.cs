@@ -141,12 +141,13 @@ namespace SOC.UI
 
         private void treeViewScripts_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            UpdateScriptControlsToSelectedNode();
+            SetDetail(UpdateScriptControlsToSelectedNode());
         }
 
-        private void UpdateScriptControlsToSelectedNode()
+        private UserControl UpdateScriptControlsToSelectedNode()
         {
             _isUpdatingControls = true;
+            UserControl detailComponentControl = null;
 
             textBoxScriptName.Text = "";
             var script = GetDefaultEvent();
@@ -167,6 +168,7 @@ namespace SOC.UI
                     EnableAllScriptEditControls(true);
                     textBoxScriptName.Text = scriptNode.Identifier.Text;
                     script = Str32TableNode.getEvent(scriptNode);
+                    detailComponentControl = new EmbeddedScriptControl(scriptNode);
                     break;
                 case null:
                     EnableAllScriptEditControls(false);
@@ -178,6 +180,7 @@ namespace SOC.UI
             comboBoxStrSenders.Text = script.sender.Text;
 
             _isUpdatingControls = false;
+            return detailComponentControl;
         }
     }
 
