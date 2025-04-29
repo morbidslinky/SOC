@@ -77,6 +77,7 @@
             this.splitContainerOuter.Panel2MinSize = 140;
             this.splitContainerOuter.Size = new System.Drawing.Size(575, 431);
             this.splitContainerOuter.SplitterDistance = 289;
+            this.splitContainerOuter.SplitterWidth = 3;
             this.splitContainerOuter.TabIndex = 22;
             // 
             // groupBoxDescription
@@ -203,7 +204,7 @@
             this.splitContainerInner.Panel2.Controls.Add(this.buttonLoadScript);
             this.splitContainerInner.Panel2.Controls.Add(this.groupBoxActions);
             this.splitContainerInner.Panel2.Controls.Add(this.buttonSaveScript);
-            this.splitContainerInner.Size = new System.Drawing.Size(282, 431);
+            this.splitContainerInner.Size = new System.Drawing.Size(283, 431);
             this.splitContainerInner.SplitterDistance = 161;
             this.splitContainerInner.TabIndex = 1;
             // 
@@ -216,7 +217,7 @@
             this.groupBoxPreconditions.Controls.Add(this.listBoxPreconditions);
             this.groupBoxPreconditions.Location = new System.Drawing.Point(0, 5);
             this.groupBoxPreconditions.Name = "groupBoxPreconditions";
-            this.groupBoxPreconditions.Size = new System.Drawing.Size(282, 155);
+            this.groupBoxPreconditions.Size = new System.Drawing.Size(283, 155);
             this.groupBoxPreconditions.TabIndex = 2;
             this.groupBoxPreconditions.TabStop = false;
             this.groupBoxPreconditions.Text = "Preconditions :: \"If\"";
@@ -229,7 +230,7 @@
             this.listBoxPreconditions.FormattingEnabled = true;
             this.listBoxPreconditions.Location = new System.Drawing.Point(3, 16);
             this.listBoxPreconditions.Name = "listBoxPreconditions";
-            this.listBoxPreconditions.Size = new System.Drawing.Size(276, 136);
+            this.listBoxPreconditions.Size = new System.Drawing.Size(277, 136);
             this.listBoxPreconditions.TabIndex = 7;
             // 
             // buttonLoadScript
@@ -238,7 +239,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLoadScript.Location = new System.Drawing.Point(0, 211);
             this.buttonLoadScript.Name = "buttonLoadScript";
-            this.buttonLoadScript.Size = new System.Drawing.Size(282, 23);
+            this.buttonLoadScript.Size = new System.Drawing.Size(283, 23);
             this.buttonLoadScript.TabIndex = 9;
             this.buttonLoadScript.Text = "Load Script From Xml...";
             this.buttonLoadScript.UseVisualStyleBackColor = true;
@@ -252,7 +253,7 @@
             this.groupBoxActions.Controls.Add(this.listBoxActions);
             this.groupBoxActions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActions.Name = "groupBoxActions";
-            this.groupBoxActions.Size = new System.Drawing.Size(282, 205);
+            this.groupBoxActions.Size = new System.Drawing.Size(283, 205);
             this.groupBoxActions.TabIndex = 1;
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Operations :: \"Do\"";
@@ -265,7 +266,7 @@
             this.listBoxActions.FormattingEnabled = true;
             this.listBoxActions.Location = new System.Drawing.Point(3, 16);
             this.listBoxActions.Name = "listBoxActions";
-            this.listBoxActions.Size = new System.Drawing.Size(276, 186);
+            this.listBoxActions.Size = new System.Drawing.Size(277, 186);
             this.listBoxActions.TabIndex = 8;
             // 
             // buttonSaveScript
@@ -274,7 +275,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSaveScript.Location = new System.Drawing.Point(0, 240);
             this.buttonSaveScript.Name = "buttonSaveScript";
-            this.buttonSaveScript.Size = new System.Drawing.Size(282, 23);
+            this.buttonSaveScript.Size = new System.Drawing.Size(283, 23);
             this.buttonSaveScript.TabIndex = 10;
             this.buttonSaveScript.Text = "Save Script To Xml...";
             this.buttonSaveScript.UseVisualStyleBackColor = true;

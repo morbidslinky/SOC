@@ -50,6 +50,7 @@
             this.splitContainerInner = new System.Windows.Forms.SplitContainer();
             this.groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
             this.panelComponentDetails = new System.Windows.Forms.Panel();
+            this.splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             this.groupBoxVariables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.groupBoxScripts.SuspendLayout();
@@ -63,6 +64,10 @@
             this.splitContainerInner.Panel2.SuspendLayout();
             this.splitContainerInner.SuspendLayout();
             this.groupBoxScriptDetails.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).BeginInit();
+            this.splitContainerPreconditionOperation.Panel1.SuspendLayout();
+            this.splitContainerPreconditionOperation.Panel2.SuspendLayout();
+            this.splitContainerPreconditionOperation.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxVariables
@@ -208,8 +213,7 @@
             // groupBoxScripts
             // 
             this.groupBoxScripts.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxScripts.Controls.Add(this.buttonNewOperation);
-            this.groupBoxScripts.Controls.Add(this.buttonNewPrecondition);
+            this.groupBoxScripts.Controls.Add(this.splitContainerPreconditionOperation);
             this.groupBoxScripts.Controls.Add(this.textBoxScriptName);
             this.groupBoxScripts.Controls.Add(this.buttonRemoveScript);
             this.groupBoxScripts.Controls.Add(this.buttonNewScript);
@@ -224,11 +228,10 @@
             // 
             // buttonNewOperation
             // 
-            this.buttonNewOperation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNewOperation.Location = new System.Drawing.Point(3, 394);
+            this.buttonNewOperation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNewOperation.Location = new System.Drawing.Point(0, 0);
             this.buttonNewOperation.Name = "buttonNewOperation";
-            this.buttonNewOperation.Size = new System.Drawing.Size(305, 23);
+            this.buttonNewOperation.Size = new System.Drawing.Size(149, 21);
             this.buttonNewOperation.TabIndex = 8;
             this.buttonNewOperation.Text = "Add New Operation";
             this.buttonNewOperation.UseVisualStyleBackColor = true;
@@ -236,10 +239,10 @@
             // 
             // buttonNewPrecondition
             // 
-            this.buttonNewPrecondition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNewPrecondition.Location = new System.Drawing.Point(186, 367);
+            this.buttonNewPrecondition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNewPrecondition.Location = new System.Drawing.Point(0, 0);
             this.buttonNewPrecondition.Name = "buttonNewPrecondition";
-            this.buttonNewPrecondition.Size = new System.Drawing.Size(122, 23);
+            this.buttonNewPrecondition.Size = new System.Drawing.Size(150, 21);
             this.buttonNewPrecondition.TabIndex = 7;
             this.buttonNewPrecondition.Text = "Add New Precondition";
             this.buttonNewPrecondition.UseVisualStyleBackColor = true;
@@ -253,7 +256,7 @@
             this.textBoxScriptName.Enabled = false;
             this.textBoxScriptName.Location = new System.Drawing.Point(3, 369);
             this.textBoxScriptName.Name = "textBoxScriptName";
-            this.textBoxScriptName.Size = new System.Drawing.Size(177, 20);
+            this.textBoxScriptName.Size = new System.Drawing.Size(305, 20);
             this.textBoxScriptName.TabIndex = 6;
             this.textBoxScriptName.TextChanged += new System.EventHandler(this.textBoxScriptName_TextChanged);
             this.textBoxScriptName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxScriptName_KeyDown);
@@ -364,6 +367,26 @@
             this.panelComponentDetails.Size = new System.Drawing.Size(575, 431);
             this.panelComponentDetails.TabIndex = 0;
             // 
+            // splitContainerPreconditionOperation
+            // 
+            this.splitContainerPreconditionOperation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainerPreconditionOperation.IsSplitterFixed = true;
+            this.splitContainerPreconditionOperation.Location = new System.Drawing.Point(3, 395);
+            this.splitContainerPreconditionOperation.Name = "splitContainerPreconditionOperation";
+            // 
+            // splitContainerPreconditionOperation.Panel1
+            // 
+            this.splitContainerPreconditionOperation.Panel1.Controls.Add(this.buttonNewPrecondition);
+            // 
+            // splitContainerPreconditionOperation.Panel2
+            // 
+            this.splitContainerPreconditionOperation.Panel2.Controls.Add(this.buttonNewOperation);
+            this.splitContainerPreconditionOperation.Size = new System.Drawing.Size(305, 21);
+            this.splitContainerPreconditionOperation.SplitterDistance = 150;
+            this.splitContainerPreconditionOperation.SplitterWidth = 6;
+            this.splitContainerPreconditionOperation.TabIndex = 9;
+            // 
             // ScriptControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -388,6 +411,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).EndInit();
             this.splitContainerInner.ResumeLayout(false);
             this.groupBoxScriptDetails.ResumeLayout(false);
+            this.splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
+            this.splitContainerPreconditionOperation.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).EndInit();
+            this.splitContainerPreconditionOperation.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -417,5 +444,6 @@
         private System.Windows.Forms.Panel panelComponentDetails;
         private System.Windows.Forms.Button buttonNewOperation;
         private System.Windows.Forms.Button buttonNewPrecondition;
+        private System.Windows.Forms.SplitContainer splitContainerPreconditionOperation;
     }
 }

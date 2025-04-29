@@ -215,12 +215,12 @@ namespace SOC.UI
         private string GenerateNewNameForDuplicate(string baseName, TreeNodeCollection siblingNodes, VariableNode currentNode)
         {
             int i = 1;
-            while (treeViewVariables.Nodes.ContainsKey($@"""{baseName} ({i})"""))
+            while (treeViewVariables.Nodes.ContainsKey($@"""{baseName}_{i}"""))
             {
                 i++;
             }
 
-            return $"{baseName} ({i})";
+            return $"{baseName}_{i}";
         }
 
         private void textBoxTextVarValue_TextChanged(object sender, EventArgs e)

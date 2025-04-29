@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 using SOC.Classes.Lua;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace SOC.UI
 {
@@ -12,7 +14,40 @@ namespace SOC.UI
 
         private void buttonNewScript_Click(object sender, EventArgs e)
         {
-            treeViewScripts.SelectedNode = qstep_main.Add(new StrCode32Script(GetDefaultEvent(), "NewEventScript"));
+            treeViewScripts.SelectedNode = qstep_main.Add(new StrCode32Script(GetEventFromSelection(), "NewEventScript"));
+        }
+
+        private StrCode32Event GetEventFromSelection()
+        {
+            var scriptNode = GetScriptNodeFromSelection();
+            if (scriptNode != null)
+            {
+                return scriptNode.getEvent();
+            }
+
+            if (treeViewScripts.SelectedNode is MsgSenderNode msgSenderNode)
+            {
+                return msgSenderNode.GetEvent();
+            }
+
+            if (treeViewScripts.SelectedNode is CodeNode codeNode)
+            {
+                string key = codeNode.Code.Text;
+                if (MessageClassListMapping[key].Count > 0)
+                {
+                    return new StrCode32Event(key, MessageClassListMapping[key][0], "");
+                }
+            }
+
+            foreach (string key in MessageClassListMapping.Keys)
+            {
+                if (MessageClassListMapping[key].Count > 0)
+                {
+                    return new StrCode32Event(key, MessageClassListMapping[key][0], "");
+                }
+            }
+
+            return new StrCode32Event("", "", "");
         }
 
         private void textBoxScriptName_TextChanged(object sender, EventArgs e)
@@ -29,7 +64,7 @@ namespace SOC.UI
             {
                 string baseName = textBoxScriptName.Text;
                 string uniqueName = qstep_main.GetUniqueScriptName(baseName, selectedScriptNode);
-                selectedScriptNode.UpdateIdentifier(Lua.Text(uniqueName));
+                selectedScriptNode.UpdateNodeText(Lua.Text(uniqueName));
 
                 if (baseName != uniqueName)
                 {
@@ -50,10 +85,19 @@ namespace SOC.UI
 
         private void buttonRemoveScript_Click(object sender, EventArgs e)
         {
-            var selectedNode = treeViewScripts.SelectedNode;
-            if (selectedNode is UnEventedScriptNode scriptNode)
+            switch (treeViewScripts.SelectedNode)
             {
-                GetParent32TableNode(scriptNode).DeleteScriptNode(scriptNode);
+                case UnEventedScriptNode scriptNode:
+                    GetParent32TableNode(scriptNode).DeleteScriptNode(scriptNode);
+                    break;
+                case PreconditionNode preconditionNode:
+                    preconditionNode.GetUnEventedScriptNode().DeleteChild(preconditionNode);
+                    break;
+                case OperationNode operationNode:
+                    operationNode.GetUnEventedScriptNode().DeleteChild(operationNode);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -68,12 +112,12 @@ namespace SOC.UI
             return (Str32TableNode)parent;
         }
 
-        private void EnableAllScriptEditControls(bool enable)
+        private void EnabledScriptEditControls(params Control[] valueControls)
         {
-            Control[] valueControls = { textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript };
-            foreach (Control valueControl in valueControls)
+            Control[] allScriptEditControls = { textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript };
+            foreach (Control control in allScriptEditControls)
             {
-                valueControl.Enabled = enable;
+                control.Enabled = (valueControls != null && valueControls.Contains(control));
             }
         }
 
@@ -97,29 +141,52 @@ namespace SOC.UI
             UserControl detailComponentControl = null;
 
             textBoxScriptName.Text = "";
+            groupBoxScriptDetails.Text = "";
+
+            UnEventedScriptNode selectedScriptNode = null;
 
             switch (treeViewScripts.SelectedNode)
             {
                 case Str32TableNode tableNode:
-                    EnableAllScriptEditControls(false);
-
+                    EnabledScriptEditControls();
                     break;
                 case CodeNode codeNode:
-                    EnableAllScriptEditControls(false);
+                    EnabledScriptEditControls();
                     break;
                 case MsgSenderNode msgSenderNode:
-                    EnableAllScriptEditControls(false);
+                    EnabledScriptEditControls();
                     break;
                 case UnEventedScriptNode scriptNode:
-                    EnableAllScriptEditControls(true);
-                    textBoxScriptName.Text = scriptNode.Identifier.Text;
-                    groupBoxScriptDetails.Text = textBoxScriptName.Text;
+                    selectedScriptNode = scriptNode;
+                    EnabledScriptEditControls(textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript);
                     SetDetail(EmbeddedScriptControl);
                     EmbeddedScriptControl.UpdateFromSelectedScript();
                     break;
-                case null:
-                    EnableAllScriptEditControls(false);
+                case PreconditionsParentNode parentNode:
+                    selectedScriptNode = parentNode.GetUnEventedScriptNode();
+                    EnabledScriptEditControls(buttonNewPrecondition);
                     break;
+                case PreconditionNode subcomponentNode:
+                    selectedScriptNode = subcomponentNode.GetUnEventedScriptNode();
+                    EnabledScriptEditControls(buttonNewPrecondition, buttonRemoveScript);
+                    break;
+                case OperationsParentNode parentNode:
+                    selectedScriptNode = parentNode.GetUnEventedScriptNode();
+                    EnabledScriptEditControls(buttonNewOperation);
+                    break;
+                case OperationNode subcomponentNode:
+                    selectedScriptNode = subcomponentNode.GetUnEventedScriptNode();
+                    EnabledScriptEditControls(buttonNewOperation, buttonRemoveScript);
+                    break;
+                case null:
+                    EnabledScriptEditControls();
+                    break;
+            }
+
+            if (selectedScriptNode != null)
+            {
+                textBoxScriptName.Text = selectedScriptNode.Identifier.Text ;
+                groupBoxScriptDetails.Text = selectedScriptNode.Identifier.ToString();
             }
 
             _isUpdatingControls = false;
@@ -128,12 +195,51 @@ namespace SOC.UI
 
         private void buttonNewPrecondition_Click(object sender, EventArgs e)
         {
+            _isUpdatingControls = true;
 
+            Random random = new Random();
+            UnEventedScriptNode scriptNode = GetScriptNodeFromSelection();
+            if (scriptNode != null)
+            {
+                scriptNode.AddPreconditional(Lua.TableEntry(random.Next(100), ""));
+                scriptNode.UpdateNodeText();
+            }
+
+            _isUpdatingControls = false;
         }
 
         private void buttonNewOperation_Click(object sender, EventArgs e)
         {
+            _isUpdatingControls = true;
 
+            Random random = new Random();
+            UnEventedScriptNode scriptNode = GetScriptNodeFromSelection();
+            if (scriptNode != null)
+            {
+                scriptNode.AddOperational(Lua.TableEntry(random.Next(100), ""));
+                scriptNode.UpdateNodeText();
+            }
+
+            _isUpdatingControls = false;
+        }
+
+        private UnEventedScriptNode GetScriptNodeFromSelection()
+        {
+            UnEventedScriptNode scriptNode = null;
+
+            switch (treeViewScripts.SelectedNode)
+            {
+                case UnEventedScriptNode selectedScriptNode:
+                    scriptNode = selectedScriptNode;
+                    break;
+                case ScriptSubComponentParentNode selectedParentNode:
+                    scriptNode = selectedParentNode.GetUnEventedScriptNode();
+                    break;
+                case ScriptSubComponentNode selectedSubcomponentNode:
+                    scriptNode = selectedSubcomponentNode.GetUnEventedScriptNode();
+                    break;
+            }
+            return scriptNode;
         }
     }
 
@@ -179,7 +285,7 @@ namespace SOC.UI
                         MsgSenderNode existingMsgSenderNode = (MsgSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
                         foreach (UnEventedScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                         {
-                            incomingScriptNode.UpdateIdentifier(Lua.Text(GetUniqueScriptName(incomingScriptNode.Name)));
+                            incomingScriptNode.UpdateNodeText(Lua.Text(GetUniqueScriptName(incomingScriptNode.Name)));
                             existingMsgSenderNode.Nodes.Add(incomingScriptNode);
                             selectedScriptNode = incomingScriptNode;
                         }
@@ -284,40 +390,6 @@ namespace SOC.UI
         }
     }
 
-    public class PreconditionsParentNode : TreeNode
-    {
-        public PreconditionsParentNode(List<LuaTableEntry> conditions)
-        {
-        }
-
-        internal List<LuaTableEntry> ConvertToLuaTableEntries()
-        {
-            return new List<LuaTableEntry>();
-        }
-    }
-
-    public class PreconditionNode : TreeNode
-    {
-
-    }
-
-    public class OperationsParentNode : TreeNode
-    {
-        public OperationsParentNode(List<LuaTableEntry> operations)
-        {
-        }
-
-        internal List<LuaTableEntry> ConvertToLuaTableEntries()
-        {
-            return new List<LuaTableEntry>();
-        }
-    }
-
-    public class OperationNode : TreeNode
-    {
-
-    }
-
     public class UnEventedScriptNode : TreeNode
     {
         public LuaText Identifier;
@@ -331,17 +403,49 @@ namespace SOC.UI
         public UnEventedScriptNode(LuaText identifier, string commment, List<LuaTableEntry> conditions, List<LuaTableEntry> operations)
         {
             PreconditionsParent = new PreconditionsParentNode(conditions);
+            Nodes.Add(PreconditionsParent);
+
             OperationsParent = new OperationsParentNode(operations);
-            UpdateIdentifier(identifier);
+            Nodes.Add(OperationsParent);
+
+            UpdateNodeText(identifier);
             Description = commment;
         }
 
-        public void UpdateIdentifier(LuaText identifier)
+        public void AddPreconditional(LuaTableEntry tableEntry)
         {
-            Identifier = identifier;
+            PreconditionsParent.Nodes.Add(new PreconditionNode(tableEntry));
+            PreconditionsParent.Expand();
+            PreconditionsParent.GetUnEventedScriptNode().Expand();
+        }
 
-            Name = identifier.Text;
-            Text = $"{identifier.Text}";
+        public void AddOperational(LuaTableEntry tableEntry)
+        {
+            OperationsParent.Nodes.Add(new OperationNode(tableEntry));
+            OperationsParent.Expand();
+            OperationsParent.GetUnEventedScriptNode().Expand();
+        }
+
+        public void DeleteChild(TreeNode childNode)
+        {
+            if (PreconditionsParent.Nodes.Contains(childNode))
+            {
+                PreconditionsParent.Nodes.Remove(childNode);
+            } 
+            else if (OperationsParent.Nodes.Contains(childNode))
+            {
+                OperationsParent.Nodes.Remove(childNode);
+            }
+        }
+
+        public void UpdateNodeText(LuaText identifier = null)
+        {
+            if (identifier != null)
+            {
+                Identifier = identifier;
+                Name = identifier.Text;
+            }
+            Text = $"{Identifier.Text}   ({PreconditionsParent.Nodes.Count}|{OperationsParent.Nodes.Count})";
         }
 
         public void UpdateDescription(string description)
@@ -352,16 +456,10 @@ namespace SOC.UI
         public StrCode32Event getEvent()
         {
             MsgSenderNode msgSenderNode = (MsgSenderNode)Parent;
-            CodeNode codeNode = (CodeNode)msgSenderNode?.Parent;
 
-            if (msgSenderNode == null || codeNode == null)
+            if (msgSenderNode == null)
                 throw new InvalidOperationException("Script node is not in a valid tree structure.");
-            return new StrCode32Event
-            {
-                StrCode32 = codeNode.Code,
-                msg = msgSenderNode.Msg,
-                sender = msgSenderNode.Sender,
-            };
+            return msgSenderNode.GetEvent();
         }
 
         public Str32TableNode GetStrCode32TableNode()
@@ -400,6 +498,85 @@ namespace SOC.UI
         }
     }
 
+    public abstract class ScriptSubComponentParentNode : TreeNode
+    {
+        public ScriptSubComponentParentNode(string label, List<LuaTableEntry> conditions) : base(label)
+        {
+
+        }
+
+        public abstract List<LuaTableEntry> ConvertToLuaTableEntries();
+
+        public UnEventedScriptNode GetUnEventedScriptNode()
+        {
+            UnEventedScriptNode parentNode = (UnEventedScriptNode)Parent;
+
+            if (parentNode == null)
+                throw new InvalidOperationException("Script node is not in a valid tree structure.");
+            return parentNode;
+        }
+    }
+
+    public abstract class ScriptSubComponentNode : TreeNode
+    {
+        public ScriptSubComponentNode(LuaTableEntry entry) : base (entry.Key.ToString()) // placeholder name
+        {
+
+        }
+
+        public UnEventedScriptNode GetUnEventedScriptNode()
+        {
+            return GetScriptSubComponentParentNode().GetUnEventedScriptNode();
+        }
+
+        public ScriptSubComponentParentNode GetScriptSubComponentParentNode()
+        {
+            if (Parent == null)
+                throw new InvalidOperationException("Script node is not in a valid tree structure.");
+            return (ScriptSubComponentParentNode)Parent;
+        }
+    }
+
+    public class PreconditionsParentNode : ScriptSubComponentParentNode
+    {
+        public PreconditionsParentNode(List<LuaTableEntry> conditions) : base(@"Preconditions", conditions)
+        {
+        }
+
+        public override List<LuaTableEntry> ConvertToLuaTableEntries()
+        {
+            return new List<LuaTableEntry>();
+        }
+    }
+
+    public class OperationsParentNode : ScriptSubComponentParentNode
+    {
+        public OperationsParentNode(List<LuaTableEntry> operations) : base(@"Operations", operations)
+        {
+        }
+
+        public override List<LuaTableEntry> ConvertToLuaTableEntries()
+        {
+            return new List<LuaTableEntry>();
+        }
+    }
+
+    public class PreconditionNode : ScriptSubComponentNode
+    {
+        public PreconditionNode(LuaTableEntry entry) : base(entry)
+        {
+
+        }
+    }
+
+    public class OperationNode : ScriptSubComponentNode
+    {
+        public OperationNode(LuaTableEntry entry) : base(entry)
+        {
+
+        }
+    }
+
     public class MsgSenderNode : TreeNode
     {
         public LuaText Msg;
@@ -422,6 +599,21 @@ namespace SOC.UI
                 Text = Name;
             }
         }
+
+        public StrCode32Event GetEvent()
+        {
+            CodeNode codeNode = (CodeNode)Parent;
+
+            if (codeNode == null)
+                throw new InvalidOperationException("Script node is not in a valid tree structure.");
+            return new StrCode32Event
+            {
+                StrCode32 = codeNode.Code,
+                msg = Msg,
+                sender = Sender,
+            };
+        }
+
     }
 
     public class CodeNode : TreeNode

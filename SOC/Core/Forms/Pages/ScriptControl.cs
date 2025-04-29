@@ -45,7 +45,7 @@ namespace SOC.UI
                 treeViewScripts.SelectedNode = selected;
             }
 
-            qstep_main.ExpandAll();
+            //qstep_main.ExpandAll();
         }
 
         private void ScriptControl_Load(object sender, EventArgs e)
@@ -80,19 +80,6 @@ namespace SOC.UI
 
                 MessageClassListMapping[categoryName] = items;
             }
-        }
-
-        private static StrCode32Event GetDefaultEvent()
-        {
-            foreach (string key in MessageClassListMapping.Keys)
-            {
-                if (MessageClassListMapping[key].Count > 0)
-                {
-                    return new StrCode32Event(key, MessageClassListMapping[key][0], "");
-                }
-            }
-
-            return new StrCode32Event("", "", "");
         }
 
         internal void SyncQuestDataToUserInput()
