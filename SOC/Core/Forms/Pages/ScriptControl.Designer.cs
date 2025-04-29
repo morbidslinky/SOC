@@ -39,11 +39,10 @@
             this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.textBoxVarTextValue = new System.Windows.Forms.TextBox();
             this.groupBoxScripts = new System.Windows.Forms.GroupBox();
-            this.comboBoxStrSenders = new System.Windows.Forms.ComboBox();
+            this.buttonNewOperation = new System.Windows.Forms.Button();
+            this.buttonNewPrecondition = new System.Windows.Forms.Button();
             this.textBoxScriptName = new System.Windows.Forms.TextBox();
             this.buttonRemoveScript = new System.Windows.Forms.Button();
-            this.comboBoxStrMsgs = new System.Windows.Forms.ComboBox();
-            this.comboBoxStrCodes = new System.Windows.Forms.ComboBox();
             this.buttonNewScript = new System.Windows.Forms.Button();
             this.treeViewScripts = new System.Windows.Forms.TreeView();
             this.panelScripting = new System.Windows.Forms.Panel();
@@ -209,11 +208,10 @@
             // groupBoxScripts
             // 
             this.groupBoxScripts.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxScripts.Controls.Add(this.comboBoxStrSenders);
+            this.groupBoxScripts.Controls.Add(this.buttonNewOperation);
+            this.groupBoxScripts.Controls.Add(this.buttonNewPrecondition);
             this.groupBoxScripts.Controls.Add(this.textBoxScriptName);
             this.groupBoxScripts.Controls.Add(this.buttonRemoveScript);
-            this.groupBoxScripts.Controls.Add(this.comboBoxStrMsgs);
-            this.groupBoxScripts.Controls.Add(this.comboBoxStrCodes);
             this.groupBoxScripts.Controls.Add(this.buttonNewScript);
             this.groupBoxScripts.Controls.Add(this.treeViewScripts);
             this.groupBoxScripts.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -224,18 +222,28 @@
             this.groupBoxScripts.TabStop = false;
             this.groupBoxScripts.Text = "Custom Scripts";
             // 
-            // comboBoxStrSenders
+            // buttonNewOperation
             // 
-            this.comboBoxStrSenders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonNewOperation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStrSenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStrSenders.Enabled = false;
-            this.comboBoxStrSenders.FormattingEnabled = true;
-            this.comboBoxStrSenders.Location = new System.Drawing.Point(130, 395);
-            this.comboBoxStrSenders.Name = "comboBoxStrSenders";
-            this.comboBoxStrSenders.Size = new System.Drawing.Size(178, 21);
-            this.comboBoxStrSenders.TabIndex = 7;
-            this.comboBoxStrSenders.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrSenders_SelectedIndexChanged);
+            this.buttonNewOperation.Location = new System.Drawing.Point(3, 394);
+            this.buttonNewOperation.Name = "buttonNewOperation";
+            this.buttonNewOperation.Size = new System.Drawing.Size(305, 23);
+            this.buttonNewOperation.TabIndex = 8;
+            this.buttonNewOperation.Text = "Add New Operation";
+            this.buttonNewOperation.UseVisualStyleBackColor = true;
+            this.buttonNewOperation.Click += new System.EventHandler(this.buttonNewOperation_Click);
+            // 
+            // buttonNewPrecondition
+            // 
+            this.buttonNewPrecondition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNewPrecondition.Location = new System.Drawing.Point(186, 367);
+            this.buttonNewPrecondition.Name = "buttonNewPrecondition";
+            this.buttonNewPrecondition.Size = new System.Drawing.Size(122, 23);
+            this.buttonNewPrecondition.TabIndex = 7;
+            this.buttonNewPrecondition.Text = "Add New Precondition";
+            this.buttonNewPrecondition.UseVisualStyleBackColor = true;
+            this.buttonNewPrecondition.Click += new System.EventHandler(this.buttonNewPrecondition_Click);
             // 
             // textBoxScriptName
             // 
@@ -245,7 +253,7 @@
             this.textBoxScriptName.Enabled = false;
             this.textBoxScriptName.Location = new System.Drawing.Point(3, 369);
             this.textBoxScriptName.Name = "textBoxScriptName";
-            this.textBoxScriptName.Size = new System.Drawing.Size(178, 20);
+            this.textBoxScriptName.Size = new System.Drawing.Size(177, 20);
             this.textBoxScriptName.TabIndex = 6;
             this.textBoxScriptName.TextChanged += new System.EventHandler(this.textBoxScriptName_TextChanged);
             this.textBoxScriptName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxScriptName_KeyDown);
@@ -261,30 +269,6 @@
             this.buttonRemoveScript.Text = "Delete Selected Node";
             this.buttonRemoveScript.UseVisualStyleBackColor = true;
             this.buttonRemoveScript.Click += new System.EventHandler(this.buttonRemoveScript_Click);
-            // 
-            // comboBoxStrMsgs
-            // 
-            this.comboBoxStrMsgs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboBoxStrMsgs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStrMsgs.Enabled = false;
-            this.comboBoxStrMsgs.FormattingEnabled = true;
-            this.comboBoxStrMsgs.Location = new System.Drawing.Point(3, 395);
-            this.comboBoxStrMsgs.Name = "comboBoxStrMsgs";
-            this.comboBoxStrMsgs.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxStrMsgs.TabIndex = 3;
-            this.comboBoxStrMsgs.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrMsgs_SelectedIndexChanged);
-            // 
-            // comboBoxStrCodes
-            // 
-            this.comboBoxStrCodes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStrCodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStrCodes.Enabled = false;
-            this.comboBoxStrCodes.FormattingEnabled = true;
-            this.comboBoxStrCodes.Location = new System.Drawing.Point(187, 369);
-            this.comboBoxStrCodes.Name = "comboBoxStrCodes";
-            this.comboBoxStrCodes.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxStrCodes.TabIndex = 2;
-            this.comboBoxStrCodes.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrCodes_SelectedIndexChanged);
             // 
             // buttonNewScript
             // 
@@ -425,14 +409,13 @@
         private System.Windows.Forms.Panel panelScripting;
         private System.Windows.Forms.GroupBox groupBoxScriptDetails;
         private System.Windows.Forms.TreeView treeViewScripts;
-        private System.Windows.Forms.ComboBox comboBoxStrCodes;
         private System.Windows.Forms.Button buttonNewScript;
-        private System.Windows.Forms.ComboBox comboBoxStrMsgs;
         private System.Windows.Forms.Button buttonRemoveScript;
         private System.Windows.Forms.TextBox textBoxScriptName;
-        private System.Windows.Forms.ComboBox comboBoxStrSenders;
         private System.Windows.Forms.SplitContainer splitContainerOuter;
         private System.Windows.Forms.SplitContainer splitContainerInner;
         private System.Windows.Forms.Panel panelComponentDetails;
+        private System.Windows.Forms.Button buttonNewOperation;
+        private System.Windows.Forms.Button buttonNewPrecondition;
     }
 }

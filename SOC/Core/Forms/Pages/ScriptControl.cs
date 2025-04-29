@@ -5,6 +5,7 @@ using SOC.Classes.Common;
 using System.IO;
 using System.Xml;
 using System.Reflection;
+using SOC.Classes.Lua;
 
 namespace SOC.UI
 {
@@ -12,11 +13,18 @@ namespace SOC.UI
     {
         public Quest Quest;
 
+        EmbeddedScriptControl EmbeddedScriptControl;
+
+        public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
+
         public ScriptControl(Quest quest)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
             Quest = quest;
+
+            ParseMessageClassesFile();
+            EmbeddedScriptControl = new EmbeddedScriptControl(treeViewScripts);
 
             treeViewVariables.Nodes.Clear();
             foreach (var entry in Quest.ScriptDetails.VariableDeclarations)
@@ -42,6 +50,11 @@ namespace SOC.UI
 
         private void ScriptControl_Load(object sender, EventArgs e)
         {
+            UpdateScriptControlsToSelectedNode();
+        }
+
+        private static void ParseMessageClassesFile()
+        {
             string MessageClassList = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets//MessageClasses.xml");
 
             if (!File.Exists(MessageClassList))
@@ -66,10 +79,20 @@ namespace SOC.UI
                 }
 
                 MessageClassListMapping[categoryName] = items;
-                comboBoxStrCodes.Items.Add(categoryName);
+            }
+        }
+
+        private static StrCode32Event GetDefaultEvent()
+        {
+            foreach (string key in MessageClassListMapping.Keys)
+            {
+                if (MessageClassListMapping[key].Count > 0)
+                {
+                    return new StrCode32Event(key, MessageClassListMapping[key][0], "");
+                }
             }
 
-            UpdateScriptControlsToSelectedNode();
+            return new StrCode32Event("", "", "");
         }
 
         internal void SyncQuestDataToUserInput()
@@ -84,15 +107,6 @@ namespace SOC.UI
 
             Quest.ScriptDetails.QStep_Main.Clear();
             Quest.ScriptDetails.QStep_Main.AddRange(qstep_main.ConvertToScripts());
-        }
-
-        internal void SetDetail(UserControl control)
-        {
-            panelComponentDetails.Controls.Clear();
-            if (control != null)
-            {
-                panelComponentDetails.Controls.Add(control);
-            }
         }
     }
 }

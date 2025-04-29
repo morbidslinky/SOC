@@ -86,7 +86,10 @@ namespace SOC.Classes.Lua
         }
         public void AppendParameter(params LuaVariable[] functionParameters)
         {
-            Parameters.AddRange(functionParameters);
+            if (functionParameters != null)
+            {
+                Parameters.AddRange(functionParameters);
+            }
         }
 
         public void AppendPlainText(string plainText)

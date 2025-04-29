@@ -21,7 +21,8 @@ namespace SOC.Classes.Lua
             List<string> tokens = new List<string>();
             State state = State.Normal;
             StringBuilder tokenBuilder = new StringBuilder();
-            bool awaitingCloseBracket = false;
+            bool awaitingCloseDoubleBracket = false;
+            bool awaitingCloseSingleBracket = false;
 
             for (int i = 0; i < luaCode.Length; i++)
             {
@@ -40,14 +41,14 @@ namespace SOC.Classes.Lua
                         else if (current == '[' && next == '[')
                         {
                             state = State.StringLiteral;
-                            awaitingCloseBracket = true;
+                            awaitingCloseDoubleBracket = true;
                             tokenBuilder.Append("[[");
                             i++;
                         }
                         else if (current == '"' || current == '\'')
                         {
                             state = State.StringLiteral;
-                            awaitingCloseBracket = false;
+                            awaitingCloseDoubleBracket = false;
                             tokenBuilder.Append(current);
                         }
                         else if (char.IsWhiteSpace(current))
@@ -102,6 +103,14 @@ namespace SOC.Classes.Lua
                         }
                         else
                         {
+                            if (current == '[')
+                            {
+                                awaitingCloseSingleBracket = true;
+                            }
+                            else if (current == ']' && awaitingCloseSingleBracket)
+                            {
+                                awaitingCloseSingleBracket = false;
+                            }
                             tokenBuilder.Append(current);
                         }
                         break;
@@ -112,7 +121,7 @@ namespace SOC.Classes.Lua
                         if (prevPrev == '-' && prev == '-' && current == '[' && next == '[')
                         {
                             state = State.MultiLineComment;
-                            awaitingCloseBracket = true;
+                            awaitingCloseDoubleBracket = true;
                             tokenBuilder.Append("[[");
                             i += 1;
                         }
@@ -130,10 +139,10 @@ namespace SOC.Classes.Lua
                         break;
 
                     case State.MultiLineComment:
-                        if (current == ']' && next == ']' && awaitingCloseBracket)
+                        if (current == ']' && next == ']' && awaitingCloseDoubleBracket)
                         {
                             state = State.Normal;
-                            awaitingCloseBracket = false;
+                            awaitingCloseDoubleBracket = false;
                             tokenBuilder.Append("]]");
                             tokens.Add(tokenBuilder.ToString());
                             tokenBuilder.Clear();
@@ -146,18 +155,25 @@ namespace SOC.Classes.Lua
                         break;
 
                     case State.StringLiteral:
-                        if (!awaitingCloseBracket && (current == '"' || current == '\''))
+
+                        if (!awaitingCloseDoubleBracket && (current == '"' || current == '\''))
                         {
                             state = State.Normal;
                             tokenBuilder.Append(current);
+                            if (awaitingCloseSingleBracket && next == ']')
+                            {
+                                tokenBuilder.Append(next);
+                                awaitingCloseSingleBracket = false;
+                                i++;
+                            }
                             tokens.Add(tokenBuilder.ToString());
                             tokenBuilder.Clear();
                         }
-                        else if (awaitingCloseBracket && current == ']' && next == ']')
+                        else if (awaitingCloseDoubleBracket && current == ']' && next == ']')
                         {
                             state = State.Normal;
                             tokenBuilder.Append("]]");
-                            awaitingCloseBracket = false;
+                            awaitingCloseDoubleBracket = false;
                             tokens.Add(tokenBuilder.ToString());
                             tokenBuilder.Clear();
                             i++;
@@ -220,7 +236,7 @@ namespace SOC.Classes.Lua
                 else
                 {
                     formattedCode.Append(token);
-                    if (nextToken != "," && nextToken != ")" && nextToken != "(" && token != "(")
+                    if ((token != "(" && nextToken != "," && nextToken != ")" && nextToken != "(") && !(token.EndsWith("]") && nextToken.StartsWith("[")))
                     {
                         formattedCode.Append(" ");
                     }

@@ -98,9 +98,9 @@ namespace SOC.Classes.Lua
 
             foreach (StrCode32Script root in CompiledScripts)
             {
-                foreach(StrCode32Script subscript in root.Subscripts)
+                foreach (StrCode32Script subscript in root.Subscripts)
                 {
-                    foreach (LuaTableEntry conditional in subscript.Conditions)
+                    foreach (LuaTableEntry conditional in subscript.Preconditions)
                     {
                         functionDefinitionsTable.Add(
                             Lua.TableEntry(
@@ -149,9 +149,12 @@ namespace SOC.Classes.Lua
         [XmlElement]
         public LuaText Identifier;
 
-        [XmlArray("Conditions")]
+        [XmlElement]
+        public string Description = "";
+
+        [XmlArray("Preconditions")]
         [XmlArrayItem("Entry")]
-        public List<LuaTableEntry> Conditions = new List<LuaTableEntry>();
+        public List<LuaTableEntry> Preconditions = new List<LuaTableEntry>();
 
         [XmlArray("Operations")]
         [XmlArrayItem("Entry")]
@@ -185,7 +188,7 @@ namespace SOC.Classes.Lua
 
         public void AddConditionalFunctionEntries(params LuaTableEntry[] conditionals)
         {
-            Conditions.AddRange(conditionals);
+            Preconditions.AddRange(conditionals);
         }
 
         public void AddOperationalFunctionEntries(params LuaTableEntry[] operationals)
@@ -203,7 +206,13 @@ namespace SOC.Classes.Lua
             LuaFunctionBuilder functionBuilder = new LuaFunctionBuilder();
             functionBuilder.AppendParameter(CodeEvent.Parameters);
 
-            foreach (LuaTableEntry functionEntry in Conditions)
+            var sanitizedDescription = Description.Replace("--[[", "").Replace("]]", "");
+            if (!string.IsNullOrEmpty(sanitizedDescription))
+            {
+                functionBuilder.AppendPlainText($"--[[{sanitizedDescription}]]");
+            }
+
+            foreach (LuaTableEntry functionEntry in Preconditions)
             {
                 var conditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaText(), Identifier, functionEntry.Key);
                 functionBuilder.AppendPlainText("if !");
