@@ -15,7 +15,8 @@ namespace SOC.Classes.Lua
     /// </summary>
     public class LuaTemplate
     {
-        [XmlElement]public string Template {  get; set; }
+        [XmlElement]
+        public string Template {  get; set; }
         public LuaTemplate() { }
         
         public LuaTemplate(string templateString)
@@ -62,19 +63,10 @@ namespace SOC.Classes.Lua
             return restrictionType;
         }
 
-        public static bool TryParse(string templateString, out LuaTemplate luaTemplate)
+        internal static bool TryTokenize(string templateString, out List<LuaTemplateToken> tokenList)
         {
-            luaTemplate = new LuaTemplate();
-            bool isValid = TryTokenize(templateString, out _);
-            luaTemplate.Template = templateString;
-            return isValid;
-        }
-
-        internal static bool TryTokenize(string templateString, out LuaTemplateToken[] tokens)
-        {
-            tokens = new LuaTemplateToken[0];
             bool isValid = true;
-            List<LuaTemplateToken> tokenBuilder = new List<LuaTemplateToken>();
+            tokenList = new List<LuaTemplateToken>();
             int start = 0;
 
             while (start < templateString.Length)
@@ -82,30 +74,41 @@ namespace SOC.Classes.Lua
                 int open = templateString.IndexOf("|[", start);
                 if (open == -1)
                 {
-                    tokenBuilder.Add(new LuaTemplatePlainText(templateString.Substring(start)));
+                    tokenList.Add(new LuaTemplatePlainText(templateString.Substring(start)));
                     break;
                 }
 
                 int close = templateString.IndexOf("]|", open);
                 if (close == -1) break;
 
-                tokenBuilder.Add(new LuaTemplatePlainText(templateString.Substring(start, open - start)));
+                tokenList.Add(new LuaTemplatePlainText(templateString.Substring(start, open - start)));
 
                 string placeholderToken = templateString.Substring(open + 2, close - open - 2).Trim();
                 isValid = LuaTemplatePlaceholder.TryParse(placeholderToken, out LuaTemplatePlaceholder placeholder) && isValid;
-                tokenBuilder.Add(placeholder);
+                tokenList.Add(placeholder);
 
                 start = close + 2;
             }
 
-            tokens = tokenBuilder.ToArray();
             return isValid;
+        }
+
+        public static bool TryGetPlaceholderTokens(string templateString, out List<LuaTemplatePlaceholder> placeholderTokens)
+        {
+            if (TryTokenize(templateString, out List<LuaTemplateToken> allTokens))
+            {
+                placeholderTokens = allTokens.OfType<LuaTemplatePlaceholder>().ToList();
+                return true;
+            }
+
+            placeholderTokens = new List<LuaTemplatePlaceholder>();
+            return false;
         }
 
         public string Populate(params LuaValue[] populationData)
         {
             StringBuilder populatedTemplate = new StringBuilder();
-            TryTokenize(Template, out LuaTemplateToken[] tokens);
+            TryTokenize(Template, out List<LuaTemplateToken> tokens);
 
             foreach (LuaTemplateToken token in tokens)
             {

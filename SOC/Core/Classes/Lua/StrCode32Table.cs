@@ -74,11 +74,11 @@ namespace SOC.Classes.Lua
                 }
 
                 LuaFunctionBuilder funcBuilder = new LuaFunctionBuilder();
-                funcBuilder.AppendParameter(root.CodeEvent.Parameters);
+                funcBuilder.AppendParameter(StrCode32Event.DefaultParameters);
                 foreach (StrCode32Script subscript in root.Subscripts)
                 {
                     var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaText(), subscript.Identifier, Lua.Text($"SUBSCRIPT_{subscript.Identifier.Text}"));
-                    funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, subscript.CodeEvent.Parameters));
+                    funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, StrCode32Event.GetDefaultParametersAsVariables()));
                 }
 
                 eventTable.Add(Lua.TableEntry("func", funcBuilder.ToFunction()));
@@ -204,7 +204,7 @@ namespace SOC.Classes.Lua
         public LuaFunction ToFunction(string definitionTableVariableName)
         {
             LuaFunctionBuilder functionBuilder = new LuaFunctionBuilder();
-            functionBuilder.AppendParameter(CodeEvent.Parameters);
+            functionBuilder.AppendParameter(StrCode32Event.DefaultParameters);
 
             var sanitizedDescription = Description.Replace("--[[", "").Replace("]]", "");
             if (!string.IsNullOrEmpty(sanitizedDescription))
@@ -216,14 +216,14 @@ namespace SOC.Classes.Lua
             {
                 var conditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaText(), Identifier, functionEntry.Key);
                 functionBuilder.AppendPlainText("if !");
-                functionBuilder.AppendLuaValue(Lua.FunctionCall(conditionIdentifier, CodeEvent.Parameters)); 
+                functionBuilder.AppendLuaValue(Lua.FunctionCall(conditionIdentifier, StrCode32Event.GetDefaultParametersAsVariables())); 
                 functionBuilder.AppendPlainText("then return end");
             }
 
             foreach (LuaTableEntry functionEntry in Operations)
             {
                 var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaText(), Identifier, functionEntry.Key);
-                functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, CodeEvent.Parameters));
+                functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, StrCode32Event.GetDefaultParametersAsVariables()));
             }
 
             return functionBuilder.ToFunction();
@@ -232,19 +232,23 @@ namespace SOC.Classes.Lua
 
     public struct StrCode32Event : IEquatable<StrCode32Event>
     {
-        [XmlArray("msgParameters")]
-        [XmlArrayItem("msgParameter")]
-        public LuaVariable[] Parameters;
         public LuaText StrCode32;
         public LuaText msg;
         public LuaText sender;
 
-        public StrCode32Event(string eventCode, string eventMsg, string msgSender, params string[] functionParameters)
+        [XmlIgnore]
+        public static readonly string[] DefaultParameters = { "arg1", "arg2", "arg3", "arg4" };
+
+        public StrCode32Event(string eventCode, string eventMsg, string msgSender)
         {
             StrCode32 = Lua.Text(eventCode);
             msg = Lua.Text(eventMsg);
             sender = Lua.Text(msgSender);
-            Parameters = functionParameters.Select(parameter => Lua.Variable(parameter)).ToArray();
+        }
+
+        public static LuaVariable[] GetDefaultParametersAsVariables()
+        {
+            return DefaultParameters.Select(parameter => Lua.Variable(parameter)).ToArray();
         }
 
         public override bool Equals(object obj)

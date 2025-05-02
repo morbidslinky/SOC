@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="0.7.3.0">
-  <setupDetails FpkName="Example_Sideop_1" QuestNum="30350">
+  <SetupDetails FpkName="Example_Sideop_1" QuestNum="30350">
     <QuestTitle>Example: Rescue the Bwala Prisoner</QuestTitle>
     <QuestDesc>Rescue the prisoner atop the shipwreck in Bwala ya Masa.</QuestDesc>
     <locationID>20</locationID>
@@ -12,9 +12,9 @@
     <reward>C</reward>
     <progressLangID>quest_extract_hostage</progressLangID>
     <routeName>NONE</routeName>
-  </setupDetails>
-  <questObjectDetails>
-    <ObjectsDetail xsi:type="EnemiesDetail">
+  </SetupDetails>
+  <ObjectsDetails>
+    <EnemiesDetail>
       <enemyMetadata objectiveType="ELIMINATE" subtype="PF_A" />
       <enemies>
         <Enemy name="sol_quest_0000" spawn="true">
@@ -274,8 +274,8 @@
           <powers />
         </Enemy>
       </enemies>
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="HostagesDetail">
+    </EnemiesDetail>
+    <HostagesDetail>
       <hostageMetadata objectiveType="RECOVERED" hostageBodyName="AFGH_HOSTAGE" canInterrogate="true" />
       <hostages>
         <Hostage ID="0">
@@ -305,8 +305,8 @@
           </position>
         </Hostage>
       </hostages>
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="VehiclesDetail">
+    </HostagesDetail>
+    <VehiclesDetail>
       <vehicleMetadata ObjectiveType="ELIMINATE" />
       <vehicles>
         <Vehicle ID="0">
@@ -319,32 +319,32 @@
           <vehicleClass>DARK_GRAY</vehicleClass>
         </Vehicle>
       </vehicles>
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="HelicoptersDetail">
+    </VehiclesDetail>
+    <HelicoptersDetail>
       <helicopterMetadata objectiveType="KILLREQUIRED" />
       <helicopters />
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="UAVsDetail">
+    </HelicoptersDetail>
+    <UAVsDetail>
       <UAVmetadata objectiveType="KILLREQUIRED" />
       <UAVs />
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="CamerasDetail">
+    </UAVsDetail>
+    <CamerasDetail>
       <cameraMetadata objectiveType="KILLREQUIRED" />
       <cameras />
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="WalkerGearsDetail">
+    </CamerasDetail>
+    <WalkerGearsDetail>
       <walkerMetadata objectiveType="ELIMINATE" />
       <walkers />
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="AnimalsDetail">
+    </WalkerGearsDetail>
+    <AnimalsDetail>
       <animalMetadata objectiveType="ELIMINATE" />
       <animals />
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="ItemsDetail">
+    </AnimalsDetail>
+    <ItemsDetail>
       <itemMetadata objectiveType="RECOVERED" />
       <items />
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="ActiveItemsDetail">
+    </ItemsDetail>
+    <ActiveItemsDetail>
       <activeItemMetadata objectiveType="ELIMINATE" />
       <activeItems>
         <ActiveItem ID="0">
@@ -364,10 +364,18 @@
           </position>
         </ActiveItem>
       </activeItems>
-    </ObjectsDetail>
-    <ObjectsDetail xsi:type="ModelsDetail">
+    </ActiveItemsDetail>
+    <ModelsDetail>
       <modelMetadata />
       <models />
-    </ObjectsDetail>
-  </questObjectDetails>
+    </ModelsDetail>
+    <GeoTrapsDetail>
+      <trapMetadata />
+      <trapShapes />
+    </GeoTrapsDetail>
+  </ObjectsDetails>
+  <ScriptDetails>
+    <QStep_Main />
+    <Variables />
+  </ScriptDetails>
 </Quest>

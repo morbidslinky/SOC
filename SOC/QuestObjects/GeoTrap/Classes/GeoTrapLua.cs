@@ -22,14 +22,14 @@ namespace SOC.QuestObjects.GeoTrap
                         new StrCode32Event("Trap", "Enter", geoTrapName),
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Enter",
-                            new string[] { },
+                            StrCode32Event.DefaultParameters,
                             $@" InfCore.DebugPrint(""{geoTrapName} Enter""); ")); //todo use function template properly
 
                     StrCode32Script ExitTrap = new StrCode32Script(
                         new StrCode32Event("Trap", "Exit", geoTrapName),
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Exit",
-                            new string[] { },
+                            StrCode32Event.DefaultParameters,
                             $@" InfCore.DebugPrint(""{geoTrapName} Exit""); "));
 
                     mainLua.QStep_Main.StrCode32Table.Add(EnterTrap, ExitTrap);
