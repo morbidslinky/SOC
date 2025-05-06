@@ -92,11 +92,11 @@ namespace SOC.Classes.Lua
                 "local StrCode32 = Fox.StrCode32 \n" +
                 "local StrCode32Table = Tpp.StrCode32Table \n" +
                 "local GetGameObjectId = GameObject.GetGameObjectId \n\n" +
-                "local |[0|ASSIGN_VARIABLE]| " +
                 "local |[1|ASSIGN_VARIABLE]| " +
                 "local |[2|ASSIGN_VARIABLE]| " +
                 "local |[3|ASSIGN_VARIABLE]| " +
-                "return |[3|VARIABLE]|",
+                "local |[4|ASSIGN_VARIABLE]| " +
+                "return |[4|VARIABLE]|",
                     CommonDefinitionsVariable,
                     Quest_MessagesDefVariable,
                     QStep_Main_MessagesDefVariable,

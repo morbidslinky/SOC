@@ -52,7 +52,7 @@
             OnAllocate.AppendLuaValue(
                 Lua.FunctionCall(
                     Lua.TableIdentifier("TppQuest", "RegisterQuestStepList"),
-                    Lua.Table(new LuaValue[] { Lua.Text("QStep_Start"), Lua.Text("QStep_Main"), Lua.Nil() })));
+                    Lua.Table(new LuaValue[] { Lua.String("QStep_Start"), Lua.String("QStep_Main"), Lua.Nil() })));
 
             OnAllocate.AppendLuaValue(
                 Lua.FunctionCall(

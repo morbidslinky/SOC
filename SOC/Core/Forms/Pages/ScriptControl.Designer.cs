@@ -37,7 +37,7 @@
             this.comboBoxVarBooleanValue = new System.Windows.Forms.ComboBox();
             this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
             this.buttonNewIdentifier = new System.Windows.Forms.Button();
-            this.textBoxVarTextValue = new System.Windows.Forms.TextBox();
+            this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
             this.groupBoxScripts = new System.Windows.Forms.GroupBox();
             this.splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             this.buttonNewPrecondition = new System.Windows.Forms.Button();
@@ -81,7 +81,7 @@
             this.groupBoxVariables.Controls.Add(this.comboBoxVarBooleanValue);
             this.groupBoxVariables.Controls.Add(this.numericUpDownVarNumberValue);
             this.groupBoxVariables.Controls.Add(this.buttonNewIdentifier);
-            this.groupBoxVariables.Controls.Add(this.textBoxVarTextValue);
+            this.groupBoxVariables.Controls.Add(this.textBoxVarStringValue);
             this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxVariables.Location = new System.Drawing.Point(0, 0);
             this.groupBoxVariables.Name = "groupBoxVariables";
@@ -97,7 +97,7 @@
             this.comboBoxVarType.Enabled = false;
             this.comboBoxVarType.FormattingEnabled = true;
             this.comboBoxVarType.Items.AddRange(new object[] {
-            "TEXT",
+            "STRING",
             "NUMBER",
             "BOOLEAN",
             "TABLE"});
@@ -200,15 +200,15 @@
             // 
             // textBoxVarTextValue
             // 
-            this.textBoxVarTextValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxVarStringValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVarTextValue.BackColor = System.Drawing.Color.Silver;
-            this.textBoxVarTextValue.Location = new System.Drawing.Point(3, 395);
-            this.textBoxVarTextValue.Name = "textBoxVarTextValue";
-            this.textBoxVarTextValue.Size = new System.Drawing.Size(254, 20);
-            this.textBoxVarTextValue.TabIndex = 4;
-            this.textBoxVarTextValue.Visible = false;
-            this.textBoxVarTextValue.TextChanged += new System.EventHandler(this.textBoxTextVarValue_TextChanged);
+            this.textBoxVarStringValue.BackColor = System.Drawing.Color.Silver;
+            this.textBoxVarStringValue.Location = new System.Drawing.Point(3, 395);
+            this.textBoxVarStringValue.Name = "textBoxVarTextValue";
+            this.textBoxVarStringValue.Size = new System.Drawing.Size(254, 20);
+            this.textBoxVarStringValue.TabIndex = 4;
+            this.textBoxVarStringValue.Visible = false;
+            this.textBoxVarStringValue.TextChanged += new System.EventHandler(this.textBoxTextVarValue_TextChanged);
             // 
             // groupBoxScripts
             // 
@@ -427,7 +427,7 @@
         private System.Windows.Forms.GroupBox groupBoxScripts;
         private System.Windows.Forms.ComboBox comboBoxVarType;
         private System.Windows.Forms.TextBox textBoxVarName;
-        private System.Windows.Forms.TextBox textBoxVarTextValue;
+        private System.Windows.Forms.TextBox textBoxVarStringValue;
         private System.Windows.Forms.Button buttonNewVariable;
         private System.Windows.Forms.Button buttonRemoveVariableIdentifier;
         private System.Windows.Forms.Button buttonNewIdentifier;

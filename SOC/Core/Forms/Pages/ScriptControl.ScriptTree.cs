@@ -61,7 +61,7 @@ namespace SOC.UI
             {
                 string baseName = textBoxScriptName.Text;
                 string uniqueName = qstep_main.GetUniqueScriptName(baseName, selectedScriptNode);
-                selectedScriptNode.UpdateNodeText(Lua.Text(uniqueName));
+                selectedScriptNode.UpdateNodeText(Lua.String(uniqueName));
 
                 if (baseName != uniqueName)
                 {
@@ -169,7 +169,7 @@ namespace SOC.UI
                     EnabledScriptEditControls(((scriptalNode.ScriptalType == ScriptalType.Preconditional) ? buttonNewPrecondition : buttonNewOperation), buttonRemoveScript);
 
                     SetDetail(EmbeddedScriptalControl);
-                    EmbeddedScriptalControl.UpdateFromScript(scriptalNode);
+                    EmbeddedScriptalControl.UpdateFromScript(scriptalNode, Quest.GetAllObjectsScriptValueSets());
                     break;
                 case null:
                     EnabledScriptEditControls();
@@ -278,7 +278,7 @@ namespace SOC.UI
                         MsgSenderNode existingMsgSenderNode = (MsgSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
                         foreach (UnEventedScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                         {
-                            incomingScriptNode.UpdateNodeText(Lua.Text(GetUniqueScriptName(incomingScriptNode.Name)));
+                            incomingScriptNode.UpdateNodeText(Lua.String(GetUniqueScriptName(incomingScriptNode.Name)));
                             existingMsgSenderNode.Nodes.Add(incomingScriptNode);
                             selectedScriptNode = incomingScriptNode;
                         }
@@ -385,7 +385,7 @@ namespace SOC.UI
 
     public class UnEventedScriptNode : TreeNode
     {
-        public LuaText Identifier;
+        public LuaString Identifier;
 
         public string Description;
 
@@ -393,7 +393,7 @@ namespace SOC.UI
 
         public ScriptalParentNode OperationsParent;
 
-        public UnEventedScriptNode(LuaText identifier, string commment, List<Scriptal> conditions, List<Scriptal> operations)
+        public UnEventedScriptNode(LuaString identifier, string commment, List<Scriptal> conditions, List<Scriptal> operations)
         {
             PreconditionsParent = new ScriptalParentNode(ScriptalType.Preconditional, conditions);
             Nodes.Add(PreconditionsParent);
@@ -431,7 +431,7 @@ namespace SOC.UI
             }
         }
 
-        public void UpdateNodeText(LuaText identifier = null)
+        public void UpdateNodeText(LuaString identifier = null)
         {
             if (identifier != null)
             {
@@ -572,11 +572,11 @@ namespace SOC.UI
 
     public class MsgSenderNode : TreeNode
     {
-        public LuaText Msg;
+        public LuaString Msg;
 
-        public LuaText Sender;
+        public LuaString Sender;
 
-        public MsgSenderNode(LuaText msg, LuaText sender)
+        public MsgSenderNode(LuaString msg, LuaString sender)
         {
             Msg = msg;
             Sender = sender;
@@ -611,9 +611,9 @@ namespace SOC.UI
 
     public class CodeNode : TreeNode
     {
-        public LuaText Code;
+        public LuaString Code;
 
-        public CodeNode(LuaText code)
+        public CodeNode(LuaString code)
         {
             Code = code;
 

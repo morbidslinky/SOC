@@ -13,14 +13,14 @@ namespace SOC.Classes.Lua
 
         public QStep_Main()
         {
-            OnEnterFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnEnter")));
-            OnLeaveFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.Text("QStep_Main OnLeave")));
+            OnEnterFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.String("QStep_Main OnEnter")));
+            OnLeaveFunction.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("Fox", "Log"), Lua.String("QStep_Main OnLeave")));
         }
 
         public LuaTableEntry Get(string strCode32TableVariableName)
         {
             QStep_Main_Table.Add(
-                Lua.TableEntry("Messages", Lua.Function("return |[0|FUNCTION_CALL]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(strCode32TableVariableName))), false),
+                Lua.TableEntry("Messages", Lua.Function("return |[1|FUNCTION_CALL]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(strCode32TableVariableName))), false),
                 Lua.TableEntry("OnEnter", OnEnterFunction.ToFunction()),
                 Lua.TableEntry("OnLeave", OnLeaveFunction.ToFunction())
             );

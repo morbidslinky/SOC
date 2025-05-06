@@ -2,13 +2,13 @@
 
 namespace SOC.Classes.Lua
 {
-    public class LuaText : LuaValue
+    public class LuaString : LuaValue
     {
         [XmlAttribute] public string Text { get; set; }
         public override string Value => $"\"{Text}\"";
 
-        public LuaText() : base(TemplateRestrictionType.TEXT) { }
-        public LuaText(string text) : base(TemplateRestrictionType.TEXT)
+        public LuaString() : base(TemplateRestrictionType.STRING) { }
+        public LuaString(string text) : base(TemplateRestrictionType.STRING)
         {
             Text = text;
         }

@@ -103,10 +103,10 @@ namespace SOC.UI
 
             switch (node.Entry.Value.Type)
             {
-                case TemplateRestrictionType.TEXT:
-                    ShowVarTypeValueControl(textBoxVarTextValue);
-                    textBoxVarTextValue.Text = node.Entry.Value.Value.Trim('"');
-                    comboBoxVarType.Text = "TEXT";
+                case TemplateRestrictionType.STRING:
+                    ShowVarTypeValueControl(textBoxVarStringValue);
+                    textBoxVarStringValue.Text = node.Entry.Value.Value.Trim('"');
+                    comboBoxVarType.Text = "STRING";
                     break;
                 case TemplateRestrictionType.NUMBER:
                     ShowVarTypeValueControl(numericUpDownVarNumberValue);
@@ -129,7 +129,7 @@ namespace SOC.UI
 
         private void ShowVarTypeValueControl(Control control)
         {
-            Control[] valueControls = { textBoxVarTextValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
 
             foreach (Control valueControl in valueControls)
             {
@@ -146,7 +146,7 @@ namespace SOC.UI
 
         private void HideAllVarValueControls()
         {
-            Control[] valueControls = { textBoxVarTextValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
             foreach (Control valueControl in valueControls)
             {
                     valueControl.Visible = false;
@@ -157,8 +157,8 @@ namespace SOC.UI
         {
             switch (comboBoxVarType.Text)
             {
-                case "TEXT":
-                    ShowVarTypeValueControl(textBoxVarTextValue);
+                case "STRING":
+                    ShowVarTypeValueControl(textBoxVarStringValue);
                     break;
                 case "NUMBER":
                     ShowVarTypeValueControl(numericUpDownVarNumberValue);
@@ -226,7 +226,7 @@ namespace SOC.UI
         private void textBoxTextVarValue_TextChanged(object sender, EventArgs e)
         {
             VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.Text(textBoxVarTextValue.Text);
+            currentNode.Entry.Value = Lua.String(textBoxVarStringValue.Text);
             currentNode.Nodes.Clear();
             currentNode.UpdateText();
         }

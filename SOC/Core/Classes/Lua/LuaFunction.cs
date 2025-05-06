@@ -117,7 +117,7 @@ namespace SOC.Classes.Lua
             StringBuilder templateBuilder = new StringBuilder();
             List<LuaValue> templateValues = new List<LuaValue>();
 
-            int index = 0;
+            int index = 1;
             foreach (FunctionToken token in Values)
             {
                 if (token is FunctionTokenPlainText t)

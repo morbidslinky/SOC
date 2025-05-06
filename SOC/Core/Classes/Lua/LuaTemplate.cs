@@ -9,8 +9,8 @@ using System.Xml.Serialization;
 namespace SOC.Classes.Lua
 {
     /// <summary>
-    /// Embed |[index,RESTRICTION]| into the template string to set placeholders that will be populated when the lua is written to a file from a LuaFunction, assuming the function's populationValues are aligned with the template placeholders.
-    /// Example: "This is a string: |[0,STRING]|, and this is a variable: |[1,VARIABLE]|, and this is an error: |[foo,bar]|."
+    /// Embed |[1-based index|RESTRICTION]| into the template string to set placeholders that will be populated when the lua is written to a file from a LuaFunction, assuming the function's populationValues are aligned with the template placeholders.
+    /// Example: "This is a string: |[1|STRING]|, and this is a variable: |[2|VARIABLE]|, and this is an error: |[foo|bar]|."
     /// Accepted placeholder restrictions: BOOLEAN, STRING, NUMBER, FUNCTION, FUNCTION_CALL, TABLE, TABLE_IDENTIFIER, VARIABLE, ASSIGN_VARIABLE, NIL 
     /// </summary>
     public class LuaTemplate
@@ -50,7 +50,7 @@ namespace SOC.Classes.Lua
                 case LuaTableIdentifier identifier:
                     restrictionType = "TABLE_IDENTIFIER";
                     break;
-                case LuaText text:
+                case LuaString text:
                     restrictionType = "STRING";
                     break;
                 case LuaVariable var:
@@ -170,7 +170,7 @@ namespace SOC.Classes.Lua
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.BOOLEAN;
                     break;
                 case "STRING":
-                    placeholder.AllowedType  = LuaValue.TemplateRestrictionType.TEXT;
+                    placeholder.AllowedType  = LuaValue.TemplateRestrictionType.STRING;
                     break;
                 case "NUMBER":
                     placeholder.AllowedType = LuaValue.TemplateRestrictionType.NUMBER;
@@ -215,12 +215,12 @@ namespace SOC.Classes.Lua
 
         internal bool TryGetValueString(LuaValue[] luaValues, out string valueString)
         {
-            if (Index >= luaValues.Length || luaValues[Index] == null)
+            if (Index - 1 >= luaValues.Length || luaValues[Index - 1] == null)
             {
-                valueString = $"Missing population data At index '{Index}'";
+                valueString = $"Missing population data at 1-based index '{Index - 1}'";
                 return false;
             }
-            LuaValue luaValueAtIndex = luaValues[Index];
+            LuaValue luaValueAtIndex = luaValues[Index - 1];
 
             if (luaValueAtIndex is LuaVariable variable)
             {

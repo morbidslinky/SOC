@@ -13,7 +13,7 @@
 
         public LuaTableEntry Get()
         {
-            return Lua.TableEntry("Messages", Lua.Function("return |[0|FUNCTION_CALL]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(TABLE_VAR_NAME))), true);
+            return Lua.TableEntry("Messages", Lua.Function("return |[1|FUNCTION_CALL]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(TABLE_VAR_NAME))), true);
         }
 
         public LuaTable GetMessagesDefs()

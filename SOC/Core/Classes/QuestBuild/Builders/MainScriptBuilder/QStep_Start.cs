@@ -7,7 +7,7 @@
 
         public QStep_Start()
         {
-            OnEnter.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "SetNextQuestStep"), Lua.Text("QStep_Main")));
+            OnEnter.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "SetNextQuestStep"), Lua.String("QStep_Main")));
         }
 
         public LuaTableEntry Get()

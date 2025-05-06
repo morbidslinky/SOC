@@ -30,7 +30,7 @@ namespace SOC.Classes.Lua
             luaBuilder.Append(IdentifierVariableName);
             foreach (var key in IdentifierKeys)
             {
-                if (key is LuaText luaString)
+                if (key is LuaString luaString)
                     luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
                 else
                     luaBuilder.Append($"[{key}]");
@@ -50,7 +50,7 @@ namespace SOC.Classes.Lua
                         luaBuilder.Append(identifierVariable.GetVarName());
                         foreach (var key in IdentifierKeys)
                         {
-                            if (key is LuaText luaString)
+                            if (key is LuaString luaString)
                                 luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
                             else
                                 luaBuilder.Append($"[{key}]");

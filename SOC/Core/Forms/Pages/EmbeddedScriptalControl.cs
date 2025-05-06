@@ -1,4 +1,6 @@
-﻿using SOC.Classes.Lua;
+﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
+using SOC.QuestObjects.Common;
 using SOC.UI;
 using System;
 using System.Collections.Generic;
@@ -19,13 +21,17 @@ namespace SOC.UI
     {
         private bool _isUpdatingControls = false;
 
-        private TreeView TreeViewScripts;
+        private List<ChoosableValues> QuestValueSets = new List<ChoosableValues>();
 
-        public EmbeddedScriptalControl(TreeView treeViewScripts)
+        private TreeView TreeViewScripts;
+        private TreeView TreeViewVariables;
+
+        public EmbeddedScriptalControl(TreeView treeViewScripts, TreeView treeViewVariables)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
             TreeViewScripts = treeViewScripts;
+            TreeViewVariables = treeViewVariables;
         }
 
         internal static string str(ScriptalType type)
@@ -33,9 +39,9 @@ namespace SOC.UI
             return type == ScriptalType.Preconditional ? "Preconditional" : "Operational";
         }
 
-        internal void UpdateFromScript(ScriptalNode scriptalNode)
+        internal void UpdateFromScript(ScriptalNode scriptalNode, List<ChoosableValues> questValueSets)
         {
-            _isUpdatingControls = true;
+            QuestValueSets = questValueSets;
 
             string scriptalType = str(scriptalNode.ScriptalType);
 
@@ -60,27 +66,41 @@ namespace SOC.UI
                 comboBoxScriptal.SelectedIndex = 0;
             }
 
-            SetDescription((Scriptal)comboBoxScriptal.SelectedItem);
-            ApplyTemplate((Scriptal)comboBoxScriptal.SelectedItem);
-
-            _isUpdatingControls = false;
+            SetDescription(scriptalNode.Scriptal);
+            SetChoiceMenu(scriptalNode.Scriptal);
         }
 
-        private void ApplyTemplate(Scriptal selectedTemplate)
+        private void SetChoiceMenu(Scriptal scriptal)
         {
-            groupBoxChoices.Text = $"Populate :: {selectedTemplate.Name}";
+            groupBoxChoices.Text = $"Populate :: {scriptal.Name}";
 
-            if (!_isUpdatingControls && TreeViewScripts.SelectedNode is ScriptalNode selectedScriptalNode)
+            listBoxChoices.Items.Clear();
+            listBoxChoices.Items.AddRange(scriptal.Choices.ToArray());
+            if (scriptal.Choices.Count > 0)
             {
-                selectedScriptalNode.Scriptal = selectedTemplate;
-                selectedScriptalNode.UpdateText();
+                listBoxChoices.Enabled = true;
+                comboBoxChoiceSet.Enabled = true;
+                comboBoxChoiceValue.Enabled = true;
+                textBoxChoiceDescription.Enabled = true;
+                listBoxChoices.SelectedIndex = 0;
+            } else
+            {
+                listBoxChoices.Items.Clear();
+                listBoxChoices.Enabled = false;
+                comboBoxChoiceSet.Items.Clear();
+                comboBoxChoiceSet.Enabled = false;
+                comboBoxChoiceValue.Items.Clear();
+                comboBoxChoiceValue.Enabled = false;
+                textBoxChoiceDescription.Text = "This Template does not contain populatable values.";
+                textBoxChoiceDescription.Enabled = false;
+                SyncScriptalNode();
             }
         }
 
-        private void SetDescription(Scriptal selectedTemplate)
+        private void SetDescription(Scriptal scriptal)
         {
-            textBoxDescription.Text = selectedTemplate.Description;
-            groupBoxDescription.Text = $"Description :: {selectedTemplate.Name}";
+            textBoxDescription.Text = scriptal.Description;
+            groupBoxDescription.Text = $"Description :: {scriptal.Name}";
         }
 
         internal Scriptal[] GetTemplates(ScriptalNode scriptalNode)
@@ -139,7 +159,69 @@ namespace SOC.UI
 
         private void buttonApplyTemplate_Click(object sender, EventArgs e)
         {
-            ApplyTemplate((Scriptal)comboBoxScriptal.SelectedItem);
+            SetChoiceMenu((Scriptal)comboBoxScriptal.SelectedItem);
+        }
+
+        private void listBoxChoices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_isUpdatingControls) return;
+
+            Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+
+            textBoxChoiceDescription.Text = selectedChoice.Description;
+            comboBoxChoiceSet.Items.Clear();
+
+            var choosableSets = selectedScriptal.EmbeddedChoosables.Union(QuestValueSets).Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key));
+            comboBoxChoiceSet.Items.AddRange(choosableSets.ToArray());
+
+            if (choosableSets.Any(set => set.Key == selectedChoice.Key))
+                comboBoxChoiceSet.Text = selectedChoice.Key;
+            else
+                comboBoxChoiceSet.SelectedIndex = 0;
+        }
+
+        private void comboBoxChoiceSet_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+            ChoosableValues selectedChoiceSet = (ChoosableValues)comboBoxChoiceSet.SelectedItem;
+
+            comboBoxChoiceValue.Items.Clear();
+            comboBoxChoiceValue.Items.AddRange(selectedChoiceSet.Values.ToArray());
+
+            if (selectedChoiceSet.Values.Any(value => value.Equals(selectedChoice.Value)))
+            {
+                comboBoxChoiceValue.Text = selectedChoice.Value.ToString();
+            }
+            else 
+            {
+                selectedChoice.Key = selectedChoiceSet.Key;
+                comboBoxChoiceValue.SelectedIndex = 0;
+            }
+        }
+
+        private void comboBoxChoiceValue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+            LuaValue value = (LuaValue)comboBoxChoiceValue.SelectedItem;
+            selectedChoice.Value = value;
+
+            _isUpdatingControls = true;
+
+            int index = listBoxChoices.Items.IndexOf(selectedChoice);
+            listBoxChoices.Items[index] = listBoxChoices.Items[index];
+            SyncScriptalNode();
+
+            _isUpdatingControls = false;
+        }
+
+        private void SyncScriptalNode()
+        {
+            if (TreeViewScripts.SelectedNode is ScriptalNode selectedScriptalNode)
+            {
+                selectedScriptalNode.Scriptal = (Scriptal)comboBoxScriptal.SelectedItem;
+                selectedScriptalNode.UpdateText();
+            }
         }
     }
 }

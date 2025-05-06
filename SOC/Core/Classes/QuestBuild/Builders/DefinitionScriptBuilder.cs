@@ -98,7 +98,7 @@ namespace SOC.Classes.Lua
 
         public void Build(string definitionLuaFilePath)
         {
-            var definitionScript = Lua.Function("local |[0|ASSIGN_VARIABLE]| return |[0|VARIABLE]|", Lua.Variable("this", definitionTable));
+            var definitionScript = Lua.Function("local |[1|ASSIGN_VARIABLE]| return |[1|VARIABLE]|", Lua.Variable("this", definitionTable));
             definitionScript.WriteToLua(definitionLuaFilePath);
         }
     }

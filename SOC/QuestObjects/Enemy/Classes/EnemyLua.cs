@@ -22,8 +22,8 @@ namespace SOC.QuestObjects.Enemy
                     definitionLua.AddToFaceIdList(new LuaTableIdentifier(
                         "TppDefine", new LuaValue[]
                         {
-                            new LuaText("QUEST_FACE_ID_LIST"),
-                            new LuaText($"{region}_BALACLAVA")
+                            new LuaString("QUEST_FACE_ID_LIST"),
+                            new LuaString($"{region}_BALACLAVA")
                         }));
                 }
 
@@ -32,8 +32,8 @@ namespace SOC.QuestObjects.Enemy
                     definitionLua.AddToBodyIdList(new LuaTableIdentifier(
                         "TppDefine", new LuaValue[]
                         {
-                            new LuaText("QUEST_BODY_ID_LIST"),
-                            new LuaText($"{region}_ARMOR")
+                            new LuaString("QUEST_BODY_ID_LIST"),
+                            new LuaString($"{region}_ARMOR")
                         }));
                 }
 
@@ -42,7 +42,7 @@ namespace SOC.QuestObjects.Enemy
                     definitionLua.AddToBodyIdList(new LuaTableIdentifier(
                         "TppEnemyBodyId", new LuaValue[]
                         {
-                            new LuaText($"{body}")
+                            new LuaString($"{body}")
                         }));
                 }
             }

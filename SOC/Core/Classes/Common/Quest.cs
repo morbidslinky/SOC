@@ -1,4 +1,5 @@
-﻿using SOC.Forms.Pages;
+﻿using SOC.Classes.Lua;
+using SOC.Forms.Pages;
 using SOC.QuestObjects.ActiveItem;
 using SOC.QuestObjects.Animal;
 using SOC.QuestObjects.Camera;
@@ -153,6 +154,18 @@ namespace SOC.Classes.Common
                     locDetail.RefreshStub();
                 }
             }
+        }
+
+        public List<ChoosableValues> GetAllObjectsScriptValueSets()
+        {
+            List<ChoosableValues> ObjectsDetailsValueSets = new List<ChoosableValues>();
+
+            foreach (ObjectsDetail detail in ObjectsDetails.Details)
+            {
+                detail.AddToScriptValueSets(ObjectsDetailsValueSets);
+            }
+
+            return ObjectsDetailsValueSets;
         }
 
         public LocationalDataStub[] GetLocationalStubs()

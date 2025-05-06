@@ -243,10 +243,10 @@ namespace SOC.QuestObjects.Hostage
                     interrogationBuilder.AppendLuaValue(
                         Lua.FunctionCall(
                             Lua.TableIdentifier("TppMarker", "Enable"), 
-                            Lua.Text(hostage.GetObjectName()), 
+                            Lua.String(hostage.GetObjectName()), 
                             Lua.Number(0), 
-                            Lua.Text("defend"), 
-                            Lua.Text("map_and_world_only_icon"), 
+                            Lua.String("defend"), 
+                            Lua.String("map_and_world_only_icon"), 
                             Lua.Number(0), 
                             Lua.Boolean(false), 
                             Lua.Boolean(true)

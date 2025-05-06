@@ -20,7 +20,6 @@ namespace SOC.UI
         EmbeddedScriptalControl EmbeddedScriptalControl;
 
         public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
-        public static List<ChoosableValues> ChoosableValueSets = new List<ChoosableValues>();
 
         Str32TableNode qstep_main = new Str32TableNode("QStep_Main");
 
@@ -34,13 +33,8 @@ namespace SOC.UI
 
             ParseMessageClassesFile();
 
-            foreach (ObjectsDetail objectsDetail in Quest.ObjectsDetails.Details)
-            {
-                ChoosableValueSets.AddRange(objectsDetail.GetChoosableScriptValues());
-            }
-
             EmbeddedScriptControl = new EmbeddedScriptControl(treeViewScripts);
-            EmbeddedScriptalControl = new EmbeddedScriptalControl(treeViewScripts);
+            EmbeddedScriptalControl = new EmbeddedScriptalControl(treeViewScripts, treeViewVariables);
 
             treeViewVariables.Nodes.Clear();
             foreach (var entry in Quest.ScriptDetails.VariableDeclarations)

@@ -301,7 +301,7 @@ namespace SOC.Classes.Lua
 
         private string FormatKey(LuaValue key)
         {
-            if (key is LuaText luaString)
+            if (key is LuaString luaString)
             {
                 string keyStr = luaString.Text;
                 return IsValidLuaIdentifier(keyStr) ? keyStr : $"[{luaString.Value}]";

@@ -1,4 +1,5 @@
 ﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
 using SOC.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace SOC.QuestObjects.Common
     public abstract class ObjectsDetailControlPanel
     {
         public UserControl detailControl { get; }
+
+        public List<ChoosableValues> ScriptValueSets { get; }
 
         public FlowLayoutPanel flowPanel { get; }
 
@@ -21,6 +24,11 @@ namespace SOC.QuestObjects.Common
         {
             DrawMetadata(detail.GetMetadata());
             DrawObjectsControls(detail.GetQuestObjects());
+        }
+
+        public void RefreshScriptValueSets(ObjectsDetail detail)
+        {
+
         }
 
         public void ShowDetail()

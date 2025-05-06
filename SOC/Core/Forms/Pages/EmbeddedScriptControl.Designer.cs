@@ -128,7 +128,7 @@
             // labelStrCode32
             // 
             this.labelStrCode32.AutoSize = true;
-            this.labelStrCode32.Location = new System.Drawing.Point(12, 24);
+            this.labelStrCode32.Location = new System.Drawing.Point(6, 24);
             this.labelStrCode32.Name = "labelStrCode32";
             this.labelStrCode32.Size = new System.Drawing.Size(60, 13);
             this.labelStrCode32.TabIndex = 0;
@@ -140,9 +140,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxStrSenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxStrSenders.FormattingEnabled = true;
-            this.comboBoxStrSenders.Location = new System.Drawing.Point(9, 120);
+            this.comboBoxStrSenders.Location = new System.Drawing.Point(6, 120);
             this.comboBoxStrSenders.Name = "comboBoxStrSenders";
-            this.comboBoxStrSenders.Size = new System.Drawing.Size(272, 21);
+            this.comboBoxStrSenders.Size = new System.Drawing.Size(275, 21);
             this.comboBoxStrSenders.TabIndex = 5;
             this.comboBoxStrSenders.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrSenders_SelectedIndexChanged);
             // 
@@ -152,16 +152,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxStrCodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxStrCodes.FormattingEnabled = true;
-            this.comboBoxStrCodes.Location = new System.Drawing.Point(9, 40);
+            this.comboBoxStrCodes.Location = new System.Drawing.Point(6, 40);
             this.comboBoxStrCodes.Name = "comboBoxStrCodes";
-            this.comboBoxStrCodes.Size = new System.Drawing.Size(272, 21);
+            this.comboBoxStrCodes.Size = new System.Drawing.Size(275, 21);
             this.comboBoxStrCodes.TabIndex = 1;
             this.comboBoxStrCodes.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrCodes_SelectedIndexChanged);
             // 
             // labelmsg
             // 
             this.labelmsg.AutoSize = true;
-            this.labelmsg.Location = new System.Drawing.Point(12, 64);
+            this.labelmsg.Location = new System.Drawing.Point(6, 64);
             this.labelmsg.Name = "labelmsg";
             this.labelmsg.Size = new System.Drawing.Size(29, 13);
             this.labelmsg.TabIndex = 2;
@@ -173,16 +173,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxStrMsgs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxStrMsgs.FormattingEnabled = true;
-            this.comboBoxStrMsgs.Location = new System.Drawing.Point(9, 80);
+            this.comboBoxStrMsgs.Location = new System.Drawing.Point(6, 80);
             this.comboBoxStrMsgs.Name = "comboBoxStrMsgs";
-            this.comboBoxStrMsgs.Size = new System.Drawing.Size(272, 21);
+            this.comboBoxStrMsgs.Size = new System.Drawing.Size(275, 21);
             this.comboBoxStrMsgs.TabIndex = 3;
             this.comboBoxStrMsgs.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrMsgs_SelectedIndexChanged);
             // 
             // labelsender
             // 
             this.labelsender.AutoSize = true;
-            this.labelsender.Location = new System.Drawing.Point(12, 104);
+            this.labelsender.Location = new System.Drawing.Point(6, 104);
             this.labelsender.Name = "labelsender";
             this.labelsender.Size = new System.Drawing.Size(42, 13);
             this.labelsender.TabIndex = 4;
