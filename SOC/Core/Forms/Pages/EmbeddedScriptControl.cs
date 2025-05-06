@@ -1,4 +1,5 @@
-﻿using SOC.Classes.Lua;
+﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,9 +25,9 @@ namespace SOC.UI
             TreeViewScripts = treeViewScripts;
         }
 
-        public void UpdateFromSelectedScript()
+        public void UpdateFromScript(UnEventedScriptNode selectedScriptNode)
         {
-            var selectedScript = ((UnEventedScriptNode)TreeViewScripts.SelectedNode).ConvertToScript();
+            var selectedScript = selectedScriptNode.ConvertToScript();
             _isUpdatingControls = true;
 
             comboBoxStrCodes.Items.Clear();
@@ -38,11 +39,6 @@ namespace SOC.UI
             textBoxDescription.Text = selectedScript.Description;
 
             _isUpdatingControls = false;
-        }
-
-        private void EmbeddedScriptControl_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void comboBoxStrCodes_SelectedIndexChanged(object sender, EventArgs e)
@@ -103,6 +99,60 @@ namespace SOC.UI
             }
 
             _isUpdatingControls = false;
+        }
+
+        private void buttonLoadScript_Click(object sender, EventArgs e)
+        {
+            var selectedNode = TreeViewScripts.SelectedNode;
+            if (selectedNode is UnEventedScriptNode scriptNode)
+            {
+                OpenFileDialog loadFile = new OpenFileDialog();
+                loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
+
+                DialogResult result = loadFile.ShowDialog();
+                if (result != DialogResult.OK)
+                    return;
+
+                Script script = new Script();
+
+                try
+                {
+                    script = Script.LoadFromXml(loadFile.FileName);
+                }
+                catch (InvalidOperationException exception)
+                {
+                    MessageBox.Show($"Failed to load script file: {exception.Message}");
+                    return;
+                }
+
+                result = MessageBox.Show("Loading this script will overwrite the current node. Are you sure?", "Load Script", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+                if (result == DialogResult.Yes)
+                {
+                    Str32TableNode table = scriptNode.GetStrCode32TableNode();
+                    table.DeleteScriptNode(scriptNode);
+                    TreeViewScripts.SelectedNode = table.Add(script);
+                }
+            }
+        }
+
+        private void buttonSaveScript_Click(object sender, EventArgs e)
+        {
+            var selectedNode = TreeViewScripts.SelectedNode;
+            if (selectedNode is UnEventedScriptNode scriptNode)
+            {
+                Script script = scriptNode.ConvertToScript();
+
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Xml File|*.xml";
+                saveFile.FileName = script.Identifier.Text;
+                DialogResult saveResult = saveFile.ShowDialog();
+
+                if (saveResult == DialogResult.OK)
+                {
+                    script.WriteToXml(saveFile.FileName);
+                    MessageBox.Show("Done!", "Script Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
     }
 }

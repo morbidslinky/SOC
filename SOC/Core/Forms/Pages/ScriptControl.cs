@@ -6,6 +6,9 @@ using System.IO;
 using System.Xml;
 using System.Reflection;
 using SOC.Classes.Lua;
+using System.Linq.Expressions;
+using SOC.QuestObjects.Common;
+using System.Xml.Serialization;
 
 namespace SOC.UI
 {
@@ -14,8 +17,14 @@ namespace SOC.UI
         public Quest Quest;
 
         EmbeddedScriptControl EmbeddedScriptControl;
+        EmbeddedScriptalControl EmbeddedScriptalControl;
 
         public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
+        public static List<ChoosableValues> ChoosableValueSets = new List<ChoosableValues>();
+
+        Str32TableNode qstep_main = new Str32TableNode("QStep_Main");
+
+        private bool _isUpdatingControls = false;
 
         public ScriptControl(Quest quest)
         {
@@ -24,7 +33,14 @@ namespace SOC.UI
             Quest = quest;
 
             ParseMessageClassesFile();
+
+            foreach (ObjectsDetail objectsDetail in Quest.ObjectsDetails.Details)
+            {
+                ChoosableValueSets.AddRange(objectsDetail.GetChoosableScriptValues());
+            }
+
             EmbeddedScriptControl = new EmbeddedScriptControl(treeViewScripts);
+            EmbeddedScriptalControl = new EmbeddedScriptalControl(treeViewScripts);
 
             treeViewVariables.Nodes.Clear();
             foreach (var entry in Quest.ScriptDetails.VariableDeclarations)
@@ -44,8 +60,6 @@ namespace SOC.UI
             {
                 treeViewScripts.SelectedNode = selected;
             }
-
-            //qstep_main.ExpandAll();
         }
 
         private void ScriptControl_Load(object sender, EventArgs e)
@@ -59,7 +73,7 @@ namespace SOC.UI
 
             if (!File.Exists(MessageClassList))
             {
-                MessageBox.Show("MessageClassese.xml file not found!");
+                MessageBox.Show("MessageClasses.xml file not found!");
                 return;
             }
 

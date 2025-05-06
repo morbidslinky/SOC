@@ -30,80 +30,317 @@ namespace SOC.Classes.Lua
     }
 }
 
-public static class QStep_Main_TargetMessages
+public static class QStep_Main_TargetMessages // as much as I want to refactor & redesign all of this to display on the script page if the user selects a target, there's really not a lot of value for the user beyond "oh that's cool"
 {
-    static readonly StrCode32Script PlayerPickUpWeapon = new StrCode32Script(
+    static readonly Script PlayerPickUpWeapon = new Script(
         new StrCode32Event("Player", "OnPickUpWeapon", ""),
         LuaFunction.ToTableEntry(
-            "PlayerPickUpWeaponClearCheck", StrCode32Event.DefaultParameters,
+            "PlayerPickUpWeaponClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"local isClearType = qvars.CheckQuestAllTargetDynamic(\"PickUpDormant\", {StrCode32Event.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); ")
         );
 
-    static readonly StrCode32Script PlayerPickUpPlaced = new StrCode32Script(
+    static readonly Script PlayerPickUpPlaced = new Script(
         new StrCode32Event("Player", "OnPickUpPlaced", ""),
         LuaFunction.ToTableEntry(
-            "PlayerPickUpPlacedClearCheck", StrCode32Event.DefaultParameters,
+            "PlayerPickUpPlacedClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if TppPlaced.IsQuestBlock({StrCode32Event.DefaultParameters[2]}) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"PickUpActive\", {StrCode32Event.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); end; "));
 
-    static readonly StrCode32Script PlacedActivatePlaced = new StrCode32Script(
+    static readonly Script PlacedActivatePlaced = new Script(
         new StrCode32Event("Placed", "OnActivatePlaced", ""),
         LuaFunction.ToTableEntry(
-            "PlacedActivatePlacedClearCheck", StrCode32Event.DefaultParameters,
+            "PlacedActivatePlacedClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if TppPlaced.IsQuestBlock({StrCode32Event.DefaultParameters[1]}) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"Activate\", {StrCode32Event.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
-    static readonly StrCode32Script GameObjectDead = new StrCode32Script(
+    static readonly Script GameObjectDead = new Script(
         new StrCode32Event("GameObject", "Dead", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectDeadClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectDeadClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"local isClearType = qvars.CheckQuestAllTargetDynamic(\"Dead\", {StrCode32Event.DefaultParameters[0]}, {StrCode32Event.DefaultParameters[2]}); TppQuest.ClearWithSave(isClearType); "));
 
-    static readonly StrCode32Script GameObjectFultonInfo = new StrCode32Script(
+    static readonly Script GameObjectFultonInfo = new Script(
         new StrCode32Event("GameObject", "FultonInfo", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectFultonInfoClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectFultonInfoClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if mvars.fultonInfo ~= TppDefine.QUEST_CLEAR_TYPE.NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = TppDefine.QUEST_CLEAR_TYPE.NONE; "));
 
-    static readonly StrCode32Script GameObjectFulton = new StrCode32Script(
+    static readonly Script GameObjectFulton = new Script(
         new StrCode32Event("GameObject", "Fulton", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectFultonClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectFultonClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"local isClearType = qvars.CheckQuestAllTargetDynamic(\"Fulton\", {StrCode32Event.DefaultParameters[0]}, {StrCode32Event.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); "));
 
-    static readonly StrCode32Script GameObjectFultonFailed = new StrCode32Script(
+    static readonly Script GameObjectFultonFailed = new Script(
         new StrCode32Event("GameObject", "FultonFailed", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectFultonFailedClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectFultonFailedClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if {StrCode32Event.DefaultParameters[3]} == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = qvars.CheckQuestAllTargetDynamic(\"FultonFailed\", {StrCode32Event.DefaultParameters[0]}, {StrCode32Event.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); end;  "));
 
-    static readonly StrCode32Script GameObjectPlacedIntoHeli = new StrCode32Script(
+    static readonly Script GameObjectPlacedIntoHeli = new Script(
         new StrCode32Event("GameObject", "PlacedIntoVehicle", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectPlacedIntoHeliClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectPlacedIntoHeliClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if Tpp.IsHelicopter({StrCode32Event.DefaultParameters[1]}) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"InHelicopter\", {StrCode32Event.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
-    static readonly StrCode32Script GameObjectVehicleBroken = new StrCode32Script(
+    static readonly Script GameObjectVehicleBroken = new Script(
         new StrCode32Event("GameObject", "VehicleBroken", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectVehicleBrokenClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectVehicleBrokenClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if {StrCode32Event.DefaultParameters[1]} == StrCode32(\"End\") then local isClearType = qvars.CheckQuestAllTargetDynamic(\"VehicleBroken\", {StrCode32Event.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
-    static readonly StrCode32Script GameObjectLostControl = new StrCode32Script(
+    static readonly Script GameObjectLostControl = new Script(
         new StrCode32Event("GameObject", "LostControl", ""),
         LuaFunction.ToTableEntry(
-            "GameObjectLostControlClearCheck", StrCode32Event.DefaultParameters,
+            "GameObjectLostControlClearCheck", 
+            StrCode32Event.DefaultParameters,
             $"if {StrCode32Event.DefaultParameters[1]} == StrCode32(\"End\") then local isClearType = qvars.CheckQuestAllTargetDynamic(\"LostControl\", {StrCode32Event.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
-    public static readonly StrCode32Script[] allCommonMessages = { PlayerPickUpWeapon, PlayerPickUpPlaced, PlacedActivatePlaced, GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
+    public static readonly Script[] allCommonMessages = { PlayerPickUpWeapon, PlayerPickUpPlaced, PlacedActivatePlaced, GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
 
-    public static readonly StrCode32Script[] genericTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
+    public static readonly Script[] genericTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectPlacedIntoHeli, GameObjectVehicleBroken, GameObjectLostControl };
 
-    public static readonly StrCode32Script[] dormantItemTargetMessages = { PlayerPickUpWeapon };
+    public static readonly Script[] dormantItemTargetMessages = { PlayerPickUpWeapon };
 
-    public static readonly StrCode32Script[] activeItemTargetMessages = { PlayerPickUpPlaced, PlacedActivatePlaced };
+    public static readonly Script[] activeItemTargetMessages = { PlayerPickUpPlaced, PlacedActivatePlaced };
 
-    public static readonly StrCode32Script[] mechaCaptureTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectVehicleBroken };
+    public static readonly Script[] mechaCaptureTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed, GameObjectVehicleBroken };
 
-    public static readonly StrCode32Script[] mechaNoCaptureTargetMessages = { GameObjectDead, GameObjectVehicleBroken, GameObjectLostControl };
+    public static readonly Script[] mechaNoCaptureTargetMessages = { GameObjectDead, GameObjectVehicleBroken, GameObjectLostControl };
 
-    public static readonly StrCode32Script[] animalTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed };
+    public static readonly Script[] animalTargetMessages = { GameObjectDead, GameObjectFultonInfo, GameObjectFulton, GameObjectFultonFailed };
+}
+
+public static class StaticObjectiveFunctions
+{
+    public static readonly LuaTableEntry IsTargetSetMessageIdForItem = LuaFunction.ToTableEntry(
+        "IsTargetSetMessageIdForItem", 
+        new string[] { "gameId", "messageId", "checkAnimalId" },
+        @"if messageId == ""PickUpDormant"" then
+            for i, targetInfo in pairs(qvars.ObjectiveTypeList.targetItemList) do
+              if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == false then
+                targetInfo.messageId = messageId
+                return true, true
+              end
+            end
+          elseif messageId == ""PickUpActive"" or messageId == ""Activate"" then
+            for i, targetInfo in pairs(qvars.ObjectiveTypeList.targetItemList) do
+              if gameId == targetInfo.equipId and targetInfo.messageId == ""None"" and targetInfo.active == true then
+                targetInfo.messageId = messageId
+                return true, true
+              end
+            end
+          end
+          return false, false");
+
+    public static readonly LuaTableEntry TallyItemTargets = LuaFunction.ToTableEntry(
+        "TallyItemTargets", 
+        new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        @"for i, targetInfo in pairs(qvars.ObjectiveTypeList.targetItemList) do
+            local dynamicQuestType = ""RECOVERED""
+            for _, ObjectiveTypeInfo in ipairs(qvars.ObjectiveTypeList.itemTargets) do
+              if ObjectiveTypeInfo.Check(targetInfo) then
+                dynamicQuestType = ObjectiveTypeInfo.Type
+                break
+              end
+            end
+            local targetMessageId = targetInfo.messageId
+
+            if targetMessageId ~= ""None"" then
+                if dynamicQuestType == ""RECOVERED"" then
+                  if (targetMessageId == ""PickUpDormant"" or targetMessageId == ""PickUpActive"") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                  elseif (targetMessageId == ""Activate"") then
+                    objectiveFailedCount = objectiveFailedCount + 1
+                  end
+
+                elseif dynamicQuestType == ""ELIMINATE"" then
+                  if (targetMessageId == ""PickUpActive"" or targetMessageId == ""Activate"") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                  end
+
+                elseif dynamicQuestType == ""KILLREQUIRED"" then
+                  if (targetMessageId == ""Activate"") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                  elseif (targetMessageId == ""PickUpActive"") then
+                    objectiveFailedCount = objectiveFailedCount + 1
+                  end
+              end
+  	        end
+            totalTargets = totalTargets + 1
+          end
+          return totalTargets, objectiveCompleteCount, objectiveFailedCount");
+
+    public static readonly LuaTableEntry IsTargetSetMessageIdForGenericEnemy = LuaFunction.ToTableEntry(
+        "IsTargetSetMessageIdForGenericEnemy", 
+        new string[] { "gameId", "messageId", "checkAnimalId" },
+        @"if mvars.ene_questTargetList[gameId] then
+	        local targetInfo = mvars.ene_questTargetList[gameId]
+	        local intended = true
+	        if targetInfo.messageId ~= ""None"" and targetInfo.isTarget == true then
+	          intended = false
+	        elseif targetInfo.isTarget == false then
+	          intended = false
+	        end
+	        targetInfo.messageId = messageId or ""None""
+	        return true, intended
+          end
+          return false, false");
+
+    public static readonly LuaTableEntry TallyGenericTargets = LuaFunction.ToTableEntry(
+        "TallyGenericTargets", 
+        new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        @"for targetGameId, targetInfo in pairs(mvars.ene_questTargetList) do
+            local dynamicQuestType = ""ELIMINATE""
+            local isTarget = targetInfo.isTarget or false
+            local targetMessageId = targetInfo.messageId
+
+            if isTarget == true then
+              if qvars.ObjectiveTypeList.genericTargets ~= nil then
+                for _, ObjectiveTypeInfo in ipairs(qvars.ObjectiveTypeList.genericTargets) do
+                  if ObjectiveTypeInfo.Check(targetGameId) then
+                    dynamicQuestType = ObjectiveTypeInfo.Type
+                    break
+                  end
+                end
+              end
+
+              if targetMessageId ~= ""None"" then
+                if dynamicQuestType == ""RECOVERED"" then
+                  if (targetMessageId == ""Fulton"") or (targetMessageId == ""InHelicopter"") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                  elseif (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") or (targetMessageId == ""VehicleBroken"") or (targetMessageId == ""LostControl"") then
+                    objectiveFailedCount = objectiveFailedCount + 1
+                  end
+
+                elseif dynamicQuestType == ""ELIMINATE"" then
+                  if (targetMessageId == ""Fulton"") or (targetMessageId == ""InHelicopter"") or (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") or (targetMessageId == ""VehicleBroken"") or (targetMessageId == ""LostControl"") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                  end
+
+                elseif dynamicQuestType == ""KILLREQUIRED"" then
+                  if (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") or (targetMessageId == ""VehicleBroken"") or (targetMessageId == ""LostControl"") then
+                    objectiveCompleteCount = objectiveCompleteCount + 1
+                  elseif (targetMessageId == ""Fulton"") or (targetMessageId == ""InHelicopter"")  then
+                    objectiveFailedCount = objectiveFailedCount + 1
+                  end
+                end
+              end
+              totalTargets = totalTargets + 1
+            end
+          end
+          return totalTargets, objectiveCompleteCount, objectiveFailedCount");
+
+    public static readonly LuaTableEntry IsTargetSetMessageIdForAnimal = LuaFunction.ToTableEntry(
+        "IsTargetSetMessageIdForAnimal", 
+        new string[] { "gameId", "messageId", "checkAnimalId" },
+        @"if checkAnimalId ~= nil then
+            local databaseId = TppAnimal.GetDataBaseIdFromAnimalId(checkAnimalId)
+            local isTarget = false
+            for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
+              if targetInfo.idType == ""animalId"" then
+                if animalId == checkAnimalId then
+                  targetInfo.messageId = messageId or ""None""
+                    isTarget = true
+                  end
+                elseif targetInfo.idType == ""databaseId"" then
+                  if animalId == databaseId then
+                    targetInfo.messageId = messageId or ""None""
+                    isTarget = true
+                  end
+                elseif targetInfo.idType == ""targetName"" then
+                  local animalGameId = GetGameObjectId(animalId)
+                  if animalGameId == gameId then
+                    targetInfo.messageId = messageId
+                    isTarget = true
+                  end
+                end
+              end
+              return isTarget, true
+            end
+          return false, false");
+
+    public static readonly LuaTableEntry TallyAnimalTargets = LuaFunction.ToTableEntry(
+        "TallyAnimalTargets", 
+        new string[] { "totalTargets", "objectiveCompleteCount", "objectiveFailedCount" },
+        @"local dynamicQuestType = qvars.ObjectiveTypeList.animalObjective
+          for animalId, targetInfo in pairs(mvars.ani_questTargetList) do
+            local targetMessageId = targetInfo.messageId
+
+            if targetMessageId ~= ""None"" then
+              if dynamicQuestType == ""RECOVERED"" then
+                if (targetMessageId == ""Fulton"") then
+                  objectiveCompleteCount = objectiveCompleteCount + 1
+                elseif (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") then
+                  objectiveFailedCount = objectiveFailedCount + 1
+                end
+
+              elseif dynamicQuestType == ""ELIMINATE"" then
+                if (targetMessageId == ""Fulton"") or (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") then
+                  objectiveCompleteCount = objectiveCompleteCount + 1
+                end
+
+              elseif dynamicQuestType == ""KILLREQUIRED"" then
+                if (targetMessageId == ""FultonFailed"") or (targetMessageId == ""Dead"") then
+                  objectiveCompleteCount = objectiveCompleteCount + 1
+                elseif (targetMessageId == ""Fulton"") then
+                  objectiveFailedCount = objectiveFailedCount + 1
+                end
+              end
+            end
+            totalTargets = totalTargets + 1
+          end
+          return totalTargets, objectiveCompleteCount, objectiveFailedCount");
+
+    public static readonly LuaTableEntry CheckQuestAllTargetDynamicFunction = LuaFunction.ToTableEntry(
+        "CheckQuestAllTargetDynamic", 
+        new string[] { "messageId", "gameId", "checkAnimalId" },
+        @"local currentQuestName=TppQuest.GetCurrentQuestName()
+          if TppQuest.IsEnd(currentQuestName) then
+            return TppDefine.QUEST_CLEAR_TYPE.NONE
+          end
+
+          local inTargetList = false
+          local intendedTarget = true
+          for IsTargetSetMethod, _ in pairs(qvars.CheckQuestMethodPairs) do 
+            inTargetList, intendedTarget = IsTargetSetMethod(gameId, messageId, checkAnimalId) 
+            if inTargetList == true then 
+                break 
+            end 
+          end 
+
+          if inTargetList == false then
+            return TppDefine.QUEST_CLEAR_TYPE.NONE
+          end
+
+          local totalTargets = 0 
+          local objectiveCompleteCount = 0 
+          local objectiveFailedCount = 0 
+          for _, TallyMethod in pairs(qvars.CheckQuestMethodPairs) do 
+            totalTargets, objectiveCompleteCount, objectiveFailedCount = TallyMethod(totalTargets, objectiveCompleteCount, objectiveFailedCount) 
+          end 
+
+          if totalTargets > 0 then
+            if objectiveCompleteCount >= totalTargets then
+              return TppDefine.QUEST_CLEAR_TYPE.CLEAR
+            elseif objectiveFailedCount > 0 then
+              return TppDefine.QUEST_CLEAR_TYPE.FAILURE
+            elseif objectiveCompleteCount > 0 then
+              if intendedTarget == true then
+                local showAnnounceLogId=TppQuest.questCompleteLangIds[TppQuest.GetCurrentQuestName()]
+                if showAnnounceLogId then
+                  TppUI.ShowAnnounceLog(showAnnounceLogId,objectiveCompleteCount,totalTargets)
+                end
+              end
+            end
+          end
+          return TppDefine.QUEST_CLEAR_TYPE.NONE");
+
 }

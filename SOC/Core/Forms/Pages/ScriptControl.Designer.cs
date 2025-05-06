@@ -39,8 +39,9 @@
             this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.textBoxVarTextValue = new System.Windows.Forms.TextBox();
             this.groupBoxScripts = new System.Windows.Forms.GroupBox();
-            this.buttonNewOperation = new System.Windows.Forms.Button();
+            this.splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             this.buttonNewPrecondition = new System.Windows.Forms.Button();
+            this.buttonNewOperation = new System.Windows.Forms.Button();
             this.textBoxScriptName = new System.Windows.Forms.TextBox();
             this.buttonRemoveScript = new System.Windows.Forms.Button();
             this.buttonNewScript = new System.Windows.Forms.Button();
@@ -50,10 +51,13 @@
             this.splitContainerInner = new System.Windows.Forms.SplitContainer();
             this.groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
             this.panelComponentDetails = new System.Windows.Forms.Panel();
-            this.splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             this.groupBoxVariables.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.groupBoxScripts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).BeginInit();
+            this.splitContainerPreconditionOperation.Panel1.SuspendLayout();
+            this.splitContainerPreconditionOperation.Panel2.SuspendLayout();
+            this.splitContainerPreconditionOperation.SuspendLayout();
             this.panelScripting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
             this.splitContainerOuter.Panel1.SuspendLayout();
@@ -64,10 +68,6 @@
             this.splitContainerInner.Panel2.SuspendLayout();
             this.splitContainerInner.SuspendLayout();
             this.groupBoxScriptDetails.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).BeginInit();
-            this.splitContainerPreconditionOperation.Panel1.SuspendLayout();
-            this.splitContainerPreconditionOperation.Panel2.SuspendLayout();
-            this.splitContainerPreconditionOperation.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxVariables
@@ -226,16 +226,25 @@
             this.groupBoxScripts.TabStop = false;
             this.groupBoxScripts.Text = "Custom Scripts";
             // 
-            // buttonNewOperation
+            // splitContainerPreconditionOperation
             // 
-            this.buttonNewOperation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonNewOperation.Location = new System.Drawing.Point(0, 0);
-            this.buttonNewOperation.Name = "buttonNewOperation";
-            this.buttonNewOperation.Size = new System.Drawing.Size(149, 21);
-            this.buttonNewOperation.TabIndex = 8;
-            this.buttonNewOperation.Text = "Add New Operation";
-            this.buttonNewOperation.UseVisualStyleBackColor = true;
-            this.buttonNewOperation.Click += new System.EventHandler(this.buttonNewOperation_Click);
+            this.splitContainerPreconditionOperation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainerPreconditionOperation.IsSplitterFixed = true;
+            this.splitContainerPreconditionOperation.Location = new System.Drawing.Point(3, 395);
+            this.splitContainerPreconditionOperation.Name = "splitContainerPreconditionOperation";
+            // 
+            // splitContainerPreconditionOperation.Panel1
+            // 
+            this.splitContainerPreconditionOperation.Panel1.Controls.Add(this.buttonNewPrecondition);
+            // 
+            // splitContainerPreconditionOperation.Panel2
+            // 
+            this.splitContainerPreconditionOperation.Panel2.Controls.Add(this.buttonNewOperation);
+            this.splitContainerPreconditionOperation.Size = new System.Drawing.Size(305, 21);
+            this.splitContainerPreconditionOperation.SplitterDistance = 150;
+            this.splitContainerPreconditionOperation.SplitterWidth = 6;
+            this.splitContainerPreconditionOperation.TabIndex = 9;
             // 
             // buttonNewPrecondition
             // 
@@ -247,6 +256,17 @@
             this.buttonNewPrecondition.Text = "Add New Precondition";
             this.buttonNewPrecondition.UseVisualStyleBackColor = true;
             this.buttonNewPrecondition.Click += new System.EventHandler(this.buttonNewPrecondition_Click);
+            // 
+            // buttonNewOperation
+            // 
+            this.buttonNewOperation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNewOperation.Location = new System.Drawing.Point(0, 0);
+            this.buttonNewOperation.Name = "buttonNewOperation";
+            this.buttonNewOperation.Size = new System.Drawing.Size(149, 21);
+            this.buttonNewOperation.TabIndex = 8;
+            this.buttonNewOperation.Text = "Add New Operation";
+            this.buttonNewOperation.UseVisualStyleBackColor = true;
+            this.buttonNewOperation.Click += new System.EventHandler(this.buttonNewOperation_Click);
             // 
             // textBoxScriptName
             // 
@@ -367,26 +387,6 @@
             this.panelComponentDetails.Size = new System.Drawing.Size(575, 431);
             this.panelComponentDetails.TabIndex = 0;
             // 
-            // splitContainerPreconditionOperation
-            // 
-            this.splitContainerPreconditionOperation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerPreconditionOperation.IsSplitterFixed = true;
-            this.splitContainerPreconditionOperation.Location = new System.Drawing.Point(3, 395);
-            this.splitContainerPreconditionOperation.Name = "splitContainerPreconditionOperation";
-            // 
-            // splitContainerPreconditionOperation.Panel1
-            // 
-            this.splitContainerPreconditionOperation.Panel1.Controls.Add(this.buttonNewPrecondition);
-            // 
-            // splitContainerPreconditionOperation.Panel2
-            // 
-            this.splitContainerPreconditionOperation.Panel2.Controls.Add(this.buttonNewOperation);
-            this.splitContainerPreconditionOperation.Size = new System.Drawing.Size(305, 21);
-            this.splitContainerPreconditionOperation.SplitterDistance = 150;
-            this.splitContainerPreconditionOperation.SplitterWidth = 6;
-            this.splitContainerPreconditionOperation.TabIndex = 9;
-            // 
             // ScriptControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -401,6 +401,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();
             this.groupBoxScripts.ResumeLayout(false);
             this.groupBoxScripts.PerformLayout();
+            this.splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
+            this.splitContainerPreconditionOperation.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).EndInit();
+            this.splitContainerPreconditionOperation.ResumeLayout(false);
             this.panelScripting.ResumeLayout(false);
             this.splitContainerOuter.Panel1.ResumeLayout(false);
             this.splitContainerOuter.Panel2.ResumeLayout(false);
@@ -411,10 +415,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).EndInit();
             this.splitContainerInner.ResumeLayout(false);
             this.groupBoxScriptDetails.ResumeLayout(false);
-            this.splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
-            this.splitContainerPreconditionOperation.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).EndInit();
-            this.splitContainerPreconditionOperation.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

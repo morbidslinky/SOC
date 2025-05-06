@@ -13,7 +13,7 @@ namespace SOC.Classes.Common
     {
         [XmlArray("QStep_Main")]
         [XmlArrayItem("UserScript")]
-        public List<StrCode32Script> QStep_Main = new List<StrCode32Script>();
+        public List<Script> QStep_Main = new List<Script>();
 
         [XmlArray("Variables")]
         [XmlArrayItem("UserVariable")]

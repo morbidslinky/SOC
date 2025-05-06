@@ -147,7 +147,6 @@
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\Messages.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\StaticObjectiveFunctions.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnAllocate.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnInitialize.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnTerminate.cs" />
@@ -170,6 +169,12 @@
     </Compile>
     <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.Designer.cs">
       <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.Designer.cs">
+      <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Forms\Pages\ScriptControl.cs">
       <SubType>UserControl</SubType>
@@ -482,6 +487,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptControl.resx">
       <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptalControl.resx">
+      <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>

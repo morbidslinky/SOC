@@ -243,6 +243,7 @@
             this.buttonLoadScript.TabIndex = 9;
             this.buttonLoadScript.Text = "Load Script From Xml...";
             this.buttonLoadScript.UseVisualStyleBackColor = true;
+            this.buttonLoadScript.Click += new System.EventHandler(this.buttonLoadScript_Click);
             // 
             // groupBoxActions
             // 
@@ -279,6 +280,7 @@
             this.buttonSaveScript.TabIndex = 10;
             this.buttonSaveScript.Text = "Save Script To Xml...";
             this.buttonSaveScript.UseVisualStyleBackColor = true;
+            this.buttonSaveScript.Click += new System.EventHandler(this.buttonSaveScript_Click);
             // 
             // EmbeddedScriptControl
             // 
@@ -287,7 +289,6 @@
             this.Controls.Add(this.splitContainerOuter);
             this.Name = "EmbeddedScriptControl";
             this.Size = new System.Drawing.Size(575, 431);
-            this.Load += new System.EventHandler(this.EmbeddedScriptControl_Load);
             this.splitContainerOuter.Panel1.ResumeLayout(false);
             this.splitContainerOuter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).EndInit();

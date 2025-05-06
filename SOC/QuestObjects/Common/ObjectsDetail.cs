@@ -17,6 +17,8 @@ namespace SOC.QuestObjects.Common
 
         public abstract ObjectsMetadata GetMetadata();
 
+        public virtual List<ChoosableValues> GetChoosableScriptValues() { return new List<ChoosableValues>(); }
+
         public virtual void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList) { return; }
 
         public virtual void AddToDefinitionLua(DefinitionScriptBuilder definitionLua) { return; }
