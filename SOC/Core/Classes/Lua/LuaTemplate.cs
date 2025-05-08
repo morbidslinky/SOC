@@ -105,6 +105,11 @@ namespace SOC.Classes.Lua
             return false;
         }
 
+        public static bool MatchesRestriction(LuaValue value, LuaTemplatePlaceholder placeholder)
+        {
+            return placeholder.AllowedType == value.Type;
+        }
+
         public string Populate(params LuaValue[] populationData)
         {
             StringBuilder populatedTemplate = new StringBuilder();

@@ -22,6 +22,7 @@ namespace SOC.UI
         private bool _isUpdatingControls = false;
 
         private List<ChoosableValues> QuestValueSets = new List<ChoosableValues>();
+        private List<LuaTemplatePlaceholder> TemplatePlaceholderTokens = new List<LuaTemplatePlaceholder>();
 
         private TreeView TreeViewScripts;
         private TreeView TreeViewVariables;
@@ -72,84 +73,103 @@ namespace SOC.UI
 
         private void SetChoiceMenu(Scriptal scriptal)
         {
-            groupBoxChoices.Text = $"Populate :: {scriptal.Name}";
+            groupBoxChoicesList.Text = $"Choices List :: \"{scriptal.Name}\"";
 
             listBoxChoices.Items.Clear();
             listBoxChoices.Items.AddRange(scriptal.Choices.ToArray());
+
             if (scriptal.Choices.Count > 0)
             {
-                listBoxChoices.Enabled = true;
-                comboBoxChoiceSet.Enabled = true;
-                comboBoxChoiceValue.Enabled = true;
-                textBoxChoiceDescription.Enabled = true;
+                groupBoxChoicesList.Enabled = true;
+                groupBoxChoice.Enabled = true;
+                textBoxChoiceDescription.TextAlign = HorizontalAlignment.Left;
                 listBoxChoices.SelectedIndex = 0;
-            } else
+            }
+            else
             {
                 listBoxChoices.Items.Clear();
-                listBoxChoices.Enabled = false;
                 comboBoxChoiceSet.Items.Clear();
-                comboBoxChoiceSet.Enabled = false;
                 comboBoxChoiceValue.Items.Clear();
-                comboBoxChoiceValue.Enabled = false;
-                textBoxChoiceDescription.Text = "This Template does not contain populatable values.";
-                textBoxChoiceDescription.Enabled = false;
+                textBoxChoiceDescription.TextAlign = HorizontalAlignment.Center;
+                textBoxChoiceDescription.Text = "\r\n[Event Function does not contain choosable values]";
+                groupBoxChoicesList.Enabled = false;
+                groupBoxChoice.Enabled = false;
                 SyncScriptalNode();
             }
         }
 
         private void SetDescription(Scriptal scriptal)
         {
-            textBoxDescription.Text = scriptal.Description;
-            groupBoxDescription.Text = $"Description :: {scriptal.Name}";
+            groupBoxDescription.Text = $"Template Description :: \"{scriptal.Name}\"";
+            textBoxDescription.Text = scriptal.Description +
+                $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate}";
+            if (scriptal.EmbeddedChoosables.Count > 0)
+            {
+                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n{string.Join("\r\n\r\n", scriptal.EmbeddedChoosables.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
+            }
         }
 
         internal Scriptal[] GetTemplates(ScriptalNode scriptalNode)
         {
             List<Scriptal> scriptals = new List<Scriptal>();
 
-            StrCode32Event scriptalEvent = scriptalNode.GetEvent();
+            List<FileInfo> scriptalFiles = GetScriptalFiles(scriptalNode);
 
-            string[] scriptalSubDirs = { "Scriptals", str(scriptalNode.ScriptalType), scriptalEvent.StrCode32.Text, scriptalEvent.msg.Text };
-            string scriptalDir = "";
-
-            List<FileInfo> scriptalFiles = new List<FileInfo>();
-
-            for (int i = 0; i < scriptalSubDirs.Length; i++)
-            {
-                scriptalDir = Path.Combine(scriptalDir, scriptalSubDirs[i]);
-                scriptalFiles.AddRange(GetScriptalFiles(scriptalDir));
-            }
-
+            Exception lastExeption = null; int exceptionCount = 0;
             foreach (FileInfo scriptalFile in scriptalFiles)
             {
                 try
                 {
-                    XmlSerializer serializer = new XmlSerializer(typeof(Scriptal));
-                    using (StreamReader reader = new StreamReader(scriptalFile.FullName))
-                    {
-                        scriptals.Add((Scriptal)serializer.Deserialize(reader));
-                    }
+                    scriptals.Add(Scriptal.LoadFromXml(scriptalFile.FullName));
                 }
-                catch
+                catch (Exception e)
                 {
-
+                    exceptionCount++;
+                    lastExeption = e;
                 }
+            }
+            if (lastExeption != null)
+            {
+                MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to load the Scriptal Template files. \n\nThe broken templates will not be listed. \n\nLast Error: {lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             return scriptals.ToArray();
         }
 
-        internal FileInfo[] GetScriptalFiles(string subdir)
+        internal List<FileInfo> GetScriptalFiles(ScriptalNode scriptalNode)
         {
-            string dir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets", subdir);
-            DirectoryInfo scriptalDir = new DirectoryInfo(dir);
+            List<FileInfo> scriptalFiles = new List<FileInfo>();
 
-            if (scriptalDir.Exists)
+            StrCode32Event scriptalEvent = scriptalNode.GetEvent();
+
+            string scriptsRootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets");
+            string[] scriptalSubDirs = { "Scriptals", str(scriptalNode.ScriptalType), scriptalEvent.StrCode32.Text, scriptalEvent.msg.Text };
+
+            Exception lastExeption = null; int exceptionCount = 0;
+            for (int i = 0; i < scriptalSubDirs.Length; i++)
             {
-                return scriptalDir.GetFiles("*.xml");
+                scriptsRootPath = Path.Combine(scriptsRootPath, scriptalSubDirs[i]);
+                try
+                {
+                    DirectoryInfo scriptalDir = new DirectoryInfo(scriptsRootPath);
+                    if (scriptalDir.Exists)
+                    {
+                        scriptalFiles.AddRange(scriptalDir.GetFiles("*.xml"));
+                    }
+                }
+                catch (Exception e)
+                {
+                    exceptionCount++;
+                    lastExeption = e;
+                }
+            }
+            if (lastExeption != null)
+            {
+                MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to read the files in the ScriptAssets directory. \n\nLast Error: {lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            return new FileInfo[0];
+
+            return scriptalFiles;
         }
 
         private void comboBoxScriptal_SelectedIndexChanged(object sender, EventArgs e)
@@ -169,15 +189,30 @@ namespace SOC.UI
             Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
 
+            groupBoxChoice.Text = $"Choice :: \"{selectedChoice.Name}\"";
             textBoxChoiceDescription.Text = selectedChoice.Description;
-            comboBoxChoiceSet.Items.Clear();
+            string choiceRestrictions = $"\r\n\r\nChoice Restrictions:\r\n" +
+$"\r\nAllow User Edits:\t{selectedChoice.AllowUIEdit}," +
+$"\r\nAllow User Vars:\t{selectedChoice.AllowUserVariable}," +
+$"\r\nAllow Literals:\t{selectedChoice.AllowLiteral}," +
+$"\r\nType Restriction:\t{selectedChoice.CorrespondingRuntimeToken.AllowedType}," +
+$"\r\nAllow Value Sets:\t{string.Join(", ", selectedChoice.ChoosableValuesKeyFilter)}";
 
-            var choosableSets = selectedScriptal.EmbeddedChoosables.Union(QuestValueSets).Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key));
+            textBoxChoiceDescription.Text += choiceRestrictions;
+            comboBoxChoiceSet.Items.Clear();
+                
+            var choosableSets = selectedScriptal.EmbeddedChoosables
+                .Union(QuestValueSets)
+                .Where(
+                    set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key) && 
+                    set.Values.Any(setValue => LuaTemplate.MatchesRestriction(setValue, selectedChoice.CorrespondingRuntimeToken))
+                );
+
             comboBoxChoiceSet.Items.AddRange(choosableSets.ToArray());
 
             if (choosableSets.Any(set => set.Key == selectedChoice.Key))
                 comboBoxChoiceSet.Text = selectedChoice.Key;
-            else
+            else if (comboBoxChoiceSet.Items.Count > 0)
                 comboBoxChoiceSet.SelectedIndex = 0;
         }
 
@@ -186,18 +221,15 @@ namespace SOC.UI
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
             ChoosableValues selectedChoiceSet = (ChoosableValues)comboBoxChoiceSet.SelectedItem;
 
+            selectedChoice.Key = selectedChoiceSet.Key;
+
             comboBoxChoiceValue.Items.Clear();
-            comboBoxChoiceValue.Items.AddRange(selectedChoiceSet.Values.ToArray());
+            comboBoxChoiceValue.Items.AddRange(selectedChoiceSet.Values.Where(value => LuaTemplate.MatchesRestriction(value, selectedChoice.CorrespondingRuntimeToken)).ToArray());
 
             if (selectedChoiceSet.Values.Any(value => value.Equals(selectedChoice.Value)))
-            {
                 comboBoxChoiceValue.Text = selectedChoice.Value.ToString();
-            }
-            else 
-            {
-                selectedChoice.Key = selectedChoiceSet.Key;
+            else if (comboBoxChoiceValue.Items.Count > 0)
                 comboBoxChoiceValue.SelectedIndex = 0;
-            }
         }
 
         private void comboBoxChoiceValue_SelectedIndexChanged(object sender, EventArgs e)

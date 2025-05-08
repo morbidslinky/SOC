@@ -92,19 +92,23 @@
             this.groupBoxDescription.Size = new System.Drawing.Size(287, 263);
             this.groupBoxDescription.TabIndex = 32;
             this.groupBoxDescription.TabStop = false;
-            this.groupBoxDescription.Text = "Script Description";
+            this.groupBoxDescription.Text = "Custom Description";
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.BackColor = System.Drawing.Color.Silver;
-            this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxDescription.AcceptsReturn = true;
+            this.textBoxDescription.AcceptsTab = true;
+            this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxDescription.BackColor = System.Drawing.Color.LightGray;
+            this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxDescription.Size = new System.Drawing.Size(281, 244);
+            this.textBoxDescription.Size = new System.Drawing.Size(281, 241);
             this.textBoxDescription.TabIndex = 6;
+            this.textBoxDescription.WordWrap = false;
             this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
             // 
             // groupBoxTrigger
@@ -224,8 +228,8 @@
             // 
             // listBoxPreconditions
             // 
-            this.listBoxPreconditions.BackColor = System.Drawing.Color.Silver;
-            this.listBoxPreconditions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listBoxPreconditions.BackColor = System.Drawing.Color.LightGray;
+            this.listBoxPreconditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBoxPreconditions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxPreconditions.FormattingEnabled = true;
             this.listBoxPreconditions.Location = new System.Drawing.Point(3, 16);
@@ -261,8 +265,8 @@
             // 
             // listBoxActions
             // 
-            this.listBoxActions.BackColor = System.Drawing.Color.Silver;
-            this.listBoxActions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listBoxActions.BackColor = System.Drawing.Color.LightGray;
+            this.listBoxActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBoxActions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxActions.FormattingEnabled = true;
             this.listBoxActions.Location = new System.Drawing.Point(3, 16);

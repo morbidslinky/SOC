@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -372,12 +373,38 @@ namespace SOC.Classes.Lua
             );
         }
 
+        public bool TryMapChoicesToTokens(out int choicesMinusTokens)
+        {
+            choicesMinusTokens = 0;
+            if (LuaTemplate.TryGetPlaceholderTokens(EventFunctionTemplate, out List<LuaTemplatePlaceholder> placeholderTokens))
+            {
+                for (int i = 0; i < Choices.Count; i++)
+                {
+                    if (i < placeholderTokens.Count)
+                        Choices[i].CorrespondingRuntimeToken = placeholderTokens[i];
+                }
+                choicesMinusTokens = Choices.Count - placeholderTokens.Count;
+                return true;
+            }
+
+            return false;
+        }
+
         public static Scriptal LoadFromXml(string filePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(Scriptal));
             using (StreamReader reader = new StreamReader(filePath))
             {
-                return (Scriptal)serializer.Deserialize(reader);
+                Scriptal newScriptal = (Scriptal)serializer.Deserialize(reader);
+                if (newScriptal.TryMapChoicesToTokens(out int choicesMinusTokens))
+                {
+                    if (choicesMinusTokens == 0)
+                    {
+                        return newScriptal;
+                    }
+                    throw new Exception($"The scriptal file \"{ newScriptal.Name }\" contains { (choicesMinusTokens > 0 ? "more" : "less")} choices for populating data than the scriptal's Event Function Template. These should be exactly equal.");
+                }
+                throw new Exception($"The placeholder tokens for the Event Function Template for \"{newScriptal.Name}\" failed to be parsed, likely due to an invalid token format. The format must be |[1-based index number|value type]|");
             }
         }
 
@@ -422,6 +449,12 @@ namespace SOC.Classes.Lua
         [XmlArray("ChoosableValuesKeyFilter")]
         [XmlArrayItem("Key")]
         public List<string> ChoosableValuesKeyFilter = new List<string>();
+
+        [XmlIgnore]
+        public LuaTemplatePlaceholder CorrespondingRuntimeToken = new LuaTemplatePlaceholder("");
+
+        [XmlIgnore]
+        public bool EnableFiltering = true;
 
         public override string ToString() => $"{Name} :: {Key} :: {Value.ToString()}";
     }
