@@ -158,14 +158,24 @@ namespace SOC.Classes.Common
 
         public List<ChoosableValues> GetAllObjectsScriptValueSets()
         {
-            List<ChoosableValues> ObjectsDetailsValueSets = new List<ChoosableValues>();
-
-            foreach (ObjectsDetail detail in ObjectsDetails.Details)
+            if (ScriptDetails.QuestChoosableValueSetsCache == null)
             {
-                detail.AddToScriptValueSets(ObjectsDetailsValueSets);
+                ScriptDetails.QuestChoosableValueSetsCache = new List<ChoosableValues>();
+
+                foreach (ObjectsDetail detail in ObjectsDetails.Details)
+                {
+                    detail.AddToScriptChoosableValueSets(ScriptDetails.QuestChoosableValueSetsCache);
+                }
+
+                SetupDetails.AddToScriptChoosableValueSets(ScriptDetails.QuestChoosableValueSetsCache);
             }
 
-            return ObjectsDetailsValueSets;
+            return ScriptDetails.QuestChoosableValueSetsCache;
+        }
+
+        internal void ClearAllObjectsScriptValueSets()
+        {
+            ScriptDetails.QuestChoosableValueSetsCache = null;
         }
 
         public LocationalDataStub[] GetLocationalStubs()

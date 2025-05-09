@@ -51,7 +51,7 @@ namespace SOC.UI
             Scriptal[] scriptalTemplates = GetTemplates(scriptalNode);
 
             comboBoxScriptal.Items.Clear();
-            comboBoxScriptal.Items.Add(Scriptal.Default());
+            comboBoxScriptal.Items.Add(scriptalNode.ScriptalType == ScriptalType.Preconditional ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
             comboBoxScriptal.Items.AddRange(scriptalTemplates);
 
             Scriptal matchingTemplate = scriptalTemplates.FirstOrDefault(template => template.Name == scriptalNode.Scriptal.Name && template.EventFunctionTemplate == scriptalNode.Scriptal.EventFunctionTemplate);
@@ -69,6 +69,27 @@ namespace SOC.UI
 
             SetDescription(scriptalNode.Scriptal);
             SetChoiceMenu(scriptalNode.Scriptal);
+        }
+
+        private void comboBoxScriptal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetDescription((Scriptal)comboBoxScriptal.SelectedItem);
+        }
+
+        private void buttonApplyTemplate_Click(object sender, EventArgs e)
+        {
+            SetChoiceMenu((Scriptal)comboBoxScriptal.SelectedItem);
+        }
+
+        private void SetDescription(Scriptal scriptal)
+        {
+            groupBoxDescription.Text = $"Template Description :: \"{scriptal.Name}\"";
+            textBoxDescription.Text = scriptal.Description +
+                $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate}";
+            if (scriptal.EmbeddedChoosables.Count > 0)
+            {
+                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n{string.Join("\r\n\r\n", scriptal.EmbeddedChoosables.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
+            }
         }
 
         private void SetChoiceMenu(Scriptal scriptal)
@@ -95,17 +116,6 @@ namespace SOC.UI
                 groupBoxChoicesList.Enabled = false;
                 groupBoxChoice.Enabled = false;
                 SyncScriptalNode();
-            }
-        }
-
-        private void SetDescription(Scriptal scriptal)
-        {
-            groupBoxDescription.Text = $"Template Description :: \"{scriptal.Name}\"";
-            textBoxDescription.Text = scriptal.Description +
-                $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate}";
-            if (scriptal.EmbeddedChoosables.Count > 0)
-            {
-                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n{string.Join("\r\n\r\n", scriptal.EmbeddedChoosables.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
             }
         }
 
@@ -172,33 +182,21 @@ namespace SOC.UI
             return scriptalFiles;
         }
 
-        private void comboBoxScriptal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetDescription((Scriptal)comboBoxScriptal.SelectedItem);
-        }
-
-        private void buttonApplyTemplate_Click(object sender, EventArgs e)
-        {
-            SetChoiceMenu((Scriptal)comboBoxScriptal.SelectedItem);
-        }
-
         private void listBoxChoices_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_isUpdatingControls) return;
 
             Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-
             groupBoxChoice.Text = $"Choice :: \"{selectedChoice.Name}\"";
             textBoxChoiceDescription.Text = selectedChoice.Description;
             string choiceRestrictions = $"\r\n\r\nChoice Restrictions:\r\n" +
-$"\r\nAllow User Edits:\t{selectedChoice.AllowUIEdit}," +
-$"\r\nAllow User Vars:\t{selectedChoice.AllowUserVariable}," +
-$"\r\nAllow Literals:\t{selectedChoice.AllowLiteral}," +
-$"\r\nType Restriction:\t{selectedChoice.CorrespondingRuntimeToken.AllowedType}," +
-$"\r\nAllow Value Sets:\t{string.Join(", ", selectedChoice.ChoosableValuesKeyFilter)}";
+                $"\r\nAllow User Edits:\t{selectedChoice.AllowUIEdit}" + (selectedChoice.AllowUIEdit ? "," +
+                $"\r\nAllow User Vars:\t{selectedChoice.AllowUserVariable}," +
+                $"\r\nAllow Literals:\t{selectedChoice.AllowLiteral}," +
+                $"\r\nAllow Value Sets:\t{string.Join(", ", selectedChoice.ChoosableValuesKeyFilter)}" : "");
 
-            textBoxChoiceDescription.Text += choiceRestrictions;
+                textBoxChoiceDescription.Text += choiceRestrictions;
             comboBoxChoiceSet.Items.Clear();
                 
             var choosableSets = selectedScriptal.EmbeddedChoosables
@@ -214,6 +212,8 @@ $"\r\nAllow Value Sets:\t{string.Join(", ", selectedChoice.ChoosableValuesKeyFil
                 comboBoxChoiceSet.Text = selectedChoice.Key;
             else if (comboBoxChoiceSet.Items.Count > 0)
                 comboBoxChoiceSet.SelectedIndex = 0;
+
+            comboBoxChoiceSet.Enabled = selectedChoice.AllowUIEdit;
         }
 
         private void comboBoxChoiceSet_SelectedIndexChanged(object sender, EventArgs e)
@@ -226,10 +226,12 @@ $"\r\nAllow Value Sets:\t{string.Join(", ", selectedChoice.ChoosableValuesKeyFil
             comboBoxChoiceValue.Items.Clear();
             comboBoxChoiceValue.Items.AddRange(selectedChoiceSet.Values.Where(value => LuaTemplate.MatchesRestriction(value, selectedChoice.CorrespondingRuntimeToken)).ToArray());
 
-            if (selectedChoiceSet.Values.Any(value => value.Equals(selectedChoice.Value)))
+            if (selectedChoiceSet.Values.Any(value => value.Matches(selectedChoice.Value)))
                 comboBoxChoiceValue.Text = selectedChoice.Value.ToString();
             else if (comboBoxChoiceValue.Items.Count > 0)
                 comboBoxChoiceValue.SelectedIndex = 0;
+
+            comboBoxChoiceValue.Enabled = selectedChoice.AllowUIEdit;
         }
 
         private void comboBoxChoiceValue_SelectedIndexChanged(object sender, EventArgs e)

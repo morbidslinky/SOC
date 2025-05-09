@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace SOC.Classes.Lua
 {
@@ -175,9 +176,6 @@ namespace SOC.Classes.Lua
         [XmlElement]
         public string Description = "";
 
-        [XmlElement]
-        public bool AllowUIEdit = true;
-
         [XmlArray("Preconditions")]
         [XmlArrayItem("Preconditional")]
         public List<Scriptal> Preconditionals = new List<Scriptal>();
@@ -188,7 +186,6 @@ namespace SOC.Classes.Lua
 
         [XmlIgnore]
         public List<Script> Subscripts = new List<Script>();
-
         public Script() { }
 
         public Script(StrCode32Event codeMsgSender, string identifier)
@@ -214,6 +211,12 @@ namespace SOC.Classes.Lua
             Identifier = subscript.CodeEvent.ToLuaString();
             CodeEvent = subscript.CodeEvent;
             Subscripts.Add(subscript);
+        }
+
+        public override string ToString()
+        {
+            return string.Format(" {0,-30}:: {1, -35}:: {2}",
+            Identifier, $"{Preconditionals.Count} Precondition(s), {Operationals.Count} Operation(s)", CodeEvent);
         }
 
         public void AddConditionalFunctionEntries(params Scriptal[] conditionals)
@@ -354,13 +357,24 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Definition")]
         public List<LuaTableEntry> CommonDefinitions = new List<LuaTableEntry>();
 
-        public static Scriptal Default()
+        public static Scriptal AlwaysTrue()
         {
             Scriptal defaultScriptal = new Scriptal();
 
-            defaultScriptal.Name = "Empty";
-            defaultScriptal.Description = "Empty Precondition/Operation.\r\n\r\n- Always returns true when used as a precondition.\r\n\r\n- Does nothing when used as an operation.";
+            defaultScriptal.Name = "Always True";
+            defaultScriptal.Description = "Empty Precondition.\r\n\r\n- Always returns true (same as having no preconditions at all).";
             defaultScriptal.EventFunctionTemplate = "return true";
+
+            return defaultScriptal;
+        }
+
+        public static Scriptal DoNothing()
+        {
+            Scriptal defaultScriptal = new Scriptal();
+
+            defaultScriptal.Name = "Do Nothing";
+            defaultScriptal.Description = "Empty Operation.\r\n\r\n- Does nothing (same as having no operations at all).";
+            defaultScriptal.EventFunctionTemplate = "";
 
             return defaultScriptal;
         }

@@ -23,7 +23,7 @@ namespace SOC.Classes.Lua
         protected LuaValue(TemplateRestrictionType type) { Type = type; }
 
         public override string ToString() => Value;
-        public override bool Equals(object v) => (v != null && v is LuaValue luaV && luaV.Type == Type && luaV.Value == Value);
+        public bool Matches(object v) => (v != null && v is LuaValue luaV && luaV.Type == Type && luaV.Value == Value);
 
         public enum TemplateRestrictionType
         {

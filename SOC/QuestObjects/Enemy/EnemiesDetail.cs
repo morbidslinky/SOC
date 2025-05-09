@@ -60,6 +60,11 @@ namespace SOC.QuestObjects.Enemy
             EnemyLua.GetMain(this, mainLua);
         }
 
+        public override void AddToScriptChoosableValueSets(List<ChoosableValues> choosableValues) 
+        {
+            EnemyLua.GetScriptChoosableValueSets(this, choosableValues);
+        }
+
         public override void AddToAssets(CommonAssetsBuilder assetsBuilder)
         {
             EnemyAssets.GetEnemyAssets(this, assetsBuilder);

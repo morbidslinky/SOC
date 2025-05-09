@@ -33,6 +33,7 @@ namespace SOC.UI
         {
             Quest.ObjectsDetails.Details = Quest.ObjectsDetails.Details.Select(detail => detail.GetControlPanel().GetDetailFromControl()).ToList();
             Quest.RefreshAllStubTexts();
+            Quest.ClearAllObjectsScriptValueSets();
         }
     }
 }

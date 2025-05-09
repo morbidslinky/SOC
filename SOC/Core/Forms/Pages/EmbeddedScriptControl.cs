@@ -38,6 +38,12 @@ namespace SOC.UI
 
             textBoxDescription.Text = selectedScript.Description;
 
+            listBoxPreconditions.Items.Clear();
+            listBoxPreconditions.Items.AddRange(selectedScriptNode.PreconditionsParent.GetScriptals().ToArray());
+
+            listBoxActions.Items.Clear();
+            listBoxActions.Items.AddRange(selectedScriptNode.OperationsParent.GetScriptals().ToArray());
+
             _isUpdatingControls = false;
         }
 
@@ -101,57 +107,27 @@ namespace SOC.UI
             _isUpdatingControls = false;
         }
 
-        private void buttonLoadScript_Click(object sender, EventArgs e)
-        {
-            var selectedNode = TreeViewScripts.SelectedNode;
-            if (selectedNode is UnEventedScriptNode scriptNode)
-            {
-                OpenFileDialog loadFile = new OpenFileDialog();
-                loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
-
-                DialogResult result = loadFile.ShowDialog();
-                if (result != DialogResult.OK)
-                    return;
-
-                Script script = new Script();
-
-                try
-                {
-                    script = Script.LoadFromXml(loadFile.FileName);
-                }
-                catch (InvalidOperationException exception)
-                {
-                    MessageBox.Show($"Failed to load script file: {exception.Message}");
-                    return;
-                }
-
-                result = MessageBox.Show("Loading this script will overwrite the current node. Are you sure?", "Load Script", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
-                if (result == DialogResult.Yes)
-                {
-                    Str32TableNode table = scriptNode.GetStrCode32TableNode();
-                    table.DeleteScriptNode(scriptNode);
-                    TreeViewScripts.SelectedNode = table.Add(script);
-                }
-            }
-        }
-
         private void buttonSaveScript_Click(object sender, EventArgs e)
         {
             var selectedNode = TreeViewScripts.SelectedNode;
             if (selectedNode is UnEventedScriptNode scriptNode)
             {
                 Script script = scriptNode.ConvertToScript();
+                SaveScript(script);
+            }
+        }
 
-                SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.Filter = "Xml File|*.xml";
-                saveFile.FileName = script.Identifier.Text;
-                DialogResult saveResult = saveFile.ShowDialog();
+        public static void SaveScript(Script script)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "Xml File|*.xml";
+            saveFile.FileName = script.Identifier.Text;
+            DialogResult saveResult = saveFile.ShowDialog();
 
-                if (saveResult == DialogResult.OK)
-                {
-                    script.WriteToXml(saveFile.FileName);
-                    MessageBox.Show("Done!", "Script Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+            if (saveResult == DialogResult.OK)
+            {
+                script.WriteToXml(saveFile.FileName);
+                MessageBox.Show("Done!", "Script Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

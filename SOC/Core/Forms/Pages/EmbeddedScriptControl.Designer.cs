@@ -41,7 +41,6 @@
             this.splitContainerInner = new System.Windows.Forms.SplitContainer();
             this.groupBoxPreconditions = new System.Windows.Forms.GroupBox();
             this.listBoxPreconditions = new System.Windows.Forms.ListBox();
-            this.buttonLoadScript = new System.Windows.Forms.Button();
             this.groupBoxActions = new System.Windows.Forms.GroupBox();
             this.listBoxActions = new System.Windows.Forms.ListBox();
             this.buttonSaveScript = new System.Windows.Forms.Button();
@@ -92,7 +91,7 @@
             this.groupBoxDescription.Size = new System.Drawing.Size(287, 263);
             this.groupBoxDescription.TabIndex = 32;
             this.groupBoxDescription.TabStop = false;
-            this.groupBoxDescription.Text = "Custom Description";
+            this.groupBoxDescription.Text = "Custom Description (Optional) ";
             // 
             // textBoxDescription
             // 
@@ -205,7 +204,6 @@
             // 
             // splitContainerInner.Panel2
             // 
-            this.splitContainerInner.Panel2.Controls.Add(this.buttonLoadScript);
             this.splitContainerInner.Panel2.Controls.Add(this.groupBoxActions);
             this.splitContainerInner.Panel2.Controls.Add(this.buttonSaveScript);
             this.splitContainerInner.Size = new System.Drawing.Size(283, 431);
@@ -237,18 +235,6 @@
             this.listBoxPreconditions.Size = new System.Drawing.Size(277, 136);
             this.listBoxPreconditions.TabIndex = 7;
             // 
-            // buttonLoadScript
-            // 
-            this.buttonLoadScript.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLoadScript.Location = new System.Drawing.Point(0, 211);
-            this.buttonLoadScript.Name = "buttonLoadScript";
-            this.buttonLoadScript.Size = new System.Drawing.Size(283, 23);
-            this.buttonLoadScript.TabIndex = 9;
-            this.buttonLoadScript.Text = "Load Script From Xml...";
-            this.buttonLoadScript.UseVisualStyleBackColor = true;
-            this.buttonLoadScript.Click += new System.EventHandler(this.buttonLoadScript_Click);
-            // 
             // groupBoxActions
             // 
             this.groupBoxActions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -278,11 +264,11 @@
             // 
             this.buttonSaveScript.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSaveScript.Location = new System.Drawing.Point(0, 240);
+            this.buttonSaveScript.Location = new System.Drawing.Point(0, 211);
             this.buttonSaveScript.Name = "buttonSaveScript";
-            this.buttonSaveScript.Size = new System.Drawing.Size(283, 23);
+            this.buttonSaveScript.Size = new System.Drawing.Size(283, 52);
             this.buttonSaveScript.TabIndex = 10;
-            this.buttonSaveScript.Text = "Save Script To Xml...";
+            this.buttonSaveScript.Text = "Export Script To Xml...";
             this.buttonSaveScript.UseVisualStyleBackColor = true;
             this.buttonSaveScript.Click += new System.EventHandler(this.buttonSaveScript_Click);
             // 
@@ -322,7 +308,6 @@
         private System.Windows.Forms.GroupBox groupBoxDescription;
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.GroupBox groupBoxTrigger;
-        private System.Windows.Forms.Button buttonLoadScript;
         private System.Windows.Forms.Label labelStrCode32;
         private System.Windows.Forms.ComboBox comboBoxStrSenders;
         private System.Windows.Forms.ComboBox comboBoxStrCodes;

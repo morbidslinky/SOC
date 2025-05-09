@@ -198,13 +198,13 @@
             this.buttonNewIdentifier.Visible = false;
             this.buttonNewIdentifier.Click += new System.EventHandler(this.buttonNewIdentifier_Click);
             // 
-            // textBoxVarTextValue
+            // textBoxVarStringValue
             // 
             this.textBoxVarStringValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxVarStringValue.BackColor = System.Drawing.Color.Silver;
             this.textBoxVarStringValue.Location = new System.Drawing.Point(3, 395);
-            this.textBoxVarStringValue.Name = "textBoxVarTextValue";
+            this.textBoxVarStringValue.Name = "textBoxVarStringValue";
             this.textBoxVarStringValue.Size = new System.Drawing.Size(254, 20);
             this.textBoxVarStringValue.TabIndex = 4;
             this.textBoxVarStringValue.Visible = false;

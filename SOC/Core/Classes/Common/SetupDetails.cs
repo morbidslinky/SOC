@@ -7,6 +7,7 @@ using SOC.Classes.QuestBuild.Assets;
 using System;
 using System.IO;
 using System.Reflection;
+using SOC.Classes.Lua;
 
 namespace SOC.Classes.Common
 {
@@ -121,6 +122,12 @@ namespace SOC.Classes.Common
                 string frtFilePath = Path.Combine(RouteManager.routeAssetsPath, routeName) + ".frt";
                 assetsBuilder.AddFPKAssetPath(frtFilePath);
             }
+        }
+
+        internal void AddToScriptChoosableValueSets(List<ChoosableValues> questDetailsValueSets) // For any future additions to SetupDetails that would send script data to the ScriptControl/ScriptDetails
+        {
+            List<ChoosableValues> SetupChoosableValuesSets = new List<ChoosableValues>();
+            questDetailsValueSets.AddRange(SetupChoosableValuesSets);
         }
     }
 }

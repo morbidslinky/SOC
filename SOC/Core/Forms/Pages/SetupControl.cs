@@ -260,6 +260,8 @@ namespace SOC.UI
 
                 controlPanel.RedrawControl(detail);
             }
+
+            Quest.ClearAllObjectsScriptValueSets();
         }
     }
 }

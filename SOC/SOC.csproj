@@ -176,6 +176,12 @@
     <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.Designer.cs">
       <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptSetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptSetControl.Designer.cs">
+      <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Core\Forms\Pages\ScriptControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -490,6 +496,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptalControl.resx">
       <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptSetControl.resx">
+      <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>

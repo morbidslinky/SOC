@@ -18,5 +18,8 @@ namespace SOC.Classes.Common
         [XmlArray("Variables")]
         [XmlArrayItem("UserVariable")]
         public List<LuaTableEntry> VariableDeclarations = new List<LuaTableEntry>();
+
+        [XmlIgnore]
+        public List<ChoosableValues> QuestChoosableValueSetsCache = new List<ChoosableValues>();
     }
 }

@@ -52,6 +52,8 @@ namespace SOC.UI
 
         private void buttonRemoveVariableIdentifier_Click(object sender, EventArgs e)
         {
+            if (treeViewVariables.SelectedNode == null) { return; }
+
             textBoxVarName.Text = "";
             TreeNode prevNode = treeViewVariables.SelectedNode.PrevNode;
             TreeNode parentNode = treeViewVariables.SelectedNode.Parent;
@@ -74,6 +76,7 @@ namespace SOC.UI
             {
                 textBoxVarName.Enabled = false;
                 comboBoxVarType.Enabled = false;
+                buttonRemoveVariableIdentifier.Enabled = false;
                 HideAllVarValueControls();
             }
         }
@@ -95,11 +98,20 @@ namespace SOC.UI
             parentNode.Expand();
         }
 
-        private void treeViewVariables_AfterSelect(object sender, TreeViewEventArgs e)
+        private void UpdateVariableControlsToSelectedNode()
         {
             VariableNode node = (VariableNode)treeViewVariables.SelectedNode;
+            if (node == null)
+            {
+                comboBoxVarType.Enabled = false;
+                textBoxVarName.Enabled = false;
+                buttonRemoveVariableIdentifier.Enabled = false;
+                return;
+            }
+                
             comboBoxVarType.Enabled = true;
             textBoxVarName.Enabled = true;
+            buttonRemoveVariableIdentifier.Enabled = true;
 
             switch (node.Entry.Value.Type)
             {
@@ -125,6 +137,11 @@ namespace SOC.UI
             }
 
             textBoxVarName.Text = node.Name.Trim('"');
+        }
+
+        private void treeViewVariables_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            UpdateVariableControlsToSelectedNode();
         }
 
         private void ShowVarTypeValueControl(Control control)
