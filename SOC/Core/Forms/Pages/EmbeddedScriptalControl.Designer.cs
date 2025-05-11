@@ -35,28 +35,29 @@
             this.buttonApplyTemplate = new System.Windows.Forms.Button();
             this.labelTemplate = new System.Windows.Forms.Label();
             this.comboBoxScriptal = new System.Windows.Forms.ComboBox();
-            this.groupBoxChoice = new System.Windows.Forms.GroupBox();
-            this.textBoxChoiceDescription = new System.Windows.Forms.TextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.groupBoxChoicesList = new System.Windows.Forms.GroupBox();
             this.listBoxChoices = new System.Windows.Forms.ListBox();
+            this.groupBoxChoice = new System.Windows.Forms.GroupBox();
+            this.checkBoxChoiceFilter = new System.Windows.Forms.CheckBox();
+            this.textBoxChoiceDescription = new System.Windows.Forms.TextBox();
             this.labelChoice = new System.Windows.Forms.Label();
             this.labelChoiceSet = new System.Windows.Forms.Label();
             this.comboBoxChoiceSet = new System.Windows.Forms.ComboBox();
-            this.comboBoxChoiceValue = new System.Windows.Forms.ComboBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.groupBoxChoicesList = new System.Windows.Forms.GroupBox();
-            this.checkBoxChoiceFilter = new System.Windows.Forms.CheckBox();
+            this.comboBoxPresetChoosables = new System.Windows.Forms.ComboBox();
+            this.comboBoxUserVariables = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerScriptal)).BeginInit();
             this.splitContainerScriptal.Panel1.SuspendLayout();
             this.splitContainerScriptal.Panel2.SuspendLayout();
             this.splitContainerScriptal.SuspendLayout();
             this.groupBoxDescription.SuspendLayout();
             this.groupBoxScriptalSelect.SuspendLayout();
-            this.groupBoxChoice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBoxChoicesList.SuspendLayout();
+            this.groupBoxChoice.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerScriptal
@@ -102,6 +103,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.BackColor = System.Drawing.Color.LightGray;
             this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
@@ -156,6 +158,50 @@
             this.comboBoxScriptal.TabIndex = 0;
             this.comboBoxScriptal.SelectedIndexChanged += new System.EventHandler(this.comboBoxScriptal_SelectedIndexChanged);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.groupBoxChoicesList);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.groupBoxChoice);
+            this.splitContainer1.Size = new System.Drawing.Size(283, 431);
+            this.splitContainer1.SplitterDistance = 161;
+            this.splitContainer1.TabIndex = 8;
+            // 
+            // groupBoxChoicesList
+            // 
+            this.groupBoxChoicesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBoxChoicesList.BackColor = System.Drawing.Color.Silver;
+            this.groupBoxChoicesList.Controls.Add(this.listBoxChoices);
+            this.groupBoxChoicesList.Location = new System.Drawing.Point(0, 5);
+            this.groupBoxChoicesList.Name = "groupBoxChoicesList";
+            this.groupBoxChoicesList.Size = new System.Drawing.Size(283, 155);
+            this.groupBoxChoicesList.TabIndex = 0;
+            this.groupBoxChoicesList.TabStop = false;
+            // 
+            // listBoxChoices
+            // 
+            this.listBoxChoices.BackColor = System.Drawing.Color.LightGray;
+            this.listBoxChoices.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBoxChoices.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxChoices.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.listBoxChoices.FormattingEnabled = true;
+            this.listBoxChoices.Location = new System.Drawing.Point(3, 16);
+            this.listBoxChoices.Name = "listBoxChoices";
+            this.listBoxChoices.Size = new System.Drawing.Size(277, 136);
+            this.listBoxChoices.TabIndex = 5;
+            this.listBoxChoices.SelectedIndexChanged += new System.EventHandler(this.listBoxChoices_SelectedIndexChanged);
+            // 
             // groupBoxChoice
             // 
             this.groupBoxChoice.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -167,12 +213,27 @@
             this.groupBoxChoice.Controls.Add(this.labelChoice);
             this.groupBoxChoice.Controls.Add(this.labelChoiceSet);
             this.groupBoxChoice.Controls.Add(this.comboBoxChoiceSet);
-            this.groupBoxChoice.Controls.Add(this.comboBoxChoiceValue);
+            this.groupBoxChoice.Controls.Add(this.comboBoxPresetChoosables);
+            this.groupBoxChoice.Controls.Add(this.comboBoxUserVariables);
             this.groupBoxChoice.Location = new System.Drawing.Point(0, 0);
             this.groupBoxChoice.Name = "groupBoxChoice";
             this.groupBoxChoice.Size = new System.Drawing.Size(283, 263);
             this.groupBoxChoice.TabIndex = 0;
             this.groupBoxChoice.TabStop = false;
+            // 
+            // checkBoxChoiceFilter
+            // 
+            this.checkBoxChoiceFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxChoiceFilter.AutoSize = true;
+            this.checkBoxChoiceFilter.Checked = true;
+            this.checkBoxChoiceFilter.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxChoiceFilter.Location = new System.Drawing.Point(6, 181);
+            this.checkBoxChoiceFilter.Name = "checkBoxChoiceFilter";
+            this.checkBoxChoiceFilter.Size = new System.Drawing.Size(266, 17);
+            this.checkBoxChoiceFilter.TabIndex = 7;
+            this.checkBoxChoiceFilter.Text = "Value Filtering (Template Restrictions, Type Safety)";
+            this.checkBoxChoiceFilter.UseVisualStyleBackColor = true;
+            this.checkBoxChoiceFilter.CheckedChanged += new System.EventHandler(this.checkBoxChoiceFilter_CheckedChanged);
             // 
             // textBoxChoiceDescription
             // 
@@ -183,6 +244,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxChoiceDescription.BackColor = System.Drawing.Color.LightGray;
             this.textBoxChoiceDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxChoiceDescription.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.textBoxChoiceDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxChoiceDescription.Multiline = true;
             this.textBoxChoiceDescription.Name = "textBoxChoiceDescription";
@@ -190,18 +252,6 @@
             this.textBoxChoiceDescription.Size = new System.Drawing.Size(277, 159);
             this.textBoxChoiceDescription.TabIndex = 6;
             this.textBoxChoiceDescription.WordWrap = false;
-            // 
-            // listBoxChoices
-            // 
-            this.listBoxChoices.BackColor = System.Drawing.Color.LightGray;
-            this.listBoxChoices.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxChoices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxChoices.FormattingEnabled = true;
-            this.listBoxChoices.Location = new System.Drawing.Point(3, 16);
-            this.listBoxChoices.Name = "listBoxChoices";
-            this.listBoxChoices.Size = new System.Drawing.Size(277, 136);
-            this.listBoxChoices.TabIndex = 5;
-            this.listBoxChoices.SelectedIndexChanged += new System.EventHandler(this.listBoxChoices_SelectedIndexChanged);
             // 
             // labelChoice
             // 
@@ -235,61 +285,29 @@
             this.comboBoxChoiceSet.TabIndex = 2;
             this.comboBoxChoiceSet.SelectedIndexChanged += new System.EventHandler(this.comboBoxChoiceSet_SelectedIndexChanged);
             // 
-            // comboBoxChoiceValue
+            // comboBoxPresetChoosables
             // 
-            this.comboBoxChoiceValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxPresetChoosables.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxChoiceValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxChoiceValue.FormattingEnabled = true;
-            this.comboBoxChoiceValue.Location = new System.Drawing.Point(68, 231);
-            this.comboBoxChoiceValue.Name = "comboBoxChoiceValue";
-            this.comboBoxChoiceValue.Size = new System.Drawing.Size(212, 21);
-            this.comboBoxChoiceValue.TabIndex = 1;
-            this.comboBoxChoiceValue.SelectedIndexChanged += new System.EventHandler(this.comboBoxChoiceValue_SelectedIndexChanged);
+            this.comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPresetChoosables.FormattingEnabled = true;
+            this.comboBoxPresetChoosables.Location = new System.Drawing.Point(68, 231);
+            this.comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
+            this.comboBoxPresetChoosables.Size = new System.Drawing.Size(212, 21);
+            this.comboBoxPresetChoosables.TabIndex = 1;
+            this.comboBoxPresetChoosables.SelectedIndexChanged += new System.EventHandler(this.comboBoxPresetChoosables_SelectedIndexChanged);
             // 
-            // splitContainer1
+            // comboBoxUserVariables
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.groupBoxChoicesList);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.groupBoxChoice);
-            this.splitContainer1.Size = new System.Drawing.Size(283, 431);
-            this.splitContainer1.SplitterDistance = 161;
-            this.splitContainer1.TabIndex = 8;
-            // 
-            // groupBoxChoicesList
-            // 
-            this.groupBoxChoicesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxUserVariables.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxChoicesList.BackColor = System.Drawing.Color.Silver;
-            this.groupBoxChoicesList.Controls.Add(this.listBoxChoices);
-            this.groupBoxChoicesList.Location = new System.Drawing.Point(0, 5);
-            this.groupBoxChoicesList.Name = "groupBoxChoicesList";
-            this.groupBoxChoicesList.Size = new System.Drawing.Size(283, 155);
-            this.groupBoxChoicesList.TabIndex = 0;
-            this.groupBoxChoicesList.TabStop = false;
-            // 
-            // checkBoxChoiceFilter
-            // 
-            this.checkBoxChoiceFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxChoiceFilter.AutoSize = true;
-            this.checkBoxChoiceFilter.Checked = true;
-            this.checkBoxChoiceFilter.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxChoiceFilter.Location = new System.Drawing.Point(6, 181);
-            this.checkBoxChoiceFilter.Name = "checkBoxChoiceFilter";
-            this.checkBoxChoiceFilter.Size = new System.Drawing.Size(266, 17);
-            this.checkBoxChoiceFilter.TabIndex = 7;
-            this.checkBoxChoiceFilter.Text = "Value Filtering (Template Restrictions, Type Safety)";
-            this.checkBoxChoiceFilter.UseVisualStyleBackColor = true;
+            this.comboBoxUserVariables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxUserVariables.FormattingEnabled = true;
+            this.comboBoxUserVariables.Location = new System.Drawing.Point(68, 231);
+            this.comboBoxUserVariables.Name = "comboBoxUserVariables";
+            this.comboBoxUserVariables.Size = new System.Drawing.Size(212, 21);
+            this.comboBoxUserVariables.TabIndex = 8;
+            this.comboBoxUserVariables.SelectedIndexChanged += new System.EventHandler(this.comboBoxUserVariables_SelectedIndexChanged);
             // 
             // EmbeddedScriptalControl
             // 
@@ -306,13 +324,13 @@
             this.groupBoxDescription.PerformLayout();
             this.groupBoxScriptalSelect.ResumeLayout(false);
             this.groupBoxScriptalSelect.PerformLayout();
-            this.groupBoxChoice.ResumeLayout(false);
-            this.groupBoxChoice.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBoxChoicesList.ResumeLayout(false);
+            this.groupBoxChoice.ResumeLayout(false);
+            this.groupBoxChoice.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -325,7 +343,7 @@
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.GroupBox groupBoxChoice;
         private System.Windows.Forms.ComboBox comboBoxChoiceSet;
-        private System.Windows.Forms.ComboBox comboBoxChoiceValue;
+        private System.Windows.Forms.ComboBox comboBoxPresetChoosables;
         private System.Windows.Forms.ComboBox comboBoxScriptal;
         private System.Windows.Forms.Label labelTemplate;
         private System.Windows.Forms.Label labelChoice;
@@ -336,5 +354,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBoxChoicesList;
         private System.Windows.Forms.CheckBox checkBoxChoiceFilter;
+        private System.Windows.Forms.ComboBox comboBoxUserVariables;
     }
 }

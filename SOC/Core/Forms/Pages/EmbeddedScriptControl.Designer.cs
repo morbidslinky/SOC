@@ -42,7 +42,7 @@
             this.groupBoxPreconditions = new System.Windows.Forms.GroupBox();
             this.listBoxPreconditions = new System.Windows.Forms.ListBox();
             this.groupBoxActions = new System.Windows.Forms.GroupBox();
-            this.listBoxActions = new System.Windows.Forms.ListBox();
+            this.listBoxOperations = new System.Windows.Forms.ListBox();
             this.buttonSaveScript = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
             this.splitContainerOuter.Panel1.SuspendLayout();
@@ -102,6 +102,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.BackColor = System.Drawing.Color.LightGray;
             this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
@@ -229,6 +230,7 @@
             this.listBoxPreconditions.BackColor = System.Drawing.Color.LightGray;
             this.listBoxPreconditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBoxPreconditions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxPreconditions.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.listBoxPreconditions.FormattingEnabled = true;
             this.listBoxPreconditions.Location = new System.Drawing.Point(3, 16);
             this.listBoxPreconditions.Name = "listBoxPreconditions";
@@ -241,7 +243,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActions.BackColor = System.Drawing.Color.Silver;
-            this.groupBoxActions.Controls.Add(this.listBoxActions);
+            this.groupBoxActions.Controls.Add(this.listBoxOperations);
             this.groupBoxActions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActions.Name = "groupBoxActions";
             this.groupBoxActions.Size = new System.Drawing.Size(283, 205);
@@ -251,14 +253,15 @@
             // 
             // listBoxActions
             // 
-            this.listBoxActions.BackColor = System.Drawing.Color.LightGray;
-            this.listBoxActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxActions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxActions.FormattingEnabled = true;
-            this.listBoxActions.Location = new System.Drawing.Point(3, 16);
-            this.listBoxActions.Name = "listBoxActions";
-            this.listBoxActions.Size = new System.Drawing.Size(277, 186);
-            this.listBoxActions.TabIndex = 8;
+            this.listBoxOperations.BackColor = System.Drawing.Color.LightGray;
+            this.listBoxOperations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBoxOperations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxOperations.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.listBoxOperations.FormattingEnabled = true;
+            this.listBoxOperations.Location = new System.Drawing.Point(3, 16);
+            this.listBoxOperations.Name = "listBoxActions";
+            this.listBoxOperations.Size = new System.Drawing.Size(277, 186);
+            this.listBoxOperations.TabIndex = 8;
             // 
             // buttonSaveScript
             // 
@@ -303,7 +306,7 @@
         private System.Windows.Forms.GroupBox groupBoxPreconditions;
         private System.Windows.Forms.ListBox listBoxPreconditions;
         private System.Windows.Forms.GroupBox groupBoxActions;
-        private System.Windows.Forms.ListBox listBoxActions;
+        private System.Windows.Forms.ListBox listBoxOperations;
         private System.Windows.Forms.Button buttonSaveScript;
         private System.Windows.Forms.GroupBox groupBoxDescription;
         private System.Windows.Forms.TextBox textBoxDescription;

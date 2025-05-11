@@ -12,10 +12,13 @@ namespace SOC.Classes.Lua
         public LuaValue[] Arguments { get; set; }
         public override string Value => GetFunctionCall();
 
+        public TemplateRestrictionType EvaluatesTo { get; set; }
+
         public LuaFunctionCall() : base(TemplateRestrictionType.FUNCTION_CALL) { }
-        public LuaFunctionCall(string functionVariableName, params LuaValue[] args) : base(TemplateRestrictionType.FUNCTION_CALL)
+        public LuaFunctionCall(string functionVariableName, TemplateRestrictionType evaluatesToType = TemplateRestrictionType.NIL, params LuaValue[] args) : base(TemplateRestrictionType.FUNCTION_CALL)
         {
             FunctionVariableName = functionVariableName;
+            EvaluatesTo = evaluatesToType;
             Arguments = args;
         }
 

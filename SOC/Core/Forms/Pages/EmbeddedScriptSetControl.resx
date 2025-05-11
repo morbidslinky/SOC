@@ -122,11 +122,14 @@
 [Click &lt;Add New Script Event&gt; to create an "When-If-Do" script]
 
 
-["When" is what occurs in the game to trigger the script. "When" a soldier dies, "When" the player is spotted. etc.]
+["When" is what occurs in the game to trigger the script.]
+["When" a soldier dies, "When" the player is spotted. etc.]
 
-["If" is a set of preconditions for the script to check before it operates. "If" the player is in a specific location, etc.]
+["If" is a set of preconditions for the script to check before it operates.]
+["If" the player is in a specific location, etc.]
 
-["Do" is a set of operations that run if the preconditions are met. "Do" fail the SideOp, "Do" award GMP, etc.]
+["Do" is a set of operations that run if the preconditions are met.]
+["Do" fail the SideOp, "Do" award GMP, etc.]
 
 
 [Preconditionals and Operationals ("If" and "Do") are created via "fill-in-the-blank" Event Function templates]

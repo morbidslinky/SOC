@@ -150,7 +150,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewVariables.BackColor = System.Drawing.Color.Silver;
-            this.treeViewVariables.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeViewVariables.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.treeViewVariables.HideSelection = false;
             this.treeViewVariables.Location = new System.Drawing.Point(3, 19);
             this.treeViewVariables.Name = "treeViewVariables";
@@ -311,6 +311,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewScripts.BackColor = System.Drawing.Color.Silver;
+            this.treeViewScripts.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.treeViewScripts.HideSelection = false;
             this.treeViewScripts.Location = new System.Drawing.Point(3, 19);
             this.treeViewScripts.Name = "treeViewScripts";

@@ -17,6 +17,7 @@ namespace SOC.Classes.Lua
     {
         [XmlElement]
         public string Template {  get; set; }
+
         public LuaTemplate() { }
         
         public LuaTemplate(string templateString)
@@ -57,7 +58,7 @@ namespace SOC.Classes.Lua
                     restrictionType = (ifVariableIsAssign ? "ASSIGN_VARIABLE" : "VARIABLE");
                     break;
                 default:
-                    restrictionType = "unknown value type";
+                    restrictionType = "UNRECOGNIZED";
                     break;
             }
             return restrictionType;
@@ -103,11 +104,6 @@ namespace SOC.Classes.Lua
 
             placeholderTokens = new List<LuaTemplatePlaceholder>();
             return false;
-        }
-
-        public static bool MatchesRestriction(LuaValue value, LuaTemplatePlaceholder placeholder)
-        {
-            return placeholder.AllowedType == value.Type;
         }
 
         public string Populate(params LuaValue[] populationData)
@@ -213,8 +209,8 @@ namespace SOC.Classes.Lua
         {
             if (Index == -1 || AllowedType == LuaValue.TemplateRestrictionType.TEMPLATE_ERROR)
                 return $"--[[ERROR: Invalid placeholder ({PlaceholderString})]]";
-            if (!TryGetValueString(luaValues, out string luaString))
-                return $"--[[ERROR: Valid placeholder ({PlaceholderString}), but invalid data ({luaString})]]";
+
+            TryGetValueString(luaValues, out string luaString);
             return luaString;
         }
 
@@ -227,26 +223,36 @@ namespace SOC.Classes.Lua
             }
             LuaValue luaValueAtIndex = luaValues[Index - 1];
 
-            if (luaValueAtIndex is LuaVariable variable)
+            return Allows(luaValueAtIndex, out valueString);
+        }
+
+        public bool Allows(LuaValue value, out string valueString)
+        {
+            if (value is LuaVariable variable)
             {
                 if (AllowedType == LuaValue.TemplateRestrictionType.VARIABLE || variable.GetAssignedValue().Type == AllowedType)
                 {
                     valueString = variable.ToString();
                     return true;
-                } 
+                }
                 else if (AllowedType == LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE)
                 {
                     valueString = variable.GetAssignmentLua();
                     return true;
                 }
             }
-            else if (luaValueAtIndex.Type == AllowedType)
+            else if (value is LuaFunctionCall function && (AllowedType == LuaValue.TemplateRestrictionType.FUNCTION_CALL || function.EvaluatesTo == AllowedType))
             {
-                valueString = luaValueAtIndex.ToString();
+                valueString = function.ToString();
+                return true;
+            }
+            else if (value.Type == AllowedType)
+            {
+                valueString = value.ToString();
                 return true;
             }
 
-            valueString = luaValueAtIndex.ToString();
+            valueString = value.ToString();
             return false;
         }
     }

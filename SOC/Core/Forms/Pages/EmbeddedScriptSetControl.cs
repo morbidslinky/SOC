@@ -9,63 +9,37 @@ namespace SOC.UI
 {
     public partial class EmbeddedScriptSetControl : UserControl
     {
-        private TreeView TreeViewScripts;
+        private Str32TableNode TableNode;
 
-        public EmbeddedScriptSetControl(TreeView treeViewScripts)
+        public EmbeddedScriptSetControl()
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            TreeViewScripts = treeViewScripts;
         }
 
-        internal void UpdateListFromNode(TreeNode node)
-        {
-            List<Script> scripts = new List<Script>();
+        public override string ToString() => TableNode.ToString();
 
-            switch (node)
-            {
-                case RootTableNode rootTableNode:
-                    scripts = rootTableNode.QStep_Main.ConvertToScripts();
-                    break;
-                case Str32TableNode tableNode:
-                    scripts = tableNode.ConvertToScripts();
-                    break;
-                case CodeNode codeNode:
-                    scripts = codeNode.GetTableNode().ConvertToScripts();
-                    break;
-                case MsgSenderNode msgSenderNode:
-                    scripts = msgSenderNode.GetTableNode().ConvertToScripts();
-                    break;
-            }
+        internal UserControl Menu(Str32TableNode tableNode)
+        {
+            TableNode = tableNode;
+            UpdateMenu();
+            return this;
+        }
+
+        private void UpdateMenu()
+        {
+            List<Script> scripts = TableNode.ConvertToScripts();
 
             checkedListBoxScripts.Items.Clear();
             checkedListBoxScripts.Items.AddRange(scripts.ToArray());
 
-            buttonSaveScript.Enabled = checkedListBoxScripts.Items.Count != 0;
+            buttonSaveScript.Enabled = checkedListBoxScripts.CheckedItems.Count != 0;
             checkedListBoxScripts.Visible = checkedListBoxScripts.Items.Count != 0;
             textEmptyHint.Visible = checkedListBoxScripts.Items.Count == 0;
         }
 
         private void buttonLoadScript_Click(object sender, EventArgs e)
         {
-            var node = TreeViewScripts.SelectedNode;
-            Str32TableNode parentTableNode;
-
-            switch (node)
-            {
-                case Str32TableNode tableNode:
-                    parentTableNode = tableNode;
-                    break;
-                case CodeNode codeNode:
-                    parentTableNode = codeNode.GetTableNode();
-                    break;
-                case MsgSenderNode msgSenderNode:
-                    parentTableNode = msgSenderNode.GetTableNode();
-                    break;
-                default:
-                    return;
-            }
-
             OpenFileDialog loadFile = new OpenFileDialog();
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
 
@@ -76,7 +50,7 @@ namespace SOC.UI
             try
             {
                 var script = Script.LoadFromXml(loadFile.FileName);
-                parentTableNode.Add(script);
+                TableNode.Add(script);
             }
             catch
             {
@@ -84,7 +58,7 @@ namespace SOC.UI
                 {
                     var scriptSet = ScriptSet.LoadFromXml(loadFile.FileName);
                     foreach (var script in scriptSet.Scripts)
-                        parentTableNode.Add(script);
+                        TableNode.Add(script);
                 }
                 catch (Exception ex)
                 {
@@ -93,7 +67,7 @@ namespace SOC.UI
                 }
             }
 
-            UpdateListFromNode(parentTableNode);
+            UpdateMenu();
         }
 
         private void buttonSaveScript_Click(object sender, EventArgs e)
@@ -119,6 +93,18 @@ namespace SOC.UI
                 set.WriteToXml(saveFile.FileName);
                 MessageBox.Show("Done!", "Script(s) Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void checkedListBoxScripts_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            int checkedCount = checkedListBoxScripts.CheckedItems.Count;
+
+            if (e.NewValue == CheckState.Checked)
+                checkedCount++;
+            else if (e.NewValue == CheckState.Unchecked)
+                checkedCount--;
+
+            buttonSaveScript.Enabled = checkedCount > 0;
         }
     }
 

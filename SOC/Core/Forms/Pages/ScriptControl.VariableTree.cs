@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using SOC.Classes.Lua;
+using static SOC.Classes.Lua.Choice;
 using static SOC.Classes.Lua.LuaValue;
 
 namespace SOC.UI
@@ -228,6 +229,8 @@ namespace SOC.UI
                 textBoxVarName.SelectionStart = selectionStart;
                 textBoxVarName.SelectionLength = selectionLength;
             }
+
+
         }
         private string GenerateNewNameForDuplicate(string baseName, TreeNodeCollection siblingNodes, VariableNode currentNode)
         {
@@ -269,10 +272,12 @@ namespace SOC.UI
             userPressedBackspace = e.KeyCode == Keys.Back;
         }
     }
-
     public class VariableNode : TreeNode
     {
         public LuaTableEntry Entry;
+
+        public event EventHandler<VariableNodeEventArgs> VariableNodeEvent;
+
         public VariableNode(LuaTableEntry entry)
         {
             Entry = entry;
@@ -287,6 +292,8 @@ namespace SOC.UI
             UpdateText();
         }
 
+        public LuaTableIdentifier AsLuaTableIdentifier() => Lua.TableIdentifier("qvars", Entry.Key);
+
         public void UpdateText()
         {
             if (Entry.Value is LuaTable table)
@@ -297,6 +304,11 @@ namespace SOC.UI
             {
                 Text = $"{Entry.Key.Value} :: {LuaTemplate.GetTemplateRestrictionTypeString(Entry.Value)} :: {Entry.Value.Value}";
             }
+        }
+
+        public void NotifyDependentsOfVariableNodeChange(bool isDoomed)
+        {
+            VariableNodeEvent?.Invoke(this, new VariableNodeEventArgs { Entry = Entry, Doomed = isDoomed });
         }
     }
 }

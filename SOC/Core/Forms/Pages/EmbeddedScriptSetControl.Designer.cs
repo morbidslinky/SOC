@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmbeddedScriptSetControl));
             this.buttonLoadScript = new System.Windows.Forms.Button();
             this.groupBoxScriptSet = new System.Windows.Forms.GroupBox();
-            this.textEmptyHint = new System.Windows.Forms.TextBox();
             this.checkedListBoxScripts = new System.Windows.Forms.CheckedListBox();
+            this.textEmptyHint = new System.Windows.Forms.TextBox();
             this.buttonSaveScript = new System.Windows.Forms.Button();
             this.groupBoxScriptSet.SuspendLayout();
             this.SuspendLayout();
@@ -55,32 +55,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxScriptSet.BackColor = System.Drawing.Color.Silver;
-            this.groupBoxScriptSet.Controls.Add(this.checkedListBoxScripts);
             this.groupBoxScriptSet.Controls.Add(this.textEmptyHint);
+            this.groupBoxScriptSet.Controls.Add(this.checkedListBoxScripts);
             this.groupBoxScriptSet.Location = new System.Drawing.Point(0, 5);
             this.groupBoxScriptSet.Name = "groupBoxScriptSet";
             this.groupBoxScriptSet.Size = new System.Drawing.Size(575, 368);
             this.groupBoxScriptSet.TabIndex = 11;
             this.groupBoxScriptSet.TabStop = false;
-            // 
-            // textEmptyHint
-            // 
-            this.textEmptyHint.AcceptsReturn = true;
-            this.textEmptyHint.AcceptsTab = true;
-            this.textEmptyHint.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textEmptyHint.BackColor = System.Drawing.Color.LightGray;
-            this.textEmptyHint.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textEmptyHint.Enabled = false;
-            this.textEmptyHint.Location = new System.Drawing.Point(3, 16);
-            this.textEmptyHint.Multiline = true;
-            this.textEmptyHint.Name = "textEmptyHint";
-            this.textEmptyHint.ReadOnly = true;
-            this.textEmptyHint.Size = new System.Drawing.Size(569, 346);
-            this.textEmptyHint.TabIndex = 0;
-            this.textEmptyHint.Text = resources.GetString("textEmptyHint.Text");
-            this.textEmptyHint.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.groupBoxScriptSet.Text = "Script Details";
             // 
             // checkedListBoxScripts
             // 
@@ -94,6 +76,26 @@
             this.checkedListBoxScripts.Name = "checkedListBoxScripts";
             this.checkedListBoxScripts.Size = new System.Drawing.Size(569, 349);
             this.checkedListBoxScripts.TabIndex = 0;
+            this.checkedListBoxScripts.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxScripts_ItemCheck);
+            // 
+            // textEmptyHint
+            // 
+            this.textEmptyHint.AcceptsReturn = true;
+            this.textEmptyHint.AcceptsTab = true;
+            this.textEmptyHint.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textEmptyHint.BackColor = System.Drawing.Color.LightGray;
+            this.textEmptyHint.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textEmptyHint.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.textEmptyHint.Location = new System.Drawing.Point(3, 16);
+            this.textEmptyHint.Multiline = true;
+            this.textEmptyHint.Name = "textEmptyHint";
+            this.textEmptyHint.ReadOnly = true;
+            this.textEmptyHint.Size = new System.Drawing.Size(569, 346);
+            this.textEmptyHint.TabIndex = 0;
+            this.textEmptyHint.Text = resources.GetString("textEmptyHint.Text");
+            this.textEmptyHint.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // buttonSaveScript
             // 
@@ -103,7 +105,7 @@
             this.buttonSaveScript.Name = "buttonSaveScript";
             this.buttonSaveScript.Size = new System.Drawing.Size(575, 23);
             this.buttonSaveScript.TabIndex = 13;
-            this.buttonSaveScript.Text = "Export Script(s) To Xml...";
+            this.buttonSaveScript.Text = "Export ☑ Script(s) To Xml...";
             this.buttonSaveScript.UseVisualStyleBackColor = true;
             this.buttonSaveScript.Click += new System.EventHandler(this.buttonSaveScript_Click);
             // 

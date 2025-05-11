@@ -11,9 +11,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using static SOC.Classes.Lua.Choice;
 
 namespace SOC.UI
 {
@@ -21,54 +23,59 @@ namespace SOC.UI
     {
         private bool _isUpdatingControls = false;
 
-        private List<ChoosableValues> QuestValueSets = new List<ChoosableValues>();
-        private List<LuaTemplatePlaceholder> TemplatePlaceholderTokens = new List<LuaTemplatePlaceholder>();
-
-        private TreeView TreeViewScripts;
+        private ScriptalNode ScriptalNode;
         private TreeView TreeViewVariables;
+        private List<ChoosableValues> QuestValueSets = new List<ChoosableValues>();
 
-        public EmbeddedScriptalControl(TreeView treeViewScripts, TreeView treeViewVariables)
+        public EmbeddedScriptalControl()
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            TreeViewScripts = treeViewScripts;
+        }
+
+        public override string ToString() => ScriptalNode.ToString();
+
+        internal UserControl Menu(ScriptalNode scriptalNode, TreeView treeViewVariables, List<ChoosableValues> questValueSets)
+        {
+            ScriptalNode = scriptalNode;
             TreeViewVariables = treeViewVariables;
-        }
-
-        internal static string str(ScriptalType type)
-        {
-            return type == ScriptalType.Preconditional ? "Preconditional" : "Operational";
-        }
-
-        internal void UpdateFromScript(ScriptalNode scriptalNode, List<ChoosableValues> questValueSets)
-        {
             QuestValueSets = questValueSets;
+            UpdateMenu();
+            return this;
+        }
 
-            string scriptalType = str(scriptalNode.ScriptalType);
+        internal void UpdateMenu()
+        {
+            string scriptalType = str(ScriptalNode.ScriptalType);
 
             groupBoxScriptalSelect.Text = $"{scriptalType}";
 
-            Scriptal[] scriptalTemplates = GetTemplates(scriptalNode);
+            Scriptal[] scriptalTemplates = GetTemplates(ScriptalNode);
 
             comboBoxScriptal.Items.Clear();
-            comboBoxScriptal.Items.Add(scriptalNode.ScriptalType == ScriptalType.Preconditional ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
+            comboBoxScriptal.Items.Add(ScriptalNode.ScriptalType == ScriptalType.Preconditional ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
             comboBoxScriptal.Items.AddRange(scriptalTemplates);
 
-            Scriptal matchingTemplate = scriptalTemplates.FirstOrDefault(template => template.Name == scriptalNode.Scriptal.Name && template.EventFunctionTemplate == scriptalNode.Scriptal.EventFunctionTemplate);
+            Scriptal matchingTemplate = scriptalTemplates.FirstOrDefault(template => template.Name == ScriptalNode.Scriptal.Name && template.EventFunctionTemplate == ScriptalNode.Scriptal.EventFunctionTemplate);
             if (matchingTemplate != null)
             {
                 int matchingIndex = comboBoxScriptal.Items.IndexOf(matchingTemplate);
                 comboBoxScriptal.Items.RemoveAt(matchingIndex);
-                comboBoxScriptal.Items.Insert(matchingIndex, scriptalNode.Scriptal);
-                comboBoxScriptal.SelectedItem = scriptalNode.Scriptal;
+                comboBoxScriptal.Items.Insert(matchingIndex, ScriptalNode.Scriptal);
+                comboBoxScriptal.SelectedItem = ScriptalNode.Scriptal;
             }
             else
             {
                 comboBoxScriptal.SelectedIndex = 0;
             }
 
-            SetDescription(scriptalNode.Scriptal);
-            SetChoiceMenu(scriptalNode.Scriptal);
+            SetDescription(ScriptalNode.Scriptal);
+            SetChoiceMenu(ScriptalNode.Scriptal);
+        }
+
+        internal static string str(ScriptalType type)
+        {
+            return type == ScriptalType.Preconditional ? "Preconditional" : "Operational";
         }
 
         private void comboBoxScriptal_SelectedIndexChanged(object sender, EventArgs e)
@@ -78,7 +85,8 @@ namespace SOC.UI
 
         private void buttonApplyTemplate_Click(object sender, EventArgs e)
         {
-            SetChoiceMenu((Scriptal)comboBoxScriptal.SelectedItem);
+                ScriptalNode.Set((Scriptal)comboBoxScriptal.SelectedItem);
+                SetChoiceMenu(ScriptalNode.Scriptal);
         }
 
         private void SetDescription(Scriptal scriptal)
@@ -88,7 +96,7 @@ namespace SOC.UI
                 $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate}";
             if (scriptal.EmbeddedChoosables.Count > 0)
             {
-                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n{string.Join("\r\n\r\n", scriptal.EmbeddedChoosables.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
+                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n\r\n- {string.Join("\r\n\r\n- ", scriptal.EmbeddedChoosables.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
             }
         }
 
@@ -110,12 +118,11 @@ namespace SOC.UI
             {
                 listBoxChoices.Items.Clear();
                 comboBoxChoiceSet.Items.Clear();
-                comboBoxChoiceValue.Items.Clear();
+                comboBoxPresetChoosables.Items.Clear();
                 textBoxChoiceDescription.TextAlign = HorizontalAlignment.Center;
-                textBoxChoiceDescription.Text = "\r\n[Event Function does not contain choosable values]";
+                textBoxChoiceDescription.Text = "\r\n[Event Function does not contain choices]";
                 groupBoxChoicesList.Enabled = false;
                 groupBoxChoice.Enabled = false;
-                SyncScriptalNode();
             }
         }
 
@@ -178,8 +185,16 @@ namespace SOC.UI
                 MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to read the files in the ScriptAssets directory. \n\nLast Error: {lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-
             return scriptalFiles;
+        }
+
+        private void checkBoxChoiceFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+            Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
+            selectedChoice.EnableGuardrails = checkBoxChoiceFilter.Checked;
+
+            RefreshChoiceSets(selectedScriptal, selectedChoice);
         }
 
         private void listBoxChoices_SelectedIndexChanged(object sender, EventArgs e)
@@ -188,74 +203,169 @@ namespace SOC.UI
 
             Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+
             groupBoxChoice.Text = $"Choice :: \"{selectedChoice.Name}\"";
-            textBoxChoiceDescription.Text = selectedChoice.Description;
-            string choiceRestrictions = $"\r\n\r\nChoice Restrictions:\r\n" +
-                $"\r\nAllow User Edits:\t{selectedChoice.AllowUIEdit}" + (selectedChoice.AllowUIEdit ? "," +
-                $"\r\nAllow User Vars:\t{selectedChoice.AllowUserVariable}," +
-                $"\r\nAllow Literals:\t{selectedChoice.AllowLiteral}," +
-                $"\r\nAllow Value Sets:\t{string.Join(", ", selectedChoice.ChoosableValuesKeyFilter)}" : "");
+            textBoxChoiceDescription.Text = selectedChoice.Description + RestrictionsToString(selectedChoice);
 
-                textBoxChoiceDescription.Text += choiceRestrictions;
+            RefreshChoiceSets(selectedScriptal, selectedChoice);
+            comboBoxChoiceSet.Enabled = selectedChoice.AllowUIEdit;
+        }
+
+        private string RestrictionsToString(Choice selectedChoice)
+        {
+            return string.Format(@"
+
+Template Restrictions:
+{0,-20}{1}
+
+{2,-20}{3}",
+"Index|Type Safety:", $"|[{selectedChoice.CorrespondingRuntimeToken.PlaceholderString}]|",
+"Allow User Edits:", selectedChoice.AllowUIEdit) + (selectedChoice.AllowUIEdit ?
+string.Format(@"
+{0,-20}{1}
+{2,-20}{3}
+{4,-20}{5}",
+"Allow User Vars:", selectedChoice.AllowUserVariable,
+"Allow Literals:", selectedChoice.AllowLiteral,
+"Allow Value Sets:", string.Join(", ", selectedChoice.ChoosableValuesKeyFilter)) : "");
+        }
+
+        private void RefreshChoiceSets(Scriptal selectedScriptal, Choice selectedChoice)
+        {
             comboBoxChoiceSet.Items.Clear();
-                
-            var choosableSets = selectedScriptal.EmbeddedChoosables
-                .Union(QuestValueSets)
-                .Where(
-                    set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key) && 
-                    set.Values.Any(setValue => LuaTemplate.MatchesRestriction(setValue, selectedChoice.CorrespondingRuntimeToken))
-                );
+            comboBoxChoiceSet.Items.AddRange(GetChoosableValuesSets(selectedScriptal, selectedChoice));
 
-            comboBoxChoiceSet.Items.AddRange(choosableSets.ToArray());
+            var match = comboBoxChoiceSet.Items
+                .OfType<ChoosableValues>()
+                .FirstOrDefault(set => set.Key == selectedChoice.Key);
 
-            if (choosableSets.Any(set => set.Key == selectedChoice.Key))
-                comboBoxChoiceSet.Text = selectedChoice.Key;
-            else if (comboBoxChoiceSet.Items.Count > 0)
-                comboBoxChoiceSet.SelectedIndex = 0;
+            if (match == null && comboBoxChoiceSet.Items.Count > 0)
+                match = (ChoosableValues)comboBoxChoiceSet.Items[0];
+
+            comboBoxChoiceSet.SelectedItem = match;
 
             comboBoxChoiceSet.Enabled = selectedChoice.AllowUIEdit;
+        }
+
+        private ChoosableValues[] GetChoosableValuesSets(Scriptal selectedScriptal, Choice selectedChoice)
+        {
+            List<ChoosableValues> chooseableSets = new List<ChoosableValues>();
+
+            if (selectedChoice.EnableGuardrails)
+                chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables
+                    .Union(QuestValueSets)
+                    .Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key)));
+            else
+                chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables);
+                
+            if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)
+                chooseableSets.Add(new ChoosableValues() { Key = "CUSTOM VARIABLES" });
+
+            if (selectedChoice.AllowLiteral)
+            {
+                chooseableSets.Add(new ChoosableValues() { Key = "NUMBER" });
+                chooseableSets.Add(new ChoosableValues() { Key = "STRING" });
+                chooseableSets.Add(new ChoosableValues() { Key = "BOOLEAN" });
+            }
+
+            return chooseableSets.ToArray();
         }
 
         private void comboBoxChoiceSet_SelectedIndexChanged(object sender, EventArgs e)
         {
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
             ChoosableValues selectedChoiceSet = (ChoosableValues)comboBoxChoiceSet.SelectedItem;
-
             selectedChoice.Key = selectedChoiceSet.Key;
 
-            comboBoxChoiceValue.Items.Clear();
-            comboBoxChoiceValue.Items.AddRange(selectedChoiceSet.Values.Where(value => LuaTemplate.MatchesRestriction(value, selectedChoice.CorrespondingRuntimeToken)).ToArray());
-
-            if (selectedChoiceSet.Values.Any(value => value.Matches(selectedChoice.Value)))
-                comboBoxChoiceValue.Text = selectedChoice.Value.ToString();
-            else if (comboBoxChoiceValue.Items.Count > 0)
-                comboBoxChoiceValue.SelectedIndex = 0;
-
-            comboBoxChoiceValue.Enabled = selectedChoice.AllowUIEdit;
+            switch (selectedChoice.Key)
+            {
+                case "CUSTOM VARIABLES":
+                    showCorrespondingChoiceControl(comboBoxUserVariables);
+                    RefreshUserVariableChoiceValues(selectedChoice, selectedChoiceSet);
+                    break;
+                case "NUMBER":
+                case "STRING":
+                case "BOOLEAN":
+                    // todo literals
+                    break;
+                default:
+                    showCorrespondingChoiceControl(comboBoxPresetChoosables, selectedChoice.AllowUIEdit);
+                    RefreshPresetChoiceValues(selectedChoice, selectedChoiceSet);
+                    break;
+            }
         }
 
-        private void comboBoxChoiceValue_SelectedIndexChanged(object sender, EventArgs e)
+        private void showCorrespondingChoiceControl(Control choiceControl, bool enable = true)
+        {
+            Control[] controlSet = { comboBoxPresetChoosables, comboBoxUserVariables };
+
+            foreach (var control in controlSet)
+            {
+                control.Visible = control == choiceControl;
+            }
+
+            choiceControl.Enabled = enable;
+        }
+
+        private void RefreshUserVariableChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
+        {
+            if (selectedChoiceSet.Key != "CUSTOM VARIABLES" || !selectedChoice.AllowUserVariable || !selectedChoice.AllowUIEdit) return;
+            IEnumerable<VariableNode> userVariables = TreeViewVariables.Nodes.OfType<VariableNode>();
+
+            if (selectedChoice.EnableGuardrails)
+                userVariables = userVariables.Where(node => selectedChoice.CorrespondingRuntimeToken.Allows(node.Entry.Value, out _));
+
+            comboBoxUserVariables.Items.Clear();
+            comboBoxUserVariables.Items.AddRange(userVariables.ToArray());
+        }
+
+        private void comboBoxUserVariables_SelectedIndexChanged(object sender, EventArgs e)
         {
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-            LuaValue value = (LuaValue)comboBoxChoiceValue.SelectedItem;
-            selectedChoice.Value = value;
-
-            _isUpdatingControls = true;
-
-            int index = listBoxChoices.Items.IndexOf(selectedChoice);
-            listBoxChoices.Items[index] = listBoxChoices.Items[index];
-            SyncScriptalNode();
-
-            _isUpdatingControls = false;
+            VariableNode selectedValue = (VariableNode)comboBoxUserVariables.SelectedItem;
+            if (selectedChoice.AllowUIEdit && selectedChoice.AllowUserVariable)
+            {
+                selectedChoice.SetUserVariableNodeDependency(selectedValue);
+                selectedChoice.Value = selectedValue.AsLuaTableIdentifier();
+                RefreshListBoxDisplay();
+            }
         }
 
-        private void SyncScriptalNode()
+        private void RefreshPresetChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
         {
-            if (TreeViewScripts.SelectedNode is ScriptalNode selectedScriptalNode)
+            IEnumerable<LuaValue> choosables;
+
+            if (selectedChoice.EnableGuardrails)
+                choosables = selectedChoiceSet.Values.Where(value => selectedChoice.CorrespondingRuntimeToken.Allows(value, out _));
+            else
+                choosables = selectedChoiceSet.Values;
+
+            comboBoxPresetChoosables.Items.Clear();
+            comboBoxPresetChoosables.Items.AddRange(choosables.ToArray());
+
+            var match = selectedChoiceSet.Values.FirstOrDefault(value => value.Matches(selectedChoice.Value));
+            if (match == null && comboBoxPresetChoosables.Items.Count > 0)
+                match = (LuaValue)comboBoxPresetChoosables.Items[0];
+
+            comboBoxPresetChoosables.SelectedItem = match;
+        }
+
+        private void comboBoxPresetChoosables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+            if (selectedChoice.AllowUIEdit)
             {
-                selectedScriptalNode.Scriptal = (Scriptal)comboBoxScriptal.SelectedItem;
-                selectedScriptalNode.UpdateText();
+                LuaValue selectedValue = (LuaValue)comboBoxPresetChoosables.SelectedItem;
+                selectedChoice.Value = selectedValue;
+                RefreshListBoxDisplay();
             }
+        }
+
+        private void RefreshListBoxDisplay()
+        {
+            _isUpdatingControls = true;
+            listBoxChoices.Items[listBoxChoices.SelectedIndex] = listBoxChoices.Items[listBoxChoices.SelectedIndex];
+            _isUpdatingControls = false;
         }
     }
 }

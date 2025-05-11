@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using SOC.QuestObjects.Common;
 using System.Xml.Serialization;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace SOC.UI
 {
@@ -17,11 +18,12 @@ namespace SOC.UI
     {
         public Quest Quest;
 
-        RootTableNode ScriptRootTable = new RootTableNode();
+        ScriptTablesRootNode ScriptTablesRootNode = new ScriptTablesRootNode();
 
-        EmbeddedScriptSetControl EmbeddedScriptSetControl;
-        EmbeddedScriptControl EmbeddedScriptControl;
-        EmbeddedScriptalControl EmbeddedScriptalControl;
+        EmbeddedScriptSetControl ScriptSetEmbed = new EmbeddedScriptSetControl();
+        EmbeddedScriptControl ScriptEmbed = new EmbeddedScriptControl();
+        EmbeddedScriptalControl ScriptalEmbed = new EmbeddedScriptalControl();
+        List<TreeNode> SelectionRelationNodes = new List<TreeNode>();
 
         public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
 
@@ -30,6 +32,7 @@ namespace SOC.UI
         public ScriptControl(Quest quest)
         {
             InitializeComponent();
+            ParseMessageClassesFile();
             Dock = DockStyle.Fill;
             Quest = quest;
 
@@ -38,32 +41,13 @@ namespace SOC.UI
                 treeViewVariables.Nodes.Add(new VariableNode(entry));
             }
 
-            ParseMessageClassesFile();
-
-            EmbeddedScriptSetControl = new EmbeddedScriptSetControl(treeViewScripts);
-            EmbeddedScriptControl = new EmbeddedScriptControl(treeViewScripts);
-            EmbeddedScriptalControl = new EmbeddedScriptalControl(treeViewScripts, treeViewVariables);
-
-            treeViewScripts.Nodes.Add(ScriptRootTable);
-
             TreeNode selected = null;
+            treeViewScripts.Nodes.Add(ScriptTablesRootNode);
             foreach (var entry in Quest.ScriptDetails.QStep_Main)
             {
-                selected = ScriptRootTable.QStep_Main.Add(entry);
+                selected = ScriptTablesRootNode.QStep_Main.Add(entry);
             }
-
-            if (selected != null)
-            {
-                treeViewScripts.SelectedNode = selected;
-            }
-            else
-            {
-                treeViewScripts.SelectedNode = ScriptRootTable.QStep_Main;
-            }
-        }
-
-        public void RefreshTreeViews()
-        {
+            treeViewScripts.SelectedNode = selected != null ? selected : ScriptTablesRootNode.QStep_Main;
         }
 
         private void ScriptControl_Load(object sender, EventArgs e)
@@ -112,17 +96,7 @@ namespace SOC.UI
             }
 
             Quest.ScriptDetails.QStep_Main.Clear();
-            Quest.ScriptDetails.QStep_Main.AddRange(ScriptRootTable.QStep_Main.ConvertToScripts());
-        }
-    }
-
-    public class RootTableNode : TreeNode
-    {
-        public Str32TableNode QStep_Main;
-
-        public RootTableNode() : base("Quest Tables") {
-            QStep_Main = new Str32TableNode("QStep_Main");
-            Nodes.Add(QStep_Main);
+            Quest.ScriptDetails.QStep_Main.AddRange(ScriptTablesRootNode.QStep_Main.ConvertToScripts());
         }
     }
 }

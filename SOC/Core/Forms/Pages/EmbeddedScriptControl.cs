@@ -15,19 +15,26 @@ namespace SOC.UI
     public partial class EmbeddedScriptControl : UserControl
     {
         private bool _isUpdatingControls = false;
+        ScriptNode ScriptNode;
 
-        private TreeView TreeViewScripts;
-
-        public EmbeddedScriptControl(TreeView treeViewScripts)
+        public EmbeddedScriptControl()
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
-            TreeViewScripts = treeViewScripts;
         }
 
-        public void UpdateFromScript(UnEventedScriptNode selectedScriptNode)
+        public override string ToString() => ScriptNode.ToString();
+
+        public UserControl Menu(ScriptNode scriptNode)
         {
-            var selectedScript = selectedScriptNode.ConvertToScript();
+            ScriptNode = scriptNode;
+            UpdateMenu();
+            return this;
+        }
+
+        private void UpdateMenu()
+        {
+            var selectedScript = ScriptNode.ConvertToScript();
             _isUpdatingControls = true;
 
             comboBoxStrCodes.Items.Clear();
@@ -39,10 +46,10 @@ namespace SOC.UI
             textBoxDescription.Text = selectedScript.Description;
 
             listBoxPreconditions.Items.Clear();
-            listBoxPreconditions.Items.AddRange(selectedScriptNode.PreconditionsParent.GetScriptals().ToArray());
+            listBoxPreconditions.Items.AddRange(selectedScript.Preconditionals.ToArray());
 
-            listBoxActions.Items.Clear();
-            listBoxActions.Items.AddRange(selectedScriptNode.OperationsParent.GetScriptals().ToArray());
+            listBoxOperations.Items.Clear();
+            listBoxOperations.Items.AddRange(selectedScript.Operationals.ToArray());
 
             _isUpdatingControls = false;
         }
@@ -78,43 +85,27 @@ namespace SOC.UI
         private void MoveSelectedScript()
         {
             if (_isUpdatingControls) return;
-            var selectedNode = TreeViewScripts.SelectedNode;
             string selectedMsg = comboBoxStrMsgs.SelectedItem.ToString();
             string selectedCode = comboBoxStrCodes.SelectedItem.ToString();
             string selectedSender = "";//comboBoxStrSenders.SelectedItem.ToString(); not implemented yet. needs to grab (useful) senders from sideop details
 
-            if (selectedNode is UnEventedScriptNode scriptNode)
+            var script = ScriptNode.getEvent();
+            if (script.msg.Text != selectedMsg || script.sender.Text != selectedSender || script.StrCode32.Text != selectedCode)
             {
-                var script = scriptNode.getEvent();
-                if (script.msg.Text != selectedMsg || script.sender.Text != selectedSender || script.StrCode32.Text != selectedCode)
-                {
-                    TreeViewScripts.SelectedNode = scriptNode.GetStrCode32TableNode().MoveScript(scriptNode, selectedCode, selectedMsg, selectedSender);
-                    TreeViewScripts.Focus();
-                }
+                ScriptNode.GetStrCode32TableNode().MoveScript(ScriptNode, selectedCode, selectedMsg, selectedSender);
             }
         }
 
         private void textBoxDescription_TextChanged(object sender, EventArgs e)
         {
             _isUpdatingControls = true;
-
-            var selectedNode = TreeViewScripts.SelectedNode;
-            if (selectedNode is UnEventedScriptNode scriptNode)
-            {
-                scriptNode.UpdateDescription(textBoxDescription.Text);
-            }
-
+            ScriptNode.UpdateDescription(textBoxDescription.Text);
             _isUpdatingControls = false;
         }
 
         private void buttonSaveScript_Click(object sender, EventArgs e)
         {
-            var selectedNode = TreeViewScripts.SelectedNode;
-            if (selectedNode is UnEventedScriptNode scriptNode)
-            {
-                Script script = scriptNode.ConvertToScript();
-                SaveScript(script);
-            }
+            SaveScript(ScriptNode.ConvertToScript());
         }
 
         public static void SaveScript(Script script)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SOC.QuestObjects.Enemy;
+using SOC.UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -6,8 +8,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace SOC.Classes.Lua
@@ -215,7 +219,7 @@ namespace SOC.Classes.Lua
 
         public override string ToString()
         {
-            return string.Format(" {0,-30}:: {1, -35}:: {2}",
+            return string.Format(" {0,-25}:: {1, -35}:: {2}",
             Identifier, $"{Preconditionals.Count} Precondition(s), {Operationals.Count} Operation(s)", CodeEvent);
         }
 
@@ -468,8 +472,32 @@ namespace SOC.Classes.Lua
         public LuaTemplatePlaceholder CorrespondingRuntimeToken = new LuaTemplatePlaceholder("");
 
         [XmlIgnore]
-        public bool EnableFiltering = true;
+        public bool EnableGuardrails = true;
+
+        public event EventHandler<VariableNodeEventArgs> VariableNodeEventPassthrough;
 
         public override string ToString() => $"{Name} :: {Key} :: {Value.ToString()}";
+
+        public void SetUserVariableNodeDependency(VariableNode depedency)
+        {
+            depedency.VariableNodeEvent += OnVariableNodeKeyUpdated;
+        }
+
+        public void ClearUserVariableNodeDependency(VariableNode depedency)
+        {
+            depedency.VariableNodeEvent -= OnVariableNodeKeyUpdated;
+        }
+
+        public void OnVariableNodeKeyUpdated(object sender, VariableNodeEventArgs e)
+        {
+            VariableNodeEventPassthrough?.Invoke(this, e);
+        }
+
+        public class VariableNodeEventArgs : EventArgs
+        {
+            public LuaTableEntry Entry { get; set; }
+
+            public bool Doomed { get; set; }
+        }
     }
 }
