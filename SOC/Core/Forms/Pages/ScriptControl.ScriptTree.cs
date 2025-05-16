@@ -325,24 +325,7 @@ namespace SOC.UI
 
         public string GetUniqueScriptName(string baseName, ScriptNode except = null)
         {
-            List<string> names = new List<string>();
-
-            foreach (Str32TableNode table in Parent.Nodes)
-            {
-                foreach (CodeNode code in table.Nodes)
-                {
-                    foreach (MsgSenderNode msgSender in code.Nodes)
-                    {
-                        foreach (ScriptNode scriptNode in msgSender.Nodes)
-                        {
-                            if (except == null || scriptNode != except)
-                            {
-                                names.Add(scriptNode.Name);
-                            }
-                        }
-                    }
-                }
-            }
+            var names = GetScriptNodes().Where(scriptNode => scriptNode != except).Select(scriptNode => scriptNode.Name);
 
             if (!names.Contains(baseName))
             {
@@ -357,6 +340,27 @@ namespace SOC.UI
             } while (names.Contains($@"{newName}"));
 
             return newName;
+        }
+
+        public List<ScriptNode> GetScriptNodes()
+        {
+            List<ScriptNode> scriptNodes = new List<ScriptNode>();
+
+            foreach (Str32TableNode table in Parent.Nodes)
+            {
+                foreach (CodeNode code in table.Nodes)
+                {
+                    foreach (MsgSenderNode msgSender in code.Nodes)
+                    {
+                        foreach (ScriptNode scriptNode in msgSender.Nodes)
+                        {
+                            scriptNodes.Add(scriptNode);
+                        }
+                    }
+                }
+            }
+
+            return scriptNodes;
         }
 
         public void DeleteScriptNode(ScriptNode selectedScriptNode)

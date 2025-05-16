@@ -29,14 +29,15 @@
         internal void InitializeComponent()
         {
             this.groupBoxVariables = new System.Windows.Forms.GroupBox();
-            this.panelBoolean = new System.Windows.Forms.Panel();
-            this.radioButtonFalse = new System.Windows.Forms.RadioButton();
-            this.radioButtonTrue = new System.Windows.Forms.RadioButton();
             this.comboBoxVarType = new System.Windows.Forms.ComboBox();
             this.textBoxVarName = new System.Windows.Forms.TextBox();
             this.buttonNewVariable = new System.Windows.Forms.Button();
             this.buttonRemoveVariableIdentifier = new System.Windows.Forms.Button();
             this.treeViewVariables = new System.Windows.Forms.TreeView();
+            this.panelBoolean = new System.Windows.Forms.Panel();
+            this.radioButtonFalse = new System.Windows.Forms.RadioButton();
+            this.radioButtonTrue = new System.Windows.Forms.RadioButton();
+            this.panelPlaceholder = new System.Windows.Forms.Panel();
             this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
             this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
@@ -81,10 +82,11 @@
             this.groupBoxVariables.Controls.Add(this.buttonNewVariable);
             this.groupBoxVariables.Controls.Add(this.buttonRemoveVariableIdentifier);
             this.groupBoxVariables.Controls.Add(this.treeViewVariables);
+            this.groupBoxVariables.Controls.Add(this.panelBoolean);
             this.groupBoxVariables.Controls.Add(this.numericUpDownVarNumberValue);
             this.groupBoxVariables.Controls.Add(this.buttonNewIdentifier);
             this.groupBoxVariables.Controls.Add(this.textBoxVarStringValue);
-            this.groupBoxVariables.Controls.Add(this.panelBoolean);
+            this.groupBoxVariables.Controls.Add(this.panelPlaceholder);
             this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxVariables.Location = new System.Drawing.Point(0, 0);
             this.groupBoxVariables.Name = "groupBoxVariables";
@@ -92,43 +94,6 @@
             this.groupBoxVariables.TabIndex = 0;
             this.groupBoxVariables.TabStop = false;
             this.groupBoxVariables.Text = "Custom Variables :: Type :: Initial Value";
-            // 
-            // panelBoolean
-            // 
-            this.panelBoolean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelBoolean.Controls.Add(this.radioButtonFalse);
-            this.panelBoolean.Controls.Add(this.radioButtonTrue);
-            this.panelBoolean.Location = new System.Drawing.Point(3, 395);
-            this.panelBoolean.Name = "panelBoolean";
-            this.panelBoolean.Size = new System.Drawing.Size(254, 20);
-            this.panelBoolean.TabIndex = 8;
-            this.panelBoolean.Visible = false;
-            // 
-            // radioButtonFalse
-            // 
-            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFalse.AutoSize = true;
-            this.radioButtonFalse.Checked = true;
-            this.radioButtonFalse.Location = new System.Drawing.Point(77, 1);
-            this.radioButtonFalse.Name = "radioButtonFalse";
-            this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
-            this.radioButtonFalse.TabIndex = 6;
-            this.radioButtonFalse.TabStop = true;
-            this.radioButtonFalse.Text = "False";
-            this.radioButtonFalse.UseVisualStyleBackColor = true;
-            this.radioButtonFalse.CheckedChanged += new System.EventHandler(this.radioButtonFalse_CheckedChanged);
-            // 
-            // radioButtonTrue
-            // 
-            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonTrue.AutoSize = true;
-            this.radioButtonTrue.Location = new System.Drawing.Point(136, 1);
-            this.radioButtonTrue.Name = "radioButtonTrue";
-            this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
-            this.radioButtonTrue.TabIndex = 7;
-            this.radioButtonTrue.Text = "True";
-            this.radioButtonTrue.UseVisualStyleBackColor = true;
             // 
             // comboBoxVarType
             // 
@@ -198,20 +163,69 @@
             this.treeViewVariables.TabIndex = 0;
             this.treeViewVariables.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewVariables_AfterSelect);
             // 
+            // panelBoolean
+            // 
+            this.panelBoolean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelBoolean.BackColor = System.Drawing.Color.Silver;
+            this.panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelBoolean.Controls.Add(this.radioButtonFalse);
+            this.panelBoolean.Controls.Add(this.radioButtonTrue);
+            this.panelBoolean.Location = new System.Drawing.Point(3, 395);
+            this.panelBoolean.Name = "panelBoolean";
+            this.panelBoolean.Size = new System.Drawing.Size(254, 20);
+            this.panelBoolean.TabIndex = 8;
+            this.panelBoolean.Visible = false;
+            // 
+            // radioButtonFalse
+            // 
+            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFalse.AutoSize = true;
+            this.radioButtonFalse.Checked = true;
+            this.radioButtonFalse.Location = new System.Drawing.Point(75, -1);
+            this.radioButtonFalse.Name = "radioButtonFalse";
+            this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonFalse.TabIndex = 6;
+            this.radioButtonFalse.TabStop = true;
+            this.radioButtonFalse.Text = "False";
+            this.radioButtonFalse.UseVisualStyleBackColor = true;
+            this.radioButtonFalse.CheckedChanged += new System.EventHandler(this.radioButtonFalse_CheckedChanged);
+            // 
+            // radioButtonTrue
+            // 
+            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonTrue.AutoSize = true;
+            this.radioButtonTrue.Location = new System.Drawing.Point(134, -1);
+            this.radioButtonTrue.Name = "radioButtonTrue";
+            this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonTrue.TabIndex = 7;
+            this.radioButtonTrue.Text = "True";
+            this.radioButtonTrue.UseVisualStyleBackColor = true;
+            // 
+            // panelPlaceholder
+            // 
+            this.panelPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPlaceholder.BackColor = System.Drawing.Color.Silver;
+            this.panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelPlaceholder.Location = new System.Drawing.Point(3, 395);
+            this.panelPlaceholder.Name = "panelPlaceholder";
+            this.panelPlaceholder.Size = new System.Drawing.Size(254, 20);
+            this.panelPlaceholder.TabIndex = 9;
+            // 
             // numericUpDownVarNumberValue
             // 
             this.numericUpDownVarNumberValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownVarNumberValue.DecimalPlaces = 5;
             this.numericUpDownVarNumberValue.Location = new System.Drawing.Point(3, 395);
             this.numericUpDownVarNumberValue.Maximum = new decimal(new int[] {
-            100000000,
-            0,
+            1215752192,
+            23,
             0,
             0});
             this.numericUpDownVarNumberValue.Minimum = new decimal(new int[] {
-            100000000,
-            0,
+            1215752192,
+            23,
             0,
             -2147483648});
             this.numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
@@ -421,9 +435,9 @@
             this.panelComponentDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelComponentDetails.Location = new System.Drawing.Point(3, 15);
+            this.panelComponentDetails.Location = new System.Drawing.Point(3, 19);
             this.panelComponentDetails.Name = "panelComponentDetails";
-            this.panelComponentDetails.Size = new System.Drawing.Size(575, 431);
+            this.panelComponentDetails.Size = new System.Drawing.Size(575, 425);
             this.panelComponentDetails.TabIndex = 0;
             // 
             // ScriptControl
@@ -488,5 +502,6 @@
         internal System.Windows.Forms.RadioButton radioButtonTrue;
         internal System.Windows.Forms.RadioButton radioButtonFalse;
         internal System.Windows.Forms.Panel panelBoolean;
+        internal System.Windows.Forms.Panel panelPlaceholder;
     }
 }

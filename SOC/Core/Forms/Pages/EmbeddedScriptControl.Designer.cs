@@ -87,7 +87,7 @@
             this.groupBoxDescription.Controls.Add(this.textBoxDescription);
             this.groupBoxDescription.Location = new System.Drawing.Point(0, 165);
             this.groupBoxDescription.Name = "groupBoxDescription";
-            this.groupBoxDescription.Size = new System.Drawing.Size(285, 263);
+            this.groupBoxDescription.Size = new System.Drawing.Size(285, 266);
             this.groupBoxDescription.TabIndex = 32;
             this.groupBoxDescription.TabStop = false;
             this.groupBoxDescription.Text = "Custom Description / Notes (Optional) ";
@@ -105,7 +105,7 @@
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
-            this.textBoxDescription.Size = new System.Drawing.Size(279, 241);
+            this.textBoxDescription.Size = new System.Drawing.Size(279, 244);
             this.textBoxDescription.TabIndex = 6;
             this.textBoxDescription.WordWrap = false;
             this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
@@ -121,9 +121,9 @@
             this.groupBoxTrigger.Controls.Add(this.labelmsg);
             this.groupBoxTrigger.Controls.Add(this.comboBoxStrMsgs);
             this.groupBoxTrigger.Controls.Add(this.labelsender);
-            this.groupBoxTrigger.Location = new System.Drawing.Point(0, 5);
+            this.groupBoxTrigger.Location = new System.Drawing.Point(0, 0);
             this.groupBoxTrigger.Name = "groupBoxTrigger";
-            this.groupBoxTrigger.Size = new System.Drawing.Size(285, 155);
+            this.groupBoxTrigger.Size = new System.Drawing.Size(285, 160);
             this.groupBoxTrigger.TabIndex = 31;
             this.groupBoxTrigger.TabStop = false;
             this.groupBoxTrigger.Text = "Trigger :: \"When\"";
@@ -194,6 +194,7 @@
             // splitContainerInner
             // 
             this.splitContainerInner.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerInner.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainerInner.Location = new System.Drawing.Point(0, 0);
             this.splitContainerInner.Name = "splitContainerInner";
             this.splitContainerInner.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -216,9 +217,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxPreconditions.BackColor = System.Drawing.Color.Silver;
             this.groupBoxPreconditions.Controls.Add(this.listBoxPreconditions);
-            this.groupBoxPreconditions.Location = new System.Drawing.Point(0, 5);
+            this.groupBoxPreconditions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxPreconditions.Name = "groupBoxPreconditions";
-            this.groupBoxPreconditions.Size = new System.Drawing.Size(285, 155);
+            this.groupBoxPreconditions.Size = new System.Drawing.Size(285, 160);
             this.groupBoxPreconditions.TabIndex = 2;
             this.groupBoxPreconditions.TabStop = false;
             this.groupBoxPreconditions.Text = "Preconditions :: \"If\"";
@@ -232,7 +233,7 @@
             this.listBoxPreconditions.FormattingEnabled = true;
             this.listBoxPreconditions.Location = new System.Drawing.Point(3, 16);
             this.listBoxPreconditions.Name = "listBoxPreconditions";
-            this.listBoxPreconditions.Size = new System.Drawing.Size(279, 136);
+            this.listBoxPreconditions.Size = new System.Drawing.Size(279, 141);
             this.listBoxPreconditions.TabIndex = 7;
             // 
             // groupBoxActions
@@ -244,7 +245,7 @@
             this.groupBoxActions.Controls.Add(this.listBoxOperations);
             this.groupBoxActions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActions.Name = "groupBoxActions";
-            this.groupBoxActions.Size = new System.Drawing.Size(285, 263);
+            this.groupBoxActions.Size = new System.Drawing.Size(285, 266);
             this.groupBoxActions.TabIndex = 1;
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Operations :: \"Do\"";
@@ -258,7 +259,7 @@
             this.listBoxOperations.FormattingEnabled = true;
             this.listBoxOperations.Location = new System.Drawing.Point(3, 16);
             this.listBoxOperations.Name = "listBoxOperations";
-            this.listBoxOperations.Size = new System.Drawing.Size(279, 244);
+            this.listBoxOperations.Size = new System.Drawing.Size(279, 247);
             this.listBoxOperations.TabIndex = 8;
             // 
             // EmbeddedScriptControl

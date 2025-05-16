@@ -29,20 +29,38 @@ namespace SOC.UI
 
         private void UpdateMenu()
         {
-            ParentControl.SyncQuestDataToUserInput();
-            ScriptDetails scriptDetails = ParentControl.Quest.ScriptDetails;
+            var varNodes = ParentControl.treeViewVariables.Nodes.OfType<VariableNode>().ToList();
+            foreach (VariableNode varNode in varNodes)
+            {
+                if (!checkedListBoxVariables.Items.Contains(varNode))
+                    checkedListBoxVariables.Items.Add(varNode);
+            }
 
-            checkedListBoxScripts.Items.Clear();
-            checkedListBoxScripts.Items.AddRange(scriptDetails.QStep_Main.ToArray());
+            foreach (VariableNode varNode in checkedListBoxVariables.Items.OfType<VariableNode>().ToList())
+            {
+                if (!varNodes.Contains(varNode))
+                    checkedListBoxVariables.Items.Remove(varNode);
+            }
 
-            checkedListBoxVariables.Items.Clear();
-            checkedListBoxVariables.Items.AddRange(scriptDetails.VariableDeclarations.ToArray());
+            var scriptNodes = ParentControl.ScriptTablesRootNode.QStep_Main.GetScriptNodes();
+            foreach (ScriptNode scriptNode in scriptNodes)
+            {
+                if (!checkedListBoxScripts.Items.Contains(scriptNode))
+                    checkedListBoxScripts.Items.Add(scriptNode);
+            }
+
+            foreach (ScriptNode scriptNode in checkedListBoxScripts.Items.OfType<ScriptNode>().ToList())
+            {
+                if (!scriptNodes.Contains(scriptNode))
+                    checkedListBoxScripts.Items.Remove(scriptNode);
+            }
 
             int totalItems = checkedListBoxScripts.Items.Count + checkedListBoxVariables.Items.Count;
             int totalChecks = checkedListBoxScripts.CheckedItems.Count + checkedListBoxVariables.CheckedItems.Count;
 
             buttonExportVariablesScripts.Enabled = totalChecks != 0;
             splitContainerOuter.Visible = totalItems != 0;
+            panelCheckDependencies.Enabled = totalItems != 0;
             textEmptyHint.Visible = totalItems == 0;
         }
 
@@ -78,8 +96,8 @@ namespace SOC.UI
             if (saveResult == DialogResult.OK)
             {
                 new ScriptDetails(
-                    checkedListBoxScripts.CheckedItems.OfType<Script>().ToList(), 
-                    checkedListBoxVariables.CheckedItems.OfType<LuaTableEntry>().ToList()
+                    checkedListBoxScripts.CheckedItems.OfType<ScriptNode>().Select(node => node.ConvertToScript()).ToList(), 
+                    checkedListBoxVariables.CheckedItems.OfType<VariableNode>().Select(node => node.ConvertToLuaTableEntry()).ToList()
                 ).WriteToXml(saveFile.FileName);
 
                 MessageBox.Show("Done!", "Script(s) Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -88,30 +106,29 @@ namespace SOC.UI
 
         private void checkedListBoxScripts_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            int checkedCount = checkedListBoxScripts.CheckedItems.Count;
-
-            if (e.NewValue == CheckState.Checked)
-                checkedCount++;
-            else if (e.NewValue == CheckState.Unchecked)
-                checkedCount--;
-
-            buttonExportVariablesScripts.Enabled = checkedCount + checkedListBoxVariables.CheckedItems.Count > 0;
+            UpdateExportEnabled(e.NewValue == CheckState.Checked);
         }
 
         private void checkedListBoxVariables_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            int checkedCount = checkedListBoxVariables.CheckedItems.Count;
+            UpdateExportEnabled(e.NewValue == CheckState.Checked);
+        }
 
-            if (e.NewValue == CheckState.Checked)
-                checkedCount++;
-            else if (e.NewValue == CheckState.Unchecked)
-                checkedCount--;
-
-            buttonExportVariablesScripts.Enabled = checkedCount + checkedListBoxScripts.CheckedItems.Count > 0;
+        private void UpdateExportEnabled(bool newCheckboxValue)
+        {
+            buttonExportVariablesScripts.Enabled = checkedListBoxVariables.CheckedItems.Count + checkedListBoxScripts.CheckedItems.Count + (newCheckboxValue ? 1 : -1) > 0;
         }
 
         private void Insert(ScriptDetails scriptDetails)
         {
+            var incomingScripts = scriptDetails.QStep_Main;
+
+            var incomingScriptals = incomingScripts
+                .SelectMany(script => script.Preconditionals.Concat(script.Operationals))
+                .ToList();
+
+            var incomingChoices = incomingScriptals.SelectMany(scriptal => scriptal.Choices).ToList();
+
             foreach (var variable in scriptDetails.VariableDeclarations)
             {
                 string name = variable.Key.Value.Trim('"');
@@ -122,27 +139,35 @@ namespace SOC.UI
                 var varNode = new VariableNode(Lua.TableEntry(name, variable.Value));
                 ParentControl.treeViewVariables.Nodes.Add(varNode);
 
-                foreach(var script in scriptDetails.QStep_Main)
+                foreach (var choice in incomingChoices)
                 {
-                    foreach (var scriptal in script.Preconditionals.Union(script.Operationals))
-                    {
-                        foreach (var choice in scriptal.Choices)
-                        {
-                            if (choice.DependencyNameMatches(variable))
-                            {
-                                choice.SetVarNodeDependency(varNode);
-                            }
-                        }
-                    }
+                    if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.DependencyNameMatches(variable))
+                        choice.SetVarNodeDependency(varNode);
                 }
             }
 
-            foreach(var script in scriptDetails.QStep_Main)
+            foreach (VariableNode variableNode in ParentControl.treeViewVariables.Nodes)
             {
-                foreach (var scriptal in script.Preconditionals.Union(script.Operationals))
+                foreach (var choice in incomingChoices)
                 {
-                    scriptal.TryMapChoicesToTokens(out _);
+                    if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null && choice.DependencyNameMatches(variableNode.ConvertToLuaTableEntry()))
+                        choice.SetVarNodeDependency(variableNode);
                 }
+            }
+
+            foreach (var choice in incomingChoices)
+            {
+                if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null)
+                    choice.Value = new LuaNil();
+            }
+
+            foreach (var scriptal in incomingScriptals)
+            {
+                scriptal.TryMapChoicesToTokens(out _);
+            }
+
+            foreach (var script in incomingScripts)
+            {
                 ParentControl.ScriptTablesRootNode.QStep_Main.Add(script);
             }
         }

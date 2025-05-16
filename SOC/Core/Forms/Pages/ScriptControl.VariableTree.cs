@@ -13,33 +13,6 @@ namespace SOC.UI
     {
         private bool userPressedBackspace = false;
 
-        private void ClearVarTables(VariableNode node)
-        {
-            foreach (VariableNode child in node.Nodes)
-            {
-                ClearVarTables(child);
-            }
-
-            if (node.Parent != null)
-            {
-                var parentNode = (VariableNode)node.Parent;
-                parentNode.Entry.Value = new LuaTable();
-            }
-        }
-
-        private void AddVariableNode(VariableNode node)
-        {
-            foreach (VariableNode child in node.Nodes) {
-                AddVariableNode(child);
-            }
-
-            if (node.Parent != null)
-            {
-                var parentNode = (VariableNode)node.Parent;
-                var parentNodeEntry = (LuaTable)parentNode.Entry.Value;
-                parentNodeEntry.TryAdd(node.Entry);
-            }
-        }
 
         private void buttonNewVariable_Click(object sender, EventArgs e)
         {
@@ -51,9 +24,9 @@ namespace SOC.UI
             VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.Number(0)));
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
-            treeViewVariables.Focus();
 
             ScriptalEmbed.UpdateVarNodesUI();
+            ScriptSetEmbed.Menu();
         }
 
         private void buttonRemoveVariableIdentifier_Click(object sender, EventArgs e)
@@ -62,7 +35,6 @@ namespace SOC.UI
 
             var selectedNode = (VariableNode)treeViewVariables.SelectedNode;
 
-            selectedNode.NotifyDependentsOfVariableNodeChange(true);
             selectedNode.Remove();
 
             if (treeViewVariables.SelectedNode == null)
@@ -71,10 +43,13 @@ namespace SOC.UI
                 textBoxVarName.Enabled = false;
                 comboBoxVarType.Enabled = false;
                 buttonRemoveVariableIdentifier.Enabled = false;
-                HideAllVarValueControls();
+                ShowVarTypeValueControl(panelPlaceholder);
 
                 ScriptalEmbed.UpdateVarNodesUI();
+                ScriptSetEmbed.Menu();
             }
+
+            selectedNode.NotifyDependentsOfVariableNodeChange(true);
         }
 
         private void buttonNewIdentifier_Click(object sender, EventArgs e)
@@ -127,6 +102,7 @@ namespace SOC.UI
             }
 
             textBoxVarName.Text = node.Name.Trim('"');
+            UpdateNode();
         }
 
         private void treeViewVariables_AfterSelect(object sender, TreeViewEventArgs e)
@@ -136,7 +112,7 @@ namespace SOC.UI
 
         private void ShowVarTypeValueControl(Control control)
         {
-            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, buttonNewIdentifier, panelPlaceholder };
 
             foreach (Control valueControl in valueControls)
             {
@@ -148,15 +124,6 @@ namespace SOC.UI
                 {
                     valueControl.Visible = false;
                 }
-            }
-        }
-
-        private void HideAllVarValueControls()
-        {
-            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, buttonNewIdentifier };
-            foreach (Control valueControl in valueControls)
-            {
-                    valueControl.Visible = false;
             }
         }
 
@@ -198,6 +165,8 @@ namespace SOC.UI
                 textBoxVarName.SelectionStart = selectionStart;
                 textBoxVarName.SelectionLength = selectionLength;
             }
+
+            ScriptSetEmbed.Menu();
         }
         internal string GetUniqueVariableName(string baseName)
         {
@@ -270,6 +239,7 @@ namespace SOC.UI
             currentNode.UpdateText();
 
             ScriptalEmbed.UpdateVarNodesUI();
+            ScriptSetEmbed.Menu();
         }
 
         private void textBoxName_KeyDown(object sender, KeyEventArgs e)
@@ -295,6 +265,31 @@ namespace SOC.UI
                 }
             }
             UpdateText();
+        }
+
+        public LuaTableEntry ConvertToLuaTableEntry()
+        {
+            if (Entry.Value is LuaTable)
+            {
+                LuaTableEntry flattenedTable = Lua.TableEntry(Entry.Key, BuildTableFromChildNodes(Nodes));
+                return flattenedTable;
+            }
+
+            return Entry;
+        }
+
+        private static LuaTable BuildTableFromChildNodes(TreeNodeCollection nodes)
+        {
+            LuaTable table = new LuaTable();
+            foreach (VariableNode childNode in nodes)
+            {
+                if (childNode.Entry.Value is LuaTable)
+                    table.TryAdd(Lua.TableEntry(childNode.Entry.Key, BuildTableFromChildNodes(childNode.Nodes)));
+                else
+                    table.TryAdd(childNode.Entry);
+            }
+
+            return table;
         }
 
         public LuaTableIdentifier ToLuaTableIdentifier() => ConvertToLuaTableIdentifier(Entry);
