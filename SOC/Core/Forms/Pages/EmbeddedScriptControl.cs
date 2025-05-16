@@ -15,12 +15,14 @@ namespace SOC.UI
     public partial class EmbeddedScriptControl : UserControl
     {
         private bool _isUpdatingControls = false;
+        ScriptControl ParentControl;
         ScriptNode ScriptNode;
 
-        public EmbeddedScriptControl()
+        public EmbeddedScriptControl(ScriptControl parentControl)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            ParentControl = parentControl;
         }
 
         public override string ToString() => ScriptNode.ToString();
@@ -28,6 +30,7 @@ namespace SOC.UI
         public UserControl Menu(ScriptNode scriptNode)
         {
             ScriptNode = scriptNode;
+            ParentControl.SetMenuText(ToString(), ScriptNode.Identifier.Text);
             UpdateMenu();
             return this;
         }

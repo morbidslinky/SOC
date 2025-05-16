@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SOC.Classes.Lua;
 using System.Linq;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SOC.UI
 {
@@ -127,7 +128,7 @@ namespace SOC.UI
             UpdateScriptControlsToSelectedNode();
         }
 
-        internal void SetEmbeddedControl(UserControl control)
+        internal void Embed(UserControl control)
         {
             if (control != null && !panelComponentDetails.Controls.Contains(control))
             {
@@ -139,63 +140,40 @@ namespace SOC.UI
         private void UpdateScriptControlsToSelectedNode()
         {
             _isUpdatingControls = true;
-            UserControl embeddedControl = null;
 
-            textBoxScriptName.Text = "";
-            groupBoxScriptDetails.Text = "";
-
+            UserControl embedControl = null;
             switch (treeViewScripts.SelectedNode)
             {
-                case ScriptTablesRootNode rootTableNode:
-                    EnabledScriptEditControls();
-                    embeddedControl = ScriptSetEmbed.Menu(rootTableNode.QStep_Main);
-                    break;
-
-                case Str32TableNode tableNode:
-                    EnabledScriptEditControls();
-                    embeddedControl = ScriptSetEmbed.Menu(tableNode);
-                    break;
-
-                case CodeNode codeNode:
-                    EnabledScriptEditControls();
-                    embeddedControl = ScriptSetEmbed.Menu(codeNode.GetTableNode());
-                    break;
-
-                case MsgSenderNode msgSenderNode:
-                    EnabledScriptEditControls();
-                    embeddedControl = ScriptSetEmbed.Menu(msgSenderNode.GetTableNode());
-                    break;
-
                 case ScriptNode scriptNode:
-                    textBoxScriptName.Text = scriptNode.Identifier.Text;
                     EnabledScriptEditControls(textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript);
-                    embeddedControl = ScriptEmbed.Menu(scriptNode);
+                    embedControl = ScriptEmbed.Menu(scriptNode);
                     break;
 
                 case ScriptalParentNode parentNode:
-                    ScriptNode rootScriptNode = parentNode.GetUnEventedScriptNode();
-                    textBoxScriptName.Text = rootScriptNode.Identifier.Text;
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation);
-                    embeddedControl = ScriptEmbed.Menu(rootScriptNode);
+                    embedControl = ScriptEmbed.Menu(parentNode.GetUnEventedScriptNode());
                     break;
 
                 case ScriptalNode scriptalNode:
-                    textBoxScriptName.Text = scriptalNode.GetUnEventedScriptNode().Identifier.Text;
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation, buttonRemoveScript);
-                    embeddedControl = ScriptalEmbed.Menu(scriptalNode, treeViewVariables, Quest.GetAllObjectsScriptValueSets()); 
+                    embedControl = ScriptalEmbed.Menu(scriptalNode); 
                     break;
 
                 default:
                     EnabledScriptEditControls();
-                    embeddedControl = ScriptSetEmbed.Menu(ScriptTablesRootNode.QStep_Main);
+                    SyncQuestDataToUserInput();
+                    embedControl = ScriptSetEmbed.Menu();
                     break;
             }
-
-            SetEmbeddedControl(embeddedControl);
-
-            groupBoxScriptDetails.Text = embeddedControl.ToString();
+            Embed(embedControl);
 
             _isUpdatingControls = false;
+        }
+
+        public void SetMenuText(string _groupBoxScriptDetails, string _textBoxScriptName)
+        {
+            groupBoxScriptDetails.Text = _groupBoxScriptDetails;
+            textBoxScriptName.Text = _textBoxScriptName;
         }
 
         private void buttonNewPrecondition_Click(object sender, EventArgs e)
@@ -285,6 +263,17 @@ namespace SOC.UI
         {
             CodeNode codeNode = new CodeNode(script.CodeEvent.StrCode32);
             MsgSenderNode msgSenderNode = new MsgSenderNode(script.CodeEvent.msg, script.CodeEvent.sender);
+
+            foreach (var precondition in script.Preconditionals)
+            {
+                precondition.TryMapChoicesToTokens(out _);
+            }
+
+            foreach (var operation in script.Operationals)
+            {
+                operation.TryMapChoicesToTokens(out _);
+            }
+
             ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditionals, script.Operationals);
 
             msgSenderNode.Nodes.Add(scriptNode);
@@ -548,9 +537,10 @@ namespace SOC.UI
         public List<Scriptal> GetScriptals()
         {
             List<Scriptal> childScriptals = new List<Scriptal>();
-
+            int index = 1;
             foreach (ScriptalNode scriptalNode in Nodes)
             {
+                scriptalNode.Scriptal.ScriptPrefixID = $"{Text}_{index++}_";
                 childScriptals.Add(scriptalNode.Scriptal);
             }
 

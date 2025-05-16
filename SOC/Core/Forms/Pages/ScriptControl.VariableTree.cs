@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using SOC.Classes.Lua;
 using static SOC.Classes.Lua.Choice;
@@ -24,10 +27,10 @@ namespace SOC.UI
             }
         }
 
-        private void AddVarNodesToVarTable(VariableNode node)
+        private void AddVariableNode(VariableNode node)
         {
             foreach (VariableNode child in node.Nodes) {
-                AddVarNodesToVarTable(child);
+                AddVariableNode(child);
             }
 
             if (node.Parent != null)
@@ -49,44 +52,34 @@ namespace SOC.UI
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
             treeViewVariables.Focus();
+
+            ScriptalEmbed.UpdateVarNodesUI();
         }
 
         private void buttonRemoveVariableIdentifier_Click(object sender, EventArgs e)
         {
             if (treeViewVariables.SelectedNode == null) { return; }
 
-            textBoxVarName.Text = "";
-            TreeNode prevNode = treeViewVariables.SelectedNode.PrevNode;
-            TreeNode parentNode = treeViewVariables.SelectedNode.Parent;
+            var selectedNode = (VariableNode)treeViewVariables.SelectedNode;
 
-            treeViewVariables.SelectedNode.Remove();
+            selectedNode.NotifyDependentsOfVariableNodeChange(true);
+            selectedNode.Remove();
 
-            if (parentNode != null)
+            if (treeViewVariables.SelectedNode == null)
             {
-                treeViewVariables.SelectedNode = parentNode;
-            }
-            else if (prevNode != null)
-            {
-                treeViewVariables.SelectedNode = prevNode;
-            }
-            else if (treeViewVariables.Nodes.Count > 0)
-            {
-                treeViewVariables.SelectedNode = treeViewVariables.Nodes[treeViewVariables.Nodes.Count - 1];
-            } 
-            else
-            {
+                textBoxVarName.Text = "";
                 textBoxVarName.Enabled = false;
                 comboBoxVarType.Enabled = false;
                 buttonRemoveVariableIdentifier.Enabled = false;
                 HideAllVarValueControls();
+
+                ScriptalEmbed.UpdateVarNodesUI();
             }
         }
 
         private void buttonNewIdentifier_Click(object sender, EventArgs e)
         {
             VariableNode parentNode = (VariableNode)treeViewVariables.SelectedNode;
-            parentNode.Entry.Value = new LuaTable();
-            parentNode.UpdateText();
 
             int i = 1;
             while (parentNode.Nodes.ContainsKey($"{i}"))
@@ -117,22 +110,18 @@ namespace SOC.UI
             switch (node.Entry.Value.Type)
             {
                 case TemplateRestrictionType.STRING:
-                    ShowVarTypeValueControl(textBoxVarStringValue);
                     textBoxVarStringValue.Text = node.Entry.Value.Value.Trim('"');
                     comboBoxVarType.Text = "STRING";
                     break;
                 case TemplateRestrictionType.NUMBER:
-                    ShowVarTypeValueControl(numericUpDownVarNumberValue);
                     numericUpDownVarNumberValue.Value = decimal.Parse(node.Entry.Value.Value);
                     comboBoxVarType.Text = "NUMBER";
                     break;
                 case TemplateRestrictionType.BOOLEAN:
-                    ShowVarTypeValueControl(comboBoxVarBooleanValue);
-                    comboBoxVarBooleanValue.Text = node.Entry.Value.Value;
+                    radioButtonTrue.Checked = node.Entry.Value.Value == "true";
                     comboBoxVarType.Text = "BOOLEAN";
                     break;
                 case TemplateRestrictionType.TABLE:
-                    ShowVarTypeValueControl(buttonNewIdentifier);
                     comboBoxVarType.Text = "TABLE";
                     break;
             }
@@ -147,7 +136,7 @@ namespace SOC.UI
 
         private void ShowVarTypeValueControl(Control control)
         {
-            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, buttonNewIdentifier };
 
             foreach (Control valueControl in valueControls)
             {
@@ -164,7 +153,7 @@ namespace SOC.UI
 
         private void HideAllVarValueControls()
         {
-            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, comboBoxVarBooleanValue, buttonNewIdentifier };
+            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, buttonNewIdentifier };
             foreach (Control valueControl in valueControls)
             {
                     valueControl.Visible = false;
@@ -173,39 +162,19 @@ namespace SOC.UI
 
         private void comboBoxVarType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (comboBoxVarType.Text)
-            {
-                case "STRING":
-                    ShowVarTypeValueControl(textBoxVarStringValue);
-                    break;
-                case "NUMBER":
-                    ShowVarTypeValueControl(numericUpDownVarNumberValue);
-                    break;
-                case "BOOLEAN":
-                    ShowVarTypeValueControl(comboBoxVarBooleanValue);
-                    break;
-                case "TABLE":
-                    ShowVarTypeValueControl(buttonNewIdentifier);
-                    break;
-            }
+            UpdateNode();
         }
 
         private void textBoxVarName_TextChanged(object sender, EventArgs e)
         {
             string userInputText = textBoxVarName.Text.Trim();
 
-            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode; 
+            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
+            if (currentNode == null) return;
+
             TreeNodeCollection siblings = currentNode.Parent != null ? currentNode.Parent.Nodes : treeViewVariables.Nodes;
 
-            bool found = false;
-            foreach (VariableNode node in siblings)
-            {
-                if (node.Entry.Key.Value.Trim('"') == userInputText && node != currentNode)
-                {
-                    found = true;
-                    break;
-                }
-            }
+            bool found = VariableNameExists(userInputText, siblings, currentNode);
 
             currentNode.Entry.Key = Lua.GetEntryValueType(userInputText);
             currentNode.Name = currentNode.Entry.Key.Value;
@@ -213,7 +182,7 @@ namespace SOC.UI
 
             if (found)
             {
-                string newName = GenerateNewNameForDuplicate(userInputText, siblings, currentNode);
+                string newName = GetUniqueVariableName(userInputText);
                 int addedCharCount = newName.Length - textBoxVarName.Text.Length;
 
                 textBoxVarName.Text = newName; 
@@ -229,10 +198,8 @@ namespace SOC.UI
                 textBoxVarName.SelectionStart = selectionStart;
                 textBoxVarName.SelectionLength = selectionLength;
             }
-
-
         }
-        private string GenerateNewNameForDuplicate(string baseName, TreeNodeCollection siblingNodes, VariableNode currentNode)
+        internal string GetUniqueVariableName(string baseName)
         {
             int i = 1;
             while (treeViewVariables.Nodes.ContainsKey($@"""{baseName}_{i}"""))
@@ -243,28 +210,66 @@ namespace SOC.UI
             return $"{baseName}_{i}";
         }
 
-        private void textBoxTextVarValue_TextChanged(object sender, EventArgs e)
+        internal bool VariableNameExists(string baseName, TreeNodeCollection nodes, TreeNode except = null)
         {
-            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.String(textBoxVarStringValue.Text);
-            currentNode.Nodes.Clear();
-            currentNode.UpdateText();
+            foreach (VariableNode node in nodes)
+            {
+                if (node == except)
+                {
+                    continue;
+                }
+                if (node.Entry.Key.Value.Trim('"') == baseName)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        private void comboBoxVarBooleanValue_SelectedIndexChanged(object sender, EventArgs e)
+        private void textBoxTextVarValue_TextChanged(object sender, EventArgs e)
         {
-            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.Boolean(comboBoxVarBooleanValue.Text);
-            currentNode.Nodes.Clear();
-            currentNode.UpdateText();
+            UpdateNode();
         }
 
         private void numericUpDownVarNumberValue_ValueChanged(object sender, EventArgs e)
         {
+            UpdateNode();
+        }
+
+        private void radioButtonFalse_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateNode();
+        }
+
+        private void UpdateNode()
+        {
             VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
-            currentNode.Entry.Value = Lua.Number((double)numericUpDownVarNumberValue.Value);
-            currentNode.Nodes.Clear();
+            switch (comboBoxVarType.Text)
+            {
+                case "STRING":
+                    ShowVarTypeValueControl(textBoxVarStringValue);
+                    currentNode.Nodes.Clear();
+                    currentNode.Entry.Value = Lua.String(textBoxVarStringValue.Text);
+                    break;
+                case "NUMBER":
+                    ShowVarTypeValueControl(numericUpDownVarNumberValue);
+                    currentNode.Nodes.Clear();
+                    currentNode.Entry.Value = Lua.Number((double)numericUpDownVarNumberValue.Value);
+                    break;
+                case "BOOLEAN":
+                    ShowVarTypeValueControl(panelBoolean);
+                    currentNode.Nodes.Clear();
+                    currentNode.Entry.Value = Lua.Boolean(radioButtonTrue.Checked);
+                    break;
+                case "TABLE":
+                    ShowVarTypeValueControl(buttonNewIdentifier);
+                    currentNode.Entry.Value = new LuaTable();
+                    break;
+            }
+
             currentNode.UpdateText();
+
+            ScriptalEmbed.UpdateVarNodesUI();
         }
 
         private void textBoxName_KeyDown(object sender, KeyEventArgs e)
@@ -292,23 +297,26 @@ namespace SOC.UI
             UpdateText();
         }
 
-        public LuaTableIdentifier AsLuaTableIdentifier() => Lua.TableIdentifier("qvars", Entry.Key);
+        public LuaTableIdentifier ToLuaTableIdentifier() => ConvertToLuaTableIdentifier(Entry);
+
+        public static LuaTableIdentifier ConvertToLuaTableIdentifier(LuaTableEntry entry)
+        {
+            return new LuaTableIdentifier("qvars", entry.Value.Type, entry.Key);
+        }
+
+        public override string ToString() => Entry.Key.Value;
+
 
         public void UpdateText()
         {
-            if (Entry.Value is LuaTable table)
-            {
-                Text = $"{Entry.Key.Value} :: {LuaTemplate.GetTemplateRestrictionTypeString(Entry.Value)}";
-            }
-            else
-            {
-                Text = $"{Entry.Key.Value} :: {LuaTemplate.GetTemplateRestrictionTypeString(Entry.Value)} :: {Entry.Value.Value}";
-            }
+            Text = Entry.ToString();
+
+            NotifyDependentsOfVariableNodeChange(false);
         }
 
         public void NotifyDependentsOfVariableNodeChange(bool isDoomed)
         {
-            VariableNodeEvent?.Invoke(this, new VariableNodeEventArgs { Entry = Entry, Doomed = isDoomed });
+            VariableNodeEvent?.Invoke(this, new VariableNodeEventArgs { Doomed = isDoomed });
         }
     }
 }

@@ -139,16 +139,13 @@ namespace SOC.Classes.Lua
     public class LuaTemplatePlaceholder : LuaTemplateToken
     {
         public string PlaceholderString { get; set; }
+
         public int Index { get; set; }
-        public LuaValue.TemplateRestrictionType AllowedType { get; set; }
+
+        public List<LuaValue.TemplateRestrictionType> AllowedTypes { get; set; }
 
         public LuaTemplatePlaceholder(string placeholderString) {
-            Index = -1; AllowedType = LuaValue.TemplateRestrictionType.NIL; PlaceholderString = placeholderString;
-        }
-        
-        public LuaTemplatePlaceholder(string placeholder, int index, LuaValue.TemplateRestrictionType allowedType)
-        {
-            Index = index; AllowedType = allowedType; PlaceholderString = placeholder;
+            Index = -1; AllowedTypes = new List<LuaValue.TemplateRestrictionType> { LuaValue.TemplateRestrictionType.NIL }; PlaceholderString = placeholderString;
         }
 
         public static bool TryParse(string placeholderToken, out LuaTemplatePlaceholder placeholder)
@@ -163,43 +160,21 @@ namespace SOC.Classes.Lua
 
             placeholder.Index = parseInt;
 
-            string typeRestriction = splitPlaceholderTokens[1];
+            string[] typeRestrictions = splitPlaceholderTokens[1].Split(',');
+            placeholder.AllowedTypes = new List<LuaValue.TemplateRestrictionType>();
 
-            switch (typeRestriction.Trim().ToUpper())
+            foreach (string restriction in typeRestrictions)
             {
-                case "BOOLEAN":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.BOOLEAN;
-                    break;
-                case "STRING":
-                    placeholder.AllowedType  = LuaValue.TemplateRestrictionType.STRING;
-                    break;
-                case "NUMBER":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.NUMBER;
-                    break;
-                case "FUNCTION":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION;
-                    break;
-                case "FUNCTION_CALL":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.FUNCTION_CALL;
-                    break;
-                case "TABLE":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE;
-                    break;
-                case "TABLE_IDENTIFIER":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.TABLE_IDENTIFIER;
-                    break;
-                case "VARIABLE":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.VARIABLE;
-                    break;
-                case "ASSIGN_VARIABLE":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE;
-                    break;
-                case "NIL":
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.NIL;
-                    break;
-                default:
-                    placeholder.AllowedType = LuaValue.TemplateRestrictionType.TEMPLATE_ERROR;
+                string trimmed = restriction.Trim().ToUpper();
+                if (Enum.TryParse<LuaValue.TemplateRestrictionType>(trimmed, out var parsedType))
+                {
+                    placeholder.AllowedTypes.Add(parsedType);
+                }
+                else
+                {
+                    placeholder.AllowedTypes = new List<LuaValue.TemplateRestrictionType> { LuaValue.TemplateRestrictionType.TEMPLATE_ERROR };
                     return false;
+                }
             }
 
             return true;
@@ -207,10 +182,10 @@ namespace SOC.Classes.Lua
 
         public string Populate(LuaValue[] luaValues)
         {
-            if (Index == -1 || AllowedType == LuaValue.TemplateRestrictionType.TEMPLATE_ERROR)
+            if (Index == -1 || AllowedTypes.Contains(LuaValue.TemplateRestrictionType.TEMPLATE_ERROR))
                 return $"--[[ERROR: Invalid placeholder ({PlaceholderString})]]";
-
-            TryGetValueString(luaValues, out string luaString);
+            if (!TryGetValueString(luaValues, out string luaString))
+                return $"--[[ERROR: Valid placeholder ({PlaceholderString}), but invalid data ({luaString})]]";
             return luaString;
         }
 
@@ -228,28 +203,37 @@ namespace SOC.Classes.Lua
 
         public bool Allows(LuaValue value, out string valueString)
         {
-            if (value is LuaVariable variable)
+            foreach (var allowed in AllowedTypes)
             {
-                if (AllowedType == LuaValue.TemplateRestrictionType.VARIABLE || variable.GetAssignedValue().Type == AllowedType)
+                if (value is LuaVariable variable)
                 {
-                    valueString = variable.ToString();
+                    if (allowed == LuaValue.TemplateRestrictionType.VARIABLE ||
+                        (allowed == LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE) ||
+                        (variable.GetAssignedValue().Type == allowed))
+                    {
+                        valueString = allowed == LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE
+                            ? variable.GetAssignmentLua()
+                            : variable.ToString();
+                        return true;
+                    }
+                }
+                else if (value is LuaFunctionCall function &&
+                         (allowed == LuaValue.TemplateRestrictionType.FUNCTION_CALL || function.EvaluatesTo == allowed))
+                {
+                    valueString = function.ToString();
                     return true;
                 }
-                else if (AllowedType == LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE)
+                else if (value is LuaTableIdentifier tableIdentifier &&
+                         (allowed == LuaValue.TemplateRestrictionType.TABLE_IDENTIFIER || tableIdentifier.EvaluatesTo == allowed))
                 {
-                    valueString = variable.GetAssignmentLua();
+                    valueString = tableIdentifier.ToString();
                     return true;
                 }
-            }
-            else if (value is LuaFunctionCall function && (AllowedType == LuaValue.TemplateRestrictionType.FUNCTION_CALL || function.EvaluatesTo == AllowedType))
-            {
-                valueString = function.ToString();
-                return true;
-            }
-            else if (value.Type == AllowedType)
-            {
-                valueString = value.ToString();
-                return true;
+                else if (value.Type == allowed)
+                {
+                    valueString = value.ToString();
+                    return true;
+                }
             }
 
             valueString = value.ToString();

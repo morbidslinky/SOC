@@ -18,12 +18,11 @@ namespace SOC.UI
     {
         public Quest Quest;
 
-        ScriptTablesRootNode ScriptTablesRootNode = new ScriptTablesRootNode();
+        public ScriptTablesRootNode ScriptTablesRootNode = new ScriptTablesRootNode();
 
-        EmbeddedScriptSetControl ScriptSetEmbed = new EmbeddedScriptSetControl();
-        EmbeddedScriptControl ScriptEmbed = new EmbeddedScriptControl();
-        EmbeddedScriptalControl ScriptalEmbed = new EmbeddedScriptalControl();
-        List<TreeNode> SelectionRelationNodes = new List<TreeNode>();
+        EmbeddedScriptSetControl ScriptSetEmbed;
+        EmbeddedScriptControl ScriptEmbed;
+        EmbeddedScriptalControl ScriptalEmbed;
 
         public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
 
@@ -31,6 +30,10 @@ namespace SOC.UI
 
         public ScriptControl(Quest quest)
         {
+            ScriptSetEmbed = new EmbeddedScriptSetControl(this);
+            ScriptEmbed = new EmbeddedScriptControl(this);
+            ScriptalEmbed = new EmbeddedScriptalControl(this);
+
             InitializeComponent();
             ParseMessageClassesFile();
             Dock = DockStyle.Fill;
@@ -43,7 +46,7 @@ namespace SOC.UI
 
             TreeNode selected = null;
             treeViewScripts.Nodes.Add(ScriptTablesRootNode);
-            foreach (var entry in Quest.ScriptDetails.QStep_Main)
+            foreach (Script entry in Quest.ScriptDetails.QStep_Main)
             {
                 selected = ScriptTablesRootNode.QStep_Main.Add(entry);
             }
@@ -91,7 +94,7 @@ namespace SOC.UI
             foreach (VariableNode node in treeViewVariables.Nodes)
             {
                 ClearVarTables(node);
-                AddVarNodesToVarTable(node);
+                AddVariableNode(node);
                 Quest.ScriptDetails.VariableDeclarations.Add(node.Entry);
             }
 

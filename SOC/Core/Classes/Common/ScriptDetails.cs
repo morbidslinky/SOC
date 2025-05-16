@@ -1,6 +1,7 @@
 ﻿using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +22,31 @@ namespace SOC.Classes.Common
 
         [XmlIgnore]
         public List<ChoosableValues> QuestChoosableValueSetsCache = new List<ChoosableValues>();
+
+        public ScriptDetails () { }
+
+        public ScriptDetails (List<Script> qstep_main, List<LuaTableEntry> variables)
+        {
+            QStep_Main = qstep_main;
+            VariableDeclarations = variables;
+        }
+
+        public void WriteToXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ScriptDetails));
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                serializer.Serialize(writer, this);
+            }
+        }
+
+        public static ScriptDetails LoadFromXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ScriptDetails));
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                return (ScriptDetails)serializer.Deserialize(reader);
+            }
+        }
     }
 }

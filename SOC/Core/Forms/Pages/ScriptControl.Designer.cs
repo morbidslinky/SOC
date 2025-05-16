@@ -5,7 +5,7 @@
         /// <summary> 
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        internal System.ComponentModel.IContainer components = null;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -26,15 +26,17 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        internal void InitializeComponent()
         {
             this.groupBoxVariables = new System.Windows.Forms.GroupBox();
+            this.panelBoolean = new System.Windows.Forms.Panel();
+            this.radioButtonFalse = new System.Windows.Forms.RadioButton();
+            this.radioButtonTrue = new System.Windows.Forms.RadioButton();
             this.comboBoxVarType = new System.Windows.Forms.ComboBox();
             this.textBoxVarName = new System.Windows.Forms.TextBox();
             this.buttonNewVariable = new System.Windows.Forms.Button();
             this.buttonRemoveVariableIdentifier = new System.Windows.Forms.Button();
             this.treeViewVariables = new System.Windows.Forms.TreeView();
-            this.comboBoxVarBooleanValue = new System.Windows.Forms.ComboBox();
             this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
             this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
@@ -52,6 +54,7 @@
             this.groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
             this.panelComponentDetails = new System.Windows.Forms.Panel();
             this.groupBoxVariables.SuspendLayout();
+            this.panelBoolean.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.groupBoxScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).BeginInit();
@@ -78,10 +81,10 @@
             this.groupBoxVariables.Controls.Add(this.buttonNewVariable);
             this.groupBoxVariables.Controls.Add(this.buttonRemoveVariableIdentifier);
             this.groupBoxVariables.Controls.Add(this.treeViewVariables);
-            this.groupBoxVariables.Controls.Add(this.comboBoxVarBooleanValue);
             this.groupBoxVariables.Controls.Add(this.numericUpDownVarNumberValue);
             this.groupBoxVariables.Controls.Add(this.buttonNewIdentifier);
             this.groupBoxVariables.Controls.Add(this.textBoxVarStringValue);
+            this.groupBoxVariables.Controls.Add(this.panelBoolean);
             this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxVariables.Location = new System.Drawing.Point(0, 0);
             this.groupBoxVariables.Name = "groupBoxVariables";
@@ -89,6 +92,43 @@
             this.groupBoxVariables.TabIndex = 0;
             this.groupBoxVariables.TabStop = false;
             this.groupBoxVariables.Text = "Custom Variables :: Type :: Initial Value";
+            // 
+            // panelBoolean
+            // 
+            this.panelBoolean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelBoolean.Controls.Add(this.radioButtonFalse);
+            this.panelBoolean.Controls.Add(this.radioButtonTrue);
+            this.panelBoolean.Location = new System.Drawing.Point(3, 395);
+            this.panelBoolean.Name = "panelBoolean";
+            this.panelBoolean.Size = new System.Drawing.Size(254, 20);
+            this.panelBoolean.TabIndex = 8;
+            this.panelBoolean.Visible = false;
+            // 
+            // radioButtonFalse
+            // 
+            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFalse.AutoSize = true;
+            this.radioButtonFalse.Checked = true;
+            this.radioButtonFalse.Location = new System.Drawing.Point(77, 1);
+            this.radioButtonFalse.Name = "radioButtonFalse";
+            this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonFalse.TabIndex = 6;
+            this.radioButtonFalse.TabStop = true;
+            this.radioButtonFalse.Text = "False";
+            this.radioButtonFalse.UseVisualStyleBackColor = true;
+            this.radioButtonFalse.CheckedChanged += new System.EventHandler(this.radioButtonFalse_CheckedChanged);
+            // 
+            // radioButtonTrue
+            // 
+            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonTrue.AutoSize = true;
+            this.radioButtonTrue.Location = new System.Drawing.Point(136, 1);
+            this.radioButtonTrue.Name = "radioButtonTrue";
+            this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonTrue.TabIndex = 7;
+            this.radioButtonTrue.Text = "True";
+            this.radioButtonTrue.UseVisualStyleBackColor = true;
             // 
             // comboBoxVarType
             // 
@@ -158,30 +198,26 @@
             this.treeViewVariables.TabIndex = 0;
             this.treeViewVariables.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewVariables_AfterSelect);
             // 
-            // comboBoxVarBooleanValue
-            // 
-            this.comboBoxVarBooleanValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxVarBooleanValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxVarBooleanValue.FormattingEnabled = true;
-            this.comboBoxVarBooleanValue.Items.AddRange(new object[] {
-            "true",
-            "false"});
-            this.comboBoxVarBooleanValue.Location = new System.Drawing.Point(3, 395);
-            this.comboBoxVarBooleanValue.Name = "comboBoxVarBooleanValue";
-            this.comboBoxVarBooleanValue.Size = new System.Drawing.Size(254, 21);
-            this.comboBoxVarBooleanValue.TabIndex = 4;
-            this.comboBoxVarBooleanValue.Visible = false;
-            this.comboBoxVarBooleanValue.SelectedIndexChanged += new System.EventHandler(this.comboBoxVarBooleanValue_SelectedIndexChanged);
-            // 
             // numericUpDownVarNumberValue
             // 
             this.numericUpDownVarNumberValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownVarNumberValue.DecimalPlaces = 5;
             this.numericUpDownVarNumberValue.Location = new System.Drawing.Point(3, 395);
+            this.numericUpDownVarNumberValue.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.numericUpDownVarNumberValue.Minimum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            -2147483648});
             this.numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
             this.numericUpDownVarNumberValue.Size = new System.Drawing.Size(254, 20);
             this.numericUpDownVarNumberValue.TabIndex = 4;
+            this.numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownVarNumberValue.Visible = false;
             this.numericUpDownVarNumberValue.ValueChanged += new System.EventHandler(this.numericUpDownVarNumberValue_ValueChanged);
             // 
@@ -382,8 +418,10 @@
             // 
             // panelComponentDetails
             // 
-            this.panelComponentDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelComponentDetails.Location = new System.Drawing.Point(3, 16);
+            this.panelComponentDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelComponentDetails.Location = new System.Drawing.Point(3, 15);
             this.panelComponentDetails.Name = "panelComponentDetails";
             this.panelComponentDetails.Size = new System.Drawing.Size(575, 431);
             this.panelComponentDetails.TabIndex = 0;
@@ -399,6 +437,8 @@
             this.Load += new System.EventHandler(this.ScriptControl_Load);
             this.groupBoxVariables.ResumeLayout(false);
             this.groupBoxVariables.PerformLayout();
+            this.panelBoolean.ResumeLayout(false);
+            this.panelBoolean.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();
             this.groupBoxScripts.ResumeLayout(false);
             this.groupBoxScripts.PerformLayout();
@@ -423,28 +463,30 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBoxVariables;
-        private System.Windows.Forms.TreeView treeViewVariables;
-        private System.Windows.Forms.GroupBox groupBoxScripts;
-        private System.Windows.Forms.ComboBox comboBoxVarType;
-        private System.Windows.Forms.TextBox textBoxVarName;
-        private System.Windows.Forms.TextBox textBoxVarStringValue;
-        private System.Windows.Forms.Button buttonNewVariable;
-        private System.Windows.Forms.Button buttonRemoveVariableIdentifier;
-        private System.Windows.Forms.Button buttonNewIdentifier;
-        private System.Windows.Forms.ComboBox comboBoxVarBooleanValue;
-        private System.Windows.Forms.NumericUpDown numericUpDownVarNumberValue;
-        private System.Windows.Forms.Panel panelScripting;
-        private System.Windows.Forms.GroupBox groupBoxScriptDetails;
-        private System.Windows.Forms.TreeView treeViewScripts;
-        private System.Windows.Forms.Button buttonNewScript;
-        private System.Windows.Forms.Button buttonRemoveScript;
-        private System.Windows.Forms.TextBox textBoxScriptName;
-        private System.Windows.Forms.SplitContainer splitContainerOuter;
-        private System.Windows.Forms.SplitContainer splitContainerInner;
-        private System.Windows.Forms.Panel panelComponentDetails;
-        private System.Windows.Forms.Button buttonNewOperation;
-        private System.Windows.Forms.Button buttonNewPrecondition;
-        private System.Windows.Forms.SplitContainer splitContainerPreconditionOperation;
+        internal System.Windows.Forms.GroupBox groupBoxVariables;
+        internal System.Windows.Forms.TreeView treeViewVariables;
+        internal System.Windows.Forms.GroupBox groupBoxScripts;
+        internal System.Windows.Forms.ComboBox comboBoxVarType;
+        internal System.Windows.Forms.TextBox textBoxVarName;
+        internal System.Windows.Forms.TextBox textBoxVarStringValue;
+        internal System.Windows.Forms.Button buttonNewVariable;
+        internal System.Windows.Forms.Button buttonRemoveVariableIdentifier;
+        internal System.Windows.Forms.Button buttonNewIdentifier;
+        internal System.Windows.Forms.NumericUpDown numericUpDownVarNumberValue;
+        internal System.Windows.Forms.Panel panelScripting;
+        internal System.Windows.Forms.GroupBox groupBoxScriptDetails;
+        internal System.Windows.Forms.TreeView treeViewScripts;
+        internal System.Windows.Forms.Button buttonNewScript;
+        internal System.Windows.Forms.Button buttonRemoveScript;
+        internal System.Windows.Forms.TextBox textBoxScriptName;
+        internal System.Windows.Forms.SplitContainer splitContainerOuter;
+        internal System.Windows.Forms.SplitContainer splitContainerInner;
+        internal System.Windows.Forms.Panel panelComponentDetails;
+        internal System.Windows.Forms.Button buttonNewOperation;
+        internal System.Windows.Forms.Button buttonNewPrecondition;
+        internal System.Windows.Forms.SplitContainer splitContainerPreconditionOperation;
+        internal System.Windows.Forms.RadioButton radioButtonTrue;
+        internal System.Windows.Forms.RadioButton radioButtonFalse;
+        internal System.Windows.Forms.Panel panelBoolean;
     }
 }

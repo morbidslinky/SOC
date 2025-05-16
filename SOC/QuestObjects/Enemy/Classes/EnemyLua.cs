@@ -20,7 +20,7 @@ namespace SOC.QuestObjects.Enemy
                 if (HasBalaclavas(detail.enemies))
                 {
                     definitionLua.AddToFaceIdList(new LuaTableIdentifier(
-                        "TppDefine", new LuaValue[]
+                        "TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaValue[]
                         {
                             new LuaString("QUEST_FACE_ID_LIST"),
                             new LuaString($"{region}_BALACLAVA")
@@ -30,7 +30,7 @@ namespace SOC.QuestObjects.Enemy
                 if (HasArmors(detail.enemies))
                 {
                     definitionLua.AddToBodyIdList(new LuaTableIdentifier(
-                        "TppDefine", new LuaValue[]
+                        "TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaValue[]
                         {
                             new LuaString("QUEST_BODY_ID_LIST"),
                             new LuaString($"{region}_ARMOR")
@@ -40,7 +40,7 @@ namespace SOC.QuestObjects.Enemy
                 foreach (string body in GetBodies(detail.enemies))
                 {
                     definitionLua.AddToBodyIdList(new LuaTableIdentifier(
-                        "TppEnemyBodyId", new LuaValue[]
+                        "TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaValue[]
                         {
                             new LuaString($"{body}")
                         }));

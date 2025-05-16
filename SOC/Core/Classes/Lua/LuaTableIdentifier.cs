@@ -15,12 +15,15 @@ namespace SOC.Classes.Lua
         [XmlArray("TableKeys")]
         [XmlArrayItem("Key")] 
         public LuaValue[] IdentifierKeys { get; set; }
+
+        public TemplateRestrictionType EvaluatesTo { get; set; }
         public override string Value => GetIdentifier();
 
         public LuaTableIdentifier() : base(TemplateRestrictionType.TABLE_IDENTIFIER) { }
-        public LuaTableIdentifier(string identifierVariableName, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
+        public LuaTableIdentifier(string identifierVariableName, TemplateRestrictionType evaluatesToType = TemplateRestrictionType.NIL, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
         {
             IdentifierVariableName = identifierVariableName;
+            EvaluatesTo = evaluatesToType;
             IdentifierKeys = identifierPath;
         }
 

@@ -112,7 +112,7 @@ namespace SOC.Classes.Lua
                     {
                         functionDefinitionsTable.Add(
                             Lua.TableEntry(
-                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String(conditional.Name)),
+                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{conditional.ScriptPrefixID}{conditional.Name}")),
                                 conditional.Populate(),
                                 true
                             )
@@ -122,7 +122,7 @@ namespace SOC.Classes.Lua
                     {
                         functionDefinitionsTable.Add(
                             Lua.TableEntry(
-                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String(operational.Name)),
+                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{operational.ScriptPrefixID}{operational.Name}")),
                                 operational.Populate(),
                                 true
                             )
@@ -251,13 +251,13 @@ namespace SOC.Classes.Lua
 
             foreach (Scriptal scriptal in Preconditionals)
             {
-                var conditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String(scriptal.Name));
+                var conditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{scriptal.ScriptPrefixID}{scriptal.Name}"));
                 functionBuilder.AppendPlainText($"if not {Lua.FunctionCall(conditionIdentifier, StrCode32Event.GetDefaultParametersAsVariables())} then return end\n");
             }
 
             foreach (Scriptal scriptal in Operationals)
             {
-                var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String(scriptal.Name));
+                var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{scriptal.ScriptPrefixID}{scriptal.Name}"));
                 functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, StrCode32Event.GetDefaultParametersAsVariables()));
             }
 
@@ -361,11 +361,14 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Definition")]
         public List<LuaTableEntry> CommonDefinitions = new List<LuaTableEntry>();
 
+        [XmlIgnore]
+        public string ScriptPrefixID = "";
+
         public static Scriptal AlwaysTrue()
         {
             Scriptal defaultScriptal = new Scriptal();
 
-            defaultScriptal.Name = "Always True";
+            defaultScriptal.Name = "Always_True";
             defaultScriptal.Description = "Empty Precondition.\r\n\r\n- Always returns true (same as having no preconditions at all).";
             defaultScriptal.EventFunctionTemplate = "return true";
 
@@ -376,7 +379,7 @@ namespace SOC.Classes.Lua
         {
             Scriptal defaultScriptal = new Scriptal();
 
-            defaultScriptal.Name = "Do Nothing";
+            defaultScriptal.Name = "Do_Nothing";
             defaultScriptal.Description = "Empty Operation.\r\n\r\n- Does nothing (same as having no operations at all).";
             defaultScriptal.EventFunctionTemplate = "";
 
@@ -472,31 +475,71 @@ namespace SOC.Classes.Lua
         public LuaTemplatePlaceholder CorrespondingRuntimeToken = new LuaTemplatePlaceholder("");
 
         [XmlIgnore]
-        public bool EnableGuardrails = true;
+        public VariableNode Dependency;
 
         public event EventHandler<VariableNodeEventArgs> VariableNodeEventPassthrough;
 
         public override string ToString() => $"{Name} :: {Key} :: {Value.ToString()}";
 
-        public void SetUserVariableNodeDependency(VariableNode depedency)
+        public void SetVarNodeDependency(VariableNode dependency)
         {
-            depedency.VariableNodeEvent += OnVariableNodeKeyUpdated;
+            if (Dependency != null)
+            {
+                ClearVarNodeDependency();
+            }
+
+            Dependency = dependency;
+            Dependency.VariableNodeEvent += OnVariableNodeKeyUpdated;
+            Value = Dependency.ToLuaTableIdentifier();
         }
 
-        public void ClearUserVariableNodeDependency(VariableNode depedency)
+        public bool DependencyNameMatches(LuaTableEntry entry)
         {
-            depedency.VariableNodeEvent -= OnVariableNodeKeyUpdated;
+            return EmbeddedScriptalControl.CUSTOM_VARIABLE_SET == Key && VariableNode.ConvertToLuaTableIdentifier(entry).Matches(Value);
+        }
+
+        public void ClearVarNodeDependency()
+        {
+            Dependency.VariableNodeEvent -= OnVariableNodeKeyUpdated;
+            Dependency = null;
+            Value = new LuaNil();
+        }
+
+        public bool HasPassthrough(EmbeddedScriptalControl target)
+        {
+            var handlers = VariableNodeEventPassthrough?.GetInvocationList();
+            if (handlers == null) return false;
+
+            foreach (var handler in handlers)
+            {
+                if (handler.Target == target && handler.Method.Name == nameof(target.SelectedChoice_VariableNodeEventPassthrough))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void OnVariableNodeKeyUpdated(object sender, VariableNodeEventArgs e)
         {
-            VariableNodeEventPassthrough?.Invoke(this, e);
+            if (sender is VariableNode dependency && Dependency == dependency)
+            {
+                if (e.Doomed || !CorrespondingRuntimeToken.Allows(Dependency.Entry.Value, out _))
+                {
+                    ClearVarNodeDependency();
+                    e.Doomed = true;
+                }
+                else 
+                {
+                    Value = Dependency.ToLuaTableIdentifier();
+                }
+
+                VariableNodeEventPassthrough?.Invoke(this, e);
+            }
         }
 
         public class VariableNodeEventArgs : EventArgs
         {
-            public LuaTableEntry Entry { get; set; }
-
             public bool Doomed { get; set; }
         }
     }

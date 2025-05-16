@@ -1,20 +1,11 @@
-﻿using SOC.Classes.Common;
-using SOC.Classes.Lua;
-using SOC.QuestObjects.Common;
-using SOC.UI;
+﻿using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using static SOC.Classes.Lua.Choice;
 
 namespace SOC.UI
@@ -23,23 +14,27 @@ namespace SOC.UI
     {
         private bool _isUpdatingControls = false;
 
+        ScriptControl ParentControl;
         private ScriptalNode ScriptalNode;
-        private TreeView TreeViewVariables;
-        private List<ChoosableValues> QuestValueSets = new List<ChoosableValues>();
 
-        public EmbeddedScriptalControl()
+        public const string CUSTOM_VARIABLE_SET = "Custom Variables";
+        public const string NUMBER_LITERAL_SET = "Number Literal";
+        public const string STRING_LITERAL_SET = "String Literal";
+        public const string BOOLEAN_LITERAL_SET = "Boolean Literal";
+
+        public EmbeddedScriptalControl(ScriptControl parentControl)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            ParentControl = parentControl;
         }
 
         public override string ToString() => ScriptalNode.ToString();
 
-        internal UserControl Menu(ScriptalNode scriptalNode, TreeView treeViewVariables, List<ChoosableValues> questValueSets)
+        internal UserControl Menu(ScriptalNode scriptalNode)
         {
             ScriptalNode = scriptalNode;
-            TreeViewVariables = treeViewVariables;
-            QuestValueSets = questValueSets;
+            ParentControl.SetMenuText(ToString(), ScriptalNode.GetUnEventedScriptNode().Identifier.Text);
             UpdateMenu();
             return this;
         }
@@ -71,6 +66,13 @@ namespace SOC.UI
 
             SetDescription(ScriptalNode.Scriptal);
             SetChoiceMenu(ScriptalNode.Scriptal);
+        }
+
+        internal void UpdateVarNodesUI()
+        {
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+            ChoosableValues selectedChoiceSet = (ChoosableValues)comboBoxChoiceSet.SelectedItem;
+            RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
         }
 
         internal static string str(ScriptalType type)
@@ -188,15 +190,6 @@ namespace SOC.UI
             return scriptalFiles;
         }
 
-        private void checkBoxChoiceFilter_CheckedChanged(object sender, EventArgs e)
-        {
-            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-            Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
-            selectedChoice.EnableGuardrails = checkBoxChoiceFilter.Checked;
-
-            RefreshChoiceSets(selectedScriptal, selectedChoice);
-        }
-
         private void listBoxChoices_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_isUpdatingControls) return;
@@ -251,15 +244,12 @@ string.Format(@"
         {
             List<ChoosableValues> chooseableSets = new List<ChoosableValues>();
 
-            if (selectedChoice.EnableGuardrails)
-                chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables
-                    .Union(QuestValueSets)
-                    .Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key)));
-            else
-                chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables);
+            chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables
+                .Union(ParentControl.Quest.GetAllObjectsScriptValueSets())
+                .Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key)));
                 
             if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)
-                chooseableSets.Add(new ChoosableValues() { Key = "CUSTOM VARIABLES" });
+                chooseableSets.Add(new ChoosableValues() { Key = CUSTOM_VARIABLE_SET });
 
             if (selectedChoice.AllowLiteral)
             {
@@ -279,13 +269,13 @@ string.Format(@"
 
             switch (selectedChoice.Key)
             {
-                case "CUSTOM VARIABLES":
-                    showCorrespondingChoiceControl(comboBoxUserVariables);
-                    RefreshUserVariableChoiceValues(selectedChoice, selectedChoiceSet);
+                case CUSTOM_VARIABLE_SET:
+                    showCorrespondingChoiceControl(comboBoxUserVarNodes);
+                    RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
                     break;
-                case "NUMBER":
-                case "STRING":
-                case "BOOLEAN":
+                case NUMBER_LITERAL_SET:
+                case STRING_LITERAL_SET:
+                case BOOLEAN_LITERAL_SET:
                     // todo literals
                     break;
                 default:
@@ -297,7 +287,7 @@ string.Format(@"
 
         private void showCorrespondingChoiceControl(Control choiceControl, bool enable = true)
         {
-            Control[] controlSet = { comboBoxPresetChoosables, comboBoxUserVariables };
+            Control[] controlSet = { comboBoxPresetChoosables, comboBoxUserVarNodes };
 
             foreach (var control in controlSet)
             {
@@ -307,38 +297,60 @@ string.Format(@"
             choiceControl.Enabled = enable;
         }
 
-        private void RefreshUserVariableChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
+        private void RefreshUserVarNodeChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
         {
-            if (selectedChoiceSet.Key != "CUSTOM VARIABLES" || !selectedChoice.AllowUserVariable || !selectedChoice.AllowUIEdit) return;
-            IEnumerable<VariableNode> userVariables = TreeViewVariables.Nodes.OfType<VariableNode>();
+            if (selectedChoiceSet == null || selectedChoice == null) return;
+            if (selectedChoiceSet.Key != CUSTOM_VARIABLE_SET || !selectedChoice.AllowUserVariable || !selectedChoice.AllowUIEdit) return;
 
-            if (selectedChoice.EnableGuardrails)
-                userVariables = userVariables.Where(node => selectedChoice.CorrespondingRuntimeToken.Allows(node.Entry.Value, out _));
+            var userVarNodes = ParentControl.treeViewVariables.Nodes.OfType<VariableNode>().Where(node => selectedChoice.CorrespondingRuntimeToken.Allows(node.Entry.Value, out _));
 
-            comboBoxUserVariables.Items.Clear();
-            comboBoxUserVariables.Items.AddRange(userVariables.ToArray());
+            comboBoxUserVarNodes.Items.Clear();
+            comboBoxUserVarNodes.Items.AddRange(userVarNodes.ToArray());
+
+            var match = comboBoxUserVarNodes.Items.OfType<VariableNode>().FirstOrDefault(node => node == selectedChoice.Dependency);
+            if (match == null && comboBoxUserVarNodes.Items.Count > 0)
+                match = (VariableNode)comboBoxUserVarNodes.Items[0];
+
+            comboBoxUserVarNodes.SelectedItem = match;
         }
 
-        private void comboBoxUserVariables_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxUserVarNodes_SelectedIndexChanged(object sender, EventArgs e)
         {
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-            VariableNode selectedValue = (VariableNode)comboBoxUserVariables.SelectedItem;
+            VariableNode selectedVarNode = (VariableNode)comboBoxUserVarNodes.SelectedItem;
             if (selectedChoice.AllowUIEdit && selectedChoice.AllowUserVariable)
             {
-                selectedChoice.SetUserVariableNodeDependency(selectedValue);
-                selectedChoice.Value = selectedValue.AsLuaTableIdentifier();
+                selectedChoice.SetVarNodeDependency(selectedVarNode);
+                if (!selectedChoice.HasPassthrough(this))
+                    selectedChoice.VariableNodeEventPassthrough += SelectedChoice_VariableNodeEventPassthrough;
+
                 RefreshListBoxDisplay();
+            }
+        }
+
+        public void SelectedChoice_VariableNodeEventPassthrough(object sender, VariableNodeEventArgs e)
+        {
+            if (sender is Choice choice)
+            {
+                if (e.Doomed)
+                {
+                    choice.VariableNodeEventPassthrough -= SelectedChoice_VariableNodeEventPassthrough;
+                }
+
+                var updateIndex = listBoxChoices.Items.IndexOf(choice);
+                RefreshListBoxDisplay(updateIndex);
+
+                if ((Choice)listBoxChoices.SelectedItem == choice)
+                {
+                    Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
+                    RefreshChoiceSets(selectedScriptal, choice);
+                }
             }
         }
 
         private void RefreshPresetChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
         {
-            IEnumerable<LuaValue> choosables;
-
-            if (selectedChoice.EnableGuardrails)
-                choosables = selectedChoiceSet.Values.Where(value => selectedChoice.CorrespondingRuntimeToken.Allows(value, out _));
-            else
-                choosables = selectedChoiceSet.Values;
+            IEnumerable<LuaValue> choosables = selectedChoiceSet.Values.Where(value => selectedChoice.CorrespondingRuntimeToken.Allows(value, out _));
 
             comboBoxPresetChoosables.Items.Clear();
             comboBoxPresetChoosables.Items.AddRange(choosables.ToArray());
@@ -361,10 +373,11 @@ string.Format(@"
             }
         }
 
-        private void RefreshListBoxDisplay()
+        private void RefreshListBoxDisplay(int index = -1)
         {
+            if (index < 0 || index >= listBoxChoices.Items.Count) index = listBoxChoices.SelectedIndex;
             _isUpdatingControls = true;
-            listBoxChoices.Items[listBoxChoices.SelectedIndex] = listBoxChoices.Items[listBoxChoices.SelectedIndex];
+            listBoxChoices.Items[index] = listBoxChoices.Items[index];
             _isUpdatingControls = false;
         }
     }

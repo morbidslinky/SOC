@@ -1,7 +1,9 @@
-﻿using SOC.Classes.Lua;
+﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -9,33 +11,39 @@ namespace SOC.UI
 {
     public partial class EmbeddedScriptSetControl : UserControl
     {
-        private Str32TableNode TableNode;
+        ScriptControl ParentControl;
 
-        public EmbeddedScriptSetControl()
+        public EmbeddedScriptSetControl(ScriptControl parentControl)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            ParentControl = parentControl;
         }
 
-        public override string ToString() => TableNode.ToString();
-
-        internal UserControl Menu(Str32TableNode tableNode)
+        internal UserControl Menu()
         {
-            TableNode = tableNode;
             UpdateMenu();
+            ParentControl.SetMenuText("Import/Export Script Details", "");
             return this;
         }
 
         private void UpdateMenu()
         {
-            List<Script> scripts = TableNode.ConvertToScripts();
+            ParentControl.SyncQuestDataToUserInput();
+            ScriptDetails scriptDetails = ParentControl.Quest.ScriptDetails;
 
             checkedListBoxScripts.Items.Clear();
-            checkedListBoxScripts.Items.AddRange(scripts.ToArray());
+            checkedListBoxScripts.Items.AddRange(scriptDetails.QStep_Main.ToArray());
 
-            buttonSaveScript.Enabled = checkedListBoxScripts.CheckedItems.Count != 0;
-            checkedListBoxScripts.Visible = checkedListBoxScripts.Items.Count != 0;
-            textEmptyHint.Visible = checkedListBoxScripts.Items.Count == 0;
+            checkedListBoxVariables.Items.Clear();
+            checkedListBoxVariables.Items.AddRange(scriptDetails.VariableDeclarations.ToArray());
+
+            int totalItems = checkedListBoxScripts.Items.Count + checkedListBoxVariables.Items.Count;
+            int totalChecks = checkedListBoxScripts.CheckedItems.Count + checkedListBoxVariables.CheckedItems.Count;
+
+            buttonExportVariablesScripts.Enabled = totalChecks != 0;
+            splitContainerOuter.Visible = totalItems != 0;
+            textEmptyHint.Visible = totalItems == 0;
         }
 
         private void buttonLoadScript_Click(object sender, EventArgs e)
@@ -49,22 +57,12 @@ namespace SOC.UI
 
             try
             {
-                var script = Script.LoadFromXml(loadFile.FileName);
-                TableNode.Add(script);
+                Insert(ScriptDetails.LoadFromXml(loadFile.FileName));
             }
-            catch
+            catch (Exception ex)
             {
-                try
-                {
-                    var scriptSet = ScriptSet.LoadFromXml(loadFile.FileName);
-                    foreach (var script in scriptSet.Scripts)
-                        TableNode.Add(script);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to load script(s) file: {ex.Message}");
-                    return;
-                }
+                MessageBox.Show($"Failed to load script(s) file: {ex.Message}");
+                return;
             }
 
             UpdateMenu();
@@ -73,24 +71,17 @@ namespace SOC.UI
         private void buttonSaveScript_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFile = new SaveFileDialog();
-
-            if (checkedListBoxScripts.CheckedItems.Count == 1)
-            {
-                EmbeddedScriptControl.SaveScript((Script)checkedListBoxScripts.CheckedItems[0]);
-                return;
-            }
-
             saveFile.Filter = "Xml File|*.xml";
-            saveFile.FileName = "Exported Scripts";
+            saveFile.FileName = $"{ParentControl.Quest.SetupDetails.FpkName}.ScriptExport";
             DialogResult saveResult = saveFile.ShowDialog();
 
             if (saveResult == DialogResult.OK)
             {
-                List<Script> scriptList = new List<Script>();
-                foreach (Script script in checkedListBoxScripts.CheckedItems) { scriptList.Add(script); }
-                ScriptSet set = new ScriptSet(scriptList);
+                new ScriptDetails(
+                    checkedListBoxScripts.CheckedItems.OfType<Script>().ToList(), 
+                    checkedListBoxVariables.CheckedItems.OfType<LuaTableEntry>().ToList()
+                ).WriteToXml(saveFile.FileName);
 
-                set.WriteToXml(saveFile.FileName);
                 MessageBox.Show("Done!", "Script(s) Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -104,39 +95,66 @@ namespace SOC.UI
             else if (e.NewValue == CheckState.Unchecked)
                 checkedCount--;
 
-            buttonSaveScript.Enabled = checkedCount > 0;
-        }
-    }
-
-    public class ScriptSet
-    {
-        [XmlArray("Scripts")]
-        [XmlArrayItem("Script")]
-        public List<Script> Scripts = new List<Script>();
-
-        public ScriptSet() { }
-
-        public ScriptSet(List<Script> scripts)
-        {
-            Scripts = scripts;
+            buttonExportVariablesScripts.Enabled = checkedCount + checkedListBoxVariables.CheckedItems.Count > 0;
         }
 
-        public void WriteToXml(string filePath)
+        private void checkedListBoxVariables_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(ScriptSet));
-            using (StreamWriter writer = new StreamWriter(filePath))
+            int checkedCount = checkedListBoxVariables.CheckedItems.Count;
+
+            if (e.NewValue == CheckState.Checked)
+                checkedCount++;
+            else if (e.NewValue == CheckState.Unchecked)
+                checkedCount--;
+
+            buttonExportVariablesScripts.Enabled = checkedCount + checkedListBoxScripts.CheckedItems.Count > 0;
+        }
+
+        private void Insert(ScriptDetails scriptDetails)
+        {
+            foreach (var variable in scriptDetails.VariableDeclarations)
             {
-                serializer.Serialize(writer, this);
+                string name = variable.Key.Value.Trim('"');
+                if (ParentControl.VariableNameExists(name, ParentControl.treeViewVariables.Nodes)) {
+                    name = ParentControl.GetUniqueVariableName(name);
+                }
+
+                var varNode = new VariableNode(Lua.TableEntry(name, variable.Value));
+                ParentControl.treeViewVariables.Nodes.Add(varNode);
+
+                foreach(var script in scriptDetails.QStep_Main)
+                {
+                    foreach (var scriptal in script.Preconditionals.Union(script.Operationals))
+                    {
+                        foreach (var choice in scriptal.Choices)
+                        {
+                            if (choice.DependencyNameMatches(variable))
+                            {
+                                choice.SetVarNodeDependency(varNode);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach(var script in scriptDetails.QStep_Main)
+            {
+                foreach (var scriptal in script.Preconditionals.Union(script.Operationals))
+                {
+                    scriptal.TryMapChoicesToTokens(out _);
+                }
+                ParentControl.ScriptTablesRootNode.QStep_Main.Add(script);
             }
         }
 
-        public static ScriptSet LoadFromXml(string filePath)
+        private void checkedListBoxVariables_SelectedIndexChanged(object sender, EventArgs e)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(ScriptSet));
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                return (ScriptSet)serializer.Deserialize(reader);
-            }
+            checkedListBoxVariables.ClearSelected();
+        }
+
+        private void checkedListBoxScripts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkedListBoxScripts.ClearSelected();
         }
     }
 }
