@@ -97,7 +97,7 @@ namespace SOC.UI
             {
                 new ScriptDetails(
                     checkedListBoxScripts.CheckedItems.OfType<ScriptNode>().Select(node => node.ConvertToScript()).ToList(), 
-                    checkedListBoxVariables.CheckedItems.OfType<VariableNode>().Select(node => node.ConvertToLuaTableEntry()).ToList()
+                    checkedListBoxVariables.CheckedItems.OfType<VariableNode>().Select(node => node.GetEntry()).ToList()
                 ).WriteToXml(saveFile.FileName);
 
                 MessageBox.Show("Done!", "Script(s) Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -107,11 +107,63 @@ namespace SOC.UI
         private void checkedListBoxScripts_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             UpdateExportEnabled(e.NewValue == CheckState.Checked);
+
+            if (checkBoxDependencies.Checked)
+            {
+                checkmarkDependencies((ScriptNode)checkedListBoxScripts.Items[e.Index], e.NewValue == CheckState.Checked);
+            }
+        }
+
+        private void checkmarkDependencies(ScriptNode scriptNode, bool isCheck)
+        {
+            var dependencies = scriptNode.GetAllDependencies();
+
+            if (isCheck)
+            {
+                foreach (var dependency in dependencies)
+                {
+                    int i = checkedListBoxVariables.Items.IndexOf(dependency);
+                    if (i != -1)
+                    {
+                        checkedListBoxVariables.SetItemChecked(i, true);
+                    }
+                }
+                return;
+            }
+
+            var theOtherScriptNodes = checkedListBoxScripts.CheckedItems.OfType<ScriptNode>().Where(node => node != scriptNode);
+            var theOtherDependencies = theOtherScriptNodes.SelectMany(node => node.GetAllDependencies());
+
+            foreach(var dependency in dependencies)
+            {
+                if (theOtherDependencies.Contains(dependency))
+                {
+                    continue;
+                }
+
+                int i = checkedListBoxVariables.Items.IndexOf(dependency);
+                if (i != -1)
+                {
+                    BeginInvoke(new Action(() =>
+                    {
+                        checkedListBoxVariables.SetItemChecked(i, false);
+                    }));
+                }
+            }
         }
 
         private void checkedListBoxVariables_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             UpdateExportEnabled(e.NewValue == CheckState.Checked);
+
+            if (e.NewValue != CheckState.Checked && checkBoxDependencies.Checked)
+            {
+                var currentDependencies = checkedListBoxScripts.CheckedItems.OfType<ScriptNode>().SelectMany(node => node.GetAllDependencies());
+                if (currentDependencies.Contains(checkedListBoxVariables.Items[e.Index]))
+                {
+                    e.NewValue = CheckState.Checked;
+                }
+            }
         }
 
         private void UpdateExportEnabled(bool newCheckboxValue)
@@ -119,54 +171,150 @@ namespace SOC.UI
             buttonExportVariablesScripts.Enabled = checkedListBoxVariables.CheckedItems.Count + checkedListBoxScripts.CheckedItems.Count + (newCheckboxValue ? 1 : -1) > 0;
         }
 
-        private void Insert(ScriptDetails scriptDetails)
+        private void Insert(ScriptDetails incomingScriptDetails)
         {
-            var incomingScripts = scriptDetails.QStep_Main;
+            var variables = incomingScriptDetails.VariableDeclarations;
 
-            var incomingScriptals = incomingScripts
+            var scripts = incomingScriptDetails.QStep_Main;
+
+            var scriptals = scripts
                 .SelectMany(script => script.Preconditionals.Concat(script.Operationals))
                 .ToList();
+            MapChoicesToTokens(scriptals);
 
-            var incomingChoices = incomingScriptals.SelectMany(scriptal => scriptal.Choices).ToList();
+            var choices = scriptals.SelectMany(scriptal => scriptal.Choices).ToList();
 
-            foreach (var variable in scriptDetails.VariableDeclarations)
+            VariableNode[] incomingNodes = ConvertToVariableNodesWithDependencies(variables, choices);
+
+            MapUnresolvedDependenciesFromControl(choices);
+            
+            VariableNode[] bestGuessNodes = CreateVariableNodesForUnresolvedDependencies(choices);
+
+            MapUnresolvedDependenciesToNil(choices);
+
+            AddToControl(incomingNodes);
+
+            if (bestGuessNodes.Length > 0)
+            {
+                MessageBox.Show($"Notice: The imported script(s) depended on {bestGuessNodes.Length} variable(s) that did not correspond to any imported or pre-existing variable(s).\n\nThe new dependency variable(s) have been extrapolated.", "Extrapolated Variable(s) Created", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AddToControl(bestGuessNodes);
+            }
+
+            AddToControl(scripts);
+        }
+
+        private void MapChoicesToTokens(List<Scriptal> scriptals)
+        {
+            foreach (var scriptal in scriptals)
+                scriptal.TryMapChoicesToTokens(out _);
+        }
+
+        private VariableNode[] ConvertToVariableNodesWithDependencies(List<LuaTableEntry> variables, List<Choice> choices)
+        {
+            VariableNode[] variableNodes = new VariableNode[variables.Count];
+
+            foreach (var variable in variables)
             {
                 string name = variable.Key.Value.Trim('"');
-                if (ParentControl.VariableNameExists(name, ParentControl.treeViewVariables.Nodes)) {
+                if (ParentControl.VariableNameExists(name, ParentControl.treeViewVariables.Nodes))
+                {
                     name = ParentControl.GetUniqueVariableName(name);
                 }
 
-                var varNode = new VariableNode(Lua.TableEntry(name, variable.Value));
-                ParentControl.treeViewVariables.Nodes.Add(varNode);
+                var variableNode = new VariableNode(Lua.TableEntry(name, variable.Value));
 
-                foreach (var choice in incomingChoices)
+                foreach (var choice in choices)
                 {
-                    if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.DependencyNameMatches(variable))
-                        choice.SetVarNodeDependency(varNode);
+                    if (choice.DependencyNameMatches(variable) && 
+                        choice.CorrespondingRuntimeToken.Allows(variable.Value, out _))
+                    {
+                        choice.SetVarNodeDependency(variableNode);
+                    }
                 }
+
+                variableNodes[variables.IndexOf(variable)] = variableNode;
             }
 
+            return variableNodes;
+        }
+
+        private void MapUnresolvedDependenciesFromControl(List<Choice> choices)
+        {
             foreach (VariableNode variableNode in ParentControl.treeViewVariables.Nodes)
             {
-                foreach (var choice in incomingChoices)
+                foreach (var choice in choices)
                 {
-                    if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null && choice.DependencyNameMatches(variableNode.ConvertToLuaTableEntry()))
+                    if (choice.Dependency == null && 
+                        choice.DependencyNameMatches(variableNode.GetEntry()) &&
+                        choice.CorrespondingRuntimeToken.Allows(variableNode.Entry.Value, out _))
+                    {
                         choice.SetVarNodeDependency(variableNode);
+                    }
+                }
+            }
+        }
+
+        private VariableNode[] CreateVariableNodesForUnresolvedDependencies(List<Choice> choices)
+        {
+            List<VariableNode> extrapolatedNodes = new List<VariableNode>();
+
+            foreach (var choice in choices)
+            {
+                if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null && choice.Value is LuaTableIdentifier choiceIdentifier)
+                {
+                    bool matchesExistingExtrapolatedNode = false;
+                    foreach (VariableNode extrapolatedNode in extrapolatedNodes)
+                    {
+                        if (choice.DependencyNameMatches(extrapolatedNode.GetEntry()))
+                        {
+                            if (choiceIdentifier.EvaluatesTo == extrapolatedNode.GetEntry().Value.Type)
+                            {
+                                choice.SetVarNodeDependency(extrapolatedNode);
+                                matchesExistingExtrapolatedNode = true;
+                                break;
+                            } 
+                            else
+                            {
+                                choiceIdentifier.IdentifierKeys[0] = Lua.String(choiceIdentifier.IdentifierKeys[0].Value.Trim('"') + $"_{choiceIdentifier.EvaluatesTo}");
+                                break;
+                            }
+                        }
+                    }
+
+                    if (matchesExistingExtrapolatedNode) 
+                        continue;
+
+                    VariableNode ExtrapolatedNode = VariableNode.ExtrapolateDefault(choiceIdentifier);
+                    if (ExtrapolatedNode != null)
+                    {
+                        choice.SetVarNodeDependency(ExtrapolatedNode);
+                        extrapolatedNodes.Add(ExtrapolatedNode);
+                    }
                 }
             }
 
-            foreach (var choice in incomingChoices)
+            return extrapolatedNodes.ToArray();
+        }
+
+        private void MapUnresolvedDependenciesToNil(List<Choice> choices)
+        {
+            foreach (var choice in choices)
             {
                 if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null)
+                {
                     choice.Value = new LuaNil();
+                }
             }
+        }
 
-            foreach (var scriptal in incomingScriptals)
-            {
-                scriptal.TryMapChoicesToTokens(out _);
-            }
+        private void AddToControl(VariableNode[] incomingNodes)
+        {
+            ParentControl.treeViewVariables.Nodes.AddRange(incomingNodes);
+        }
 
-            foreach (var script in incomingScripts)
+        private void AddToControl(List<Script> scripts)
+        {
+            foreach (var script in scripts)
             {
                 ParentControl.ScriptTablesRootNode.QStep_Main.Add(script);
             }
@@ -180,6 +328,13 @@ namespace SOC.UI
         private void checkedListBoxScripts_SelectedIndexChanged(object sender, EventArgs e)
         {
             checkedListBoxScripts.ClearSelected();
+        }
+
+        private void checkBoxDependencies_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxDependencies.Checked)
+                foreach(ScriptNode node in checkedListBoxScripts.CheckedItems)
+                    checkmarkDependencies(node, true);
         }
     }
 }

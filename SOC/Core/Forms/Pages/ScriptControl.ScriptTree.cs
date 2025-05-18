@@ -498,6 +498,23 @@ namespace SOC.UI
             return str32TableNode;
         }
 
+        public List<VariableNode> GetAllDependencies()
+        {
+            List<VariableNode> dependencies = new List<VariableNode>();
+            var script = ConvertToScript();
+            foreach (var scriptal in script.Operationals.Union(script.Preconditionals))
+            {
+                foreach (var choice in scriptal.Choices)
+                {
+                    if (choice.Dependency != null)
+                    {
+                        dependencies.Add(choice.Dependency);
+                    }
+                }
+            }
+            return dependencies;
+        }
+
         public Script ConvertToScript()
         {
             MsgSenderNode msgSenderNode = (MsgSenderNode)Parent;

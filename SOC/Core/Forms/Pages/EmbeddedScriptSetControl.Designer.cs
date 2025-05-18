@@ -132,6 +132,7 @@
             this.checkBoxDependencies.TabIndex = 2;
             this.checkBoxDependencies.Text = "Auto-☑ Variable Dependencies";
             this.checkBoxDependencies.UseVisualStyleBackColor = false;
+            this.checkBoxDependencies.CheckedChanged += new System.EventHandler(this.checkBoxDependencies_CheckedChanged);
             // 
             // groupBoxScripts
             // 

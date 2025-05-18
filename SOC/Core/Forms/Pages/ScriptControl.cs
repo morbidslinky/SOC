@@ -91,7 +91,7 @@ namespace SOC.UI
         internal void SyncQuestDataToUserInput()
         {
             Quest.ScriptDetails.VariableDeclarations.Clear();
-            Quest.ScriptDetails.VariableDeclarations.AddRange(treeViewVariables.Nodes.OfType<VariableNode>().Select(node => node.ConvertToLuaTableEntry()).ToList());
+            Quest.ScriptDetails.VariableDeclarations.AddRange(treeViewVariables.Nodes.OfType<VariableNode>().Select(node => node.GetEntry()).ToList());
 
             Quest.ScriptDetails.QStep_Main.Clear();
             Quest.ScriptDetails.QStep_Main.AddRange(ScriptTablesRootNode.QStep_Main.ConvertToScripts());

@@ -267,7 +267,25 @@ namespace SOC.UI
             UpdateText();
         }
 
-        public LuaTableEntry ConvertToLuaTableEntry()
+        public static VariableNode ExtrapolateDefault(LuaTableIdentifier identifier)
+        {
+            LuaValue key = identifier.IdentifierKeys.Last();
+            switch(identifier.EvaluatesTo)
+            {
+                case TemplateRestrictionType.STRING:
+                    return new VariableNode(Lua.TableEntry(key, ""));
+                case TemplateRestrictionType.BOOLEAN:
+                    return new VariableNode(Lua.TableEntry(key, false));
+                case TemplateRestrictionType.NUMBER:
+                    return new VariableNode(Lua.TableEntry(key, 0));
+                case TemplateRestrictionType.TABLE:
+                    return new VariableNode(Lua.TableEntry(key, new LuaTable()));
+            }
+
+            return null;
+        }
+
+        public LuaTableEntry GetEntry()
         {
             if (Entry.Value is LuaTable)
             {
