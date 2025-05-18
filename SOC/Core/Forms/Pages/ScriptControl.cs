@@ -1,16 +1,17 @@
-using System;
-using System.Windows.Forms;
-using System.Collections.Generic;
 using SOC.Classes.Common;
-using System.IO;
-using System.Xml;
-using System.Reflection;
 using SOC.Classes.Lua;
-using System.Linq.Expressions;
 using SOC.QuestObjects.Common;
-using System.Xml.Serialization;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace SOC.UI
 {
@@ -27,6 +28,9 @@ namespace SOC.UI
         public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
 
         private bool _isUpdatingControls = false;
+
+        public static readonly Font UNDERLINE = new Font("Consolas", 8.25F, FontStyle.Underline);
+        public static readonly Font REGULAR = new Font("Consolas", 8.25F, FontStyle.Regular);
 
         public ScriptControl(Quest quest)
         {

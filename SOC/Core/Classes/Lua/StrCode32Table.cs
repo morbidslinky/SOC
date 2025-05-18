@@ -430,6 +430,14 @@ namespace SOC.Classes.Lua
         }
 
         public override string ToString() => Name;
+
+        internal void SetRespectiveNode(ScriptalNode scriptalNode)
+        {
+            foreach(Choice choice in Choices)
+            {
+                choice.ParentScriptalNode = scriptalNode;
+            }
+        }
     }
 
     public class ChoosableValues
@@ -477,6 +485,9 @@ namespace SOC.Classes.Lua
         [XmlIgnore]
         public VariableNode Dependency;
 
+        [XmlIgnore]
+        public ScriptalNode ParentScriptalNode;
+
         public event EventHandler<VariableNodeEventArgs> VariableNodeEventPassthrough;
 
         public override string ToString() => $"{Name} :: {Key} :: {Value.ToString()}";
@@ -485,12 +496,16 @@ namespace SOC.Classes.Lua
         {
             if (Dependency != null)
             {
-                ClearVarNodeDependency();
+                Dependency.Dependents.Remove(this);
+                Dependency = null;
             }
 
-            Dependency = dependency;
-            Dependency.VariableNodeEvent += OnVariableNodeKeyUpdated;
-            Value = Dependency.ToLuaTableIdentifier();
+            if (dependency != null)
+            {
+                Dependency = dependency;
+                Dependency.Dependents.Add(this);
+                Value = Dependency.ToLuaTableIdentifier();
+            }
         }
 
         public bool DependencyNameMatches(LuaTableEntry entry)
@@ -500,9 +515,23 @@ namespace SOC.Classes.Lua
 
         public void ClearVarNodeDependency()
         {
-            Dependency.VariableNodeEvent -= OnVariableNodeKeyUpdated;
-            Dependency = null;
-            Value = new LuaNil();
+            if (Dependency != null)
+            {
+                Dependency.Dependents.Remove(this);
+                Dependency = null;
+                Value = new LuaNil();
+
+                VariableNodeEventPassthrough?.Invoke(this, new VariableNodeEventArgs() { Doomed = true });
+            }
+        }
+
+        public void RefreshValue()
+        {
+            if (Dependency != null)
+            {
+                Value = Dependency.ToLuaTableIdentifier();
+                VariableNodeEventPassthrough?.Invoke(this, new VariableNodeEventArgs() { Doomed = false });
+            }
         }
 
         public bool HasPassthrough(EmbeddedScriptalControl target)
@@ -518,24 +547,6 @@ namespace SOC.Classes.Lua
                 }
             }
             return false;
-        }
-
-        public void OnVariableNodeKeyUpdated(object sender, VariableNodeEventArgs e)
-        {
-            if (sender is VariableNode dependency && Dependency == dependency)
-            {
-                if (e.Doomed || !CorrespondingRuntimeToken.Allows(Dependency.Entry.Value, out _))
-                {
-                    ClearVarNodeDependency();
-                    e.Doomed = true;
-                }
-                else 
-                {
-                    Value = Dependency.ToLuaTableIdentifier();
-                }
-
-                VariableNodeEventPassthrough?.Invoke(this, e);
-            }
         }
 
         public class VariableNodeEventArgs : EventArgs

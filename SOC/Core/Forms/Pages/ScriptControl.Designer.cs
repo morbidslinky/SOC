@@ -204,7 +204,7 @@
             // 
             // panelPlaceholder
             // 
-            this.panelPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelPlaceholder.BackColor = System.Drawing.Color.Silver;
             this.panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;

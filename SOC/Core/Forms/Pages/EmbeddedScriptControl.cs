@@ -95,7 +95,10 @@ namespace SOC.UI
             var script = ScriptNode.getEvent();
             if (script.msg.Text != selectedMsg || script.sender.Text != selectedSender || script.StrCode32.Text != selectedCode)
             {
-                ScriptNode.GetStrCode32TableNode().MoveScript(ScriptNode, selectedCode, selectedMsg, selectedSender);
+                var movedNode = ScriptNode.GetStrCode32TableNode().MoveScript(ScriptNode, selectedCode, selectedMsg, selectedSender);
+                ParentControl.treeViewScripts.SelectedNode = movedNode;
+                ParentControl.RedrawScriptDependents();
+                movedNode.ExpandAll();
             }
         }
 

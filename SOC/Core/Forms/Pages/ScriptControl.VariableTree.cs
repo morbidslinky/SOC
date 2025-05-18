@@ -1,9 +1,11 @@
-﻿using System;
+﻿using SOC.Classes.Lua;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SOC.Classes.Lua;
+using System.Xml.Linq;
 using static SOC.Classes.Lua.Choice;
 using static SOC.Classes.Lua.LuaValue;
 
@@ -11,7 +13,7 @@ namespace SOC.UI
 {
     public partial class ScriptControl : UserControl
     {
-        private bool userPressedBackspace = false;
+        private bool userPressedBackspace = false; 
 
 
         private void buttonNewVariable_Click(object sender, EventArgs e)
@@ -34,7 +36,6 @@ namespace SOC.UI
             if (treeViewVariables.SelectedNode == null) { return; }
 
             var selectedNode = (VariableNode)treeViewVariables.SelectedNode;
-
             selectedNode.Remove();
 
             if (treeViewVariables.SelectedNode == null)
@@ -108,6 +109,24 @@ namespace SOC.UI
         private void treeViewVariables_AfterSelect(object sender, TreeViewEventArgs e)
         {
             UpdateVariableControlsToSelectedNode();
+            RedrawScriptDependents();
+        }
+
+        public void RedrawScriptDependents()
+        {
+            ResetNodeUnderlinesRecursive(ScriptTablesRootNode);
+            ((VariableNode)treeViewVariables.SelectedNode).MarkDependents();
+        }
+
+        private void ResetNodeUnderlinesRecursive(TreeNode node)
+        {
+            if (node.NodeFont != REGULAR)
+            {
+                node.NodeFont = REGULAR;
+            }
+
+            foreach (TreeNode child in node.Nodes)
+                ResetNodeUnderlinesRecursive(child);
         }
 
         private void ShowVarTypeValueControl(Control control)
@@ -251,7 +270,7 @@ namespace SOC.UI
     {
         public LuaTableEntry Entry;
 
-        public event EventHandler<VariableNodeEventArgs> VariableNodeEvent;
+        public List<Choice> Dependents = new List<Choice>();
 
         public VariableNode(LuaTableEntry entry)
         {
@@ -329,7 +348,31 @@ namespace SOC.UI
 
         public void NotifyDependentsOfVariableNodeChange(bool isDoomed)
         {
-            VariableNodeEvent?.Invoke(this, new VariableNodeEventArgs { Doomed = isDoomed });
+            for (int i = Dependents.Count - 1; i >= 0; i--)
+            {
+                var dependent = Dependents[i];
+                if (isDoomed || !dependent.CorrespondingRuntimeToken.Allows(Entry.Value, out _))
+                {
+                    dependent.ClearVarNodeDependency();
+                } 
+                else
+                {
+                    dependent.RefreshValue();
+                }
+            }
+        }
+
+        internal void MarkDependents()
+        {
+            foreach (ScriptalNode scriptalNode in Dependents.Select(dependent => dependent.ParentScriptalNode))
+            {
+                
+                scriptalNode.NodeFont = ScriptControl.UNDERLINE;
+                scriptalNode.Parent.NodeFont = ScriptControl.UNDERLINE;
+                scriptalNode.Parent.Parent.NodeFont = ScriptControl.UNDERLINE;
+
+            }
+            
         }
     }
 }

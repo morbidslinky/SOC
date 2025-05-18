@@ -276,13 +276,17 @@ string.Format(@"
                 case NUMBER_LITERAL_SET:
                 case STRING_LITERAL_SET:
                 case BOOLEAN_LITERAL_SET:
+                    selectedChoice.ClearVarNodeDependency();
                     // todo literals
                     break;
                 default:
+                    selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(comboBoxPresetChoosables, selectedChoice.AllowUIEdit);
                     RefreshPresetChoiceValues(selectedChoice, selectedChoiceSet);
                     break;
             }
+
+            ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
         }
 
         private void showCorrespondingChoiceControl(Control choiceControl, bool enable = true)
@@ -326,6 +330,8 @@ string.Format(@"
 
                 RefreshListBoxDisplay();
             }
+
+            ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
         }
 
         public void SelectedChoice_VariableNodeEventPassthrough(object sender, VariableNodeEventArgs e)
@@ -345,7 +351,15 @@ string.Format(@"
                     Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
                     RefreshChoiceSets(selectedScriptal, choice);
                 }
+
+                ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
             }
+        }
+
+        public void RedrawVariableDependencies()
+        {
+            ParentControl.UnmarkVariableDependencies();
+            ScriptalNode.MarkDependencies();
         }
 
         private void RefreshPresetChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
@@ -375,9 +389,11 @@ string.Format(@"
 
         private void RefreshListBoxDisplay(int index = -1)
         {
-            if (index < 0 || index >= listBoxChoices.Items.Count) index = listBoxChoices.SelectedIndex;
+            if (index < 0 || index >= listBoxChoices.Items.Count) 
+                index = listBoxChoices.SelectedIndex;
             _isUpdatingControls = true;
-            listBoxChoices.Items[index] = listBoxChoices.Items[index];
+            if (listBoxChoices.Items.Count > 0 && index >= 0)
+                listBoxChoices.Items[index] = listBoxChoices.Items[index];
             _isUpdatingControls = false;
         }
     }

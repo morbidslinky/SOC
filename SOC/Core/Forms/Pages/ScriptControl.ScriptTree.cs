@@ -141,22 +141,26 @@ namespace SOC.UI
         {
             _isUpdatingControls = true;
 
+            UnmarkVariableDependencies();
             UserControl embedControl = null;
             switch (treeViewScripts.SelectedNode)
             {
                 case ScriptNode scriptNode:
                     EnabledScriptEditControls(textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript);
                     embedControl = ScriptEmbed.Menu(scriptNode);
+                    scriptNode.MarkDependencies();
                     break;
 
                 case ScriptalParentNode parentNode:
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation);
                     embedControl = ScriptEmbed.Menu(parentNode.GetUnEventedScriptNode());
+                    parentNode.MarkDependencies();
                     break;
 
                 case ScriptalNode scriptalNode:
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation, buttonRemoveScript);
                     embedControl = ScriptalEmbed.Menu(scriptalNode); 
+                    scriptalNode.MarkDependencies();
                     break;
 
                 default:
@@ -168,6 +172,14 @@ namespace SOC.UI
             Embed(embedControl);
 
             _isUpdatingControls = false;
+        }
+
+        public void UnmarkVariableDependencies()
+        {
+            foreach (VariableNode node in treeViewVariables.Nodes)
+            {
+                ResetNodeUnderlinesRecursive(node);
+            }
         }
 
         public void SetMenuText(string _groupBoxScriptDetails, string _textBoxScriptName)
@@ -538,6 +550,14 @@ namespace SOC.UI
                 Operationals = OperationsParent.GetScriptals()
             };
         }
+
+        public void MarkDependencies()
+        {
+            foreach (var dependency in GetAllDependencies())
+            {
+                dependency.NodeFont = ScriptControl.UNDERLINE;
+            }
+        }
     }
 
     public class ScriptalParentNode : TreeNode
@@ -576,6 +596,20 @@ namespace SOC.UI
                 throw new InvalidOperationException("Script node is not in a valid tree structure.");
             return parentNode;
         }
+
+        public void MarkDependencies()
+        {
+            foreach (var scriptal in Nodes.OfType<ScriptalNode>().Select(node => node.Scriptal))
+            {
+                foreach (var dependency in scriptal.Choices.Select(choice => choice.Dependency))
+                {
+                    if (dependency != null)
+                    {
+                        dependency.NodeFont = ScriptControl.UNDERLINE;
+                    }
+                }
+            }
+        }
     }
 
     public enum ScriptalType
@@ -602,6 +636,7 @@ namespace SOC.UI
         {
             Scriptal = scriptal;
             Text = Scriptal.Name;
+            Scriptal.SetRespectiveNode(this);
         }
 
         public ScriptNode GetUnEventedScriptNode()
@@ -619,6 +654,15 @@ namespace SOC.UI
             if (Parent == null)
                 throw new InvalidOperationException("Script node is not in a valid tree structure.");
             return (ScriptalParentNode)Parent;
+        }
+
+        public void MarkDependencies()
+        {
+            foreach (var dependency in Scriptal.Choices.Select(choice => choice.Dependency))
+            {
+                if (dependency != null)
+                    dependency.NodeFont = ScriptControl.UNDERLINE;
+            }
         }
     }
 
