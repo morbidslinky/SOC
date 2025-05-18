@@ -40,8 +40,12 @@
             this.labelsender = new System.Windows.Forms.Label();
             this.splitContainerInner = new System.Windows.Forms.SplitContainer();
             this.groupBoxPreconditions = new System.Windows.Forms.GroupBox();
+            this.buttonUpPrecondition = new System.Windows.Forms.Button();
+            this.buttonDownPrecondition = new System.Windows.Forms.Button();
             this.listBoxPreconditions = new System.Windows.Forms.ListBox();
             this.groupBoxActions = new System.Windows.Forms.GroupBox();
+            this.buttonUpOperation = new System.Windows.Forms.Button();
+            this.buttonDownOperation = new System.Windows.Forms.Button();
             this.listBoxOperations = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
             this.splitContainerOuter.Panel1.SuspendLayout();
@@ -216,6 +220,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxPreconditions.BackColor = System.Drawing.Color.Silver;
+            this.groupBoxPreconditions.Controls.Add(this.buttonUpPrecondition);
+            this.groupBoxPreconditions.Controls.Add(this.buttonDownPrecondition);
             this.groupBoxPreconditions.Controls.Add(this.listBoxPreconditions);
             this.groupBoxPreconditions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxPreconditions.Name = "groupBoxPreconditions";
@@ -224,17 +230,40 @@
             this.groupBoxPreconditions.TabStop = false;
             this.groupBoxPreconditions.Text = "Preconditions :: \"If\"";
             // 
+            // buttonUpPrecondition
+            // 
+            this.buttonUpPrecondition.Location = new System.Drawing.Point(3, 36);
+            this.buttonUpPrecondition.Name = "buttonUpPrecondition";
+            this.buttonUpPrecondition.Size = new System.Drawing.Size(30, 36);
+            this.buttonUpPrecondition.TabIndex = 12;
+            this.buttonUpPrecondition.Text = "▲";
+            this.buttonUpPrecondition.UseVisualStyleBackColor = true;
+            this.buttonUpPrecondition.Click += new System.EventHandler(this.buttonUpPrecondition_Click);
+            // 
+            // buttonDownPrecondition
+            // 
+            this.buttonDownPrecondition.Location = new System.Drawing.Point(3, 70);
+            this.buttonDownPrecondition.Name = "buttonDownPrecondition";
+            this.buttonDownPrecondition.Size = new System.Drawing.Size(30, 36);
+            this.buttonDownPrecondition.TabIndex = 11;
+            this.buttonDownPrecondition.Text = "▼";
+            this.buttonDownPrecondition.UseVisualStyleBackColor = true;
+            this.buttonDownPrecondition.Click += new System.EventHandler(this.buttonDownPrecondition_Click);
+            // 
             // listBoxPreconditions
             // 
+            this.listBoxPreconditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxPreconditions.BackColor = System.Drawing.Color.LightGray;
             this.listBoxPreconditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxPreconditions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxPreconditions.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.listBoxPreconditions.FormattingEnabled = true;
-            this.listBoxPreconditions.Location = new System.Drawing.Point(3, 16);
+            this.listBoxPreconditions.Location = new System.Drawing.Point(33, 16);
             this.listBoxPreconditions.Name = "listBoxPreconditions";
-            this.listBoxPreconditions.Size = new System.Drawing.Size(279, 141);
+            this.listBoxPreconditions.Size = new System.Drawing.Size(249, 132);
             this.listBoxPreconditions.TabIndex = 7;
+            this.listBoxPreconditions.SelectedIndexChanged += new System.EventHandler(this.listBoxPreconditions_SelectedIndexChanged);
             // 
             // groupBoxActions
             // 
@@ -242,6 +271,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxActions.BackColor = System.Drawing.Color.Silver;
+            this.groupBoxActions.Controls.Add(this.buttonUpOperation);
+            this.groupBoxActions.Controls.Add(this.buttonDownOperation);
             this.groupBoxActions.Controls.Add(this.listBoxOperations);
             this.groupBoxActions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActions.Name = "groupBoxActions";
@@ -250,17 +281,40 @@
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Operations :: \"Do\"";
             // 
+            // buttonUpOperation
+            // 
+            this.buttonUpOperation.Location = new System.Drawing.Point(3, 36);
+            this.buttonUpOperation.Name = "buttonUpOperation";
+            this.buttonUpOperation.Size = new System.Drawing.Size(30, 36);
+            this.buttonUpOperation.TabIndex = 14;
+            this.buttonUpOperation.Text = "▲";
+            this.buttonUpOperation.UseVisualStyleBackColor = true;
+            this.buttonUpOperation.Click += new System.EventHandler(this.buttonUpOperation_Click);
+            // 
+            // buttonDownOperation
+            // 
+            this.buttonDownOperation.Location = new System.Drawing.Point(3, 70);
+            this.buttonDownOperation.Name = "buttonDownOperation";
+            this.buttonDownOperation.Size = new System.Drawing.Size(30, 36);
+            this.buttonDownOperation.TabIndex = 13;
+            this.buttonDownOperation.Text = "▼";
+            this.buttonDownOperation.UseVisualStyleBackColor = true;
+            this.buttonDownOperation.Click += new System.EventHandler(this.buttonDownOperation_Click);
+            // 
             // listBoxOperations
             // 
+            this.listBoxOperations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxOperations.BackColor = System.Drawing.Color.LightGray;
             this.listBoxOperations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxOperations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxOperations.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.listBoxOperations.FormattingEnabled = true;
-            this.listBoxOperations.Location = new System.Drawing.Point(3, 16);
+            this.listBoxOperations.Location = new System.Drawing.Point(33, 16);
             this.listBoxOperations.Name = "listBoxOperations";
-            this.listBoxOperations.Size = new System.Drawing.Size(279, 247);
+            this.listBoxOperations.Size = new System.Drawing.Size(249, 223);
             this.listBoxOperations.TabIndex = 8;
+            this.listBoxOperations.SelectedIndexChanged += new System.EventHandler(this.listBoxOperations_SelectedIndexChanged);
             // 
             // EmbeddedScriptControl
             // 
@@ -303,5 +357,9 @@
         internal System.Windows.Forms.Label labelmsg;
         internal System.Windows.Forms.ComboBox comboBoxStrMsgs;
         internal System.Windows.Forms.Label labelsender;
+        private System.Windows.Forms.Button buttonUpPrecondition;
+        private System.Windows.Forms.Button buttonDownPrecondition;
+        private System.Windows.Forms.Button buttonUpOperation;
+        private System.Windows.Forms.Button buttonDownOperation;
     }
 }

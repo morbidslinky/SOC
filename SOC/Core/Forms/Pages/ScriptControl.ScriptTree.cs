@@ -1,9 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using SOC.Classes.Lua;
+using System;
 using System.Collections.Generic;
-using SOC.Classes.Lua;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Linq;
+using static SOC.Classes.Lua.Choice;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace SOC.UI
@@ -95,7 +96,7 @@ namespace SOC.UI
                     break;
                 case ScriptalNode scriptalNode:
                     ScriptNode parentScriptNode = scriptalNode.GetUnEventedScriptNode();
-                    parentScriptNode.DeleteChild(scriptalNode);
+                    scriptalNode.Doom();
                     parentScriptNode.UpdateNodeText();
                     break;
                 default:
@@ -463,18 +464,6 @@ namespace SOC.UI
             return scriptalNode;
         }
 
-        public void DeleteChild(TreeNode childNode)
-        {
-            if (PreconditionsParent.Nodes.Contains(childNode))
-            {
-                PreconditionsParent.Nodes.Remove(childNode);
-            } 
-            else if (OperationsParent.Nodes.Contains(childNode))
-            {
-                OperationsParent.Nodes.Remove(childNode);
-            }
-        }
-
         public void UpdateNodeText(LuaString identifier = null)
         {
             if (identifier != null)
@@ -512,7 +501,12 @@ namespace SOC.UI
 
         public List<VariableNode> GetAllDependencies()
         {
-            List<VariableNode> dependencies = new List<VariableNode>();
+            return GetAllChoicesContainingDependencies().Select(choice => choice.Dependency).ToList();
+        }
+
+        public List<Choice> GetAllChoicesContainingDependencies()
+        {
+            List<Choice> choices = new List<Choice>();
             var script = ConvertToScript();
             foreach (var scriptal in script.Operationals.Union(script.Preconditionals))
             {
@@ -520,11 +514,11 @@ namespace SOC.UI
                 {
                     if (choice.Dependency != null)
                     {
-                        dependencies.Add(choice.Dependency);
+                        choices.Add(choice);
                     }
                 }
             }
-            return dependencies;
+            return choices;
         }
 
         public Script ConvertToScript()
@@ -630,13 +624,22 @@ namespace SOC.UI
             Set(scriptal);
         }
 
-        public override string ToString() => Scriptal.Name;
+        public override string ToString() => Scriptal.Name + $" {string.Join(" ", Scriptal.Choices.Select(choice => choice.ToAbridgedString()))}";
 
         public void Set(Scriptal scriptal)
         {
             Scriptal = scriptal;
             Text = Scriptal.Name;
             Scriptal.SetRespectiveNode(this);
+        }
+
+        public void Doom()
+        {
+            foreach (var choice in Scriptal.Choices)
+            {
+                choice.ClearVarNodeDependency(false);
+            }
+            Remove();
         }
 
         public ScriptNode GetUnEventedScriptNode()

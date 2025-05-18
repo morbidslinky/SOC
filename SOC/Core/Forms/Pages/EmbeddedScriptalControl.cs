@@ -325,8 +325,9 @@ string.Format(@"
             if (selectedChoice.AllowUIEdit && selectedChoice.AllowUserVariable)
             {
                 selectedChoice.SetVarNodeDependency(selectedVarNode);
+
                 if (!selectedChoice.HasPassthrough(this))
-                    selectedChoice.VariableNodeEventPassthrough += SelectedChoice_VariableNodeEventPassthrough;
+                    selectedChoice.VariableNodeEventPassthrough += VariableNodeEventPassthroughFunction;
 
                 RefreshListBoxDisplay();
             }
@@ -334,13 +335,13 @@ string.Format(@"
             ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
         }
 
-        public void SelectedChoice_VariableNodeEventPassthrough(object sender, VariableNodeEventArgs e)
+        public void VariableNodeEventPassthroughFunction(object sender, VariableNodeEventArgs e)
         {
             if (sender is Choice choice)
             {
                 if (e.Doomed)
                 {
-                    choice.VariableNodeEventPassthrough -= SelectedChoice_VariableNodeEventPassthrough;
+                    choice.VariableNodeEventPassthrough -= VariableNodeEventPassthroughFunction;
                 }
 
                 var updateIndex = listBoxChoices.Items.IndexOf(choice);

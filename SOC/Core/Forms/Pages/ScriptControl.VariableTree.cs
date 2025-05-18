@@ -115,7 +115,8 @@ namespace SOC.UI
         public void RedrawScriptDependents()
         {
             ResetNodeUnderlinesRecursive(ScriptTablesRootNode);
-            ((VariableNode)treeViewVariables.SelectedNode).MarkDependents();
+            if (treeViewVariables.SelectedNode != null)
+                ((VariableNode)treeViewVariables.SelectedNode).MarkDependents();
         }
 
         private void ResetNodeUnderlinesRecursive(TreeNode node)

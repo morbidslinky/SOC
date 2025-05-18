@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SOC.Classes.Lua.Choice;
 
 namespace SOC.UI
 {
@@ -29,6 +30,7 @@ namespace SOC.UI
 
         public UserControl Menu(ScriptNode scriptNode)
         {
+            ClearScriptNodePassthroughs();
             ScriptNode = scriptNode;
             ParentControl.SetMenuText(ToString(), ScriptNode.Identifier.Text);
             UpdateMenu();
@@ -49,12 +51,75 @@ namespace SOC.UI
             textBoxDescription.Text = selectedScript.Description;
 
             listBoxPreconditions.Items.Clear();
-            listBoxPreconditions.Items.AddRange(selectedScript.Preconditionals.ToArray());
+            listBoxPreconditions.Items.AddRange(ScriptNode.PreconditionsParent.Nodes.OfType<ScriptalNode>().ToArray());
+            if (listBoxPreconditions.Items.Count > 0)
+                listBoxPreconditions.SelectedIndex = 0;
 
             listBoxOperations.Items.Clear();
-            listBoxOperations.Items.AddRange(selectedScript.Operationals.ToArray());
+            listBoxOperations.Items.AddRange(ScriptNode.OperationsParent.Nodes.OfType<ScriptalNode>().ToArray());
+            if (listBoxOperations.Items.Count > 0)
+                listBoxOperations.SelectedIndex = 0;
+
+            List<VariableNode> uniqueDependencies = new List<VariableNode>();
+            foreach (Choice choice in ScriptNode.GetAllChoicesContainingDependencies())
+            {
+                if (uniqueDependencies.Contains(choice.Dependency)) continue;
+                uniqueDependencies.Add(choice.Dependency);
+
+                if (!choice.HasPassthrough(this))
+                    choice.VariableNodeEventPassthrough += VariableNodeEventPassthroughFunction;
+            }
 
             _isUpdatingControls = false;
+        }
+
+        public void VariableNodeEventPassthroughFunction(object sender, VariableNodeEventArgs e)
+        {
+            if (sender is Choice choice)
+            {
+                if (e.Doomed)
+                {
+                    choice.VariableNodeEventPassthrough -= VariableNodeEventPassthroughFunction;
+                }
+
+                RefreshListBoxDisplay(listBoxPreconditions);
+                RefreshListBoxDisplay(listBoxOperations);
+            }
+        }
+
+        private void RefreshListBoxDisplay(ListBox listBox)
+        {
+            _isUpdatingControls = true;
+            for (int i = 0; i < listBox.Items.Count; i++)
+            {
+                listBox.Items[i] = listBox.Items[i];
+            }
+            _isUpdatingControls = false;
+        }
+
+        private void ClearScriptNodePassthroughs()
+        {
+            if (ScriptNode != null)
+            {
+                foreach (Choice choice in ScriptNode.GetAllChoicesContainingDependencies())
+                {
+                    if (choice.HasPassthrough(this))
+                        choice.VariableNodeEventPassthrough -= VariableNodeEventPassthroughFunction;
+                }
+            }
+        }
+
+        private void UpdateUpDownButtons(ListBox listBoxScriptals, Button buttonUpOrder, Button buttonDownOrder)
+        {
+            if (listBoxScriptals.Items.Count > 0 && listBoxScriptals.SelectedIndex != -1)
+            {
+                buttonUpOrder.Enabled = listBoxScriptals.SelectedIndex > 0;
+                buttonDownOrder.Enabled = listBoxScriptals.SelectedIndex < listBoxScriptals.Items.Count - 1;
+            } 
+            else
+            {
+                buttonUpOrder.Enabled = false; buttonDownOrder.Enabled = false;
+            }
         }
 
         private void comboBoxStrCodes_SelectedIndexChanged(object sender, EventArgs e)
@@ -126,6 +191,77 @@ namespace SOC.UI
                 script.WriteToXml(saveFile.FileName);
                 MessageBox.Show("Done!", "Script Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        public void MoveScriptal(ScriptalNode node, bool up)
+        {
+            ScriptalParentNode parent = (ScriptalParentNode)node.Parent;
+            int currentIndex = parent.Nodes.IndexOf(node);
+            int newIndex = currentIndex + (up ? -1 : 1);
+            if (newIndex >= 0 && newIndex <= parent.Nodes.Count - 1)
+            {
+                parent.Nodes.Remove(node);
+                parent.Nodes.Insert(newIndex, node);
+            }
+
+        }
+
+        private void buttonUpPrecondition_Click(object sender, EventArgs e)
+        {
+            var scriptalNode = (ScriptalNode)listBoxPreconditions.SelectedItem;
+            if (scriptalNode != null)
+            {
+                MoveScriptal(scriptalNode, true);
+                listBoxPreconditions.Items.Clear();
+                listBoxPreconditions.Items.AddRange(scriptalNode.Parent.Nodes.OfType<ScriptalNode>().ToArray());
+                listBoxPreconditions.SelectedItem = scriptalNode;
+            }
+        }
+
+        private void buttonDownPrecondition_Click(object sender, EventArgs e)
+        {
+            var scriptalNode = (ScriptalNode)listBoxPreconditions.SelectedItem;
+            if (scriptalNode != null)
+            {
+                MoveScriptal(scriptalNode, false);
+                listBoxPreconditions.Items.Clear();
+                listBoxPreconditions.Items.AddRange(scriptalNode.Parent.Nodes.OfType<ScriptalNode>().ToArray());
+                listBoxPreconditions.SelectedItem = scriptalNode;
+            }
+        }
+
+        private void buttonDownOperation_Click(object sender, EventArgs e)
+        {
+            var scriptalNode = (ScriptalNode)listBoxOperations.SelectedItem;
+            if (scriptalNode != null)
+            {
+                MoveScriptal(scriptalNode, false);
+                listBoxOperations.Items.Clear();
+                listBoxOperations.Items.AddRange(scriptalNode.Parent.Nodes.OfType<ScriptalNode>().ToArray());
+                listBoxOperations.SelectedItem = scriptalNode;
+            }
+        }
+
+        private void buttonUpOperation_Click(object sender, EventArgs e)
+        {
+            var scriptalNode = (ScriptalNode)listBoxOperations.SelectedItem;
+            if (scriptalNode != null)
+            {
+                MoveScriptal(scriptalNode, true);
+                listBoxOperations.Items.Clear();
+                listBoxOperations.Items.AddRange(scriptalNode.Parent.Nodes.OfType<ScriptalNode>().ToArray());
+                listBoxOperations.SelectedItem = scriptalNode;
+            }
+        }
+
+        private void listBoxPreconditions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUpDownButtons(listBoxPreconditions, buttonUpPrecondition, buttonDownPrecondition);
+        }
+
+        private void listBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUpDownButtons(listBoxOperations, buttonUpOperation, buttonDownOperation);
         }
     }
 }

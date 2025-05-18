@@ -490,7 +490,9 @@ namespace SOC.Classes.Lua
 
         public event EventHandler<VariableNodeEventArgs> VariableNodeEventPassthrough;
 
-        public override string ToString() => $"{Name} :: {Key} :: {Value.ToString()}";
+        public override string ToString() => $"{Name} :: {Key} :: {Value}";
+
+        public string ToAbridgedString() => $"({Name}: {Value})";
 
         public void SetVarNodeDependency(VariableNode dependency)
         {
@@ -513,7 +515,7 @@ namespace SOC.Classes.Lua
             return EmbeddedScriptalControl.CUSTOM_VARIABLE_SET == Key && VariableNode.ConvertToLuaTableIdentifier(entry).Matches(Value);
         }
 
-        public void ClearVarNodeDependency()
+        public void ClearVarNodeDependency(bool notify = true)
         {
             if (Dependency != null)
             {
@@ -521,7 +523,7 @@ namespace SOC.Classes.Lua
                 Dependency = null;
                 Value = new LuaNil();
 
-                VariableNodeEventPassthrough?.Invoke(this, new VariableNodeEventArgs() { Doomed = true });
+                if (notify) VariableNodeEventPassthrough?.Invoke(this, new VariableNodeEventArgs() { Doomed = true });
             }
         }
 
@@ -534,14 +536,14 @@ namespace SOC.Classes.Lua
             }
         }
 
-        public bool HasPassthrough(EmbeddedScriptalControl target)
+        public bool HasPassthrough(UserControl target)
         {
             var handlers = VariableNodeEventPassthrough?.GetInvocationList();
             if (handlers == null) return false;
 
             foreach (var handler in handlers)
             {
-                if (handler.Target == target && handler.Method.Name == nameof(target.SelectedChoice_VariableNodeEventPassthrough))
+                if (handler.Target == target)
                 {
                     return true;
                 }
