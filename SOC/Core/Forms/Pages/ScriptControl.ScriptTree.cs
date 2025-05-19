@@ -92,6 +92,8 @@ namespace SOC.UI
             switch (treeViewScripts.SelectedNode)
             {
                 case ScriptNode scriptNode:
+                    foreach (ScriptalNode node in scriptNode.OperationsParent.Nodes) node.Doom();
+                    foreach (ScriptalNode node in scriptNode.PreconditionsParent.Nodes) node.Doom();
                     GetParent32TableNode(scriptNode).DeleteScriptNode(scriptNode);
                     break;
                 case ScriptalNode scriptalNode:
@@ -102,6 +104,7 @@ namespace SOC.UI
                 default:
                     break;
             }
+            RedrawScriptDependents();
         }
 
         private Str32TableNode GetParent32TableNode(ScriptNode node)
@@ -290,7 +293,9 @@ namespace SOC.UI
             ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditionals, script.Operationals);
 
             msgSenderNode.Nodes.Add(scriptNode);
+            msgSenderNode.Expand();
             codeNode.Nodes.Add(msgSenderNode);
+            codeNode.Expand();
 
             return codeNode;
         }

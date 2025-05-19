@@ -37,10 +37,10 @@
             this.panelBoolean = new System.Windows.Forms.Panel();
             this.radioButtonFalse = new System.Windows.Forms.RadioButton();
             this.radioButtonTrue = new System.Windows.Forms.RadioButton();
-            this.panelPlaceholder = new System.Windows.Forms.Panel();
             this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
             this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
+            this.panelPlaceholder = new System.Windows.Forms.Panel();
             this.groupBoxScripts = new System.Windows.Forms.GroupBox();
             this.splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             this.buttonNewPrecondition = new System.Windows.Forms.Button();
@@ -179,10 +179,10 @@
             // 
             // radioButtonFalse
             // 
-            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.radioButtonFalse.AutoSize = true;
             this.radioButtonFalse.Checked = true;
-            this.radioButtonFalse.Location = new System.Drawing.Point(75, -1);
+            this.radioButtonFalse.Location = new System.Drawing.Point(75, 0);
             this.radioButtonFalse.Name = "radioButtonFalse";
             this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
             this.radioButtonFalse.TabIndex = 6;
@@ -193,25 +193,14 @@
             // 
             // radioButtonTrue
             // 
-            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.radioButtonTrue.AutoSize = true;
-            this.radioButtonTrue.Location = new System.Drawing.Point(134, -1);
+            this.radioButtonTrue.Location = new System.Drawing.Point(134, 0);
             this.radioButtonTrue.Name = "radioButtonTrue";
             this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
             this.radioButtonTrue.TabIndex = 7;
             this.radioButtonTrue.Text = "True";
             this.radioButtonTrue.UseVisualStyleBackColor = true;
-            // 
-            // panelPlaceholder
-            // 
-            this.panelPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPlaceholder.BackColor = System.Drawing.Color.Silver;
-            this.panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelPlaceholder.Location = new System.Drawing.Point(3, 395);
-            this.panelPlaceholder.Name = "panelPlaceholder";
-            this.panelPlaceholder.Size = new System.Drawing.Size(254, 20);
-            this.panelPlaceholder.TabIndex = 9;
             // 
             // numericUpDownVarNumberValue
             // 
@@ -259,6 +248,17 @@
             this.textBoxVarStringValue.TabIndex = 4;
             this.textBoxVarStringValue.Visible = false;
             this.textBoxVarStringValue.TextChanged += new System.EventHandler(this.textBoxTextVarValue_TextChanged);
+            // 
+            // panelPlaceholder
+            // 
+            this.panelPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPlaceholder.BackColor = System.Drawing.Color.Silver;
+            this.panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelPlaceholder.Location = new System.Drawing.Point(3, 395);
+            this.panelPlaceholder.Name = "panelPlaceholder";
+            this.panelPlaceholder.Size = new System.Drawing.Size(254, 20);
+            this.panelPlaceholder.TabIndex = 9;
             // 
             // groupBoxScripts
             // 

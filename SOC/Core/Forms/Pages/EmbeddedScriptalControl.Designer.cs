@@ -39,6 +39,11 @@
             this.groupBoxChoicesList = new System.Windows.Forms.GroupBox();
             this.listBoxChoices = new System.Windows.Forms.ListBox();
             this.groupBoxChoice = new System.Windows.Forms.GroupBox();
+            this.panelBoolean = new System.Windows.Forms.Panel();
+            this.radioButtonFalse = new System.Windows.Forms.RadioButton();
+            this.radioButtonTrue = new System.Windows.Forms.RadioButton();
+            this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
+            this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
             this.textBoxChoiceDescription = new System.Windows.Forms.TextBox();
             this.labelChoice = new System.Windows.Forms.Label();
             this.labelChoiceSet = new System.Windows.Forms.Label();
@@ -57,6 +62,8 @@
             this.splitContainer1.SuspendLayout();
             this.groupBoxChoicesList.SuspendLayout();
             this.groupBoxChoice.SuspendLayout();
+            this.panelBoolean.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainerScriptal
@@ -87,9 +94,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxDescription.BackColor = System.Drawing.Color.Silver;
             this.groupBoxDescription.Controls.Add(this.textBoxDescription);
-            this.groupBoxDescription.Location = new System.Drawing.Point(0, 85);
+            this.groupBoxDescription.Location = new System.Drawing.Point(0, 75);
             this.groupBoxDescription.Name = "groupBoxDescription";
-            this.groupBoxDescription.Size = new System.Drawing.Size(285, 346);
+            this.groupBoxDescription.Size = new System.Drawing.Size(285, 356);
             this.groupBoxDescription.TabIndex = 33;
             this.groupBoxDescription.TabStop = false;
             // 
@@ -107,7 +114,7 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
-            this.textBoxDescription.Size = new System.Drawing.Size(279, 324);
+            this.textBoxDescription.Size = new System.Drawing.Size(279, 334);
             this.textBoxDescription.TabIndex = 6;
             this.textBoxDescription.WordWrap = false;
             // 
@@ -121,7 +128,7 @@
             this.groupBoxScriptalSelect.Controls.Add(this.comboBoxScriptal);
             this.groupBoxScriptalSelect.Location = new System.Drawing.Point(0, 0);
             this.groupBoxScriptalSelect.Name = "groupBoxScriptalSelect";
-            this.groupBoxScriptalSelect.Size = new System.Drawing.Size(285, 80);
+            this.groupBoxScriptalSelect.Size = new System.Drawing.Size(285, 70);
             this.groupBoxScriptalSelect.TabIndex = 0;
             this.groupBoxScriptalSelect.TabStop = false;
             // 
@@ -173,7 +180,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBoxChoice);
             this.splitContainer1.Size = new System.Drawing.Size(285, 431);
-            this.splitContainer1.SplitterDistance = 161;
+            this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 8;
             // 
             // groupBoxChoicesList
@@ -185,7 +192,7 @@
             this.groupBoxChoicesList.Controls.Add(this.listBoxChoices);
             this.groupBoxChoicesList.Location = new System.Drawing.Point(0, 0);
             this.groupBoxChoicesList.Name = "groupBoxChoicesList";
-            this.groupBoxChoicesList.Size = new System.Drawing.Size(285, 160);
+            this.groupBoxChoicesList.Size = new System.Drawing.Size(285, 179);
             this.groupBoxChoicesList.TabIndex = 0;
             this.groupBoxChoicesList.TabStop = false;
             // 
@@ -198,7 +205,7 @@
             this.listBoxChoices.FormattingEnabled = true;
             this.listBoxChoices.Location = new System.Drawing.Point(3, 16);
             this.listBoxChoices.Name = "listBoxChoices";
-            this.listBoxChoices.Size = new System.Drawing.Size(279, 141);
+            this.listBoxChoices.Size = new System.Drawing.Size(279, 160);
             this.listBoxChoices.TabIndex = 5;
             this.listBoxChoices.SelectedIndexChanged += new System.EventHandler(this.listBoxChoices_SelectedIndexChanged);
             // 
@@ -208,6 +215,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxChoice.BackColor = System.Drawing.Color.Silver;
+            this.groupBoxChoice.Controls.Add(this.panelBoolean);
+            this.groupBoxChoice.Controls.Add(this.numericUpDownVarNumberValue);
+            this.groupBoxChoice.Controls.Add(this.textBoxVarStringValue);
             this.groupBoxChoice.Controls.Add(this.textBoxChoiceDescription);
             this.groupBoxChoice.Controls.Add(this.labelChoice);
             this.groupBoxChoice.Controls.Add(this.labelChoiceSet);
@@ -216,9 +226,85 @@
             this.groupBoxChoice.Controls.Add(this.comboBoxUserVarNodes);
             this.groupBoxChoice.Location = new System.Drawing.Point(0, 0);
             this.groupBoxChoice.Name = "groupBoxChoice";
-            this.groupBoxChoice.Size = new System.Drawing.Size(285, 266);
+            this.groupBoxChoice.Size = new System.Drawing.Size(285, 247);
             this.groupBoxChoice.TabIndex = 0;
             this.groupBoxChoice.TabStop = false;
+            // 
+            // panelBoolean
+            // 
+            this.panelBoolean.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panelBoolean.BackColor = System.Drawing.Color.LightGray;
+            this.panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelBoolean.Controls.Add(this.radioButtonFalse);
+            this.panelBoolean.Controls.Add(this.radioButtonTrue);
+            this.panelBoolean.Location = new System.Drawing.Point(68, 216);
+            this.panelBoolean.Name = "panelBoolean";
+            this.panelBoolean.Size = new System.Drawing.Size(214, 20);
+            this.panelBoolean.TabIndex = 9;
+            this.panelBoolean.Visible = false;
+            // 
+            // radioButtonFalse
+            // 
+            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFalse.AutoSize = true;
+            this.radioButtonFalse.Checked = true;
+            this.radioButtonFalse.Location = new System.Drawing.Point(53, 0);
+            this.radioButtonFalse.Name = "radioButtonFalse";
+            this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonFalse.TabIndex = 6;
+            this.radioButtonFalse.TabStop = true;
+            this.radioButtonFalse.Text = "False";
+            this.radioButtonFalse.UseVisualStyleBackColor = true;
+            this.radioButtonFalse.CheckedChanged += new System.EventHandler(this.radioButtonFalse_CheckedChanged);
+            // 
+            // radioButtonTrue
+            // 
+            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonTrue.AutoSize = true;
+            this.radioButtonTrue.Location = new System.Drawing.Point(112, 0);
+            this.radioButtonTrue.Name = "radioButtonTrue";
+            this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
+            this.radioButtonTrue.TabIndex = 7;
+            this.radioButtonTrue.Text = "True";
+            this.radioButtonTrue.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownVarNumberValue
+            // 
+            this.numericUpDownVarNumberValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownVarNumberValue.Location = new System.Drawing.Point(68, 215);
+            this.numericUpDownVarNumberValue.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numericUpDownVarNumberValue.Minimum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            -2147483648});
+            this.numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
+            this.numericUpDownVarNumberValue.Size = new System.Drawing.Size(214, 20);
+            this.numericUpDownVarNumberValue.TabIndex = 8;
+            this.numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDownVarNumberValue.Visible = false;
+            this.numericUpDownVarNumberValue.ValueChanged += new System.EventHandler(this.numericUpDownVarNumberValue_ValueChanged);
+            // 
+            // textBoxVarStringValue
+            // 
+            this.textBoxVarStringValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxVarStringValue.BackColor = System.Drawing.Color.LightGray;
+            this.textBoxVarStringValue.Location = new System.Drawing.Point(68, 215);
+            this.textBoxVarStringValue.Name = "textBoxVarStringValue";
+            this.textBoxVarStringValue.Size = new System.Drawing.Size(214, 20);
+            this.textBoxVarStringValue.TabIndex = 9;
+            this.textBoxVarStringValue.Visible = false;
+            this.textBoxVarStringValue.TextChanged += new System.EventHandler(this.textBoxVarStringValue_TextChanged);
             // 
             // textBoxChoiceDescription
             // 
@@ -234,7 +320,7 @@
             this.textBoxChoiceDescription.Multiline = true;
             this.textBoxChoiceDescription.Name = "textBoxChoiceDescription";
             this.textBoxChoiceDescription.ReadOnly = true;
-            this.textBoxChoiceDescription.Size = new System.Drawing.Size(279, 185);
+            this.textBoxChoiceDescription.Size = new System.Drawing.Size(279, 166);
             this.textBoxChoiceDescription.TabIndex = 6;
             this.textBoxChoiceDescription.WordWrap = false;
             // 
@@ -242,7 +328,7 @@
             // 
             this.labelChoice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelChoice.AutoSize = true;
-            this.labelChoice.Location = new System.Drawing.Point(25, 237);
+            this.labelChoice.Location = new System.Drawing.Point(25, 218);
             this.labelChoice.Name = "labelChoice";
             this.labelChoice.Size = new System.Drawing.Size(37, 13);
             this.labelChoice.TabIndex = 4;
@@ -252,7 +338,7 @@
             // 
             this.labelChoiceSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelChoiceSet.AutoSize = true;
-            this.labelChoiceSet.Location = new System.Drawing.Point(6, 210);
+            this.labelChoiceSet.Location = new System.Drawing.Point(6, 191);
             this.labelChoiceSet.Name = "labelChoiceSet";
             this.labelChoiceSet.Size = new System.Drawing.Size(56, 13);
             this.labelChoiceSet.TabIndex = 3;
@@ -264,7 +350,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxChoiceSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxChoiceSet.FormattingEnabled = true;
-            this.comboBoxChoiceSet.Location = new System.Drawing.Point(68, 207);
+            this.comboBoxChoiceSet.Location = new System.Drawing.Point(68, 188);
             this.comboBoxChoiceSet.Name = "comboBoxChoiceSet";
             this.comboBoxChoiceSet.Size = new System.Drawing.Size(214, 21);
             this.comboBoxChoiceSet.TabIndex = 2;
@@ -276,7 +362,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPresetChoosables.FormattingEnabled = true;
-            this.comboBoxPresetChoosables.Location = new System.Drawing.Point(68, 234);
+            this.comboBoxPresetChoosables.Location = new System.Drawing.Point(68, 215);
             this.comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
             this.comboBoxPresetChoosables.Size = new System.Drawing.Size(214, 21);
             this.comboBoxPresetChoosables.TabIndex = 1;
@@ -288,7 +374,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxUserVarNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxUserVarNodes.FormattingEnabled = true;
-            this.comboBoxUserVarNodes.Location = new System.Drawing.Point(68, 234);
+            this.comboBoxUserVarNodes.Location = new System.Drawing.Point(68, 215);
             this.comboBoxUserVarNodes.Name = "comboBoxUserVarNodes";
             this.comboBoxUserVarNodes.Size = new System.Drawing.Size(214, 21);
             this.comboBoxUserVarNodes.TabIndex = 8;
@@ -316,6 +402,9 @@
             this.groupBoxChoicesList.ResumeLayout(false);
             this.groupBoxChoice.ResumeLayout(false);
             this.groupBoxChoice.PerformLayout();
+            this.panelBoolean.ResumeLayout(false);
+            this.panelBoolean.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -339,5 +428,10 @@
         internal System.Windows.Forms.SplitContainer splitContainer1;
         internal System.Windows.Forms.GroupBox groupBoxChoicesList;
         internal System.Windows.Forms.ComboBox comboBoxUserVarNodes;
+        internal System.Windows.Forms.Panel panelBoolean;
+        internal System.Windows.Forms.RadioButton radioButtonFalse;
+        internal System.Windows.Forms.RadioButton radioButtonTrue;
+        internal System.Windows.Forms.NumericUpDown numericUpDownVarNumberValue;
+        internal System.Windows.Forms.TextBox textBoxVarStringValue;
     }
 }

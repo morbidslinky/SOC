@@ -99,7 +99,7 @@ namespace SOC.UI
 
         private void ClearScriptNodePassthroughs()
         {
-            if (ScriptNode != null)
+            if (ScriptNode != null && ScriptNode.Parent != null)
             {
                 foreach (Choice choice in ScriptNode.GetAllChoicesContainingDependencies())
                 {
