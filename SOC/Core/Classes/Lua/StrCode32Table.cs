@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace SOC.Classes.Lua
 {
@@ -62,7 +60,7 @@ namespace SOC.Classes.Lua
             CommonDefinitions.AddRange(definitionEntries);
         }
 
-        private bool TryGetScript(StrCode32Event codeEvent, out Script script)
+        private bool TryGetScript(StrCode32 codeEvent, out Script script)
         {
             script = CompiledScripts.FirstOrDefault(e => e.CodeEvent.Equals(codeEvent));
             return script != null;
@@ -74,26 +72,26 @@ namespace SOC.Classes.Lua
 
             foreach (Script root in CompiledScripts)
             {
-                var eventTable = Lua.Table(Lua.TableEntry("msg", root.CodeEvent.msg));
+                var eventTable = Lua.Table(Lua.TableEntry("msg", root.CodeEvent.Message));
 
-                if (!string.IsNullOrEmpty(root.CodeEvent.sender.Text))
+                if (!(root.CodeEvent.SenderValue is LuaNil))
                 {
-                    eventTable.Add(Lua.TableEntry("sender", root.CodeEvent.sender));
+                    eventTable.Add(Lua.TableEntry("sender", root.CodeEvent.SenderValue));
                 }
 
                 LuaFunctionBuilder funcBuilder = new LuaFunctionBuilder();
-                funcBuilder.AppendParameter(StrCode32Event.DefaultParameters);
+                funcBuilder.AppendParameter(StrCode32.DefaultParameters);
                 foreach (Script subscript in root.Subscripts)
                 {
                     var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"SUBSCRIPT_{subscript.Identifier.Text}"));
-                    funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, StrCode32Event.GetDefaultParametersAsVariables()));
+                    funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, StrCode32.GetDefaultParametersAsVariables()));
                 }
 
                 eventTable.Add(Lua.TableEntry("func", funcBuilder.ToFunction()));
 
 
                 strCode32Table.Add(
-                    Lua.TableEntry(root.CodeEvent.StrCode32, Lua.Table(Lua.TableEntry(eventTable)))
+                    Lua.TableEntry(Lua.String(root.CodeEvent.CodeKey), Lua.Table(Lua.TableEntry(eventTable)))
                 );
             }
 
@@ -172,7 +170,7 @@ namespace SOC.Classes.Lua
     public class Script
     {
         [XmlElement]
-        public StrCode32Event CodeEvent;
+        public StrCode32 CodeEvent;
 
         [XmlElement]
         public LuaString Identifier;
@@ -192,13 +190,13 @@ namespace SOC.Classes.Lua
         public List<Script> Subscripts = new List<Script>();
         public Script() { }
 
-        public Script(StrCode32Event codeMsgSender, string identifier)
+        public Script(StrCode32 codeMsgSender, string identifier)
         {
             CodeEvent = codeMsgSender;
             Identifier = Lua.String(identifier);
         }
 
-        public Script(StrCode32Event codeMsgSender, LuaTableEntry legacyFormat)
+        public Script(StrCode32 codeMsgSender, LuaTableEntry legacyFormat)
         {
             CodeEvent = codeMsgSender;
             Identifier = (LuaString)legacyFormat.Key;
@@ -241,7 +239,7 @@ namespace SOC.Classes.Lua
         public LuaFunction ToFunction(string definitionTableVariableName)
         {
             LuaFunctionBuilder functionBuilder = new LuaFunctionBuilder();
-            functionBuilder.AppendParameter(StrCode32Event.DefaultParameters);
+            functionBuilder.AppendParameter(StrCode32.DefaultParameters);
 
             var sanitizedDescription = Description.Replace("--[[", "").Replace("]]", "");
             if (!string.IsNullOrEmpty(sanitizedDescription))
@@ -252,13 +250,13 @@ namespace SOC.Classes.Lua
             foreach (Scriptal scriptal in Preconditionals)
             {
                 var conditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{scriptal.ScriptPrefixID}{scriptal.Name}"));
-                functionBuilder.AppendPlainText($"if not {Lua.FunctionCall(conditionIdentifier, StrCode32Event.GetDefaultParametersAsVariables())} then return end\n");
+                functionBuilder.AppendPlainText($"if not {Lua.FunctionCall(conditionIdentifier, StrCode32.GetDefaultParametersAsVariables())} then return end\n");
             }
 
             foreach (Scriptal scriptal in Operationals)
             {
                 var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{scriptal.ScriptPrefixID}{scriptal.Name}"));
-                functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, StrCode32Event.GetDefaultParametersAsVariables()));
+                functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, StrCode32.GetDefaultParametersAsVariables()));
             }
 
             return functionBuilder.ToFunction();
@@ -283,25 +281,39 @@ namespace SOC.Classes.Lua
         }
     }
 
-    public struct StrCode32Event : IEquatable<StrCode32Event>
+    public struct StrCode32 : IEquatable<StrCode32>
     {
         [XmlElement]
-        public LuaString StrCode32;
+        public string CodeKey;
 
         [XmlElement]
-        public LuaString msg;
+        public LuaValue Message;
 
         [XmlElement]
-        public LuaString sender;
+        public string SenderKey;
+
+        [XmlElement]
+        public LuaValue SenderValue;
 
         [XmlIgnore]
         public static readonly string[] DefaultParameters = { "arg1", "arg2", "arg3", "arg4" };
 
-        public StrCode32Event(string eventCode, string eventMsg, string msgSender)
+        public const string NIL_LITERAL_KEY = "NONE";
+
+        public StrCode32(string code, LuaValue message)
         {
-            StrCode32 = Lua.String(eventCode);
-            msg = Lua.String(eventMsg);
-            sender = Lua.String(msgSender);
+            CodeKey = code;
+            Message = message;
+            SenderKey = NIL_LITERAL_KEY;
+            SenderValue = Lua.Nil();
+        }
+
+        public StrCode32(string code, LuaValue message, string senderKey, LuaValue sender)
+        {
+            CodeKey = code;
+            Message = message;
+            SenderValue = sender;
+            SenderKey = senderKey;
         }
 
         public static LuaVariable[] GetDefaultParametersAsVariables()
@@ -311,28 +323,24 @@ namespace SOC.Classes.Lua
 
         public override bool Equals(object obj)
         {
-            if (obj is StrCode32Event other)
+            if (obj is StrCode32 other)
                 return Equals(other);
 
             return false;
         }
 
-        public bool Equals(StrCode32Event other)
+        public bool Equals(StrCode32 other)
         {
-            return StrCode32.Text.Equals(other.StrCode32.Text) && msg.Text.Equals(other.msg.Text) && sender.Text.Equals(other.sender.Text);
-        }
-
-        public override int GetHashCode()
-        {
-            return StrCode32.Text.GetHashCode() + msg.Text.GetHashCode() + sender.Text.GetHashCode();
+            return CodeKey.Equals(other.CodeKey) && Message.Matches(other.Message) && SenderValue.Matches(other.SenderValue);
         }
 
         public override string ToString()
         {
-            if (string.IsNullOrEmpty(sender.Text))
-                return string.Join("_", StrCode32.Text, msg.Text);
+            if (SenderValue is LuaNil)
+                return string.Join("_", CodeKey, Message.Value.Replace("\"", ""));
 
-            return string.Join("_", StrCode32.Text, msg.Text, sender.Text);
+
+            return string.Join("_", CodeKey, Message.Value.Replace("\"",""), $"{SenderValue.Value.Replace("\"", "")}");
         }
 
         public LuaString ToLuaString() => Lua.String(ToString());
@@ -355,7 +363,7 @@ namespace SOC.Classes.Lua
 
         [XmlArray("EmbeddedChoosableValueSets")]
         [XmlArrayItem("Set")]
-        public List<ChoosableValues> EmbeddedChoosables = new List<ChoosableValues>();
+        public List<ChoiceKeyValues> EmbeddedChoosables = new List<ChoiceKeyValues>();
 
         [XmlArray("CommonDefinitions")]
         [XmlArrayItem("Definition")]
@@ -390,7 +398,7 @@ namespace SOC.Classes.Lua
         {
             return new LuaFunction(
                 new LuaTemplate(EventFunctionTemplate), 
-                Choices.Select(choice => choice.Value).ToArray(), StrCode32Event.GetDefaultParametersAsVariables()
+                Choices.Select(choice => choice.Value).ToArray(), StrCode32.GetDefaultParametersAsVariables()
             );
         }
 
@@ -440,16 +448,65 @@ namespace SOC.Classes.Lua
         }
     }
 
-    public class ChoosableValues
+    public class ChoiceKeyValues
     {
         [XmlAttribute]
         public string Key = "Value Set Key";
 
-        [XmlArray("Values")]
-        [XmlArrayItem("Value")]
+        [XmlElement("Value")]
         public List<LuaValue> Values = new List<LuaValue>();
 
         public override string ToString() => Key;
+    }
+
+    public class ChoiceKeyValuesList
+    {
+        [XmlElement("KeyValuesPair")]
+        public List<ChoiceKeyValues> ChoiceKeyValues = new List<ChoiceKeyValues>();
+
+        public static ChoiceKeyValuesList LoadFromXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ChoiceKeyValuesList));
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                return (ChoiceKeyValuesList)serializer.Deserialize(reader);
+            }
+        }
+
+        public static void SaveScript(ChoiceKeyValuesList choiceKeyValuesList)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "Xml File|*.xml";
+            DialogResult saveResult = saveFile.ShowDialog();
+
+            if (saveResult == DialogResult.OK)
+            {
+                choiceKeyValuesList.WriteToXml(saveFile.FileName);
+            }
+        }
+        public void WriteToXml(string filePath)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(ChoiceKeyValuesList));
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                serializer.Serialize(writer, this);
+            }
+        }
+
+        public List<LuaValue> Get(string key)
+        {
+            return ChoiceKeyValues.FirstOrDefault(kvp => kvp.Key == key).Values;
+        }
+
+        public bool Has(string key)
+        {
+            return ChoiceKeyValues.Any(kvp => kvp.Key == key);
+        }
+
+        internal string[] Keys()
+        {
+            return ChoiceKeyValues.Select(kvp => kvp.Key).ToArray();
+        }
     }
 
     public class Choice
@@ -512,7 +569,7 @@ namespace SOC.Classes.Lua
 
         public bool DependencyNameMatches(LuaTableEntry entry)
         {
-            return EmbeddedScriptalControl.CUSTOM_VARIABLE_SET == Key && VariableNode.ConvertToLuaTableIdentifier(entry).Matches(Value);
+            return ScriptControl.CUSTOM_VARIABLE_SET == Key && VariableNode.ConvertToLuaTableIdentifier(entry).Matches(Value);
         }
 
         public void ClearVarNodeDependency(bool notify = true)

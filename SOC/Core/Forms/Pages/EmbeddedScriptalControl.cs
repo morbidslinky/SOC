@@ -17,11 +17,6 @@ namespace SOC.UI
         ScriptControl ParentControl;
         private ScriptalNode ScriptalNode;
 
-        public const string CUSTOM_VARIABLE_SET = "Custom Variable";
-        public const string NUMBER_LITERAL_SET = "Number Literal";
-        public const string STRING_LITERAL_SET = "String Literal";
-        public const string BOOLEAN_LITERAL_SET = "Boolean Literal";
-
         public EmbeddedScriptalControl(ScriptControl parentControl)
         {
             InitializeComponent();
@@ -71,7 +66,7 @@ namespace SOC.UI
         internal void UpdateVarNodesUI()
         {
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-            ChoosableValues selectedChoiceSet = (ChoosableValues)comboBoxChoiceSet.SelectedItem;
+            ChoiceKeyValues selectedChoiceSet = (ChoiceKeyValues)comboBoxChoiceSet.SelectedItem;
             RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
         }
 
@@ -159,10 +154,10 @@ namespace SOC.UI
         {
             List<FileInfo> scriptalFiles = new List<FileInfo>();
 
-            StrCode32Event scriptalEvent = scriptalNode.GetEvent();
+            StrCode32 scriptalEvent = scriptalNode.GetEvent();
 
             string scriptsRootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets");
-            string[] scriptalSubDirs = { "Scriptals", str(scriptalNode.ScriptalType), scriptalEvent.StrCode32.Text, scriptalEvent.msg.Text };
+            string[] scriptalSubDirs = { "Scriptals", str(scriptalNode.ScriptalType), scriptalEvent.CodeKey, scriptalEvent.Message.Value.Trim('"') };
 
             Exception lastExeption = null; int exceptionCount = 0;
             for (int i = 0; i < scriptalSubDirs.Length; i++)
@@ -229,36 +224,36 @@ string.Format(@"
             comboBoxChoiceSet.Items.AddRange(GetChoosableValuesSets(selectedScriptal, selectedChoice));
 
             var match = comboBoxChoiceSet.Items
-                .OfType<ChoosableValues>()
+                .OfType<ChoiceKeyValues>()
                 .FirstOrDefault(set => set.Key == selectedChoice.Key);
 
             if (match == null && comboBoxChoiceSet.Items.Count > 0)
-                match = (ChoosableValues)comboBoxChoiceSet.Items[0];
+                match = (ChoiceKeyValues)comboBoxChoiceSet.Items[0];
 
             comboBoxChoiceSet.SelectedItem = match;
 
             comboBoxChoiceSet.Enabled = selectedChoice.AllowUIEdit;
         }
 
-        private ChoosableValues[] GetChoosableValuesSets(Scriptal selectedScriptal, Choice selectedChoice)
+        private ChoiceKeyValues[] GetChoosableValuesSets(Scriptal selectedScriptal, Choice selectedChoice)
         {
-            List<ChoosableValues> chooseableSets = new List<ChoosableValues>();
+            List<ChoiceKeyValues> chooseableSets = new List<ChoiceKeyValues>();
 
             chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables
                 .Union(ParentControl.Quest.GetAllObjectsScriptValueSets())
                 .Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key)));
 
             if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)
-                chooseableSets.Add(new ChoosableValues() { Key = CUSTOM_VARIABLE_SET });
+                chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.CUSTOM_VARIABLE_SET });
 
             if (selectedChoice.AllowLiteral)
             {
                 if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.NUMBER))
-                    chooseableSets.Add(new ChoosableValues() { Key = NUMBER_LITERAL_SET });
+                    chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.NUMBER_LITERAL_SET });
                 if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.STRING))
-                    chooseableSets.Add(new ChoosableValues() { Key = STRING_LITERAL_SET });
+                    chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.STRING_LITERAL_SET });
                 if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.BOOLEAN))
-                    chooseableSets.Add(new ChoosableValues() { Key = BOOLEAN_LITERAL_SET });
+                    chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.BOOLEAN_LITERAL_SET });
             }
 
             return chooseableSets.ToArray();
@@ -267,31 +262,31 @@ string.Format(@"
         private void comboBoxChoiceSet_SelectedIndexChanged(object sender, EventArgs e)
         {
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-            ChoosableValues selectedChoiceSet = (ChoosableValues)comboBoxChoiceSet.SelectedItem;
+            ChoiceKeyValues selectedChoiceSet = (ChoiceKeyValues)comboBoxChoiceSet.SelectedItem;
             selectedChoice.Key = selectedChoiceSet.Key;
 
             switch (selectedChoice.Key)
             {
-                case CUSTOM_VARIABLE_SET:
+                case ScriptControl.CUSTOM_VARIABLE_SET:
                     showCorrespondingChoiceControl(comboBoxUserVarNodes);
                     RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
                     break;
 
-                case NUMBER_LITERAL_SET:
+                case ScriptControl.NUMBER_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(numericUpDownVarNumberValue, selectedChoice.AllowUIEdit);
                     if (selectedChoice.Value is LuaNumber number) numericUpDownVarNumberValue.Value = (decimal)number.Number;
                     UpdateChoiceLiteralValue();
                     break;
 
-                case STRING_LITERAL_SET:
+                case ScriptControl.STRING_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(textBoxVarStringValue, selectedChoice.AllowUIEdit);
                     if (selectedChoice.Value is LuaString text) textBoxVarStringValue.Text = text.Text;
                     UpdateChoiceLiteralValue();
                     break;
 
-                case BOOLEAN_LITERAL_SET:
+                case ScriptControl.BOOLEAN_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(panelBoolean, selectedChoice.AllowUIEdit);
                     if (selectedChoice.Value is LuaBoolean boolean) radioButtonTrue.Checked = boolean.BooleanValue;
@@ -320,10 +315,10 @@ string.Format(@"
             choiceControl.Enabled = enable;
         }
 
-        private void RefreshUserVarNodeChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
+        private void RefreshUserVarNodeChoiceValues(Choice selectedChoice, ChoiceKeyValues selectedChoiceSet)
         {
             if (selectedChoiceSet == null || selectedChoice == null) return;
-            if (selectedChoiceSet.Key != CUSTOM_VARIABLE_SET || !selectedChoice.AllowUserVariable || !selectedChoice.AllowUIEdit) return;
+            if (selectedChoiceSet.Key != ScriptControl.CUSTOM_VARIABLE_SET || !selectedChoice.AllowUserVariable || !selectedChoice.AllowUIEdit) return;
 
             var userVarNodes = ParentControl.treeViewVariables.Nodes.OfType<VariableNode>().Where(node => selectedChoice.CorrespondingRuntimeToken.Allows(node.Entry.Value, out _));
 
@@ -382,7 +377,7 @@ string.Format(@"
             ScriptalNode.MarkDependencies();
         }
 
-        private void RefreshPresetChoiceValues(Choice selectedChoice, ChoosableValues selectedChoiceSet)
+        private void RefreshPresetChoiceValues(Choice selectedChoice, ChoiceKeyValues selectedChoiceSet)
         {
             IEnumerable<LuaValue> choosables = selectedChoiceSet.Values.Where(value => selectedChoice.CorrespondingRuntimeToken.Allows(value, out _));
 
@@ -437,13 +432,13 @@ string.Format(@"
             Choice currentChoice = (Choice)listBoxChoices.SelectedItem;
             switch (currentChoice.Key)
             {
-                case STRING_LITERAL_SET:
+                case ScriptControl.STRING_LITERAL_SET:
                     currentChoice.Value = Lua.String(textBoxVarStringValue.Text);
                     break;
-                case NUMBER_LITERAL_SET:
+                case ScriptControl.NUMBER_LITERAL_SET:
                     currentChoice.Value = Lua.Number((double)numericUpDownVarNumberValue.Value);
                     break;
-                case BOOLEAN_LITERAL_SET:
+                case ScriptControl.BOOLEAN_LITERAL_SET:
                     currentChoice.Value = Lua.Boolean(radioButtonTrue.Checked);
                     break;
             }

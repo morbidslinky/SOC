@@ -23,7 +23,7 @@ namespace SOC.UI
         internal UserControl Menu()
         {
             UpdateMenu();
-            ParentControl.SetMenuText("Import/Export Script Details", "");
+            ParentControl.SetMenuText("Import / Export Script Details", "");
             return this;
         }
 
@@ -201,6 +201,7 @@ namespace SOC.UI
             }
 
             AddToControl(scripts);
+            ParentControl.RedrawScriptDependents();
         }
 
         private void MapChoicesToTokens(List<Scriptal> scriptals)
@@ -260,7 +261,7 @@ namespace SOC.UI
 
             foreach (var choice in choices)
             {
-                if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null && choice.Value is LuaTableIdentifier choiceIdentifier)
+                if (choice.Key == ScriptControl.CUSTOM_VARIABLE_SET && choice.Dependency == null && choice.Value is LuaTableIdentifier choiceIdentifier)
                 {
                     bool matchesExistingExtrapolatedNode = false;
                     foreach (VariableNode extrapolatedNode in extrapolatedNodes)
@@ -300,7 +301,7 @@ namespace SOC.UI
         {
             foreach (var choice in choices)
             {
-                if (choice.Key == EmbeddedScriptalControl.CUSTOM_VARIABLE_SET && choice.Dependency == null)
+                if (choice.Key == ScriptControl.CUSTOM_VARIABLE_SET && choice.Dependency == null)
                 {
                     choice.Value = new LuaNil();
                 }

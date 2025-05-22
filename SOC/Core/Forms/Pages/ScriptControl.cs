@@ -1,17 +1,11 @@
 using SOC.Classes.Common;
 using SOC.Classes.Lua;
-using SOC.QuestObjects.Common;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace SOC.UI
 {
@@ -25,12 +19,17 @@ namespace SOC.UI
         EmbeddedScriptControl ScriptEmbed;
         EmbeddedScriptalControl ScriptalEmbed;
 
-        public static Dictionary<string, List<string>> MessageClassListMapping = new Dictionary<string, List<string>>();
+        public static ChoiceKeyValuesList StrCodeClasses = new ChoiceKeyValuesList();
 
         private bool _isUpdatingControls = false;
 
         public static readonly Font UNDERLINE = new Font("Consolas", 8.25F, FontStyle.Underline);
         public static readonly Font REGULAR = new Font("Consolas", 8.25F, FontStyle.Regular);
+
+        public const string CUSTOM_VARIABLE_SET = "Custom Variable";
+        public const string NUMBER_LITERAL_SET = "Number Literal";
+        public const string STRING_LITERAL_SET = "String Literal";
+        public const string BOOLEAN_LITERAL_SET = "Boolean Literal";
 
         public ScriptControl(Quest quest)
         {
@@ -65,31 +64,15 @@ namespace SOC.UI
 
         private static void ParseMessageClassesFile()
         {
-            string MessageClassList = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets//MessageClasses.xml");
+            string MessageClassList = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets//StrCodeClasses.xml");
 
             if (!File.Exists(MessageClassList))
             {
-                MessageBox.Show("MessageClasses.xml file not found!");
+                MessageBox.Show("StrCodeClasses.xml file not found!");
                 return;
             }
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(MessageClassList);
-
-            XmlNodeList categories = doc.SelectNodes("//Category");
-
-            foreach (XmlNode categoryNode in categories)
-            {
-                string categoryName = categoryNode.Attributes["name"].Value;
-                List<string> items = new List<string>();
-
-                foreach (XmlNode itemNode in categoryNode.SelectNodes("Item"))
-                {
-                    items.Add(itemNode.InnerText);
-                }
-
-                MessageClassListMapping[categoryName] = items;
-            }
+            StrCodeClasses = ChoiceKeyValuesList.LoadFromXml(MessageClassList);
         }
 
         internal void SyncQuestDataToUserInput()

@@ -26,30 +26,207 @@ namespace SOC.UI
             ParentControl = parentControl;
         }
 
-        public override string ToString() => ScriptNode.ToString();
-
         public UserControl Menu(ScriptNode scriptNode)
         {
             ClearScriptNodePassthroughs();
+
             ScriptNode = scriptNode;
-            ParentControl.SetMenuText(ToString(), ScriptNode.Identifier.Text);
+            ParentControl.SetMenuText(ScriptNode.ToString(), ScriptNode.Identifier.Text);
+
             UpdateMenu();
+
             return this;
+        }
+
+        private void ClearScriptNodePassthroughs()
+        {
+            if (ScriptNode != null && ScriptNode.Parent != null)
+            {
+                foreach (Choice choice in ScriptNode.GetAllChoicesContainingDependencies())
+                {
+                    if (choice.HasPassthrough(this))
+                        choice.VariableNodeEventPassthrough -= VariableNodeEventPassthroughFunction;
+                }
+            }
         }
 
         private void UpdateMenu()
         {
-            var selectedScript = ScriptNode.ConvertToScript();
             _isUpdatingControls = true;
+            PopulateCodeMessageSenderControls();
+            PopulateScriptalControls();
+            _isUpdatingControls = false;
+            textBoxDescription.Text = ScriptNode.Description;
+        }
 
-            comboBoxStrCodes.Items.Clear();
-            comboBoxStrCodes.Items.AddRange(ScriptControl.MessageClassListMapping.Keys.ToArray());
-            comboBoxStrCodes.Text = selectedScript.CodeEvent.StrCode32.Text;
-            comboBoxStrMsgs.Text = selectedScript.CodeEvent.msg.Text;
-            comboBoxStrSenders.Text = selectedScript.CodeEvent.sender.Text;
+        private void PopulateCodeMessageSenderControls()
+        {
+            MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
+            CodeNode codeNode = (CodeNode)msgSenderNode.Parent;
 
-            textBoxDescription.Text = selectedScript.Description;
+            comboBoxCode.Items.Clear();
+            comboBoxCode.Items.AddRange(ScriptControl.StrCodeClasses.Keys());
+            var matchIndex = comboBoxCode.Items.IndexOf(codeNode.CodeKey);
+            if (matchIndex == -1 && comboBoxCode.Items.Count > 0)
+                matchIndex = 0;
+            comboBoxCode.SelectedIndex = matchIndex;
 
+            comboBoxSenderOptions.Items.Clear();
+            comboBoxSenderOptions.Items.AddRange(GetChoosableValuesSets());
+            var match = comboBoxSenderOptions.Items.OfType<ChoiceKeyValues>().FirstOrDefault(set => set.Key == msgSenderNode.SenderKey);
+            if (match == null && comboBoxSenderOptions.Items.Count > 0)
+                match = (ChoiceKeyValues)comboBoxSenderOptions.Items[0];
+            comboBoxSenderOptions.SelectedItem = match;
+        }
+
+        private ChoiceKeyValues[] GetChoosableValuesSets()
+        {
+            List<ChoiceKeyValues> chooseableSets = new List<ChoiceKeyValues>();
+
+            chooseableSets.AddRange(new ChoiceKeyValues[] {
+                new ChoiceKeyValues() { Key = StrCode32.NIL_LITERAL_KEY },
+                new ChoiceKeyValues() { Key = ScriptControl.STRING_LITERAL_SET },
+                new ChoiceKeyValues() { Key = ScriptControl.NUMBER_LITERAL_SET }
+                }
+            );
+
+            chooseableSets.AddRange(ParentControl.Quest.GetAllObjectsScriptValueSets());
+
+            return chooseableSets.ToArray();
+        }
+
+        private void comboBoxCode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
+            string selectedCode = (string)comboBoxCode.SelectedItem;
+
+            comboBoxMessage.Items.Clear();
+            comboBoxMessage.Items.AddRange(ScriptControl.StrCodeClasses.Get(selectedCode).ToArray());
+
+            var match = comboBoxMessage.Items.OfType<LuaValue>().FirstOrDefault(value => value.Matches(msgSenderNode.Message));
+            if (match == null && comboBoxMessage.Items.Count > 0)
+                match = (LuaValue)comboBoxMessage.Items[0];
+
+            comboBoxMessage.SelectedItem = match;
+        }
+
+        private void comboBoxMessage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MoveSelectedScript();
+        }
+
+        private void comboBoxSendersOptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
+            ChoiceKeyValues selectedSenderChoosableSet = (ChoiceKeyValues)comboBoxSenderOptions.SelectedItem;
+
+            switch (selectedSenderChoosableSet.Key)
+            {
+                case ScriptControl.NUMBER_LITERAL_SET:
+                    showCorrespondingSenderControl(numericUpDownSenders);
+                    if (msgSenderNode.Sender is LuaNumber number) numericUpDownSenders.Value = (decimal)number.Number;
+                    MoveSelectedScript(Lua.Number((double)numericUpDownSenders.Value));
+                    break;
+
+                case ScriptControl.STRING_LITERAL_SET:
+                    showCorrespondingSenderControl(textBoxSenders);
+                    if (msgSenderNode.Sender is LuaString text) textBoxSenders.Text = text.Text;
+                    MoveSelectedScript(Lua.String(textBoxSenders.Text));
+                    break;
+
+                case StrCode32.NIL_LITERAL_KEY:
+                    showCorrespondingSenderControl(null);
+                    MoveSelectedScript(Lua.Nil());
+                    break;
+
+                default:
+                    showCorrespondingSenderControl(comboBoxSenders);
+                    MoveSelectedScript((LuaValue)comboBoxSenders.SelectedItem);
+                    break;
+            }
+        }
+
+        private void showCorrespondingSenderControl(Control choiceControl, bool enable = true)
+        {
+            Control[] controlSet = { comboBoxSenders, textBoxSenders, numericUpDownSenders };
+
+            foreach (var control in controlSet)
+            {
+                control.Visible = control == choiceControl;
+            }
+
+            if (choiceControl != null)
+            {
+                choiceControl.Enabled = enable;
+            }
+
+            labelSenderValue.Visible = choiceControl != null;
+            buttonApplySender.Visible = choiceControl == textBoxSenders || choiceControl == numericUpDownSenders;
+        }
+
+        private void MoveSelectedScript(LuaValue Sender = null)
+        {
+            if (_isUpdatingControls) return;
+
+            string selectedCode = (string)comboBoxCode.SelectedItem;
+            LuaValue selectedMsg = (LuaValue)comboBoxMessage.SelectedItem;
+            ChoiceKeyValues selectedSenderChoosableSet = (ChoiceKeyValues)comboBoxSenderOptions.SelectedItem;
+
+            if (Sender == null)
+            {
+                switch (selectedSenderChoosableSet.Key)
+                {
+                    case ScriptControl.NUMBER_LITERAL_SET:
+                        Sender = Lua.Number((double)numericUpDownSenders.Value);
+                        break;
+
+                    case ScriptControl.STRING_LITERAL_SET:
+                        Sender = Lua.String(textBoxSenders.Text);
+                        break;
+
+                    case StrCode32.NIL_LITERAL_KEY:
+                        Sender = Lua.Nil();
+                        break;
+
+                    default:
+                        Sender = (LuaValue)comboBoxSenders.SelectedItem;
+                        break;
+                }
+            }
+
+            var strCodeEvent = ScriptNode.getEvent();
+            if (!strCodeEvent.Message.Matches(selectedMsg) || !strCodeEvent.SenderValue.Matches(Sender) || !strCodeEvent.CodeKey.Equals(selectedCode) || !strCodeEvent.SenderKey.Equals(selectedSenderChoosableSet.Key))
+            {
+                var movedNode = ScriptNode.GetStrCode32TableNode().MoveScript(ScriptNode, selectedCode, selectedMsg, selectedSenderChoosableSet.Key, Sender);
+                ParentControl.treeViewScripts.SelectedNode = movedNode;
+                ParentControl.RedrawScriptDependents();
+                movedNode.ExpandAll();
+            }
+        }
+
+        private void comboBoxSenders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MoveSelectedScript();
+        }
+
+        private void buttonApplySender_Click(object sender, EventArgs e)
+        {
+            MoveSelectedScript();
+        }
+
+        private void numericUpDownSenders_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                MoveSelectedScript();
+        }
+        private void textBoxSenders_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                MoveSelectedScript();
+        }
+
+        public void PopulateScriptalControls()
+        {
             listBoxPreconditions.Items.Clear();
             listBoxPreconditions.Items.AddRange(ScriptNode.PreconditionsParent.Nodes.OfType<ScriptalNode>().ToArray());
             if (listBoxPreconditions.Items.Count > 0)
@@ -69,8 +246,6 @@ namespace SOC.UI
                 if (!choice.HasPassthrough(this))
                     choice.VariableNodeEventPassthrough += VariableNodeEventPassthroughFunction;
             }
-
-            _isUpdatingControls = false;
         }
 
         public void VariableNodeEventPassthroughFunction(object sender, VariableNodeEventArgs e)
@@ -97,16 +272,14 @@ namespace SOC.UI
             _isUpdatingControls = false;
         }
 
-        private void ClearScriptNodePassthroughs()
+        private void listBoxPreconditions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ScriptNode != null && ScriptNode.Parent != null)
-            {
-                foreach (Choice choice in ScriptNode.GetAllChoicesContainingDependencies())
-                {
-                    if (choice.HasPassthrough(this))
-                        choice.VariableNodeEventPassthrough -= VariableNodeEventPassthroughFunction;
-                }
-            }
+            UpdateUpDownButtons(listBoxPreconditions, buttonUpPrecondition, buttonDownPrecondition);
+        }
+
+        private void listBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateUpDownButtons(listBoxOperations, buttonUpOperation, buttonDownOperation);
         }
 
         private void UpdateUpDownButtons(ListBox listBoxScriptals, Button buttonUpOrder, Button buttonDownOrder)
@@ -115,95 +288,11 @@ namespace SOC.UI
             {
                 buttonUpOrder.Enabled = listBoxScriptals.SelectedIndex > 0;
                 buttonDownOrder.Enabled = listBoxScriptals.SelectedIndex < listBoxScriptals.Items.Count - 1;
-            } 
+            }
             else
             {
                 buttonUpOrder.Enabled = false; buttonDownOrder.Enabled = false;
             }
-        }
-
-        private void comboBoxStrCodes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedCode = comboBoxStrCodes.SelectedItem.ToString();
-            comboBoxStrMsgs.Items.Clear();
-
-            if (ScriptControl.MessageClassListMapping.ContainsKey(selectedCode))
-            {
-                comboBoxStrMsgs.Items.AddRange(ScriptControl.MessageClassListMapping[selectedCode].ToArray());
-            }
-
-            if (comboBoxStrMsgs.Items.Count > 0)
-            {
-                comboBoxStrMsgs.SelectedIndex = 0;
-            }
-
-            MoveSelectedScript();
-        }
-
-        private void comboBoxStrMsgs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MoveSelectedScript();
-        }
-
-        private void comboBoxStrSenders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            MoveSelectedScript();
-        }
-
-        private void MoveSelectedScript()
-        {
-            if (_isUpdatingControls) return;
-            string selectedMsg = comboBoxStrMsgs.SelectedItem.ToString();
-            string selectedCode = comboBoxStrCodes.SelectedItem.ToString();
-            string selectedSender = "";//comboBoxStrSenders.SelectedItem.ToString(); not implemented yet. needs to grab (useful) senders from sideop details
-
-            var script = ScriptNode.getEvent();
-            if (script.msg.Text != selectedMsg || script.sender.Text != selectedSender || script.StrCode32.Text != selectedCode)
-            {
-                var movedNode = ScriptNode.GetStrCode32TableNode().MoveScript(ScriptNode, selectedCode, selectedMsg, selectedSender);
-                ParentControl.treeViewScripts.SelectedNode = movedNode;
-                ParentControl.RedrawScriptDependents();
-                movedNode.ExpandAll();
-            }
-        }
-
-        private void textBoxDescription_TextChanged(object sender, EventArgs e)
-        {
-            _isUpdatingControls = true;
-            ScriptNode.UpdateDescription(textBoxDescription.Text);
-            _isUpdatingControls = false;
-        }
-
-        private void buttonSaveScript_Click(object sender, EventArgs e)
-        {
-            SaveScript(ScriptNode.ConvertToScript());
-        }
-
-        public static void SaveScript(Script script)
-        {
-            SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.Filter = "Xml File|*.xml";
-            saveFile.FileName = script.Identifier.Text;
-            DialogResult saveResult = saveFile.ShowDialog();
-
-            if (saveResult == DialogResult.OK)
-            {
-                script.WriteToXml(saveFile.FileName);
-                MessageBox.Show("Done!", "Script Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        public void MoveScriptal(ScriptalNode node, bool up)
-        {
-            ScriptalParentNode parent = (ScriptalParentNode)node.Parent;
-            int currentIndex = parent.Nodes.IndexOf(node);
-            int newIndex = currentIndex + (up ? -1 : 1);
-            if (newIndex >= 0 && newIndex <= parent.Nodes.Count - 1)
-            {
-                parent.Nodes.Remove(node);
-                parent.Nodes.Insert(newIndex, node);
-            }
-
         }
 
         private void buttonUpPrecondition_Click(object sender, EventArgs e)
@@ -254,14 +343,21 @@ namespace SOC.UI
             }
         }
 
-        private void listBoxPreconditions_SelectedIndexChanged(object sender, EventArgs e)
+        public void MoveScriptal(ScriptalNode node, bool up)
         {
-            UpdateUpDownButtons(listBoxPreconditions, buttonUpPrecondition, buttonDownPrecondition);
+            ScriptalParentNode parent = (ScriptalParentNode)node.Parent;
+            int currentIndex = parent.Nodes.IndexOf(node);
+            int newIndex = currentIndex + (up ? -1 : 1);
+            if (newIndex >= 0 && newIndex <= parent.Nodes.Count - 1)
+            {
+                parent.Nodes.Remove(node);
+                parent.Nodes.Insert(newIndex, node);
+            }
         }
 
-        private void listBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
+        private void textBoxDescription_TextChanged(object sender, EventArgs e)
         {
-            UpdateUpDownButtons(listBoxOperations, buttonUpOperation, buttonDownOperation);
+            ScriptNode.UpdateDescription(textBoxDescription.Text);
         }
     }
 }

@@ -156,11 +156,11 @@ namespace SOC.Classes.Common
             }
         }
 
-        public List<ChoosableValues> GetAllObjectsScriptValueSets()
+        public List<ChoiceKeyValues> GetAllObjectsScriptValueSets()
         {
             if (ScriptDetails.QuestChoosableValueSetsCache == null)
             {
-                ScriptDetails.QuestChoosableValueSetsCache = new List<ChoosableValues>();
+                ScriptDetails.QuestChoosableValueSetsCache = new List<ChoiceKeyValues>();
 
                 foreach (ObjectsDetail detail in ObjectsDetails.Details)
                 {

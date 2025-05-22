@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.Common
     {
         public UserControl detailControl { get; }
 
-        public List<ChoosableValues> ScriptValueSets { get; }
+        public List<ChoiceKeyValues> ScriptValueSets { get; }
 
         public FlowLayoutPanel flowPanel { get; }
 

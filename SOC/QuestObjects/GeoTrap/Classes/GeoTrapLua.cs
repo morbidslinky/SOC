@@ -19,17 +19,17 @@ namespace SOC.QuestObjects.GeoTrap
                 foreach (string geoTrapName in uniqueGeoTraps)
                 {
                     Script EnterTrap = new Script(
-                        new StrCode32Event("Trap", "Enter", geoTrapName),
+                        new StrCode32("Trap", Lua.String("Enter"), "", Lua.String(geoTrapName)),
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Enter",
-                            StrCode32Event.DefaultParameters,
+                            StrCode32.DefaultParameters,
                             $@" InfCore.DebugPrint(""{geoTrapName} Enter""); ")); 
 
                     Script ExitTrap = new Script(
-                        new StrCode32Event("Trap", "Exit", geoTrapName),
+                        new StrCode32("Trap", Lua.String("Exit"), "", Lua.String(geoTrapName)),
                         LuaFunction.ToTableEntry(
                             $"{geoTrapName}Exit",
-                            StrCode32Event.DefaultParameters,
+                            StrCode32.DefaultParameters,
                             $@" InfCore.DebugPrint(""{geoTrapName} Exit""); "));
 
                     mainLua.QStep_Main.StrCode32Table.Add(EnterTrap, ExitTrap);

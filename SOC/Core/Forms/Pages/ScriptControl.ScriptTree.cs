@@ -21,7 +21,7 @@ namespace SOC.UI
             treeViewScripts.SelectedNode.ExpandAll();
         }
 
-        private StrCode32Event GetEventFromSelection()
+        private StrCode32 GetEventFromSelection()
         {
             var scriptNode = GetScriptNodeFromSelection();
             if (scriptNode != null)
@@ -29,29 +29,30 @@ namespace SOC.UI
                 return scriptNode.getEvent();
             }
 
-            if (treeViewScripts.SelectedNode is MsgSenderNode msgSenderNode)
+            if (treeViewScripts.SelectedNode is MessageSenderNode msgSenderNode)
             {
                 return msgSenderNode.GetEvent();
             }
 
             if (treeViewScripts.SelectedNode is CodeNode codeNode)
             {
-                string key = codeNode.Code.Text;
-                if (MessageClassListMapping[key].Count > 0)
+                string key = codeNode.CodeKey;
+
+                if (StrCodeClasses.Get(key).Count > 0)
                 {
-                    return new StrCode32Event(key, MessageClassListMapping[key][0], "");
+                    return new StrCode32(key, StrCodeClasses.Get(key)[0]);
                 }
             }
 
-            foreach (string key in MessageClassListMapping.Keys)
+            foreach (string key in StrCodeClasses.Keys())
             {
-                if (MessageClassListMapping[key].Count > 0)
+                if (StrCodeClasses.Get(key).Count > 0)
                 {
-                    return new StrCode32Event(key, MessageClassListMapping[key][0], "");
+                    return new StrCode32(key, StrCodeClasses.Get(key)[0]);
                 }
             }
 
-            return new StrCode32Event("", "", "");
+            return new StrCode32("", Lua.String(""));
         }
 
         private void textBoxScriptName_TextChanged(object sender, EventArgs e)
@@ -92,13 +93,14 @@ namespace SOC.UI
             switch (treeViewScripts.SelectedNode)
             {
                 case ScriptNode scriptNode:
-                    foreach (ScriptalNode node in scriptNode.OperationsParent.Nodes) node.Doom();
-                    foreach (ScriptalNode node in scriptNode.PreconditionsParent.Nodes) node.Doom();
+                    foreach (ScriptalNode node in scriptNode.OperationsParent.Nodes) node.ClearAllVarNodeDependencies();
+                    foreach (ScriptalNode node in scriptNode.PreconditionsParent.Nodes) node.ClearAllVarNodeDependencies();
                     GetParent32TableNode(scriptNode).DeleteScriptNode(scriptNode);
                     break;
                 case ScriptalNode scriptalNode:
                     ScriptNode parentScriptNode = scriptalNode.GetUnEventedScriptNode();
-                    scriptalNode.Doom();
+                    scriptalNode.ClearAllVarNodeDependencies();
+                    scriptalNode.Remove();
                     parentScriptNode.UpdateNodeText();
                     break;
                 default:
@@ -275,10 +277,11 @@ namespace SOC.UI
         {
             return Add(ConvertToNodeFamily(script));
         }
+
         public static CodeNode ConvertToNodeFamily(Script script)
         {
-            CodeNode codeNode = new CodeNode(script.CodeEvent.StrCode32);
-            MsgSenderNode msgSenderNode = new MsgSenderNode(script.CodeEvent.msg, script.CodeEvent.sender);
+            CodeNode codeNode = new CodeNode(script.CodeEvent.CodeKey);
+            MessageSenderNode msgSenderNode = new MessageSenderNode(script.CodeEvent.Message, script.CodeEvent.SenderKey, script.CodeEvent.SenderValue);
 
             foreach (var precondition in script.Preconditionals)
             {
@@ -293,19 +296,19 @@ namespace SOC.UI
             ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditionals, script.Operationals);
 
             msgSenderNode.Nodes.Add(scriptNode);
-            msgSenderNode.Expand();
             codeNode.Nodes.Add(msgSenderNode);
-            codeNode.Expand();
 
             return codeNode;
         }
 
         public ScriptNode Add(CodeNode incomingCodeNode)
         {
+            incomingCodeNode.Expand();
             ScriptNode selectedScriptNode = null;
 
-            foreach (MsgSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
+            foreach (MessageSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
             {
+                incomingMsgSenderNode.Expand();
                 foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                 {
                     selectedScriptNode = incomingScriptNode;
@@ -315,11 +318,11 @@ namespace SOC.UI
             if (Nodes.ContainsKey(incomingCodeNode.Name))
             {
                 CodeNode existingCodeNode = (CodeNode)Nodes[incomingCodeNode.Name];
-                foreach (MsgSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
+                foreach (MessageSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
                 {
                     if (existingCodeNode.Nodes.ContainsKey(incomingMsgSenderNode.Name))
                     {
-                        MsgSenderNode existingMsgSenderNode = (MsgSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
+                        MessageSenderNode existingMsgSenderNode = (MessageSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
                         foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                         {
                             incomingScriptNode.UpdateNodeText(Lua.String(GetUniqueScriptName(incomingScriptNode.Name)));
@@ -338,6 +341,7 @@ namespace SOC.UI
                 Nodes.Add(incomingCodeNode);
             }
 
+            Expand();
             return selectedScriptNode;
         }
 
@@ -368,7 +372,7 @@ namespace SOC.UI
             {
                 foreach (CodeNode code in table.Nodes)
                 {
-                    foreach (MsgSenderNode msgSender in code.Nodes)
+                    foreach (MessageSenderNode msgSender in code.Nodes)
                     {
                         foreach (ScriptNode scriptNode in msgSender.Nodes)
                         {
@@ -383,7 +387,7 @@ namespace SOC.UI
 
         public void DeleteScriptNode(ScriptNode selectedScriptNode)
         {
-            MsgSenderNode msgSenderNode = (MsgSenderNode)selectedScriptNode.Parent;
+            MessageSenderNode msgSenderNode = (MessageSenderNode)selectedScriptNode.Parent;
             CodeNode codeNode = (CodeNode)msgSenderNode?.Parent;
 
             if (msgSenderNode == null || codeNode == null)
@@ -408,7 +412,7 @@ namespace SOC.UI
 
             foreach (CodeNode codeNode in Nodes)
             {
-                foreach (MsgSenderNode msgSenderNode in codeNode.Nodes)
+                foreach (MessageSenderNode msgSenderNode in codeNode.Nodes)
                 {
                     foreach (ScriptNode scriptNode in msgSenderNode.Nodes)
                     {
@@ -420,12 +424,12 @@ namespace SOC.UI
             return result;
         }
 
-        public ScriptNode MoveScript(ScriptNode selectedScriptNode, string newCode, string newMessage, string newSender)
+        public ScriptNode MoveScript(ScriptNode selectedScriptNode, string newCode, LuaValue newMessage, string newSenderKey, LuaValue newSender)
         {
             Script script = selectedScriptNode.ConvertToScript();
             DeleteScriptNode(selectedScriptNode);
 
-            script.CodeEvent = new StrCode32Event(newCode, newMessage, newSender);
+            script.CodeEvent = new StrCode32(newCode, newMessage, newSenderKey, newSender);
 
             return Add(script);
         }
@@ -484,9 +488,9 @@ namespace SOC.UI
             Description = description;
         }
 
-        public StrCode32Event getEvent()
+        public StrCode32 getEvent()
         {
-            MsgSenderNode msgSenderNode = (MsgSenderNode)Parent;
+            MessageSenderNode msgSenderNode = (MessageSenderNode)Parent;
 
             if (msgSenderNode == null)
                 throw new InvalidOperationException("Script node is not in a valid tree structure.");
@@ -495,7 +499,7 @@ namespace SOC.UI
 
         public Str32TableNode GetStrCode32TableNode()
         {
-            MsgSenderNode msgSenderNode = (MsgSenderNode)Parent;
+            MessageSenderNode msgSenderNode = (MessageSenderNode)Parent;
             CodeNode codeNode = (CodeNode)msgSenderNode?.Parent;
             Str32TableNode str32TableNode = (Str32TableNode)codeNode?.Parent;
 
@@ -528,7 +532,7 @@ namespace SOC.UI
 
         public Script ConvertToScript()
         {
-            MsgSenderNode msgSenderNode = (MsgSenderNode)Parent;
+            MessageSenderNode msgSenderNode = (MessageSenderNode)Parent;
             CodeNode codeNode = (CodeNode)msgSenderNode?.Parent;
 
             if (msgSenderNode == null || codeNode == null)
@@ -536,11 +540,12 @@ namespace SOC.UI
 
             return new Script
             {
-                CodeEvent = new StrCode32Event
+                CodeEvent = new StrCode32
                 {
-                    StrCode32 = codeNode.Code,
-                    msg = msgSenderNode.Msg,
-                    sender = msgSenderNode.Sender,
+                    CodeKey = codeNode.CodeKey,
+                    Message = msgSenderNode.Message,
+                    SenderKey = msgSenderNode.SenderKey,
+                    SenderValue = msgSenderNode.Sender,
                 },
 
                 Identifier = Identifier,
@@ -638,13 +643,12 @@ namespace SOC.UI
             Scriptal.SetRespectiveNode(this);
         }
 
-        public void Doom()
+        public void ClearAllVarNodeDependencies()
         {
             foreach (var choice in Scriptal.Choices)
             {
                 choice.ClearVarNodeDependency(false);
             }
-            Remove();
         }
 
         public ScriptNode GetUnEventedScriptNode()
@@ -652,7 +656,7 @@ namespace SOC.UI
             return GetScriptalParentNode().GetUnEventedScriptNode();
         }
 
-        public StrCode32Event GetEvent()
+        public StrCode32 GetEvent()
         {
             return GetUnEventedScriptNode().getEvent();
         }
@@ -674,25 +678,27 @@ namespace SOC.UI
         }
     }
 
-    public class MsgSenderNode : TreeNode
+    public class MessageSenderNode : TreeNode
     {
-        public LuaString Msg;
+        public LuaValue Message;
 
-        public LuaString Sender;
+        public string SenderKey;
 
-        public MsgSenderNode(LuaString msg, LuaString sender)
+        public LuaValue Sender;
+
+        public MessageSenderNode(LuaValue message, string senderKey, LuaValue sender)
         {
-            Msg = msg;
+            Message = message;
+            SenderKey = senderKey;
             Sender = sender;
 
-            if (Sender.Text != "")
+            if (Sender is LuaNil)
             {
-                Name = $"{Msg.ToString()} :: {Sender.ToString()}";
+                Name = Message.ToString();
                 Text = Name;
-            }
-            else
+            } else 
             {
-                Name = Msg.ToString();
+                Name = $"{Message} :: {Sender}";
                 Text = Name;
             }
         }
@@ -706,17 +712,18 @@ namespace SOC.UI
             return codeNode.GetTableNode();
         }
 
-        public StrCode32Event GetEvent()
+        public StrCode32 GetEvent()
         {
             CodeNode codeNode = (CodeNode)Parent;
 
             if (codeNode == null)
                 throw new InvalidOperationException("Script node is not in a valid tree structure.");
-            return new StrCode32Event
+            return new StrCode32
             {
-                StrCode32 = codeNode.Code,
-                msg = Msg,
-                sender = Sender,
+                CodeKey = codeNode.CodeKey,
+                Message = Message,
+                SenderKey = SenderKey,
+                SenderValue = Sender,
             };
         }
 
@@ -724,7 +731,7 @@ namespace SOC.UI
 
     public class CodeNode : TreeNode
     {
-        public LuaString Code;
+        public string CodeKey;
 
         public Str32TableNode GetTableNode()
         {
@@ -735,12 +742,11 @@ namespace SOC.UI
             return tableNode;
         }
 
-        public CodeNode(LuaString code)
+        public CodeNode(string code)
         {
-            Code = code;
-
-            Name = code.Text;
-            Text = code.Text;
+            CodeKey = code;
+            Name = code;
+            Text = code;
         }
     }
 }

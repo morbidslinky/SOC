@@ -7,7 +7,7 @@
 
         public Messages()
         {
-            var blockScript = new Script(new StrCode32Event("Block", "StageBlockCurrentSmallBlockIndexUpdated", ""), Lua.TableEntry("StageBlockCurrentSmallBlockIndexUpdatedFunc", Lua.Function("")));
+            var blockScript = new Script(new StrCode32("Block", Lua.String("StageBlockCurrentSmallBlockIndexUpdated")), Lua.TableEntry("StageBlockCurrentSmallBlockIndexUpdatedFunc", Lua.Function("")));
             StrCode32Table.Add(blockScript);
         }
 

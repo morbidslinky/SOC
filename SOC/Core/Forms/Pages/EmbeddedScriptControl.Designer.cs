@@ -32,12 +32,17 @@
             this.groupBoxDescription = new System.Windows.Forms.GroupBox();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.groupBoxTrigger = new System.Windows.Forms.GroupBox();
+            this.buttonApplySender = new System.Windows.Forms.Button();
+            this.labelSenderValue = new System.Windows.Forms.Label();
             this.labelStrCode32 = new System.Windows.Forms.Label();
-            this.comboBoxStrSenders = new System.Windows.Forms.ComboBox();
-            this.comboBoxStrCodes = new System.Windows.Forms.ComboBox();
+            this.comboBoxSenderOptions = new System.Windows.Forms.ComboBox();
+            this.comboBoxCode = new System.Windows.Forms.ComboBox();
             this.labelmsg = new System.Windows.Forms.Label();
-            this.comboBoxStrMsgs = new System.Windows.Forms.ComboBox();
+            this.comboBoxMessage = new System.Windows.Forms.ComboBox();
             this.labelSenderOptions = new System.Windows.Forms.Label();
+            this.textBoxSenders = new System.Windows.Forms.TextBox();
+            this.comboBoxSenders = new System.Windows.Forms.ComboBox();
+            this.numericUpDownSenders = new System.Windows.Forms.NumericUpDown();
             this.splitContainerInner = new System.Windows.Forms.SplitContainer();
             this.groupBoxPreconditions = new System.Windows.Forms.GroupBox();
             this.buttonUpPrecondition = new System.Windows.Forms.Button();
@@ -47,23 +52,19 @@
             this.buttonUpOperation = new System.Windows.Forms.Button();
             this.buttonDownOperation = new System.Windows.Forms.Button();
             this.listBoxOperations = new System.Windows.Forms.ListBox();
-            this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
-            this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
-            this.comboBoxPresetChoosables = new System.Windows.Forms.ComboBox();
-            this.labelSenderValue = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
             this.splitContainerOuter.Panel1.SuspendLayout();
             this.splitContainerOuter.Panel2.SuspendLayout();
             this.splitContainerOuter.SuspendLayout();
             this.groupBoxDescription.SuspendLayout();
             this.groupBoxTrigger.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSenders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).BeginInit();
             this.splitContainerInner.Panel1.SuspendLayout();
             this.splitContainerInner.Panel2.SuspendLayout();
             this.splitContainerInner.SuspendLayout();
             this.groupBoxPreconditions.SuspendLayout();
             this.groupBoxActions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainerOuter
@@ -76,12 +77,12 @@
             // 
             this.splitContainerOuter.Panel1.Controls.Add(this.groupBoxDescription);
             this.splitContainerOuter.Panel1.Controls.Add(this.groupBoxTrigger);
-            this.splitContainerOuter.Panel1MinSize = 140;
+            this.splitContainerOuter.Panel1MinSize = 210;
             // 
             // splitContainerOuter.Panel2
             // 
             this.splitContainerOuter.Panel2.Controls.Add(this.splitContainerInner);
-            this.splitContainerOuter.Panel2MinSize = 140;
+            this.splitContainerOuter.Panel2MinSize = 210;
             this.splitContainerOuter.Size = new System.Drawing.Size(575, 431);
             this.splitContainerOuter.SplitterDistance = 287;
             this.splitContainerOuter.SplitterWidth = 3;
@@ -124,22 +125,43 @@
             this.groupBoxTrigger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTrigger.BackColor = System.Drawing.Color.Silver;
+            this.groupBoxTrigger.Controls.Add(this.buttonApplySender);
             this.groupBoxTrigger.Controls.Add(this.labelSenderValue);
             this.groupBoxTrigger.Controls.Add(this.labelStrCode32);
-            this.groupBoxTrigger.Controls.Add(this.comboBoxStrSenders);
-            this.groupBoxTrigger.Controls.Add(this.comboBoxStrCodes);
+            this.groupBoxTrigger.Controls.Add(this.comboBoxSenderOptions);
+            this.groupBoxTrigger.Controls.Add(this.comboBoxCode);
             this.groupBoxTrigger.Controls.Add(this.labelmsg);
-            this.groupBoxTrigger.Controls.Add(this.comboBoxStrMsgs);
+            this.groupBoxTrigger.Controls.Add(this.comboBoxMessage);
             this.groupBoxTrigger.Controls.Add(this.labelSenderOptions);
-            this.groupBoxTrigger.Controls.Add(this.numericUpDownVarNumberValue);
-            this.groupBoxTrigger.Controls.Add(this.textBoxVarStringValue);
-            this.groupBoxTrigger.Controls.Add(this.comboBoxPresetChoosables);
+            this.groupBoxTrigger.Controls.Add(this.textBoxSenders);
+            this.groupBoxTrigger.Controls.Add(this.comboBoxSenders);
+            this.groupBoxTrigger.Controls.Add(this.numericUpDownSenders);
             this.groupBoxTrigger.Location = new System.Drawing.Point(0, 0);
             this.groupBoxTrigger.Name = "groupBoxTrigger";
             this.groupBoxTrigger.Size = new System.Drawing.Size(285, 179);
             this.groupBoxTrigger.TabIndex = 31;
             this.groupBoxTrigger.TabStop = false;
             this.groupBoxTrigger.Text = "Trigger :: \"When\"";
+            // 
+            // buttonApplySender
+            // 
+            this.buttonApplySender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonApplySender.Location = new System.Drawing.Point(211, 146);
+            this.buttonApplySender.Name = "buttonApplySender";
+            this.buttonApplySender.Size = new System.Drawing.Size(71, 23);
+            this.buttonApplySender.TabIndex = 17;
+            this.buttonApplySender.Text = "Apply >>";
+            this.buttonApplySender.UseVisualStyleBackColor = true;
+            this.buttonApplySender.Click += new System.EventHandler(this.buttonApplySender_Click);
+            // 
+            // labelSenderValue
+            // 
+            this.labelSenderValue.AutoSize = true;
+            this.labelSenderValue.Location = new System.Drawing.Point(6, 151);
+            this.labelSenderValue.Name = "labelSenderValue";
+            this.labelSenderValue.Size = new System.Drawing.Size(44, 13);
+            this.labelSenderValue.TabIndex = 16;
+            this.labelSenderValue.Text = "Sender:";
             // 
             // labelStrCode32
             // 
@@ -150,59 +172,105 @@
             this.labelStrCode32.TabIndex = 0;
             this.labelStrCode32.Text = "StrCode32:";
             // 
-            // comboBoxStrSenders
+            // comboBoxSenderOptions
             // 
-            this.comboBoxStrSenders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxSenderOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStrSenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStrSenders.FormattingEnabled = true;
-            this.comboBoxStrSenders.Location = new System.Drawing.Point(6, 120);
-            this.comboBoxStrSenders.Name = "comboBoxStrSenders";
-            this.comboBoxStrSenders.Size = new System.Drawing.Size(273, 21);
-            this.comboBoxStrSenders.TabIndex = 5;
-            this.comboBoxStrSenders.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrSenders_SelectedIndexChanged);
+            this.comboBoxSenderOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSenderOptions.FormattingEnabled = true;
+            this.comboBoxSenderOptions.Location = new System.Drawing.Point(6, 120);
+            this.comboBoxSenderOptions.Name = "comboBoxSenderOptions";
+            this.comboBoxSenderOptions.Size = new System.Drawing.Size(275, 21);
+            this.comboBoxSenderOptions.TabIndex = 5;
+            this.comboBoxSenderOptions.SelectedIndexChanged += new System.EventHandler(this.comboBoxSendersOptions_SelectedIndexChanged);
             // 
-            // comboBoxStrCodes
+            // comboBoxCode
             // 
-            this.comboBoxStrCodes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxCode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStrCodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStrCodes.FormattingEnabled = true;
-            this.comboBoxStrCodes.Location = new System.Drawing.Point(6, 40);
-            this.comboBoxStrCodes.Name = "comboBoxStrCodes";
-            this.comboBoxStrCodes.Size = new System.Drawing.Size(273, 21);
-            this.comboBoxStrCodes.TabIndex = 1;
-            this.comboBoxStrCodes.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrCodes_SelectedIndexChanged);
+            this.comboBoxCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCode.FormattingEnabled = true;
+            this.comboBoxCode.Location = new System.Drawing.Point(6, 40);
+            this.comboBoxCode.Name = "comboBoxCode";
+            this.comboBoxCode.Size = new System.Drawing.Size(275, 21);
+            this.comboBoxCode.TabIndex = 1;
+            this.comboBoxCode.SelectedIndexChanged += new System.EventHandler(this.comboBoxCode_SelectedIndexChanged);
             // 
             // labelmsg
             // 
             this.labelmsg.AutoSize = true;
             this.labelmsg.Location = new System.Drawing.Point(6, 64);
             this.labelmsg.Name = "labelmsg";
-            this.labelmsg.Size = new System.Drawing.Size(39, 13);
+            this.labelmsg.Size = new System.Drawing.Size(53, 13);
             this.labelmsg.TabIndex = 2;
-            this.labelmsg.Text = "\"msg\":";
+            this.labelmsg.Text = "Message:";
             // 
-            // comboBoxStrMsgs
+            // comboBoxMessage
             // 
-            this.comboBoxStrMsgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.comboBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStrMsgs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStrMsgs.FormattingEnabled = true;
-            this.comboBoxStrMsgs.Location = new System.Drawing.Point(6, 80);
-            this.comboBoxStrMsgs.Name = "comboBoxStrMsgs";
-            this.comboBoxStrMsgs.Size = new System.Drawing.Size(273, 21);
-            this.comboBoxStrMsgs.TabIndex = 3;
-            this.comboBoxStrMsgs.SelectedIndexChanged += new System.EventHandler(this.comboBoxStrMsgs_SelectedIndexChanged);
+            this.comboBoxMessage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMessage.FormattingEnabled = true;
+            this.comboBoxMessage.Location = new System.Drawing.Point(6, 80);
+            this.comboBoxMessage.Name = "comboBoxMessage";
+            this.comboBoxMessage.Size = new System.Drawing.Size(275, 21);
+            this.comboBoxMessage.TabIndex = 3;
+            this.comboBoxMessage.SelectedIndexChanged += new System.EventHandler(this.comboBoxMessage_SelectedIndexChanged);
             // 
             // labelSenderOptions
             // 
             this.labelSenderOptions.AutoSize = true;
             this.labelSenderOptions.Location = new System.Drawing.Point(6, 104);
             this.labelSenderOptions.Name = "labelSenderOptions";
-            this.labelSenderOptions.Size = new System.Drawing.Size(86, 13);
+            this.labelSenderOptions.Size = new System.Drawing.Size(83, 13);
             this.labelSenderOptions.TabIndex = 4;
-            this.labelSenderOptions.Text = "\"sender\" Option:";
+            this.labelSenderOptions.Text = "Sender Options:";
+            // 
+            // textBoxSenders
+            // 
+            this.textBoxSenders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxSenders.BackColor = System.Drawing.Color.LightGray;
+            this.textBoxSenders.Location = new System.Drawing.Point(56, 148);
+            this.textBoxSenders.Name = "textBoxSenders";
+            this.textBoxSenders.Size = new System.Drawing.Size(149, 20);
+            this.textBoxSenders.TabIndex = 15;
+            this.textBoxSenders.Visible = false;
+            this.textBoxSenders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSenders_KeyDown);
+            // 
+            // comboBoxSenders
+            // 
+            this.comboBoxSenders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxSenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSenders.FormattingEnabled = true;
+            this.comboBoxSenders.Location = new System.Drawing.Point(56, 148);
+            this.comboBoxSenders.Name = "comboBoxSenders";
+            this.comboBoxSenders.Size = new System.Drawing.Size(223, 21);
+            this.comboBoxSenders.TabIndex = 10;
+            this.comboBoxSenders.SelectedIndexChanged += new System.EventHandler(this.comboBoxSenders_SelectedIndexChanged);
+            // 
+            // numericUpDownSenders
+            // 
+            this.numericUpDownSenders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownSenders.Location = new System.Drawing.Point(56, 148);
+            this.numericUpDownSenders.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.numericUpDownSenders.Minimum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            -2147483648});
+            this.numericUpDownSenders.Name = "numericUpDownSenders";
+            this.numericUpDownSenders.Size = new System.Drawing.Size(149, 20);
+            this.numericUpDownSenders.TabIndex = 12;
+            this.numericUpDownSenders.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.numericUpDownSenders.Visible = false;
+            this.numericUpDownSenders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericUpDownSenders_KeyDown);
             // 
             // splitContainerInner
             // 
@@ -215,10 +283,12 @@
             // splitContainerInner.Panel1
             // 
             this.splitContainerInner.Panel1.Controls.Add(this.groupBoxPreconditions);
+            this.splitContainerInner.Panel1MinSize = 130;
             // 
             // splitContainerInner.Panel2
             // 
             this.splitContainerInner.Panel2.Controls.Add(this.groupBoxActions);
+            this.splitContainerInner.Panel2MinSize = 130;
             this.splitContainerInner.Size = new System.Drawing.Size(285, 431);
             this.splitContainerInner.SplitterDistance = 180;
             this.splitContainerInner.TabIndex = 1;
@@ -325,58 +395,6 @@
             this.listBoxOperations.TabIndex = 8;
             this.listBoxOperations.SelectedIndexChanged += new System.EventHandler(this.listBoxOperations_SelectedIndexChanged);
             // 
-            // numericUpDownVarNumberValue
-            // 
-            this.numericUpDownVarNumberValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownVarNumberValue.Location = new System.Drawing.Point(64, 148);
-            this.numericUpDownVarNumberValue.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.numericUpDownVarNumberValue.Minimum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            -2147483648});
-            this.numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
-            this.numericUpDownVarNumberValue.Size = new System.Drawing.Size(215, 20);
-            this.numericUpDownVarNumberValue.TabIndex = 12;
-            this.numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownVarNumberValue.Visible = false;
-            // 
-            // textBoxVarStringValue
-            // 
-            this.textBoxVarStringValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVarStringValue.BackColor = System.Drawing.Color.LightGray;
-            this.textBoxVarStringValue.Location = new System.Drawing.Point(64, 148);
-            this.textBoxVarStringValue.Name = "textBoxVarStringValue";
-            this.textBoxVarStringValue.Size = new System.Drawing.Size(215, 20);
-            this.textBoxVarStringValue.TabIndex = 15;
-            this.textBoxVarStringValue.Visible = false;
-            // 
-            // comboBoxPresetChoosables
-            // 
-            this.comboBoxPresetChoosables.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxPresetChoosables.FormattingEnabled = true;
-            this.comboBoxPresetChoosables.Location = new System.Drawing.Point(64, 148);
-            this.comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
-            this.comboBoxPresetChoosables.Size = new System.Drawing.Size(215, 21);
-            this.comboBoxPresetChoosables.TabIndex = 10;
-            // 
-            // labelSenderValue
-            // 
-            this.labelSenderValue.AutoSize = true;
-            this.labelSenderValue.Location = new System.Drawing.Point(6, 151);
-            this.labelSenderValue.Name = "labelSenderValue";
-            this.labelSenderValue.Size = new System.Drawing.Size(52, 13);
-            this.labelSenderValue.TabIndex = 16;
-            this.labelSenderValue.Text = "\"sender\":";
-            // 
             // EmbeddedScriptControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -392,13 +410,13 @@
             this.groupBoxDescription.PerformLayout();
             this.groupBoxTrigger.ResumeLayout(false);
             this.groupBoxTrigger.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSenders)).EndInit();
             this.splitContainerInner.Panel1.ResumeLayout(false);
             this.splitContainerInner.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).EndInit();
             this.splitContainerInner.ResumeLayout(false);
             this.groupBoxPreconditions.ResumeLayout(false);
             this.groupBoxActions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -414,18 +432,19 @@
         internal System.Windows.Forms.TextBox textBoxDescription;
         internal System.Windows.Forms.GroupBox groupBoxTrigger;
         internal System.Windows.Forms.Label labelStrCode32;
-        internal System.Windows.Forms.ComboBox comboBoxStrSenders;
-        internal System.Windows.Forms.ComboBox comboBoxStrCodes;
+        internal System.Windows.Forms.ComboBox comboBoxSenderOptions;
+        internal System.Windows.Forms.ComboBox comboBoxCode;
         internal System.Windows.Forms.Label labelmsg;
-        internal System.Windows.Forms.ComboBox comboBoxStrMsgs;
+        internal System.Windows.Forms.ComboBox comboBoxMessage;
         internal System.Windows.Forms.Label labelSenderOptions;
         private System.Windows.Forms.Button buttonUpPrecondition;
         private System.Windows.Forms.Button buttonDownPrecondition;
         private System.Windows.Forms.Button buttonUpOperation;
         private System.Windows.Forms.Button buttonDownOperation;
-        internal System.Windows.Forms.NumericUpDown numericUpDownVarNumberValue;
-        internal System.Windows.Forms.TextBox textBoxVarStringValue;
-        internal System.Windows.Forms.ComboBox comboBoxPresetChoosables;
+        internal System.Windows.Forms.NumericUpDown numericUpDownSenders;
+        internal System.Windows.Forms.TextBox textBoxSenders;
+        internal System.Windows.Forms.ComboBox comboBoxSenders;
         internal System.Windows.Forms.Label labelSenderValue;
+        private System.Windows.Forms.Button buttonApplySender;
     }
 }

@@ -25,6 +25,6 @@ namespace SOC.QuestObjects.Common
 
         public virtual void AddToAssets(CommonAssetsBuilder assetsBuilder) { return; }
 
-        public virtual void AddToScriptChoosableValueSets(List<ChoosableValues> choosableValues) { return; }
+        public virtual void AddToScriptChoosableValueSets(List<ChoiceKeyValues> choosableValues) { return; }
     }
 }

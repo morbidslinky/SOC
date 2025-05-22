@@ -76,12 +76,12 @@
             // 
             this.splitContainerScriptal.Panel1.Controls.Add(this.groupBoxDescription);
             this.splitContainerScriptal.Panel1.Controls.Add(this.groupBoxScriptalSelect);
-            this.splitContainerScriptal.Panel1MinSize = 140;
+            this.splitContainerScriptal.Panel1MinSize = 210;
             // 
             // splitContainerScriptal.Panel2
             // 
             this.splitContainerScriptal.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainerScriptal.Panel2MinSize = 140;
+            this.splitContainerScriptal.Panel2MinSize = 210;
             this.splitContainerScriptal.Size = new System.Drawing.Size(575, 431);
             this.splitContainerScriptal.SplitterDistance = 287;
             this.splitContainerScriptal.SplitterWidth = 3;
@@ -175,10 +175,12 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.groupBoxChoicesList);
+            this.splitContainer1.Panel1MinSize = 130;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBoxChoice);
+            this.splitContainer1.Panel2MinSize = 130;
             this.splitContainer1.Size = new System.Drawing.Size(285, 431);
             this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 8;

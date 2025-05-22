@@ -157,10 +157,12 @@
             // splitContainerOuter.Panel1
             // 
             this.splitContainerOuter.Panel1.Controls.Add(this.groupBoxVariables);
+            this.splitContainerOuter.Panel1MinSize = 210;
             // 
             // splitContainerOuter.Panel2
             // 
             this.splitContainerOuter.Panel2.Controls.Add(this.groupBoxScripts);
+            this.splitContainerOuter.Panel2MinSize = 210;
             this.splitContainerOuter.Size = new System.Drawing.Size(575, 349);
             this.splitContainerOuter.SplitterDistance = 287;
             this.splitContainerOuter.SplitterWidth = 3;
