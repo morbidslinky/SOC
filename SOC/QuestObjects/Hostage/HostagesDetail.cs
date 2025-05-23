@@ -67,5 +67,10 @@ namespace SOC.QuestObjects.Hostage
         {
             return hostageControlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            HostageLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

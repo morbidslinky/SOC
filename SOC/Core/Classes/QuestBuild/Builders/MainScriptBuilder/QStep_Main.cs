@@ -30,8 +30,9 @@ namespace SOC.Classes.Lua
     }
 }
 
+// as much as I want to refactor & redesign all of this to display on the script page if the user selects a target, there's really not a lot of value for the user beyond "oh that's cool".
+// Maybe revisit if I want objects to add their own event scripts?
 public static class QStep_Main_TargetMessages 
-    // as much as I want to refactor & redesign all of this to display on the script page if the user selects a target, there's really not a lot of value for the user beyond "oh that's cool". Maybe revisit if I want objects to add their own event scripts?
 {
     static readonly Script PlayerPickUpWeapon = new Script(
         new StrCode32("Player", Lua.String("OnPickUpWeapon")),

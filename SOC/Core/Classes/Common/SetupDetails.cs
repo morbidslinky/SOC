@@ -124,10 +124,10 @@ namespace SOC.Classes.Common
             }
         }
 
-        internal void AddToScriptChoosableValueSets(List<ChoiceKeyValues> questDetailsValueSets) // For any future additions to SetupDetails that would send script data to the ScriptControl/ScriptDetails
+        internal void AddToScriptChoosableValueSets(ChoiceKeyValuesList questDetailsValueSets) // For any future additions to SetupDetails that would send script data to the ScriptControl/ScriptDetails
         {
             List<ChoiceKeyValues> SetupChoosableValuesSets = new List<ChoiceKeyValues>();
-            questDetailsValueSets.AddRange(SetupChoosableValuesSets);
+            questDetailsValueSets.ChoiceKeyValues.AddRange(SetupChoosableValuesSets);
         }
     }
 }

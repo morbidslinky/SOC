@@ -182,6 +182,7 @@
             this.comboBoxSenderOptions.Name = "comboBoxSenderOptions";
             this.comboBoxSenderOptions.Size = new System.Drawing.Size(275, 21);
             this.comboBoxSenderOptions.TabIndex = 5;
+            this.comboBoxSenderOptions.DropDown += new System.EventHandler(this.comboBoxSenderOptions_DropDown);
             this.comboBoxSenderOptions.SelectedIndexChanged += new System.EventHandler(this.comboBoxSendersOptions_SelectedIndexChanged);
             // 
             // comboBoxCode
@@ -248,6 +249,7 @@
             this.comboBoxSenders.Name = "comboBoxSenders";
             this.comboBoxSenders.Size = new System.Drawing.Size(223, 21);
             this.comboBoxSenders.TabIndex = 10;
+            this.comboBoxSenders.DropDown += new System.EventHandler(this.comboBoxSenders_DropDown);
             this.comboBoxSenders.SelectedIndexChanged += new System.EventHandler(this.comboBoxSenders_SelectedIndexChanged);
             // 
             // numericUpDownSenders

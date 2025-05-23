@@ -69,5 +69,10 @@ namespace SOC.QuestObjects.Animal
         {
             return controlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            AnimalLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

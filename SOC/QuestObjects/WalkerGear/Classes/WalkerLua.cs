@@ -112,6 +112,11 @@ namespace SOC.QuestObjects.WalkerGear
             }
         }
 
+        internal static void GetScriptChoosableValueSets(WalkerGearsDetail walkerGearsDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildWalkerList(List<WalkerGear> walkers)
         {
             LuaTable walkerList = new LuaTable();

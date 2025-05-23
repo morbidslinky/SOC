@@ -64,5 +64,10 @@ namespace SOC.QuestObjects.Item
         {
             return controlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            ItemLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

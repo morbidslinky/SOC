@@ -72,5 +72,10 @@ namespace SOC.QuestObjects.Vehicle
         {
             return vehicleControlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            VehicleLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

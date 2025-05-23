@@ -71,12 +71,7 @@ namespace SOC.UI
                 matchIndex = 0;
             comboBoxCode.SelectedIndex = matchIndex;
 
-            comboBoxSenderOptions.Items.Clear();
-            comboBoxSenderOptions.Items.AddRange(GetChoosableValuesSets());
-            var match = comboBoxSenderOptions.Items.OfType<ChoiceKeyValues>().FirstOrDefault(set => set.Key == msgSenderNode.SenderKey);
-            if (match == null && comboBoxSenderOptions.Items.Count > 0)
-                match = (ChoiceKeyValues)comboBoxSenderOptions.Items[0];
-            comboBoxSenderOptions.SelectedItem = match;
+            RefreshSenderOptions();
         }
 
         private ChoiceKeyValues[] GetChoosableValuesSets()
@@ -90,10 +85,28 @@ namespace SOC.UI
                 }
             );
 
-            chooseableSets.AddRange(ParentControl.Quest.GetAllObjectsScriptValueSets());
+            chooseableSets.AddRange(ParentControl.Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues);
 
             return chooseableSets.ToArray();
         }
+
+        private void comboBoxSenderOptions_DropDown(object sender, EventArgs e)
+        {
+            RefreshSenderOptions();
+        }
+
+        private void RefreshSenderOptions()
+        {
+            MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
+
+            comboBoxSenderOptions.Items.Clear();
+            comboBoxSenderOptions.Items.AddRange(GetChoosableValuesSets());
+            var match = comboBoxSenderOptions.Items.OfType<ChoiceKeyValues>().FirstOrDefault(set => set.Key == msgSenderNode.SenderKey);
+            if (match == null && comboBoxSenderOptions.Items.Count > 0)
+                match = (ChoiceKeyValues)comboBoxSenderOptions.Items[0];
+            comboBoxSenderOptions.SelectedItem = match;
+        }
+
 
         private void comboBoxCode_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -141,6 +154,7 @@ namespace SOC.UI
 
                 default:
                     showCorrespondingSenderControl(comboBoxSenders);
+                    RefreshPresetSenders(selectedSenderChoosableSet.Values);
                     MoveSelectedScript((LuaValue)comboBoxSenders.SelectedItem);
                     break;
             }
@@ -202,6 +216,25 @@ namespace SOC.UI
                 ParentControl.RedrawScriptDependents();
                 movedNode.ExpandAll();
             }
+        }
+
+        private void RefreshPresetSenders(List<LuaValue> values)
+        {
+            MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
+
+            comboBoxSenders.Items.Clear();
+            comboBoxSenders.Items.AddRange(values.ToArray());
+
+            var match = comboBoxSenders.Items.OfType<LuaValue>().FirstOrDefault(value => value.Matches(msgSenderNode.Sender));
+            if (match == null && comboBoxSenders.Items.Count > 0)
+                match = (LuaValue)comboBoxSenders.Items[0];
+
+            comboBoxSenders.SelectedItem = match;
+        }
+
+        private void comboBoxSenders_DropDown(object sender, EventArgs e)
+        {
+            RefreshPresetSenders(ParentControl.Quest.GetAllObjectsScriptValueSets().Get(((ChoiceKeyValues)comboBoxSenderOptions.SelectedItem).Key));
         }
 
         private void comboBoxSenders_SelectedIndexChanged(object sender, EventArgs e)

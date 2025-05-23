@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SOC.Classes.Lua;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOC.Classes.Lua;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.GeoTrap
 {
@@ -12,7 +13,7 @@ namespace SOC.QuestObjects.GeoTrap
         internal static void GetMain(GeoTrapsDetail detail, MainScriptBuilder mainLua)
         {
             List<GeoTrap> shapes = detail.trapShapes;
-
+/*
             if (shapes.Count > 0)
             {
                 var uniqueGeoTraps = shapes.Select(shape => shape.geoTrap).Distinct();
@@ -34,6 +35,21 @@ namespace SOC.QuestObjects.GeoTrap
 
                     mainLua.QStep_Main.StrCode32Table.Add(EnterTrap, ExitTrap);
                 }
+            }*/
+        }
+
+        internal static void GetScriptChoosableValueSets(GeoTrapsDetail geoTrapsDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (geoTrapsDetail.trapShapes.Count > 0)
+            {
+                ChoiceKeyValues geoTrapSenders = new ChoiceKeyValues("GeoTrap Senders");
+
+                foreach (string geoTrapName in geoTrapsDetail.trapShapes.Select(shape => shape.geoTrap).Distinct())
+                {
+                    geoTrapSenders.Add(Lua.String(geoTrapName));
+                }
+
+                questKeyValues.Add(geoTrapSenders);
             }
         }
     }

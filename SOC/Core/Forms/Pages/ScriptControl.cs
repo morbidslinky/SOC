@@ -54,6 +54,8 @@ namespace SOC.UI
                 selected = ScriptTablesRootNode.QStep_Main.Add(entry);
             }
             treeViewScripts.SelectedNode = selected != null ? selected : ScriptTablesRootNode.QStep_Main;
+
+            // todo the logic from EmbeddedScriptSetControl to set dependencies needs to happen here also, otherwise loading quests won't bind scripts to variables properly
         }
 
         private void ScriptControl_Load(object sender, EventArgs e)

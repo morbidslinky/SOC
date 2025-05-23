@@ -41,6 +41,11 @@ namespace SOC.QuestObjects.ActiveItem
             }
         }
 
+        internal static void GetScriptChoosableValueSets(ActiveItemsDetail activeItemsDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildTargetItemList(ActiveItemsDetail detail)
         {
             LuaTable targetItemList = new LuaTable();

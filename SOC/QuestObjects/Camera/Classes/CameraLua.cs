@@ -52,6 +52,11 @@ namespace SOC.QuestObjects.Camera
             }
         }
 
+        internal static void GetScriptChoosableValueSets(CamerasDetail camerasDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildCameraList(List<Camera> cameras)
         {
             LuaTable cameraList = new LuaTable();

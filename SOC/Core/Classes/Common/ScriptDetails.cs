@@ -21,7 +21,7 @@ namespace SOC.Classes.Common
         public List<LuaTableEntry> VariableDeclarations = new List<LuaTableEntry>();
 
         [XmlIgnore]
-        public List<ChoiceKeyValues> QuestChoosableValueSetsCache = new List<ChoiceKeyValues>();
+        public ChoiceKeyValuesList QuestKeyValueSetsCache = new ChoiceKeyValuesList();
 
         public ScriptDetails () { }
 

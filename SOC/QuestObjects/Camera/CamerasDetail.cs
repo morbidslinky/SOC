@@ -68,5 +68,10 @@ namespace SOC.QuestObjects.Camera
         {
             return controlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            CameraLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

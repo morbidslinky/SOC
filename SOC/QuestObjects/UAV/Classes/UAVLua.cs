@@ -52,6 +52,11 @@ namespace SOC.QuestObjects.UAV
             }
         }
 
+        internal static void GetScriptChoosableValueSets(UAVsDetail uAVsDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildUAVList(List<UAV> UAVs)
         {
             LuaTable UAVList = new LuaTable();

@@ -58,6 +58,11 @@ namespace SOC.QuestObjects.Vehicle
             }
         }
 
+        internal static void GetScriptChoosableValueSets(VehiclesDetail vehiclesDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildVehicleList(List<Vehicle> vehicles)
         {
             LuaTable vehicleList = new LuaTable();

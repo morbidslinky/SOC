@@ -231,9 +231,8 @@ namespace SOC.QuestObjects.Enemy
             return Lua.TableEntry("cpList", Lua.Table(Lua.Nil()));
         }
 
-        internal static void GetScriptChoosableValueSets(EnemiesDetail enemiesDetail, List<ChoiceKeyValues> choosableValues)
+        internal static void GetScriptChoosableValueSets(EnemiesDetail enemiesDetail, ChoiceKeyValuesList questKeyValueSets)
         {
-            //throw new NotImplementedException();
         }
     }
 }

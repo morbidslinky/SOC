@@ -55,6 +55,11 @@ namespace SOC.QuestObjects.Helicopter
             }
         }
 
+        internal static void GetScriptChoosableValueSets(HelicoptersDetail helicoptersDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildHeliList(HelicoptersDetail questDetail)
         {
             LuaTable heliList = new LuaTable();

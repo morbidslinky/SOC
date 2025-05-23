@@ -311,6 +311,7 @@ namespace SOC.UI
                 incomingMsgSenderNode.Expand();
                 foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                 {
+                    incomingScriptNode.UpdateNodeText(Lua.String(GetUniqueScriptName(incomingScriptNode.Name)));
                     selectedScriptNode = incomingScriptNode;
                 }
             }
@@ -325,7 +326,6 @@ namespace SOC.UI
                         MessageSenderNode existingMsgSenderNode = (MessageSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
                         foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                         {
-                            incomingScriptNode.UpdateNodeText(Lua.String(GetUniqueScriptName(incomingScriptNode.Name)));
                             existingMsgSenderNode.Nodes.Add(incomingScriptNode);
                             selectedScriptNode = incomingScriptNode;
                         }

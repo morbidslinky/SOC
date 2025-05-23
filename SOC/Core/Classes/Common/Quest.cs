@@ -156,26 +156,26 @@ namespace SOC.Classes.Common
             }
         }
 
-        public List<ChoiceKeyValues> GetAllObjectsScriptValueSets()
+        public ChoiceKeyValuesList GetAllObjectsScriptValueSets()
         {
-            if (ScriptDetails.QuestChoosableValueSetsCache == null)
+            if (ScriptDetails.QuestKeyValueSetsCache == null)
             {
-                ScriptDetails.QuestChoosableValueSetsCache = new List<ChoiceKeyValues>();
+                ScriptDetails.QuestKeyValueSetsCache = new ChoiceKeyValuesList();
 
                 foreach (ObjectsDetail detail in ObjectsDetails.Details)
                 {
-                    detail.AddToScriptChoosableValueSets(ScriptDetails.QuestChoosableValueSetsCache);
+                    detail.AddToScriptKeyValueSets(ScriptDetails.QuestKeyValueSetsCache);
                 }
 
-                SetupDetails.AddToScriptChoosableValueSets(ScriptDetails.QuestChoosableValueSetsCache);
+                SetupDetails.AddToScriptChoosableValueSets(ScriptDetails.QuestKeyValueSetsCache);
             }
 
-            return ScriptDetails.QuestChoosableValueSetsCache;
+            return ScriptDetails.QuestKeyValueSetsCache;
         }
 
         internal void ClearAllObjectsScriptValueSets()
         {
-            ScriptDetails.QuestChoosableValueSetsCache = null;
+            ScriptDetails.QuestKeyValueSetsCache = null;
         }
 
         public LocationalDataStub[] GetLocationalStubs()

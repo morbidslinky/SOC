@@ -41,6 +41,11 @@ namespace SOC.QuestObjects.Animal
             }
         }
 
+        internal static void GetScriptChoosableValueSets(AnimalsDetail animalsDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
+
         private static LuaTableEntry BuildAnimalList(List<Animal> animals)
         {
             LuaTable animalList = new LuaTable();

@@ -91,9 +91,9 @@ namespace SOC.UI
             groupBoxDescription.Text = $"Template Description :: \"{scriptal.Name}\"";
             textBoxDescription.Text = scriptal.Description +
                 $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate}";
-            if (scriptal.EmbeddedChoosables.Count > 0)
+            if (scriptal.EmbeddedChoosables.ChoiceKeyValues.Count > 0)
             {
-                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n\r\n- {string.Join("\r\n\r\n- ", scriptal.EmbeddedChoosables.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
+                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n\r\n- {string.Join("\r\n\r\n- ", scriptal.EmbeddedChoosables.ChoiceKeyValues.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
             }
         }
 
@@ -129,7 +129,7 @@ namespace SOC.UI
 
             List<FileInfo> scriptalFiles = GetScriptalFiles(scriptalNode);
 
-            Exception lastExeption = null; int exceptionCount = 0;
+            Exception lastExeption = null; string failedFileName = ""; int exceptionCount = 0;
             foreach (FileInfo scriptalFile in scriptalFiles)
             {
                 try
@@ -140,11 +140,12 @@ namespace SOC.UI
                 {
                     exceptionCount++;
                     lastExeption = e;
+                    failedFileName = scriptalFile.Name;
                 }
             }
             if (lastExeption != null)
             {
-                MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to load the Scriptal Template files. \n\nThe broken templates will not be listed. \n\nLast Error: {lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to load the Scriptal Template files. \n\nThe broken templates will not be listed. \n\nLast Error: {failedFileName}\n{lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             return scriptals.ToArray();
@@ -239,8 +240,8 @@ string.Format(@"
         {
             List<ChoiceKeyValues> chooseableSets = new List<ChoiceKeyValues>();
 
-            chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables
-                .Union(ParentControl.Quest.GetAllObjectsScriptValueSets())
+            chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables.ChoiceKeyValues
+                .Union(ParentControl.Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues)
                 .Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key)));
 
             if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)

@@ -64,5 +64,10 @@ namespace SOC.QuestObjects.GeoTrap
         {
             GeoTrapLua.GetMain(this, mainLua);
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            GeoTrapLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

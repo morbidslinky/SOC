@@ -361,9 +361,8 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Choice")]
         public List<Choice> Choices = new List<Choice>();
 
-        [XmlArray("EmbeddedChoosableValueSets")]
-        [XmlArrayItem("Set")]
-        public List<ChoiceKeyValues> EmbeddedChoosables = new List<ChoiceKeyValues>();
+        [XmlElement("EmbeddedChoiceValueSets")]
+        public ChoiceKeyValuesList EmbeddedChoosables = new ChoiceKeyValuesList();
 
         [XmlArray("CommonDefinitions")]
         [XmlArrayItem("Definition")]
@@ -456,6 +455,18 @@ namespace SOC.Classes.Lua
         [XmlElement("Value")]
         public List<LuaValue> Values = new List<LuaValue>();
 
+        public ChoiceKeyValues() { }
+
+        public ChoiceKeyValues(string key)
+        {
+            Key = key;
+        }
+
+        public void Add(LuaValue value)
+        {
+            Values.Add(value);
+        }
+
         public override string ToString() => Key;
     }
 
@@ -506,6 +517,11 @@ namespace SOC.Classes.Lua
         internal string[] Keys()
         {
             return ChoiceKeyValues.Select(kvp => kvp.Key).ToArray();
+        }
+
+        internal void Add(ChoiceKeyValues KeyValuesSet)
+        {
+            ChoiceKeyValues.Add(KeyValuesSet);
         }
     }
 

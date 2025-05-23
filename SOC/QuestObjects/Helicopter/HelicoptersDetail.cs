@@ -64,5 +64,10 @@ namespace SOC.QuestObjects.Helicopter
         {
             return controlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            HelicopterLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

@@ -68,5 +68,10 @@ namespace SOC.QuestObjects.UAV
         {
             return controlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            UAVLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

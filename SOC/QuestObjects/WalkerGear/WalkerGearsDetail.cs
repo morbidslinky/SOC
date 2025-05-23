@@ -66,5 +66,10 @@ namespace SOC.QuestObjects.WalkerGear
         {
             return walkerControlPanel;
         }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            WalkerLua.GetScriptChoosableValueSets(this, questKeyValues);
+        }
     }
 }

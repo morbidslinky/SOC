@@ -13,7 +13,8 @@ namespace SOC.Classes.Lua
             Normal,
             SingleLineComment,
             MultiLineComment,
-            StringLiteral
+            StringLiteralDoubleQuote,
+            StringLiteralSingleQuote
         }
 
         private static List<string> Tokenize(string luaCode)
@@ -40,14 +41,20 @@ namespace SOC.Classes.Lua
                         }
                         else if (current == '[' && next == '[')
                         {
-                            state = State.StringLiteral;
+                            state = State.StringLiteralDoubleQuote;
                             awaitingCloseDoubleBracket = true;
                             tokenBuilder.Append("[[");
                             i++;
                         }
-                        else if (current == '"' || current == '\'')
+                        else if (current == '"')
                         {
-                            state = State.StringLiteral;
+                            state = State.StringLiteralDoubleQuote;
+                            awaitingCloseDoubleBracket = false;
+                            tokenBuilder.Append(current);
+                        }
+                        else if (current == '\'')
+                        {
+                            state = State.StringLiteralSingleQuote;
                             awaitingCloseDoubleBracket = false;
                             tokenBuilder.Append(current);
                         }
@@ -154,9 +161,39 @@ namespace SOC.Classes.Lua
                         }
                         break;
 
-                    case State.StringLiteral:
+                    case State.StringLiteralDoubleQuote:
 
-                        if (!awaitingCloseDoubleBracket && (current == '"' || current == '\''))
+                        if (!awaitingCloseDoubleBracket && current == '"')
+                        {
+                            state = State.Normal;
+                            tokenBuilder.Append(current);
+                            if (awaitingCloseSingleBracket && next == ']')
+                            {
+                                tokenBuilder.Append(next);
+                                awaitingCloseSingleBracket = false;
+                                i++;
+                            }
+                            tokens.Add(tokenBuilder.ToString());
+                            tokenBuilder.Clear();
+                        }
+                        else if (awaitingCloseDoubleBracket && current == ']' && next == ']')
+                        {
+                            state = State.Normal;
+                            tokenBuilder.Append("]]");
+                            awaitingCloseDoubleBracket = false;
+                            tokens.Add(tokenBuilder.ToString());
+                            tokenBuilder.Clear();
+                            i++;
+                        }
+                        else
+                        {
+                            tokenBuilder.Append(current);
+                        }
+                        break;
+
+                    case State.StringLiteralSingleQuote:
+
+                        if (!awaitingCloseDoubleBracket && current == '\'')
                         {
                             state = State.Normal;
                             tokenBuilder.Append(current);

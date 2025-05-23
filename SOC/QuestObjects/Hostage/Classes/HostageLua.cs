@@ -257,5 +257,10 @@ namespace SOC.QuestObjects.Hostage
 
             return interrogationBuilder.ToFunction();
         }
+
+        internal static void GetScriptChoosableValueSets(HostagesDetail hostagesDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
