@@ -1,11 +1,9 @@
-﻿using SOC.Classes.Lua;
+﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using static SOC.Classes.Lua.Choice;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SOC.UI
 {
@@ -264,6 +262,7 @@ namespace SOC.UI
         {
             QStep_Main = new Str32TableNode("QStep_Main");
             Nodes.Add(QStep_Main);
+            Expand();
         }
     }
 
@@ -275,24 +274,18 @@ namespace SOC.UI
 
         public ScriptNode Add(Script script)
         {
-            return Add(ConvertToNodeFamily(script));
+            script.Identifier = Lua.String(GetUniqueScriptName(script.Identifier.Text));
+
+            CodeNode nodeFamily = ConvertToNodeFamily(script);
+            Add(nodeFamily);
+
+            return Expand(nodeFamily);
         }
 
         public static CodeNode ConvertToNodeFamily(Script script)
         {
             CodeNode codeNode = new CodeNode(script.CodeEvent.CodeKey);
             MessageSenderNode msgSenderNode = new MessageSenderNode(script.CodeEvent.Message, script.CodeEvent.SenderKey, script.CodeEvent.SenderValue);
-
-            foreach (var precondition in script.Preconditionals)
-            {
-                precondition.TryMapChoicesToTokens(out _);
-            }
-
-            foreach (var operation in script.Operationals)
-            {
-                operation.TryMapChoicesToTokens(out _);
-            }
-
             ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditionals, script.Operationals);
 
             msgSenderNode.Nodes.Add(scriptNode);
@@ -301,21 +294,8 @@ namespace SOC.UI
             return codeNode;
         }
 
-        public ScriptNode Add(CodeNode incomingCodeNode)
+        public void Add(CodeNode incomingCodeNode)
         {
-            incomingCodeNode.Expand();
-            ScriptNode selectedScriptNode = null;
-
-            foreach (MessageSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
-            {
-                incomingMsgSenderNode.Expand();
-                foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
-                {
-                    incomingScriptNode.UpdateNodeText(Lua.String(GetUniqueScriptName(incomingScriptNode.Name)));
-                    selectedScriptNode = incomingScriptNode;
-                }
-            }
-
             if (Nodes.ContainsKey(incomingCodeNode.Name))
             {
                 CodeNode existingCodeNode = (CodeNode)Nodes[incomingCodeNode.Name];
@@ -327,7 +307,6 @@ namespace SOC.UI
                         foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
                         {
                             existingMsgSenderNode.Nodes.Add(incomingScriptNode);
-                            selectedScriptNode = incomingScriptNode;
                         }
                     }
                     else
@@ -340,8 +319,23 @@ namespace SOC.UI
             {
                 Nodes.Add(incomingCodeNode);
             }
+        }
+
+        public ScriptNode Expand(CodeNode incomingCodeNode)
+        {
+            ScriptNode selectedScriptNode = null;
 
             Expand();
+            incomingCodeNode.Expand();
+            foreach (MessageSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
+            {
+                incomingMsgSenderNode.Expand();
+                foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
+                {
+                    selectedScriptNode = incomingScriptNode;
+                }
+            }
+
             return selectedScriptNode;
         }
 

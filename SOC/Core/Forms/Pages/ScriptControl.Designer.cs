@@ -448,7 +448,6 @@
             this.Controls.Add(this.panelScripting);
             this.Name = "ScriptControl";
             this.Size = new System.Drawing.Size(1160, 450);
-            this.Load += new System.EventHandler(this.ScriptControl_Load);
             this.groupBoxVariables.ResumeLayout(false);
             this.groupBoxVariables.PerformLayout();
             this.panelBoolean.ResumeLayout(false);

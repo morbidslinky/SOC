@@ -401,7 +401,7 @@ namespace SOC.Classes.Lua
             );
         }
 
-        public bool TryMapChoicesToTokens(out int choicesMinusTokens)
+        public bool TryMapChoicesToCorrespondingRuntimeTokens(out int choicesMinusTokens)
         {
             choicesMinusTokens = 0;
             if (LuaTemplate.TryGetPlaceholderTokens(EventFunctionTemplate, out List<LuaTemplatePlaceholder> placeholderTokens))
@@ -424,7 +424,7 @@ namespace SOC.Classes.Lua
             using (StreamReader reader = new StreamReader(filePath))
             {
                 Scriptal newScriptal = (Scriptal)serializer.Deserialize(reader);
-                if (newScriptal.TryMapChoicesToTokens(out int choicesMinusTokens))
+                if (newScriptal.TryMapChoicesToCorrespondingRuntimeTokens(out int choicesMinusTokens))
                 {
                     if (choicesMinusTokens == 0)
                     {
