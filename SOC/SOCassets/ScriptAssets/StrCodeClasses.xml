@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ChoiceKeyValuesList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyValuesPair Key="Trap">
+    <Value xsi:type="LuaString" Text="Enter" />
+    <Value xsi:type="LuaString" Text="Exit" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Timer">
+    <Value xsi:type="LuaString" Text="Start" />
+    <Value xsi:type="LuaString" Text="Finish" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Mission">
+    <Value xsi:type="LuaString" Text="CustomMessage" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Marker">
+    <Value xsi:type="LuaString" Text="ChangeToEnable" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Placed">
+    <Value xsi:type="LuaString" Text="OnActivatePlaced" />
+    <Value xsi:type="LuaString" Text="OnBreakPlaced" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Player">
+    <Value xsi:type="LuaString" Text="AdjustFulton" />
+    <Value xsi:type="LuaString" Text="CalcFultonPercent" />
+    <Value xsi:type="LuaString" Text="CallMenuMessage_HideCallMenu" />
+    <Value xsi:type="LuaString" Text="CallMenuMessage_ShowCallMenu" />
+    <Value xsi:type="LuaString" Text="CBoxSlideEnd" />
+    <Value xsi:type="LuaString" Text="CqcContinuePass" />
+    <Value xsi:type="LuaString" Text="CqcHoldStart" />
+    <Value xsi:type="LuaString" Text="CqcThrowAction" />
+    <Value xsi:type="LuaString" Text="Dead" />
+    <Value xsi:type="LuaString" Text="DogBiteConnect" />
+    <Value xsi:type="LuaString" Text="DirectMotion" />
+    <Value xsi:type="LuaString" Text="EndCarryAction" />
+    <Value xsi:type="LuaString" Text="EnableCQC" />
+    <Value xsi:type="LuaString" Text="Enter" />
+    <Value xsi:type="LuaString" Text="Exit" />
+    <Value xsi:type="LuaString" Text="FinishReflexMode" />
+    <Value xsi:type="LuaString" Text="HostageUnlock" />
+    <Value xsi:type="LuaString" Text="IconClimbOnShown" />
+    <Value xsi:type="LuaString" Text="IconCrawlStealthShown" />
+    <Value xsi:type="LuaString" Text="IconFultonShown" />
+    <Value xsi:type="LuaString" Text="IconMBCBoxShown" />
+    <Value xsi:type="LuaString" Text="IconRideHelicopterStartShown" />
+    <Value xsi:type="LuaString" Text="IconSwitchShown" />
+    <Value xsi:type="LuaString" Text="IconTBoxOnShown" />
+    <Value xsi:type="LuaString" Text="IconWormholeOnShown" />
+    <Value xsi:type="LuaString" Text="IntelIconInDisplay" />
+    <Value xsi:type="LuaString" Text="LandingFromHeli" />
+    <Value xsi:type="LuaString" Text="LookingTarget" />
+    <Value xsi:type="LuaString" Text="MBTerminalSleep" />
+    <Value xsi:type="LuaString" Text="NearVehicle" />
+    <Value xsi:type="LuaString" Text="IconToiletOnShown" />
+    <Value xsi:type="LuaString" Text="OnAmmoLessInMagazine" />
+    <Value xsi:type="LuaString" Text="OnAmmoStackEmpty" />
+    <Value xsi:type="LuaString" Text="OnBehind" />
+    <Value xsi:type="LuaString" Text="OnBinocularsModeOnBinocularsMode" />
+    <Value xsi:type="LuaString" Text="OnClimb" />
+    <Value xsi:type="LuaString" Text="OnComeOutSupplyCbox" />
+    <Value xsi:type="LuaString" Text="OnCrawl" />
+    <Value xsi:type="LuaString" Text="OnElude" />
+    <Value xsi:type="LuaString" Text="OnEquipHudClosed" />
+    <Value xsi:type="LuaString" Text="OnEquipItem" />
+    <Value xsi:type="LuaString" Text="OnEquipWeapon" />
+    <Value xsi:type="LuaString" Text="OnInjury" />
+    <Value xsi:type="LuaString" Text="OnLadder" />
+    <Value xsi:type="LuaString" Text="OnPickUpCollection" />
+    <Value xsi:type="LuaString" Text="OnPickUpPlaced" />
+    <Value xsi:type="LuaString" Text="OnPickUpSupplyCbox" />
+    <Value xsi:type="LuaString" Text="OnPickUpWeapon" />
+    <Value xsi:type="LuaString" Text="OnPipe" />
+    <Value xsi:type="LuaString" Text="OnPlayerElude" />
+    <Value xsi:type="LuaString" Text="OnPlayerGatling" />
+    <Value xsi:type="LuaString" Text="OnPlayerHeliHatchOpen" />
+    <Value xsi:type="LuaString" Text="OnPlayerMachineGun" />
+    <Value xsi:type="LuaString" Text="OnPlayerMortar" />
+    <Value xsi:type="LuaString" Text="OnPlayerPipeAction" />
+    <Value xsi:type="LuaString" Text="OnPlayerUseBoosterScope" />
+    <Value xsi:type="LuaString" Text="OnPlayerSearchLight" />
+    <Value xsi:type="LuaString" Text="OnPlayerStaminaOut" />
+    <Value xsi:type="LuaString" Text="OnPlayerToilet" />
+    <Value xsi:type="LuaString" Text="OnPlayerTrashBox" />
+    <Value xsi:type="LuaString" Text="OnRefresh" />
+    <Value xsi:type="LuaString" Text="OnVehicleDrive" />
+    <Value xsi:type="LuaString" Text="OnVehicleRide_Start" />
+    <Value xsi:type="LuaString" Text="OnWalkerGearDrive" />
+    <Value xsi:type="LuaString" Text="OutFromWormhole" />
+    <Value xsi:type="LuaString" Text="PlayerCatchFulton" />
+    <Value xsi:type="LuaString" Text="PlayerCureComplete" />
+    <Value xsi:type="LuaString" Text="PlayerCureCompleteMotEnd" />
+    <Value xsi:type="LuaString" Text="PlayerCureStart" />
+    <Value xsi:type="LuaString" Text="PlayerDamaged" />
+    <Value xsi:type="LuaString" Text="PlayerFulton" />
+    <Value xsi:type="LuaString" Text="PlayerFultoned" />
+    <Value xsi:type="LuaString" Text="PlayerHeliGetOff" />
+    <Value xsi:type="LuaString" Text="PlayerHoldWeapon" />
+    <Value xsi:type="LuaString" Text="PlayerHurt" />
+    <Value xsi:type="LuaString" Text="PlayerLifeLessThanHalf" />
+    <Value xsi:type="LuaString" Text="PlayerShowerEnd" />
+    <Value xsi:type="LuaString" Text="PlayerShowerStart" />
+    <Value xsi:type="LuaString" Text="PlayerSwitchStart" />
+    <Value xsi:type="LuaString" Text="PlayerTapCqc" />
+    <Value xsi:type="LuaString" Text="PlayerTapHeadShot" />
+    <Value xsi:type="LuaString" Text="PressedCarryIcon" />
+    <Value xsi:type="LuaString" Text="PressedFultonIcon" />
+    <Value xsi:type="LuaString" Text="PressedFultonNgIcon" />
+    <Value xsi:type="LuaString" Text="PutMarkerWithBinocle" />
+    <Value xsi:type="LuaString" Text="QuestStarted" />
+    <Value xsi:type="LuaString" Text="Respawn" />
+    <Value xsi:type="LuaString" Text="RideHelicopter" />
+    <Value xsi:type="LuaString" Text="RideHelicopterWithHuman" />
+    <Value xsi:type="LuaString" Text="RideOk" />
+    <Value xsi:type="LuaString" Text="SetMarkerBySearch" />
+    <Value xsi:type="LuaString" Text="SetWetEffect" />
+    <Value xsi:type="LuaString" Text="StartCarryIdle" />
+    <Value xsi:type="LuaString" Text="StartPlayerBrainFilter" />
+    <Value xsi:type="LuaString" Text="SuppressorIsBroken" />
+    <Value xsi:type="LuaString" Text="WarpEnd" />
+    <Value xsi:type="LuaString" Text="WeaponPutPlaced" />
+    <Value xsi:type="LuaString" Text="ZombBiteConnect" />
+    <Value xsi:type="LuaNumber" Number="583818078" />
+    <Value xsi:type="LuaNumber" Number="3367663002" />
+    <Value xsi:type="LuaNumber" Number="1144333753" />
+    <Value xsi:type="LuaNumber" Number="32226917" />
+    <Value xsi:type="LuaNumber" Number="3073853049" />
+    <Value xsi:type="LuaNumber" Number="4117713728" />
+    <Value xsi:type="LuaNumber" Number="2311886128" />
+    <Value xsi:type="LuaNumber" Number="545199978" />
+    <Value xsi:type="LuaNumber" Number="2990447840" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="GameObject">
+    <Value xsi:type="LuaString" Text="AntiSniperNoticed" />
+    <Value xsi:type="LuaString" Text="ArrivedAtLandingZoneSkyNav" />
+    <Value xsi:type="LuaString" Text="ArrivedAtLandingZoneWaitPoint" />
+    <Value xsi:type="LuaString" Text="BreakGimmick" />
+    <Value xsi:type="LuaString" Text="BreakGimmickBurglarAlarm" />
+    <Value xsi:type="LuaString" Text="BuddyAppear" />
+    <Value xsi:type="LuaString" Text="BuddyArrived" />
+    <Value xsi:type="LuaString" Text="BulletGuardArmor" />
+    <Value xsi:type="LuaString" Text="BurglarAlarmTrap" />
+    <Value xsi:type="LuaString" Text="CalledFromStandby" />
+    <Value xsi:type="LuaString" Text="Carried" />
+    <Value xsi:type="LuaString" Text="ChangeLife" />
+    <Value xsi:type="LuaString" Text="ChangePhase" />
+    <Value xsi:type="LuaString" Text="ChangePhaseForAnnounce" />
+    <Value xsi:type="LuaString" Text="CheckEventDoorNgIcon" />
+    <Value xsi:type="LuaString" Text="CommandPostAnnihilated" />
+    <Value xsi:type="LuaString" Text="ComradeFultonDiscovered" />
+    <Value xsi:type="LuaString" Text="Conscious" />
+    <Value xsi:type="LuaString" Text="ConversationEnd" />
+    <Value xsi:type="LuaString" Text="Damage" />
+    <Value xsi:type="LuaString" Text="Dead" />
+    <Value xsi:type="LuaString" Text="DescendToLandingZone" />
+    <Value xsi:type="LuaString" Text="DiscoveredBySniper" />
+    <Value xsi:type="LuaString" Text="DiscoveredObject" />
+    <Value xsi:type="LuaString" Text="DiscoveryHostage" />
+    <Value xsi:type="LuaString" Text="Down" />
+    <Value xsi:type="LuaString" Text="Dying" />
+    <Value xsi:type="LuaString" Text="DyingAll" />
+    <Value xsi:type="LuaString" Text="EndInvestigate" />
+    <Value xsi:type="LuaString" Text="EspionageBoxGimmickOnGround" />
+    <Value xsi:type="LuaString" Text="EventGimmickFinish" />
+    <Value xsi:type="LuaString" Text="FobReinforceRespawn" />
+    <Value xsi:type="LuaString" Text="Fulton" />
+    <Value xsi:type="LuaString" Text="FultonFailed" />
+    <Value xsi:type="LuaString" Text="FultonFailedEnd" />
+    <Value xsi:type="LuaString" Text="FultonInfo" />
+    <Value xsi:type="LuaString" Text="GetInEnemyHeli" />
+    <Value xsi:type="LuaString" Text="HeadShot" />
+    <Value xsi:type="LuaString" Text="HeadShotDistance" />
+    <Value xsi:type="LuaString" Text="HeliDoorClosed" />
+    <Value xsi:type="LuaString" Text="Holdup" />
+    <Value xsi:type="LuaString" Text="InAnimalLocator" />
+    <Value xsi:type="LuaString" Text="InSight" />
+    <Value xsi:type="LuaString" Text="Interrogate" />
+    <Value xsi:type="LuaString" Text="InterrogateEnd" />
+    <Value xsi:type="LuaString" Text="InterrogateSetMarker" />
+    <Value xsi:type="LuaString" Text="InterrogateUpHero" />
+    <Value xsi:type="LuaString" Text="LandedAtLandingZone" />>
+    <Value xsi:type="LuaString" Text="LostContainer" />
+    <Value xsi:type="LuaString" Text="LostControl" />
+    <Value xsi:type="LuaString" Text="LostHostage" />
+    <Value xsi:type="LuaString" Text="MapUpdate" />
+    <Value xsi:type="LuaString" Text="Neutralize" />
+    <Value xsi:type="LuaString" Text="NoticeVehicleInvalid" />
+    <Value xsi:type="LuaString" Text="OutSight" />
+    <Value xsi:type="LuaString" Text="PlacedIntoVehicle" />
+    <Value xsi:type="LuaString" Text="PlayerHideHorse" />
+    <Value xsi:type="LuaString" Text="PlayerIsWithinRange" />
+    <Value xsi:type="LuaString" Text="RadioEnd" />
+    <Value xsi:type="LuaString" Text="ReinforceRespawn" />
+    <Value xsi:type="LuaString" Text="ReportDiscoveryHostage" />
+    <Value xsi:type="LuaString" Text="RequestLoadReinforce" />
+    <Value xsi:type="LuaString" Text="Restraint" />
+    <Value xsi:type="LuaString" Text="Returned" />
+    <Value xsi:type="LuaString" Text="RouteEventFaild" />
+    <Value xsi:type="LuaString" Text="RoutePoint2" />
+    <Value xsi:type="LuaString" Text="SaluteRaiseMorale" />
+    <Value xsi:type="LuaString" Text="SmokeDiscovered" />
+    <Value xsi:type="LuaString" Text="SleepingComradeRecoverd" />
+    <Value xsi:type="LuaString" Text="SpecialActionEnd" />
+    <Value xsi:type="LuaString" Text="StartInvestigate" />
+    <Value xsi:type="LuaString" Text="StartedCombat" />
+    <Value xsi:type="LuaString" Text="StartedMoveToLandingZone" />
+    <Value xsi:type="LuaString" Text="StartedPullingOut" />
+    <Value xsi:type="LuaString" Text="SwitchCamera" />
+    <Value xsi:type="LuaString" Text="SwitchGimmick" />
+    <Value xsi:type="LuaString" Text="TapCqc" />
+    <Value xsi:type="LuaString" Text="TapFoundPlayerInAlert" />
+    <Value xsi:type="LuaString" Text="TapHeadShotFar" />
+    <Value xsi:type="LuaString" Text="TapHeadShotNear" />
+    <Value xsi:type="LuaString" Text="TapHoldup" />
+    <Value xsi:type="LuaString" Text="TapRocketArm" />
+    <Value xsi:type="LuaString" Text="Unconscious" />
+    <Value xsi:type="LuaString" Text="Unlocked" />
+    <Value xsi:type="LuaString" Text="VehicleAction" />
+    <Value xsi:type="LuaString" Text="VehicleBroken" />
+    <Value xsi:type="LuaString" Text="VehicleDisappeared" />
+    <Value xsi:type="LuaString" Text="VehicleTrouble" />
+    <Value xsi:type="LuaString" Text="WalkerGearBroken" />
+    <Value xsi:type="LuaString" Text="WarningGimmick" />
+    <Value xsi:type="LuaNumber" Number="3311396607" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Radio">
+    <Value xsi:type="LuaString" Text="Start" />
+    <Value xsi:type="LuaString" Text="Finish" />
+    <Value xsi:type="LuaNumber" Number="2719725902" />
+    <Value xsi:type="LuaNumber" Number="1809879683" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Sound">
+    <Value xsi:type="LuaString" Text="ChangeBgmPhase" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Subtitles">
+    <Value xsi:type="LuaString" Text="SubtitlesStartEventMessage" />
+    <Value xsi:type="LuaString" Text="SubtitlesEndEventMessage" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="SupportAttack">
+    <Value xsi:type="LuaString" Text="OnRequested" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Terminal">
+    <Value xsi:type="LuaString" Text="MbDvcActCallRescueHeli" />
+    <Value xsi:type="LuaString" Text="MbDvcActCallBuddy" />
+    <Value xsi:type="LuaString" Text="MbDvcActFocusMapIcon" />
+    <Value xsi:type="LuaString" Text="MbDvcActOpenHeliCall" />
+    <Value xsi:type="LuaString" Text="MbDvcActOpenMenu" />
+    <Value xsi:type="LuaString" Text="MbDvcActSelectCboxDelivery" />
+    <Value xsi:type="LuaString" Text="MbDvcActSelectItemDropPoint" />
+    <Value xsi:type="LuaString" Text="MbDvcActSelectLandPoint" />
+    <Value xsi:type="LuaNumber" Number="4275806845" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Throwing">
+    <Value xsi:type="LuaString" Text="NotifyStartWarningFlare" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="SupplyCbox">
+    <Value xsi:type="LuaNumber" Number="3768843497" />
+    <Value xsi:type="LuaNumber" Number="2414690884" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="UI">
+    <Value xsi:type="LuaString" Text="DisplayTimerTimeUp" />
+    <Value xsi:type="LuaString" Text="EndAnnounceLog" />
+    <Value xsi:type="LuaString" Text="EndFadeOut" />
+    <Value xsi:type="LuaString" Text="EndFadeIn" />
+    <Value xsi:type="LuaString" Text="QuestAreaAnnounceLog" />
+    <Value xsi:type="LuaString" Text="QuestAreaAnnounceText" />
+    <Value xsi:type="LuaString" Text="StartAnnounceLog" />
+  </KeyValuesPair>
+  <KeyValuesPair Key="Weather">
+    <Value xsi:type="LuaString" Text="ChangeWeather" />
+    <Value xsi:type="LuaString" Text="Clock" />
+    <Value xsi:type="LuaString" Text="StartRain" />
+    <Value xsi:type="LuaString" Text="FinishRain" />
+    <Value xsi:type="LuaString" Text="WeatherForecast" />
+  </KeyValuesPair>
+</ChoiceKeyValuesList>
