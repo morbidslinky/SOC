@@ -273,7 +273,7 @@ namespace SOC.Classes.Lua
                 else
                 {
                     formattedCode.Append(token);
-                    if (nextToken != null && (token != "(" && nextToken != "," && nextToken != ")" && nextToken != "(") && !(token.EndsWith("]") && nextToken.StartsWith("[")))
+                    if (nextToken != null && (token != "(" && nextToken != "," && nextToken != ")" && nextToken != "(") && !(token.EndsWith("]") && (nextToken.StartsWith("[") || nextToken.StartsWith("."))))
                     {
                         formattedCode.Append(" ");
                     }

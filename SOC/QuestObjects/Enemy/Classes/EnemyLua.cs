@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Enemy
 {
@@ -231,8 +232,47 @@ namespace SOC.QuestObjects.Enemy
             return Lua.TableEntry("cpList", Lua.Table(Lua.Nil()));
         }
 
-        internal static void GetScriptChoosableValueSets(EnemiesDetail enemiesDetail, ChoiceKeyValuesList questKeyValueSets)
+        internal static void GetScriptChoosableValueSets(EnemiesDetail detail, ChoiceKeyValuesList questKeyValues)
         {
+            if (detail.enemies.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Enemies (Targets)");
+
+                foreach (string gameObjectName in detail.enemies
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.enemies.Any(o => o.spawn))
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemies (Enabled)");
+
+                foreach (string gameObjectName in detail.enemies
+                    .Where(o => o.spawn)
+                    .Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
+
+            if (detail.enemies.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemies");
+
+                foreach (string gameObjectName in detail.enemies.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
     }
 }

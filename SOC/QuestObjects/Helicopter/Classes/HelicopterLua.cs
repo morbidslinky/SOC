@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SOC.Classes.Lua;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SOC.Classes.Lua;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Helicopter
 {
@@ -55,9 +56,33 @@ namespace SOC.QuestObjects.Helicopter
             }
         }
 
-        internal static void GetScriptChoosableValueSets(HelicoptersDetail helicoptersDetail, ChoiceKeyValuesList questKeyValues)
+        internal static void GetScriptChoosableValueSets(HelicoptersDetail detail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (detail.helicopters.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Helicopter (Target)");
+
+                foreach (string gameObjectName in detail.helicopters
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.helicopters.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Helicopter");
+
+                foreach (string gameObjectName in detail.helicopters.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildHeliList(HelicoptersDetail questDetail)

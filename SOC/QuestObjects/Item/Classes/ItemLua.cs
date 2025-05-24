@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Item
 {
@@ -58,9 +59,33 @@ namespace SOC.QuestObjects.Item
             }
         }
 
-        internal static void GetScriptChoosableValueSets(ItemsDetail itemsDetail, ChoiceKeyValuesList questKeyValues)
+        internal static void GetScriptChoosableValueSets(ItemsDetail detail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (detail.items.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Dormant Items (Targets)");
+
+                foreach (string gameObjectName in detail.items
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.items.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Dormant Items");
+
+                foreach (string gameObjectName in detail.items.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildItemTargetList(List<Item> items)

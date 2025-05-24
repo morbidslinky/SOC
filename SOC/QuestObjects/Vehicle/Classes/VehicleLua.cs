@@ -1,5 +1,6 @@
 ﻿using SOC.Classes.Lua;
 using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.WalkerGear;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +61,31 @@ namespace SOC.QuestObjects.Vehicle
 
         internal static void GetScriptChoosableValueSets(VehiclesDetail vehiclesDetail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (vehiclesDetail.vehicles.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Heavy Vehicles (Targets)");
+
+                foreach (string gameObjectName in vehiclesDetail.vehicles
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (vehiclesDetail.vehicles.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Heavy Vehicles");
+
+                foreach (string gameObjectName in vehiclesDetail.vehicles.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildVehicleList(List<Vehicle> vehicles)

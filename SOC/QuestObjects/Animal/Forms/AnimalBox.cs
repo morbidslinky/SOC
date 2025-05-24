@@ -27,7 +27,7 @@ namespace SOC.QuestObjects.Animal
             textBox_zcoord.Text = qObject.position.coords.zCoord;
             textBox_rot.Text = qObject.position.rotation.GetDegreeRotY();
 
-            checkBox_target.Checked = qObject.target;
+            checkBox_target.Checked = qObject.isTarget;
 
             comboBox_animal.Items.AddRange(AnimalInfo.animals);
             comboBox_animal.Text = qObject.animal;

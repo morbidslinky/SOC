@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Animal
 {
@@ -14,7 +15,7 @@ namespace SOC.QuestObjects.Animal
             if (detail.animals.Count > 0)
             {
                 mainLua.QUEST_TABLE.Add(BuildAnimalList(detail.animals));
-                if (detail.animals.Any(animal => animal.target))
+                if (detail.animals.Any(animal => animal.isTarget))
                 {
                     var methodPair = Lua.TableEntry("methodPair",
                         Lua.Table(
@@ -41,9 +42,33 @@ namespace SOC.QuestObjects.Animal
             }
         }
 
-        internal static void GetScriptChoosableValueSets(AnimalsDetail animalsDetail, ChoiceKeyValuesList questKeyValues)
+        internal static void GetScriptChoosableValueSets(AnimalsDetail detail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (detail.animals.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Animal Clusters (Targets)");
+
+                foreach (string gameObjectName in detail.animals
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.animals.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Animal Clusters");
+
+                foreach (string gameObjectName in detail.animals.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildAnimalList(List<Animal> animals)
@@ -72,7 +97,7 @@ namespace SOC.QuestObjects.Animal
 
             foreach (Animal animal in animals)
             {
-                if (animal.target)
+                if (animal.isTarget)
                 {
                     nameList.Add(Lua.TableEntry(animal.GetObjectName()));
                 }

@@ -1,6 +1,7 @@
 ﻿using SOC.Classes.Common;
 using SOC.Classes.Lua;
 using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.GeoTrap;
 using SOC.QuestObjects.Vehicle;
 using System;
 using System.Collections.Generic;
@@ -260,7 +261,31 @@ namespace SOC.QuestObjects.Hostage
 
         internal static void GetScriptChoosableValueSets(HostagesDetail hostagesDetail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (hostagesDetail.hostages.Any(hostage => hostage.isTarget))
+            {
+                ChoiceKeyValues hostageTargetSenders = new ChoiceKeyValues("Prisoners (Targets)");
+
+                foreach (string hostageName in hostagesDetail.hostages
+                    .Where(hostage => hostage.isTarget)
+                    .Select(hostage => hostage.GetObjectName()))
+                {
+                    hostageTargetSenders.Add(Lua.FunctionCall("GetGameObjectId", hostageName));
+                }
+
+                questKeyValues.Add(hostageTargetSenders);
+            }
+
+            if (hostagesDetail.hostages.Count > 0)
+            {
+                ChoiceKeyValues hostageSenders = new ChoiceKeyValues("Prisoners");
+
+                foreach (string hostageName in hostagesDetail.hostages.Select(hostage => hostage.GetObjectName()))
+                {
+                    hostageSenders.Add(Lua.FunctionCall("GetGameObjectId", hostageName));
+                }
+
+                questKeyValues.Add(hostageSenders);
+            }
         }
     }
 }

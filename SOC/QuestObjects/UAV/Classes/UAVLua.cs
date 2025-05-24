@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.Vehicle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOC.Classes.Lua;
-using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.UAV
 {
@@ -52,9 +53,33 @@ namespace SOC.QuestObjects.UAV
             }
         }
 
-        internal static void GetScriptChoosableValueSets(UAVsDetail uAVsDetail, ChoiceKeyValuesList questKeyValues)
+        internal static void GetScriptChoosableValueSets(UAVsDetail detail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (detail.UAVs.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("UAVs (Targets)");
+
+                foreach (string gameObjectName in detail.UAVs
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.UAVs.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("UAVs");
+
+                foreach (string gameObjectName in detail.UAVs.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildUAVList(List<UAV> UAVs)

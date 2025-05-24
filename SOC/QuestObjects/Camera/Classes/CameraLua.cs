@@ -1,10 +1,11 @@
 ﻿
+using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOC.Classes.Lua;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Camera
 {
@@ -52,9 +53,33 @@ namespace SOC.QuestObjects.Camera
             }
         }
 
-        internal static void GetScriptChoosableValueSets(CamerasDetail camerasDetail, ChoiceKeyValuesList questKeyValues)
+        internal static void GetScriptChoosableValueSets(CamerasDetail detail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (detail.cameras.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Cameras (Targets)");
+
+                foreach (string gameObjectName in detail.cameras
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.cameras.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Cameras");
+
+                foreach (string gameObjectName in detail.cameras.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildCameraList(List<Camera> cameras)

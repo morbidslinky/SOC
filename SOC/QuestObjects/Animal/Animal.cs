@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.Animal
         {
             ID = box.ID;
 
-            target = box.checkBox_target.Checked;
+            isTarget = box.checkBox_target.Checked;
             count = box.comboBox_count.Text;
             animal = box.comboBox_animal.Text;
             typeID = box.comboBox_typeID.Text;
@@ -51,7 +51,7 @@ namespace SOC.QuestObjects.Animal
         }
 
         [XmlElement]
-        public bool target { get; set; } = false;
+        public bool isTarget { get; set; } = false;
 
         [XmlAttribute]
         public int ID { get; set; } = 0;

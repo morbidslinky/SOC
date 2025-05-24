@@ -1,12 +1,13 @@
-﻿using System;
+﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.Hostage;
+using SOC.QuestObjects.Vehicle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOC.Classes.Common;
-using SOC.Classes.Lua;
-using SOC.QuestObjects.Enemy;
-using SOC.QuestObjects.Vehicle;
 
 namespace SOC.QuestObjects.WalkerGear
 {
@@ -114,7 +115,31 @@ namespace SOC.QuestObjects.WalkerGear
 
         internal static void GetScriptChoosableValueSets(WalkerGearsDetail walkerGearsDetail, ChoiceKeyValuesList questKeyValues)
         {
-            //throw new NotImplementedException();
+            if (walkerGearsDetail.walkers.Any(walker => walker.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Walker Gears (Targets)");
+
+                foreach (string gameObjectName in walkerGearsDetail.walkers
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (walkerGearsDetail.walkers.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Walker Gears");
+
+                foreach (string gameObjectName in walkerGearsDetail.walkers.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
 
         private static LuaTableEntry BuildWalkerList(List<WalkerGear> walkers)
