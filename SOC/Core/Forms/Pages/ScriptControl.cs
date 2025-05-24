@@ -24,10 +24,12 @@ namespace SOC.UI
 
         private bool _isUpdatingControls = false;
 
-        public static readonly Font UNDERLINE = new Font("Consolas", 8.25F, FontStyle.Underline);
-        public static readonly Font REGULAR = new Font("Consolas", 8.25F, FontStyle.Regular);
+        public static readonly Font REGULAR = new Font("Consolas", 8.5F, FontStyle.Regular);
+        public static readonly Font BOLD = new Font("Consolas", 8.5F, FontStyle.Bold);
+        public static readonly Font UNDERLINE = new Font("Consolas", 8.5F, FontStyle.Underline);
+        public static readonly Font UNDERLINE_BOLD = new Font("Consolas", 8.5F, FontStyle.Underline | FontStyle.Bold);
 
-        public const string CUSTOM_VARIABLE_SET = "Custom Variable";
+        public const string CUSTOM_VARIABLE_SET = "Variable";
         public const string NUMBER_LITERAL_SET = "Number Literal";
         public const string STRING_LITERAL_SET = "String Literal";
         public const string BOOLEAN_LITERAL_SET = "Boolean Literal";

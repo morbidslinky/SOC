@@ -341,6 +341,10 @@ namespace SOC.Classes.Lua
             {
                 return string.Format(" {0,-18}:: {1}", Key, LuaTemplate.GetTemplateRestrictionTypeString(Value));
             }
+            else if (Key is LuaNumber)
+            {
+                return string.Format(" {0,-7}:: {1, -8}:: {2}", Key, LuaTemplate.GetTemplateRestrictionTypeString(Value), Value);
+            }
             else
             {
                 return string.Format(" {0,-18}:: {1, -8}:: {2}", Key, LuaTemplate.GetTemplateRestrictionTypeString(Value), Value);

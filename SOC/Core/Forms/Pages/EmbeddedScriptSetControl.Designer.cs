@@ -57,7 +57,7 @@
             this.buttonImportVariablesScripts.Location = new System.Drawing.Point(0, 382);
             this.buttonImportVariablesScripts.Name = "buttonImportVariablesScripts";
             this.buttonImportVariablesScripts.Size = new System.Drawing.Size(575, 21);
-            this.buttonImportVariablesScripts.TabIndex = 12;
+            this.buttonImportVariablesScripts.TabIndex = 3;
             this.buttonImportVariablesScripts.Text = "Import Variable(s) / Script(s) From Xml...";
             this.buttonImportVariablesScripts.UseVisualStyleBackColor = true;
             this.buttonImportVariablesScripts.Click += new System.EventHandler(this.buttonLoadScript_Click);
@@ -83,7 +83,7 @@
             this.textEmptyHint.BackColor = System.Drawing.Color.LightGray;
             this.textEmptyHint.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textEmptyHint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textEmptyHint.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.textEmptyHint.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.textEmptyHint.Location = new System.Drawing.Point(3, 16);
             this.textEmptyHint.Multiline = true;
             this.textEmptyHint.Name = "textEmptyHint";
@@ -99,7 +99,7 @@
             this.checkedListBoxScripts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.checkedListBoxScripts.CheckOnClick = true;
             this.checkedListBoxScripts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxScripts.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListBoxScripts.Font = new System.Drawing.Font("Consolas", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkedListBoxScripts.FormattingEnabled = true;
             this.checkedListBoxScripts.Location = new System.Drawing.Point(3, 16);
             this.checkedListBoxScripts.Name = "checkedListBoxScripts";
@@ -115,7 +115,7 @@
             this.buttonExportVariablesScripts.Location = new System.Drawing.Point(0, 408);
             this.buttonExportVariablesScripts.Name = "buttonExportVariablesScripts";
             this.buttonExportVariablesScripts.Size = new System.Drawing.Size(575, 23);
-            this.buttonExportVariablesScripts.TabIndex = 13;
+            this.buttonExportVariablesScripts.TabIndex = 4;
             this.buttonExportVariablesScripts.Text = "Export ☑ Variable(s) / Script(s) To Xml...";
             this.buttonExportVariablesScripts.UseVisualStyleBackColor = true;
             this.buttonExportVariablesScripts.Click += new System.EventHandler(this.buttonSaveScript_Click);
@@ -142,7 +142,7 @@
             this.groupBoxScripts.Location = new System.Drawing.Point(0, 0);
             this.groupBoxScripts.Name = "groupBoxScripts";
             this.groupBoxScripts.Size = new System.Drawing.Size(285, 349);
-            this.groupBoxScripts.TabIndex = 2;
+            this.groupBoxScripts.TabIndex = 1;
             this.groupBoxScripts.TabStop = false;
             this.groupBoxScripts.Text = "Custom Scripts";
             // 
@@ -178,7 +178,7 @@
             this.groupBoxVariables.Location = new System.Drawing.Point(0, 0);
             this.groupBoxVariables.Name = "groupBoxVariables";
             this.groupBoxVariables.Size = new System.Drawing.Size(285, 349);
-            this.groupBoxVariables.TabIndex = 3;
+            this.groupBoxVariables.TabIndex = 0;
             this.groupBoxVariables.TabStop = false;
             this.groupBoxVariables.Text = "Custom Variables";
             // 
@@ -188,7 +188,7 @@
             this.checkedListBoxVariables.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.checkedListBoxVariables.CheckOnClick = true;
             this.checkedListBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkedListBoxVariables.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkedListBoxVariables.Font = new System.Drawing.Font("Consolas", 8.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkedListBoxVariables.FormattingEnabled = true;
             this.checkedListBoxVariables.Location = new System.Drawing.Point(3, 16);
             this.checkedListBoxVariables.Name = "checkedListBoxVariables";

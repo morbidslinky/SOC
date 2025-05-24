@@ -98,7 +98,7 @@
             this.groupBoxDescription.Location = new System.Drawing.Point(0, 184);
             this.groupBoxDescription.Name = "groupBoxDescription";
             this.groupBoxDescription.Size = new System.Drawing.Size(285, 247);
-            this.groupBoxDescription.TabIndex = 32;
+            this.groupBoxDescription.TabIndex = 5;
             this.groupBoxDescription.TabStop = false;
             this.groupBoxDescription.Text = "Custom Description / Notes (Optional) ";
             // 
@@ -111,12 +111,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.BackColor = System.Drawing.Color.LightGray;
             this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.Size = new System.Drawing.Size(279, 225);
-            this.textBoxDescription.TabIndex = 6;
+            this.textBoxDescription.TabIndex = 21;
             this.textBoxDescription.WordWrap = false;
             this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
             // 
@@ -149,7 +149,7 @@
             this.buttonApplySender.Location = new System.Drawing.Point(211, 146);
             this.buttonApplySender.Name = "buttonApplySender";
             this.buttonApplySender.Size = new System.Drawing.Size(71, 23);
-            this.buttonApplySender.TabIndex = 17;
+            this.buttonApplySender.TabIndex = 4;
             this.buttonApplySender.Text = "Apply >>";
             this.buttonApplySender.UseVisualStyleBackColor = true;
             this.buttonApplySender.Click += new System.EventHandler(this.buttonApplySender_Click);
@@ -181,7 +181,7 @@
             this.comboBoxSenderOptions.Location = new System.Drawing.Point(6, 120);
             this.comboBoxSenderOptions.Name = "comboBoxSenderOptions";
             this.comboBoxSenderOptions.Size = new System.Drawing.Size(275, 21);
-            this.comboBoxSenderOptions.TabIndex = 5;
+            this.comboBoxSenderOptions.TabIndex = 2;
             this.comboBoxSenderOptions.DropDown += new System.EventHandler(this.comboBoxSenderOptions_DropDown);
             this.comboBoxSenderOptions.SelectedIndexChanged += new System.EventHandler(this.comboBoxSendersOptions_SelectedIndexChanged);
             // 
@@ -194,7 +194,7 @@
             this.comboBoxCode.Location = new System.Drawing.Point(6, 40);
             this.comboBoxCode.Name = "comboBoxCode";
             this.comboBoxCode.Size = new System.Drawing.Size(275, 21);
-            this.comboBoxCode.TabIndex = 1;
+            this.comboBoxCode.TabIndex = 0;
             this.comboBoxCode.SelectedIndexChanged += new System.EventHandler(this.comboBoxCode_SelectedIndexChanged);
             // 
             // labelmsg
@@ -215,7 +215,7 @@
             this.comboBoxMessage.Location = new System.Drawing.Point(6, 80);
             this.comboBoxMessage.Name = "comboBoxMessage";
             this.comboBoxMessage.Size = new System.Drawing.Size(275, 21);
-            this.comboBoxMessage.TabIndex = 3;
+            this.comboBoxMessage.TabIndex = 1;
             this.comboBoxMessage.SelectedIndexChanged += new System.EventHandler(this.comboBoxMessage_SelectedIndexChanged);
             // 
             // labelSenderOptions
@@ -235,7 +235,7 @@
             this.textBoxSenders.Location = new System.Drawing.Point(56, 148);
             this.textBoxSenders.Name = "textBoxSenders";
             this.textBoxSenders.Size = new System.Drawing.Size(149, 20);
-            this.textBoxSenders.TabIndex = 15;
+            this.textBoxSenders.TabIndex = 3;
             this.textBoxSenders.Visible = false;
             this.textBoxSenders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSenders_KeyDown);
             // 
@@ -248,7 +248,7 @@
             this.comboBoxSenders.Location = new System.Drawing.Point(56, 148);
             this.comboBoxSenders.Name = "comboBoxSenders";
             this.comboBoxSenders.Size = new System.Drawing.Size(223, 21);
-            this.comboBoxSenders.TabIndex = 10;
+            this.comboBoxSenders.TabIndex = 3;
             this.comboBoxSenders.DropDown += new System.EventHandler(this.comboBoxSenders_DropDown);
             this.comboBoxSenders.SelectedIndexChanged += new System.EventHandler(this.comboBoxSenders_SelectedIndexChanged);
             // 
@@ -269,7 +269,7 @@
             -2147483648});
             this.numericUpDownSenders.Name = "numericUpDownSenders";
             this.numericUpDownSenders.Size = new System.Drawing.Size(149, 20);
-            this.numericUpDownSenders.TabIndex = 12;
+            this.numericUpDownSenders.TabIndex = 3;
             this.numericUpDownSenders.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownSenders.Visible = false;
             this.numericUpDownSenders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numericUpDownSenders_KeyDown);
@@ -307,7 +307,7 @@
             this.groupBoxPreconditions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxPreconditions.Name = "groupBoxPreconditions";
             this.groupBoxPreconditions.Size = new System.Drawing.Size(285, 179);
-            this.groupBoxPreconditions.TabIndex = 2;
+            this.groupBoxPreconditions.TabIndex = 6;
             this.groupBoxPreconditions.TabStop = false;
             this.groupBoxPreconditions.Text = "Preconditions :: \"If\"";
             // 
@@ -316,7 +316,7 @@
             this.buttonUpPrecondition.Location = new System.Drawing.Point(3, 36);
             this.buttonUpPrecondition.Name = "buttonUpPrecondition";
             this.buttonUpPrecondition.Size = new System.Drawing.Size(30, 36);
-            this.buttonUpPrecondition.TabIndex = 12;
+            this.buttonUpPrecondition.TabIndex = 7;
             this.buttonUpPrecondition.Text = "▲";
             this.buttonUpPrecondition.UseVisualStyleBackColor = true;
             this.buttonUpPrecondition.Click += new System.EventHandler(this.buttonUpPrecondition_Click);
@@ -326,7 +326,7 @@
             this.buttonDownPrecondition.Location = new System.Drawing.Point(3, 70);
             this.buttonDownPrecondition.Name = "buttonDownPrecondition";
             this.buttonDownPrecondition.Size = new System.Drawing.Size(30, 36);
-            this.buttonDownPrecondition.TabIndex = 11;
+            this.buttonDownPrecondition.TabIndex = 8;
             this.buttonDownPrecondition.Text = "▼";
             this.buttonDownPrecondition.UseVisualStyleBackColor = true;
             this.buttonDownPrecondition.Click += new System.EventHandler(this.buttonDownPrecondition_Click);
@@ -338,13 +338,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxPreconditions.BackColor = System.Drawing.Color.LightGray;
             this.listBoxPreconditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxPreconditions.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.listBoxPreconditions.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.listBoxPreconditions.FormattingEnabled = true;
             this.listBoxPreconditions.Location = new System.Drawing.Point(33, 16);
             this.listBoxPreconditions.Name = "listBoxPreconditions";
             this.listBoxPreconditions.Size = new System.Drawing.Size(249, 158);
-            this.listBoxPreconditions.TabIndex = 7;
+            this.listBoxPreconditions.TabIndex = 9;
             this.listBoxPreconditions.SelectedIndexChanged += new System.EventHandler(this.listBoxPreconditions_SelectedIndexChanged);
+            this.listBoxPreconditions.DoubleClick += new System.EventHandler(this.listBoxPreconditions_DoubleClick);
             // 
             // groupBoxActions
             // 
@@ -358,7 +359,7 @@
             this.groupBoxActions.Location = new System.Drawing.Point(0, 0);
             this.groupBoxActions.Name = "groupBoxActions";
             this.groupBoxActions.Size = new System.Drawing.Size(285, 247);
-            this.groupBoxActions.TabIndex = 1;
+            this.groupBoxActions.TabIndex = 10;
             this.groupBoxActions.TabStop = false;
             this.groupBoxActions.Text = "Operations :: \"Do\"";
             // 
@@ -367,7 +368,7 @@
             this.buttonUpOperation.Location = new System.Drawing.Point(3, 36);
             this.buttonUpOperation.Name = "buttonUpOperation";
             this.buttonUpOperation.Size = new System.Drawing.Size(30, 36);
-            this.buttonUpOperation.TabIndex = 14;
+            this.buttonUpOperation.TabIndex = 11;
             this.buttonUpOperation.Text = "▲";
             this.buttonUpOperation.UseVisualStyleBackColor = true;
             this.buttonUpOperation.Click += new System.EventHandler(this.buttonUpOperation_Click);
@@ -377,7 +378,7 @@
             this.buttonDownOperation.Location = new System.Drawing.Point(3, 70);
             this.buttonDownOperation.Name = "buttonDownOperation";
             this.buttonDownOperation.Size = new System.Drawing.Size(30, 36);
-            this.buttonDownOperation.TabIndex = 13;
+            this.buttonDownOperation.TabIndex = 12;
             this.buttonDownOperation.Text = "▼";
             this.buttonDownOperation.UseVisualStyleBackColor = true;
             this.buttonDownOperation.Click += new System.EventHandler(this.buttonDownOperation_Click);
@@ -389,13 +390,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxOperations.BackColor = System.Drawing.Color.LightGray;
             this.listBoxOperations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBoxOperations.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.listBoxOperations.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.listBoxOperations.FormattingEnabled = true;
             this.listBoxOperations.Location = new System.Drawing.Point(33, 16);
             this.listBoxOperations.Name = "listBoxOperations";
             this.listBoxOperations.Size = new System.Drawing.Size(249, 223);
-            this.listBoxOperations.TabIndex = 8;
+            this.listBoxOperations.TabIndex = 13;
             this.listBoxOperations.SelectedIndexChanged += new System.EventHandler(this.listBoxOperations_SelectedIndexChanged);
+            this.listBoxOperations.DoubleClick += new System.EventHandler(this.listBoxOperations_DoubleClick);
             // 
             // EmbeddedScriptControl
             // 

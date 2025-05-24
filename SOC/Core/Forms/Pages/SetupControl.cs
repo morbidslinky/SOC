@@ -240,7 +240,7 @@ namespace SOC.UI
             Application.RemoveMessageFilter(locationalTabsScrolling);
         }
 
-        internal void SyncQuestDataToUserInput()
+        internal void SyncQuestDataToUserInput(bool saveOnly = false)
         {
             Quest.SetupDetails = new SetupDetails(this);
 
@@ -249,7 +249,7 @@ namespace SOC.UI
                 var controlPanel = detail.GetControlPanel();
                 controlPanel.SetDetailsFromSetup(detail, Quest.SetupDetails);
 
-                if (detail.GetQuestObjects().Count > 0)
+                if (detail.GetQuestObjects().Count > 0 && !saveOnly)
                 {
                     controlPanel.ShowDetail();
                 }

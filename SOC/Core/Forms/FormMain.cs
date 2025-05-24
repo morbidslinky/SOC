@@ -205,9 +205,18 @@ namespace SOC.UI
 
         private bool DoSave()
         {
-            SetupControl.SyncQuestDataToUserInput();
-            ScriptControl.SyncQuestDataToUserInput();
-            GoToPage(Step.Setup);
+            switch (CurrentStep)
+            {
+                case Step.Setup:
+                    SetupControl.SyncQuestDataToUserInput(true);
+                    break;
+                case Step.Detail:
+                    GoToPage(Step.Setup);
+                    break;
+                case Step.Script:
+                    ScriptControl.SyncQuestDataToUserInput();
+                    break;
+            }
 
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";

@@ -302,6 +302,10 @@ string.Format(@"
             }
 
             ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
+            if (selectedChoice != null && selectedChoice.Dependency != null)
+            {
+                ParentControl.treeViewVariables.SelectedNode = selectedChoice.Dependency;
+            }
         }
 
         private void showCorrespondingChoiceControl(Control choiceControl, bool enable = true)

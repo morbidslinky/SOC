@@ -298,7 +298,7 @@ namespace SOC.Classes.Lua
         [XmlIgnore]
         public static readonly string[] DefaultParameters = { "arg1", "arg2", "arg3", "arg4" };
 
-        public const string NIL_LITERAL_KEY = "NONE";
+        public const string NIL_LITERAL_KEY = "ALL";
 
         public StrCode32(string code, LuaValue message)
         {

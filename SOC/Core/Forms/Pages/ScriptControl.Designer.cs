@@ -109,7 +109,7 @@
             this.comboBoxVarType.Location = new System.Drawing.Point(136, 369);
             this.comboBoxVarType.Name = "comboBoxVarType";
             this.comboBoxVarType.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxVarType.TabIndex = 2;
+            this.comboBoxVarType.TabIndex = 3;
             this.comboBoxVarType.SelectedIndexChanged += new System.EventHandler(this.comboBoxVarType_SelectedIndexChanged);
             // 
             // textBoxVarName
@@ -121,7 +121,7 @@
             this.textBoxVarName.Location = new System.Drawing.Point(3, 369);
             this.textBoxVarName.Name = "textBoxVarName";
             this.textBoxVarName.Size = new System.Drawing.Size(127, 20);
-            this.textBoxVarName.TabIndex = 3;
+            this.textBoxVarName.TabIndex = 2;
             this.textBoxVarName.TextChanged += new System.EventHandler(this.textBoxVarName_TextChanged);
             this.textBoxVarName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxName_KeyDown);
             // 
@@ -155,8 +155,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewVariables.BackColor = System.Drawing.Color.Silver;
-            this.treeViewVariables.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.treeViewVariables.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.treeViewVariables.HideSelection = false;
+            this.treeViewVariables.Indent = 15;
+            this.treeViewVariables.ItemHeight = 19;
             this.treeViewVariables.Location = new System.Drawing.Point(3, 19);
             this.treeViewVariables.Name = "treeViewVariables";
             this.treeViewVariables.Size = new System.Drawing.Size(254, 315);
@@ -174,7 +176,7 @@
             this.panelBoolean.Location = new System.Drawing.Point(3, 395);
             this.panelBoolean.Name = "panelBoolean";
             this.panelBoolean.Size = new System.Drawing.Size(254, 20);
-            this.panelBoolean.TabIndex = 8;
+            this.panelBoolean.TabIndex = 4;
             this.panelBoolean.Visible = false;
             // 
             // radioButtonFalse
@@ -302,7 +304,7 @@
             this.buttonNewPrecondition.Location = new System.Drawing.Point(0, 0);
             this.buttonNewPrecondition.Name = "buttonNewPrecondition";
             this.buttonNewPrecondition.Size = new System.Drawing.Size(150, 21);
-            this.buttonNewPrecondition.TabIndex = 7;
+            this.buttonNewPrecondition.TabIndex = 3;
             this.buttonNewPrecondition.Text = "Add New Precondition";
             this.buttonNewPrecondition.UseVisualStyleBackColor = true;
             this.buttonNewPrecondition.Click += new System.EventHandler(this.buttonNewPrecondition_Click);
@@ -313,7 +315,7 @@
             this.buttonNewOperation.Location = new System.Drawing.Point(0, 0);
             this.buttonNewOperation.Name = "buttonNewOperation";
             this.buttonNewOperation.Size = new System.Drawing.Size(149, 21);
-            this.buttonNewOperation.TabIndex = 8;
+            this.buttonNewOperation.TabIndex = 4;
             this.buttonNewOperation.Text = "Add New Operation";
             this.buttonNewOperation.UseVisualStyleBackColor = true;
             this.buttonNewOperation.Click += new System.EventHandler(this.buttonNewOperation_Click);
@@ -327,7 +329,7 @@
             this.textBoxScriptName.Location = new System.Drawing.Point(3, 369);
             this.textBoxScriptName.Name = "textBoxScriptName";
             this.textBoxScriptName.Size = new System.Drawing.Size(305, 20);
-            this.textBoxScriptName.TabIndex = 6;
+            this.textBoxScriptName.TabIndex = 2;
             this.textBoxScriptName.TextChanged += new System.EventHandler(this.textBoxScriptName_TextChanged);
             this.textBoxScriptName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxScriptName_KeyDown);
             // 
@@ -338,7 +340,7 @@
             this.buttonRemoveScript.Location = new System.Drawing.Point(3, 421);
             this.buttonRemoveScript.Name = "buttonRemoveScript";
             this.buttonRemoveScript.Size = new System.Drawing.Size(305, 23);
-            this.buttonRemoveScript.TabIndex = 6;
+            this.buttonRemoveScript.TabIndex = 5;
             this.buttonRemoveScript.Text = "Delete Selected Node";
             this.buttonRemoveScript.UseVisualStyleBackColor = true;
             this.buttonRemoveScript.Click += new System.EventHandler(this.buttonRemoveScript_Click);
@@ -361,8 +363,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeViewScripts.BackColor = System.Drawing.Color.Silver;
-            this.treeViewScripts.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.treeViewScripts.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.treeViewScripts.HideSelection = false;
+            this.treeViewScripts.Indent = 21;
+            this.treeViewScripts.ItemHeight = 19;
             this.treeViewScripts.Location = new System.Drawing.Point(3, 19);
             this.treeViewScripts.Name = "treeViewScripts";
             this.treeViewScripts.ShowRootLines = false;
@@ -426,7 +430,7 @@
             this.groupBoxScriptDetails.Location = new System.Drawing.Point(0, 0);
             this.groupBoxScriptDetails.Name = "groupBoxScriptDetails";
             this.groupBoxScriptDetails.Size = new System.Drawing.Size(581, 450);
-            this.groupBoxScriptDetails.TabIndex = 7;
+            this.groupBoxScriptDetails.TabIndex = 20;
             this.groupBoxScriptDetails.TabStop = false;
             this.groupBoxScriptDetails.Text = "Script Component Details";
             // 

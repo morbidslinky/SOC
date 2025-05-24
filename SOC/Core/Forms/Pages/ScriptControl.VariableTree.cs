@@ -123,9 +123,8 @@ namespace SOC.UI
         {
             if (node.NodeFont != REGULAR)
             {
-                node.NodeFont = REGULAR;
+                node.NodeFont = node is ScriptNode ? BOLD : REGULAR;
             }
-
             foreach (TreeNode child in node.Nodes)
                 ResetNodeUnderlinesRecursive(child);
         }
@@ -370,7 +369,7 @@ namespace SOC.UI
                 
                 scriptalNode.NodeFont = ScriptControl.UNDERLINE;
                 scriptalNode.Parent.NodeFont = ScriptControl.UNDERLINE;
-                scriptalNode.Parent.Parent.NodeFont = ScriptControl.UNDERLINE;
+                scriptalNode.Parent.Parent.NodeFont = ScriptControl.UNDERLINE_BOLD;
 
             }
             

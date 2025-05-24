@@ -97,19 +97,17 @@
             this.groupBoxDescription.Location = new System.Drawing.Point(0, 75);
             this.groupBoxDescription.Name = "groupBoxDescription";
             this.groupBoxDescription.Size = new System.Drawing.Size(285, 356);
-            this.groupBoxDescription.TabIndex = 33;
+            this.groupBoxDescription.TabIndex = 1;
             this.groupBoxDescription.TabStop = false;
             // 
             // textBoxDescription
             // 
-            this.textBoxDescription.AcceptsReturn = true;
-            this.textBoxDescription.AcceptsTab = true;
             this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDescription.BackColor = System.Drawing.Color.LightGray;
             this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
@@ -138,7 +136,7 @@
             this.buttonApplyTemplate.Location = new System.Drawing.Point(211, 39);
             this.buttonApplyTemplate.Name = "buttonApplyTemplate";
             this.buttonApplyTemplate.Size = new System.Drawing.Size(71, 23);
-            this.buttonApplyTemplate.TabIndex = 2;
+            this.buttonApplyTemplate.TabIndex = 1;
             this.buttonApplyTemplate.Text = "Apply >>";
             this.buttonApplyTemplate.UseVisualStyleBackColor = true;
             this.buttonApplyTemplate.Click += new System.EventHandler(this.buttonApplyTemplate_Click);
@@ -195,7 +193,7 @@
             this.groupBoxChoicesList.Location = new System.Drawing.Point(0, 0);
             this.groupBoxChoicesList.Name = "groupBoxChoicesList";
             this.groupBoxChoicesList.Size = new System.Drawing.Size(285, 179);
-            this.groupBoxChoicesList.TabIndex = 0;
+            this.groupBoxChoicesList.TabIndex = 3;
             this.groupBoxChoicesList.TabStop = false;
             // 
             // listBoxChoices
@@ -203,7 +201,7 @@
             this.listBoxChoices.BackColor = System.Drawing.Color.LightGray;
             this.listBoxChoices.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listBoxChoices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxChoices.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.listBoxChoices.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.listBoxChoices.FormattingEnabled = true;
             this.listBoxChoices.Location = new System.Drawing.Point(3, 16);
             this.listBoxChoices.Name = "listBoxChoices";
@@ -229,7 +227,7 @@
             this.groupBoxChoice.Location = new System.Drawing.Point(0, 0);
             this.groupBoxChoice.Name = "groupBoxChoice";
             this.groupBoxChoice.Size = new System.Drawing.Size(285, 247);
-            this.groupBoxChoice.TabIndex = 0;
+            this.groupBoxChoice.TabIndex = 4;
             this.groupBoxChoice.TabStop = false;
             // 
             // panelBoolean
@@ -242,7 +240,7 @@
             this.panelBoolean.Location = new System.Drawing.Point(68, 216);
             this.panelBoolean.Name = "panelBoolean";
             this.panelBoolean.Size = new System.Drawing.Size(214, 20);
-            this.panelBoolean.TabIndex = 9;
+            this.panelBoolean.TabIndex = 6;
             this.panelBoolean.Visible = false;
             // 
             // radioButtonFalse
@@ -304,7 +302,7 @@
             this.textBoxVarStringValue.Location = new System.Drawing.Point(68, 215);
             this.textBoxVarStringValue.Name = "textBoxVarStringValue";
             this.textBoxVarStringValue.Size = new System.Drawing.Size(214, 20);
-            this.textBoxVarStringValue.TabIndex = 9;
+            this.textBoxVarStringValue.TabIndex = 6;
             this.textBoxVarStringValue.Visible = false;
             this.textBoxVarStringValue.TextChanged += new System.EventHandler(this.textBoxVarStringValue_TextChanged);
             // 
@@ -317,7 +315,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxChoiceDescription.BackColor = System.Drawing.Color.LightGray;
             this.textBoxChoiceDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxChoiceDescription.Font = new System.Drawing.Font("Consolas", 8.25F);
+            this.textBoxChoiceDescription.Font = new System.Drawing.Font("Consolas", 8.5F);
             this.textBoxChoiceDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxChoiceDescription.Multiline = true;
             this.textBoxChoiceDescription.Name = "textBoxChoiceDescription";
@@ -355,7 +353,7 @@
             this.comboBoxChoiceSet.Location = new System.Drawing.Point(68, 188);
             this.comboBoxChoiceSet.Name = "comboBoxChoiceSet";
             this.comboBoxChoiceSet.Size = new System.Drawing.Size(214, 21);
-            this.comboBoxChoiceSet.TabIndex = 2;
+            this.comboBoxChoiceSet.TabIndex = 5;
             this.comboBoxChoiceSet.SelectedIndexChanged += new System.EventHandler(this.comboBoxChoiceSet_SelectedIndexChanged);
             // 
             // comboBoxPresetChoosables
@@ -367,7 +365,7 @@
             this.comboBoxPresetChoosables.Location = new System.Drawing.Point(68, 215);
             this.comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
             this.comboBoxPresetChoosables.Size = new System.Drawing.Size(214, 21);
-            this.comboBoxPresetChoosables.TabIndex = 1;
+            this.comboBoxPresetChoosables.TabIndex = 6;
             this.comboBoxPresetChoosables.SelectedIndexChanged += new System.EventHandler(this.comboBoxPresetChoosables_SelectedIndexChanged);
             // 
             // comboBoxUserVarNodes

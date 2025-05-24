@@ -392,5 +392,25 @@ namespace SOC.UI
         {
             ScriptNode.UpdateDescription(textBoxDescription.Text);
         }
+
+        private void listBoxPreconditions_DoubleClick(object sender, EventArgs e)
+        {
+            ScriptalNode selectedNode = (ScriptalNode)listBoxPreconditions.SelectedItem;
+            if (selectedNode != null)
+            {
+                ParentControl.treeViewScripts.SelectedNode = selectedNode;
+                ParentControl.treeViewScripts.Focus();
+            }
+        }
+
+        private void listBoxOperations_DoubleClick(object sender, EventArgs e)
+        {
+            ScriptalNode selectedNode = (ScriptalNode)listBoxOperations.SelectedItem;
+            if (selectedNode != null)
+            {
+                ParentControl.treeViewScripts.SelectedNode = selectedNode;
+                ParentControl.treeViewScripts.Focus();
+            }
+        }
     }
 }

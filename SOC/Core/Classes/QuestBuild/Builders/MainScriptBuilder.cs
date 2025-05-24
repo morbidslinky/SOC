@@ -31,14 +31,6 @@ namespace SOC.Classes.Lua
             QStep_Main.StrCode32Table.AddCommonDefinitions(Quest.ScriptDetails.VariableDeclarations);
             QStep_Main.StrCode32Table.Add(Quest.ScriptDetails.QStep_Main);
 
-            /*TODO
-            XmlSerializer serializer = new XmlSerializer(typeof(LuaTable));
-            using (StreamReader reader = new StreamReader("StaticScriptFunctions.xml"))
-            {
-                CommonFunctions = (LuaTable)serializer.Deserialize(reader);
-            }
-            */
-
             QStep_Main.StrCode32Table.AddCommonDefinitions( // TODO create a qvars table first, add these, and merge it with the CommonDefinitions table?
                 Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(Quest.SetupDetails.CPName, Quest.SetupDetails.locationID)),
                 Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}")

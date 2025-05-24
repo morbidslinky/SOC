@@ -441,6 +441,8 @@ namespace SOC.UI
 
         public ScriptNode(LuaString identifier, string commment, List<Scriptal> conditions, List<Scriptal> operations)
         {
+            NodeFont = ScriptControl.BOLD;
+
             PreconditionsParent = new ScriptalParentNode(ScriptalType.Preconditional, conditions);
             Nodes.Add(PreconditionsParent);
 
