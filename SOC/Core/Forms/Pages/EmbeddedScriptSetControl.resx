@@ -132,7 +132,7 @@
 ["Do" fail the SideOp, "Do" award GMP, etc.]
 
 
-[Preconditionals and Operationals ("If" and "Do") are created via "fill-in-the-blank" Event Function templates]
+[Preconditions and Operations ("If" and "Do") are created via "fill-in-the-blank" Event Function templates]
 
 [Click &lt;Add New Variable&gt; to create a value, which can be used to "fill-in-the-blanks" of Event Functions]</value>
   </data>

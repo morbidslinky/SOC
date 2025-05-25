@@ -83,7 +83,7 @@ namespace SOC.Classes.Lua
                 funcBuilder.AppendParameter(StrCode32.DefaultParameters);
                 foreach (Script subscript in root.Subscripts)
                 {
-                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"SUBSCRIPT_{subscript.Identifier.Text}"));
+                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Text}"));
                     funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, StrCode32.GetDefaultParametersAsVariables()));
                 }
 
@@ -106,28 +106,28 @@ namespace SOC.Classes.Lua
             {
                 foreach (Script subscript in root.Subscripts)
                 {
-                    foreach (Scriptal conditional in subscript.Preconditionals)
+                    foreach (Scriptal precondition in subscript.Preconditions)
                     {
                         functionDefinitionsTable.Add(
                             Lua.TableEntry(
-                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{conditional.ScriptPrefixID}{conditional.Name}")),
-                                conditional.Populate(),
-                                true
+                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{precondition.ScriptPrefixID}{precondition.Name}")),
+                                precondition.Populate(),
+                                false
                             )
                         );
                     }
-                    foreach (Scriptal operational in subscript.Operationals)
+                    foreach (Scriptal operation in subscript.Operations)
                     {
                         functionDefinitionsTable.Add(
                             Lua.TableEntry(
-                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{operational.ScriptPrefixID}{operational.Name}")),
-                                operational.Populate(),
-                                true
+                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{operation.ScriptPrefixID}{operation.Name}")),
+                                operation.Populate(),
+                                false
                             )
                         );
                     }
 
-                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"SUBSCRIPT_{subscript.Identifier.Text}"));
+                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Text}"));
                     functionDefinitionsTable.Add(
                         Lua.TableEntry(
                             subscriptCallableIdentifier,
@@ -151,14 +151,14 @@ namespace SOC.Classes.Lua
             {
                 foreach (Script subscript in root.Subscripts)
                 {
-                    foreach (Scriptal conditional in subscript.Preconditionals)
+                    foreach (Scriptal precondition in subscript.Preconditions)
                     {
-                        CommonDefinitionsTable.Add(conditional.CommonDefinitions);
+                        CommonDefinitionsTable.Add(precondition.CommonDefinitions);
                     }
 
-                    foreach (Scriptal operational in subscript.Operationals)
+                    foreach (Scriptal operation in subscript.Operations)
                     {
-                        CommonDefinitionsTable.Add(operational.CommonDefinitions);
+                        CommonDefinitionsTable.Add(operation.CommonDefinitions);
                     }
                 }
             }
@@ -179,12 +179,12 @@ namespace SOC.Classes.Lua
         public string Description = "";
 
         [XmlArray("Preconditions")]
-        [XmlArrayItem("Preconditional")]
-        public List<Scriptal> Preconditionals = new List<Scriptal>();
+        [XmlArrayItem("Precondition")]
+        public List<Scriptal> Preconditions = new List<Scriptal>();
 
         [XmlArray("Operations")]
-        [XmlArrayItem("Operational")]
-        public List<Scriptal> Operationals = new List<Scriptal>();
+        [XmlArrayItem("Operation")]
+        public List<Scriptal> Operations = new List<Scriptal>();
 
         [XmlIgnore]
         public List<Script> Subscripts = new List<Script>();
@@ -203,9 +203,9 @@ namespace SOC.Classes.Lua
 
             Scriptal legacyScriptal = new Scriptal();
 
-            legacyScriptal.Name = "TargetCheck";
+            legacyScriptal.Name = "func";
             legacyScriptal.EventFunctionTemplate = ((LuaFunction)legacyFormat.Value).Body.Template;
-            Operationals.Add(legacyScriptal);
+            Operations.Add(legacyScriptal);
         }
 
         public Script(Script subscript)
@@ -218,17 +218,7 @@ namespace SOC.Classes.Lua
         public override string ToString()
         {
             return string.Format(" {0,-25}:: {1, -35}:: {2}",
-            Identifier, $"{Preconditionals.Count} Precondition(s), {Operationals.Count} Operation(s)", CodeEvent);
-        }
-
-        public void AddConditionalFunctionEntries(params Scriptal[] conditionals)
-        {
-            Preconditionals.AddRange(conditionals);
-        }
-
-        public void AddOperationalFunctionEntries(params Scriptal[] operationals)
-        {
-            Operationals.AddRange(operationals);
+            Identifier, $"{Preconditions.Count} Precondition(s), {Operations.Count} Operation(s)", CodeEvent);
         }
 
         public void AddSubscripts(params Script[] subscripts)
@@ -247,15 +237,15 @@ namespace SOC.Classes.Lua
                 functionBuilder.AppendPlainText($"--[[{sanitizedDescription}]]");
             }
 
-            foreach (Scriptal scriptal in Preconditionals)
+            foreach (Scriptal precondition in Preconditions)
             {
-                var conditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{scriptal.ScriptPrefixID}{scriptal.Name}"));
-                functionBuilder.AppendPlainText($"if not {Lua.FunctionCall(conditionIdentifier, StrCode32.GetDefaultParametersAsVariables())} then return end\n");
+                var preconditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{precondition.ScriptPrefixID}{precondition.Name}"));
+                functionBuilder.AppendPlainText($"if not {Lua.FunctionCall(preconditionIdentifier, StrCode32.GetDefaultParametersAsVariables())} then return end\n");
             }
 
-            foreach (Scriptal scriptal in Operationals)
+            foreach (Scriptal operation in Operations)
             {
-                var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{scriptal.ScriptPrefixID}{scriptal.Name}"));
+                var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{operation.ScriptPrefixID}{operation.Name}"));
                 functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, StrCode32.GetDefaultParametersAsVariables()));
             }
 
@@ -298,7 +288,7 @@ namespace SOC.Classes.Lua
         [XmlIgnore]
         public static readonly string[] DefaultParameters = { "arg1", "arg2", "arg3", "arg4" };
 
-        public const string NIL_LITERAL_KEY = "ALL";
+        public const string NIL_LITERAL_KEY = "ANY / ALL";
 
         public StrCode32(string code, LuaValue message)
         {
@@ -357,12 +347,12 @@ namespace SOC.Classes.Lua
         [XmlElement]
         public string EventFunctionTemplate;
 
+        [XmlElement("EmbeddedChoosableValueSets")]
+        public ChoiceKeyValuesList EmbeddedChoosables = new ChoiceKeyValuesList();
+
         [XmlArray("Choices")]
         [XmlArrayItem("Choice")]
         public List<Choice> Choices = new List<Choice>();
-
-        [XmlElement("EmbeddedChoiceValueSets")]
-        public ChoiceKeyValuesList EmbeddedChoosables = new ChoiceKeyValuesList();
 
         [XmlArray("CommonDefinitions")]
         [XmlArrayItem("Definition")]
@@ -472,7 +462,7 @@ namespace SOC.Classes.Lua
 
     public class ChoiceKeyValuesList
     {
-        [XmlElement("KeyValuesPair")]
+        [XmlElement("KeyValuesSet")]
         public List<ChoiceKeyValues> ChoiceKeyValues = new List<ChoiceKeyValues>();
 
         public static ChoiceKeyValuesList LoadFromXml(string filePath)
@@ -533,6 +523,10 @@ namespace SOC.Classes.Lua
         [XmlElement]
         public string Description = "Choice Description";
 
+        [XmlArray("ChoosableValueSetsFilter")]
+        [XmlArrayItem("Key")]
+        public List<string> ChoosableValueSetsFilter = new List<string>();
+
         [XmlElement]
         public bool AllowUIEdit = true;
 
@@ -548,10 +542,6 @@ namespace SOC.Classes.Lua
         [XmlElement]
         public LuaValue Value = new LuaNil();
 
-        [XmlArray("ChoosableValuesKeyFilter")]
-        [XmlArrayItem("Key")]
-        public List<string> ChoosableValuesKeyFilter = new List<string>();
-
         [XmlIgnore]
         public LuaTemplatePlaceholder CorrespondingRuntimeToken = new LuaTemplatePlaceholder("");
 
@@ -565,7 +555,7 @@ namespace SOC.Classes.Lua
 
         public override string ToString() => $"{Name} :: {Key} :: {Value}";
 
-        public string ToAbridgedString() => $"({Name}: {Value})";
+        public string ToShortString() => $"({Name}: {Value})";
 
         public void SetVarNodeDependency(VariableNode dependency)
         {

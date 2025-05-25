@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ChoiceKeyValuesList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <KeyValuesPair Key="Trap">
+  <KeyValuesSet Key="Trap">
     <Value xsi:type="LuaString" Text="Enter" />
     <Value xsi:type="LuaString" Text="Exit" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Timer">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Timer">
     <Value xsi:type="LuaString" Text="Start" />
     <Value xsi:type="LuaString" Text="Finish" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Mission">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Mission">
     <Value xsi:type="LuaString" Text="CustomMessage" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Marker">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Marker">
     <Value xsi:type="LuaString" Text="ChangeToEnable" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Placed">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Placed">
     <Value xsi:type="LuaString" Text="OnActivatePlaced" />
     <Value xsi:type="LuaString" Text="OnBreakPlaced" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Player">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Player">
     <Value xsi:type="LuaString" Text="AdjustFulton" />
     <Value xsi:type="LuaString" Text="CalcFultonPercent" />
     <Value xsi:type="LuaString" Text="CallMenuMessage_HideCallMenu" />
@@ -118,7 +118,7 @@
     <Value xsi:type="LuaString" Text="WeaponPutPlaced" />
     <Value xsi:type="LuaString" Text="ZombBiteConnect" />
     <Value xsi:type="LuaNumber" Number="583818078" />
-    <Value xsi:type="LuaNumber" Number="3367663002" />
+    <Value xsi:type="LuaNumber" Number="3367663002" /> 
     <Value xsi:type="LuaNumber" Number="1144333753" />
     <Value xsi:type="LuaNumber" Number="32226917" />
     <Value xsi:type="LuaNumber" Number="3073853049" />
@@ -126,8 +126,8 @@
     <Value xsi:type="LuaNumber" Number="2311886128" />
     <Value xsi:type="LuaNumber" Number="545199978" />
     <Value xsi:type="LuaNumber" Number="2990447840" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="GameObject">
+  </KeyValuesSet>
+  <KeyValuesSet Key="GameObject">
     <Value xsi:type="LuaString" Text="AntiSniperNoticed" />
     <Value xsi:type="LuaString" Text="ArrivedAtLandingZoneSkyNav" />
     <Value xsi:type="LuaString" Text="ArrivedAtLandingZoneWaitPoint" />
@@ -219,24 +219,24 @@
     <Value xsi:type="LuaString" Text="WalkerGearBroken" />
     <Value xsi:type="LuaString" Text="WarningGimmick" />
     <Value xsi:type="LuaNumber" Number="3311396607" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Radio">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Radio">
     <Value xsi:type="LuaString" Text="Start" />
     <Value xsi:type="LuaString" Text="Finish" />
     <Value xsi:type="LuaNumber" Number="2719725902" />
     <Value xsi:type="LuaNumber" Number="1809879683" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Sound">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Sound">
     <Value xsi:type="LuaString" Text="ChangeBgmPhase" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Subtitles">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Subtitles">
     <Value xsi:type="LuaString" Text="SubtitlesStartEventMessage" />
     <Value xsi:type="LuaString" Text="SubtitlesEndEventMessage" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="SupportAttack">
+  </KeyValuesSet>
+  <KeyValuesSet Key="SupportAttack">
     <Value xsi:type="LuaString" Text="OnRequested" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Terminal">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Terminal">
     <Value xsi:type="LuaString" Text="MbDvcActCallRescueHeli" />
     <Value xsi:type="LuaString" Text="MbDvcActCallBuddy" />
     <Value xsi:type="LuaString" Text="MbDvcActFocusMapIcon" />
@@ -246,15 +246,15 @@
     <Value xsi:type="LuaString" Text="MbDvcActSelectItemDropPoint" />
     <Value xsi:type="LuaString" Text="MbDvcActSelectLandPoint" />
     <Value xsi:type="LuaNumber" Number="4275806845" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Throwing">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Throwing">
     <Value xsi:type="LuaString" Text="NotifyStartWarningFlare" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="SupplyCbox">
+  </KeyValuesSet>
+  <KeyValuesSet Key="SupplyCbox">
     <Value xsi:type="LuaNumber" Number="3768843497" />
     <Value xsi:type="LuaNumber" Number="2414690884" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="UI">
+  </KeyValuesSet>
+  <KeyValuesSet Key="UI">
     <Value xsi:type="LuaString" Text="DisplayTimerTimeUp" />
     <Value xsi:type="LuaString" Text="EndAnnounceLog" />
     <Value xsi:type="LuaString" Text="EndFadeOut" />
@@ -262,12 +262,12 @@
     <Value xsi:type="LuaString" Text="QuestAreaAnnounceLog" />
     <Value xsi:type="LuaString" Text="QuestAreaAnnounceText" />
     <Value xsi:type="LuaString" Text="StartAnnounceLog" />
-  </KeyValuesPair>
-  <KeyValuesPair Key="Weather">
+  </KeyValuesSet>
+  <KeyValuesSet Key="Weather">
     <Value xsi:type="LuaString" Text="ChangeWeather" />
     <Value xsi:type="LuaString" Text="Clock" />
     <Value xsi:type="LuaString" Text="StartRain" />
     <Value xsi:type="LuaString" Text="FinishRain" />
     <Value xsi:type="LuaString" Text="WeatherForecast" />
-  </KeyValuesPair>
+  </KeyValuesSet>
 </ChoiceKeyValuesList>

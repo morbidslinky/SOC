@@ -43,7 +43,7 @@ namespace SOC.UI
             Scriptal[] scriptalTemplates = GetTemplates(ScriptalNode);
 
             comboBoxScriptal.Items.Clear();
-            comboBoxScriptal.Items.Add(ScriptalNode.ScriptalType == ScriptalType.Preconditional ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
+            comboBoxScriptal.Items.Add(ScriptalNode.ScriptalType == ScriptalType.Precondition ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
             comboBoxScriptal.Items.AddRange(scriptalTemplates);
 
             Scriptal matchingTemplate = scriptalTemplates.FirstOrDefault(template => template.Name == ScriptalNode.Scriptal.Name && template.EventFunctionTemplate == ScriptalNode.Scriptal.EventFunctionTemplate);
@@ -72,7 +72,7 @@ namespace SOC.UI
 
         internal static string str(ScriptalType type)
         {
-            return type == ScriptalType.Preconditional ? "Preconditional" : "Operational";
+            return type == ScriptalType.Precondition ? "Precondition" : "Operation";
         }
 
         private void comboBoxScriptal_SelectedIndexChanged(object sender, EventArgs e)
@@ -127,7 +127,7 @@ namespace SOC.UI
         {
             List<Scriptal> scriptals = new List<Scriptal>();
 
-            List<FileInfo> scriptalFiles = GetScriptalFiles(scriptalNode);
+            List<FileInfo> scriptalFiles = GetScriptalTemplates(scriptalNode);
 
             Exception lastExeption = null; string failedFileName = ""; int exceptionCount = 0;
             foreach (FileInfo scriptalFile in scriptalFiles)
@@ -151,14 +151,14 @@ namespace SOC.UI
             return scriptals.ToArray();
         }
 
-        internal List<FileInfo> GetScriptalFiles(ScriptalNode scriptalNode)
+        internal List<FileInfo> GetScriptalTemplates(ScriptalNode scriptalNode)
         {
             List<FileInfo> scriptalFiles = new List<FileInfo>();
 
             StrCode32 scriptalEvent = scriptalNode.GetEvent();
 
-            string scriptsRootPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets");
-            string[] scriptalSubDirs = { "Scriptals", str(scriptalNode.ScriptalType), scriptalEvent.CodeKey, scriptalEvent.Message.Value.Trim('"') };
+            string scriptsRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets");
+            string[] scriptalSubDirs = { "Scriptal Library", str(scriptalNode.ScriptalType), scriptalEvent.CodeKey, scriptalEvent.Message.Value.Trim('"') };
 
             Exception lastExeption = null; int exceptionCount = 0;
             for (int i = 0; i < scriptalSubDirs.Length; i++)
@@ -180,7 +180,7 @@ namespace SOC.UI
             }
             if (lastExeption != null)
             {
-                MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to read the files in the ScriptAssets directory. \n\nLast Error: {lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show($"Error: {exceptionCount} error(s) occurred while attempting to read the files in the Scriptal Library. \n\nLast Error: {lastExeption.Message}", "An Error has occurred", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             return scriptalFiles;
@@ -216,7 +216,7 @@ string.Format(@"
 {4,-20}{5}",
 "Allow User Vars:", selectedChoice.AllowUserVariable,
 "Allow Literals:", selectedChoice.AllowLiteral,
-"Allow Value Sets:", string.Join(", ", selectedChoice.ChoosableValuesKeyFilter)) : "");
+"Allow Value Sets:", string.Join(", ", selectedChoice.ChoosableValueSetsFilter)) : "");
         }
 
         private void RefreshChoiceSets(Scriptal selectedScriptal, Choice selectedChoice)
@@ -242,7 +242,7 @@ string.Format(@"
 
             chooseableSets.AddRange(selectedScriptal.EmbeddedChoosables.ChoiceKeyValues
                 .Union(ParentControl.Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues)
-                .Where(set => selectedChoice.ChoosableValuesKeyFilter.Contains(set.Key)));
+                .Where(set => selectedChoice.ChoosableValueSetsFilter.Contains(set.Key)));
 
             if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)
                 chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.CUSTOM_VARIABLE_SET });

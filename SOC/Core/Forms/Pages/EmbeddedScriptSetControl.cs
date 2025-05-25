@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -68,6 +69,7 @@ namespace SOC.UI
         {
             OpenFileDialog loadFile = new OpenFileDialog();
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
+            loadFile.InitialDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Exports");
 
             DialogResult result = loadFile.ShowDialog();
             if (result != DialogResult.OK)
@@ -90,6 +92,7 @@ namespace SOC.UI
         {
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
+            saveFile.InitialDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Exports");
             saveFile.FileName = $"{ParentControl.Quest.SetupDetails.FpkName}.ScriptExport";
             DialogResult saveResult = saveFile.ShowDialog();
 

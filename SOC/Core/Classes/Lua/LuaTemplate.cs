@@ -98,7 +98,11 @@ namespace SOC.Classes.Lua
         {
             if (TryTokenize(templateString, out List<LuaTemplateToken> allTokens))
             {
-                placeholderTokens = allTokens.OfType<LuaTemplatePlaceholder>().ToList();
+                placeholderTokens = allTokens
+                    .OfType<LuaTemplatePlaceholder>()
+                    .Distinct()
+                    .OrderBy(placeholder => placeholder.Index)
+                    .ToList();
                 return true;
             }
 
@@ -136,7 +140,7 @@ namespace SOC.Classes.Lua
         }
     }
 
-    public class LuaTemplatePlaceholder : LuaTemplateToken
+    public class LuaTemplatePlaceholder : LuaTemplateToken, IEquatable<LuaTemplatePlaceholder>
     {
         public string PlaceholderString { get; set; }
 
@@ -146,6 +150,36 @@ namespace SOC.Classes.Lua
 
         public LuaTemplatePlaceholder(string placeholderString) {
             Index = -1; AllowedTypes = new List<LuaValue.TemplateRestrictionType> { LuaValue.TemplateRestrictionType.NIL }; PlaceholderString = placeholderString;
+        }
+
+        public bool Equals(LuaTemplatePlaceholder other)
+        {
+            if (other == null) return false;
+
+            return Index == other.Index
+                && string.Equals(PlaceholderString, other.PlaceholderString)
+                && new HashSet<LuaValue.TemplateRestrictionType>(AllowedTypes)
+                   .SetEquals(other.AllowedTypes);
+        }
+
+        public override bool Equals(object obj) => Equals(obj as LuaTemplatePlaceholder);
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + Index.GetHashCode();
+            hash = hash * 23 + (PlaceholderString?.GetHashCode() ?? 0);
+
+            int allowedTypesHash = 0;
+            if (AllowedTypes != null)
+            {
+                foreach (var t in new HashSet<LuaValue.TemplateRestrictionType>(AllowedTypes))
+                    allowedTypesHash ^= t.GetHashCode();
+            }
+
+            hash = hash * 23 + allowedTypesHash;
+
+            return hash;
         }
 
         public static bool TryParse(string placeholderToken, out LuaTemplatePlaceholder placeholder)

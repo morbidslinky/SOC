@@ -65,7 +65,7 @@ namespace SOC.UI
             CodeNode codeNode = (CodeNode)msgSenderNode.Parent;
 
             comboBoxCode.Items.Clear();
-            comboBoxCode.Items.AddRange(ScriptControl.StrCodeClasses.Keys());
+            comboBoxCode.Items.AddRange(ScriptControl.StrCode32Classes.Keys());
             var matchIndex = comboBoxCode.Items.IndexOf(codeNode.CodeKey);
             if (matchIndex == -1 && comboBoxCode.Items.Count > 0)
                 matchIndex = 0;
@@ -114,7 +114,7 @@ namespace SOC.UI
             string selectedCode = (string)comboBoxCode.SelectedItem;
 
             comboBoxMessage.Items.Clear();
-            comboBoxMessage.Items.AddRange(ScriptControl.StrCodeClasses.Get(selectedCode).ToArray());
+            comboBoxMessage.Items.AddRange(ScriptControl.StrCode32Classes.Get(selectedCode).ToArray());
 
             var match = comboBoxMessage.Items.OfType<LuaValue>().FirstOrDefault(value => value.Matches(msgSenderNode.Message));
             if (match == null && comboBoxMessage.Items.Count > 0)

@@ -3,6 +3,7 @@ using SOC.Classes.QuestBuild;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -232,6 +233,15 @@ namespace SOC.UI
             try
             {
                 Process.Start(AppDomain.CurrentDomain.BaseDirectory);
+            }
+            catch { }
+        }
+
+        private void buttonOpenScriptTemplates_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets"));
             }
             catch { }
         }

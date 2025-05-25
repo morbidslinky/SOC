@@ -499,6 +499,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptSetControl.resx">
       <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>

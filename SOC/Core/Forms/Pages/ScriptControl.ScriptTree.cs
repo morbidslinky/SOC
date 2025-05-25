@@ -12,8 +12,8 @@ namespace SOC.UI
         private void buttonNewScript_Click(object sender, EventArgs e)
         {
             Script newEventScript = new Script(GetEventFromSelection(), "NewEventScript");
-            newEventScript.Preconditionals.Add(Scriptal.AlwaysTrue());
-            newEventScript.Operationals.Add(Scriptal.DoNothing());
+            newEventScript.Preconditions.Add(Scriptal.AlwaysTrue());
+            newEventScript.Operations.Add(Scriptal.DoNothing());
 
             treeViewScripts.SelectedNode = ScriptTablesRootNode.QStep_Main.Add(newEventScript);
             treeViewScripts.SelectedNode.ExpandAll();
@@ -36,17 +36,17 @@ namespace SOC.UI
             {
                 string key = codeNode.CodeKey;
 
-                if (StrCodeClasses.Get(key).Count > 0)
+                if (StrCode32Classes.Get(key).Count > 0)
                 {
-                    return new StrCode32(key, StrCodeClasses.Get(key)[0]);
+                    return new StrCode32(key, StrCode32Classes.Get(key)[0]);
                 }
             }
 
-            foreach (string key in StrCodeClasses.Keys())
+            foreach (string key in StrCode32Classes.Keys())
             {
-                if (StrCodeClasses.Get(key).Count > 0)
+                if (StrCode32Classes.Get(key).Count > 0)
                 {
-                    return new StrCode32(key, StrCodeClasses.Get(key)[0]);
+                    return new StrCode32(key, StrCode32Classes.Get(key)[0]);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace SOC.UI
 
             if (scriptNode != null)
             {
-                ScriptalNode scriptalNode = scriptNode.AddPreconditional(Scriptal.AlwaysTrue());
+                ScriptalNode scriptalNode = scriptNode.AddPrecondition(Scriptal.AlwaysTrue());
                 scriptNode.UpdateNodeText();
 
                 _isUpdatingControls = false;
@@ -221,7 +221,7 @@ namespace SOC.UI
             
             if (scriptNode != null)
             {
-                ScriptalNode scriptalNode = scriptNode.AddOperational(Scriptal.DoNothing());
+                ScriptalNode scriptalNode = scriptNode.AddOperation(Scriptal.DoNothing());
                 scriptNode.UpdateNodeText();
 
                 _isUpdatingControls = false;
@@ -286,7 +286,7 @@ namespace SOC.UI
         {
             CodeNode codeNode = new CodeNode(script.CodeEvent.CodeKey);
             MessageSenderNode msgSenderNode = new MessageSenderNode(script.CodeEvent.Message, script.CodeEvent.SenderKey, script.CodeEvent.SenderValue);
-            ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditionals, script.Operationals);
+            ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditions, script.Operations);
 
             msgSenderNode.Nodes.Add(scriptNode);
             codeNode.Nodes.Add(msgSenderNode);
@@ -443,10 +443,10 @@ namespace SOC.UI
         {
             NodeFont = ScriptControl.BOLD;
 
-            PreconditionsParent = new ScriptalParentNode(ScriptalType.Preconditional, conditions);
+            PreconditionsParent = new ScriptalParentNode(ScriptalType.Precondition, conditions);
             Nodes.Add(PreconditionsParent);
 
-            OperationsParent = new ScriptalParentNode(ScriptalType.Operational, operations);
+            OperationsParent = new ScriptalParentNode(ScriptalType.Operation, operations);
             Nodes.Add(OperationsParent);
 
             UpdateNodeText(identifier);
@@ -455,16 +455,16 @@ namespace SOC.UI
 
         public override string ToString() => Identifier.ToString();
 
-        public ScriptalNode AddPreconditional(Scriptal scriptal)
+        public ScriptalNode AddPrecondition(Scriptal scriptal)
         {
-            ScriptalNode scriptalNode = new ScriptalNode(scriptal, ScriptalType.Preconditional);
+            ScriptalNode scriptalNode = new ScriptalNode(scriptal, ScriptalType.Precondition);
             PreconditionsParent.Nodes.Add(scriptalNode);
             return scriptalNode;
         }
 
-        public ScriptalNode AddOperational(Scriptal scriptal)
+        public ScriptalNode AddOperation(Scriptal scriptal)
         {
-            ScriptalNode scriptalNode = new ScriptalNode(scriptal, ScriptalType.Operational);
+            ScriptalNode scriptalNode = new ScriptalNode(scriptal, ScriptalType.Operation);
             OperationsParent.Nodes.Add(scriptalNode);
             return scriptalNode;
         }
@@ -513,7 +513,7 @@ namespace SOC.UI
         {
             List<Choice> choices = new List<Choice>();
             var script = ConvertToScript();
-            foreach (var scriptal in script.Operationals.Union(script.Preconditionals))
+            foreach (var scriptal in script.Operations.Union(script.Preconditions))
             {
                 foreach (var choice in scriptal.Choices)
                 {
@@ -546,8 +546,8 @@ namespace SOC.UI
 
                 Identifier = Identifier,
                 Description = Description,
-                Preconditionals = PreconditionsParent.GetScriptals(),
-                Operationals = OperationsParent.GetScriptals()
+                Preconditions = PreconditionsParent.GetScriptals(),
+                Operations = OperationsParent.GetScriptals()
             };
         }
 
@@ -567,7 +567,7 @@ namespace SOC.UI
         public ScriptalParentNode(ScriptalType type, List<Scriptal> scriptals)
         {
             ScriptalType = type;
-            Text = (ScriptalType == ScriptalType.Preconditional) ? "Preconditionals" : "Operationals";
+            Text = (ScriptalType == ScriptalType.Precondition) ? "Preconditions" : "Operations";
                 
             foreach (Scriptal scriptal in scriptals)
             {
@@ -614,8 +614,8 @@ namespace SOC.UI
 
     public enum ScriptalType
     {
-        Preconditional,
-        Operational
+        Precondition,
+        Operation
     }
 
     public class ScriptalNode : TreeNode
@@ -630,7 +630,7 @@ namespace SOC.UI
             Set(scriptal);
         }
 
-        public override string ToString() => Scriptal.Name + $" {string.Join(" ", Scriptal.Choices.Select(choice => choice.ToAbridgedString()))}";
+        public override string ToString() => Scriptal.Name + $" {string.Join(" ", Scriptal.Choices.Select(choice => choice.ToShortString()))}";
 
         public void Set(Scriptal scriptal)
         {

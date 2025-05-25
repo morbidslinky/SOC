@@ -37,7 +37,7 @@ public static class QStep_Main_TargetMessages
     static readonly Script PlayerPickUpWeapon = new Script(
         new StrCode32("Player", Lua.String("OnPickUpWeapon")),
         LuaFunction.ToTableEntry(
-            "PlayerPickUpWeaponClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"local isClearType = qvars.CheckQuestAllTargetDynamic(\"PickUpDormant\", {StrCode32.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); ")
         );
@@ -45,63 +45,63 @@ public static class QStep_Main_TargetMessages
     static readonly Script PlayerPickUpPlaced = new Script(
         new StrCode32("Player", Lua.String("OnPickUpPlaced")),
         LuaFunction.ToTableEntry(
-            "PlayerPickUpPlacedClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if TppPlaced.IsQuestBlock({StrCode32.DefaultParameters[2]}) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"PickUpActive\", {StrCode32.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly Script PlacedActivatePlaced = new Script(
         new StrCode32("Placed", Lua.String("OnActivatePlaced")),
         LuaFunction.ToTableEntry(
-            "PlacedActivatePlacedClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if TppPlaced.IsQuestBlock({StrCode32.DefaultParameters[1]}) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"Activate\", {StrCode32.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly Script GameObjectDead = new Script(
         new StrCode32("GameObject", Lua.String("Dead")),
         LuaFunction.ToTableEntry(
-            "GameObjectDeadClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"local isClearType = qvars.CheckQuestAllTargetDynamic(\"Dead\", {StrCode32.DefaultParameters[0]}, {StrCode32.DefaultParameters[2]}); TppQuest.ClearWithSave(isClearType); "));
 
     static readonly Script GameObjectFultonInfo = new Script(
         new StrCode32("GameObject", Lua.String("FultonInfo")),
         LuaFunction.ToTableEntry(
-            "GameObjectFultonInfoClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if mvars.fultonInfo ~= TppDefine.QUEST_CLEAR_TYPE.NONE then TppQuest.ClearWithSave(mvars.fultonInfo) end; mvars.fultonInfo = TppDefine.QUEST_CLEAR_TYPE.NONE; "));
 
     static readonly Script GameObjectFulton = new Script(
         new StrCode32("GameObject", Lua.String("Fulton")),
         LuaFunction.ToTableEntry(
-            "GameObjectFultonClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"local isClearType = qvars.CheckQuestAllTargetDynamic(\"Fulton\", {StrCode32.DefaultParameters[0]}, {StrCode32.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); "));
 
     static readonly Script GameObjectFultonFailed = new Script(
         new StrCode32("GameObject", Lua.String("FultonFailed")),
         LuaFunction.ToTableEntry(
-            "GameObjectFultonFailedClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if {StrCode32.DefaultParameters[3]} == TppGameObject.FULTON_FAILED_TYPE_ON_FINISHED_RISE then local isClearType = qvars.CheckQuestAllTargetDynamic(\"FultonFailed\", {StrCode32.DefaultParameters[0]}, {StrCode32.DefaultParameters[1]}); TppQuest.ClearWithSave(isClearType); end;  "));
 
     static readonly Script GameObjectPlacedIntoHeli = new Script(
         new StrCode32("GameObject", Lua.String("PlacedIntoVehicle")),
         LuaFunction.ToTableEntry(
-            "GameObjectPlacedIntoHeliClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if Tpp.IsHelicopter({StrCode32.DefaultParameters[1]}) then local isClearType = qvars.CheckQuestAllTargetDynamic(\"InHelicopter\", {StrCode32.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly Script GameObjectVehicleBroken = new Script(
         new StrCode32("GameObject", Lua.String("VehicleBroken")),
         LuaFunction.ToTableEntry(
-            "GameObjectVehicleBrokenClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if {StrCode32.DefaultParameters[1]} == StrCode32(\"End\") then local isClearType = qvars.CheckQuestAllTargetDynamic(\"VehicleBroken\", {StrCode32.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 
     static readonly Script GameObjectLostControl = new Script(
         new StrCode32("GameObject", Lua.String("LostControl")),
         LuaFunction.ToTableEntry(
-            "GameObjectLostControlClearCheck", 
+            "CheckTargetDynamic", 
             StrCode32.DefaultParameters,
             $"if {StrCode32.DefaultParameters[1]} == StrCode32(\"End\") then local isClearType = qvars.CheckQuestAllTargetDynamic(\"LostControl\", {StrCode32.DefaultParameters[0]}); TppQuest.ClearWithSave(isClearType); end; "));
 

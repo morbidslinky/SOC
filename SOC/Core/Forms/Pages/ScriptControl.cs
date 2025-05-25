@@ -20,7 +20,7 @@ namespace SOC.UI
         EmbeddedScriptControl ScriptEmbed;
         EmbeddedScriptalControl ScriptalEmbed;
 
-        public static ChoiceKeyValuesList StrCodeClasses = new ChoiceKeyValuesList();
+        public static ChoiceKeyValuesList StrCode32Classes = new ChoiceKeyValuesList();
 
         private bool _isUpdatingControls = false;
 
@@ -54,7 +54,7 @@ namespace SOC.UI
 
         private static void ParseMessageClassesFile()
         {
-            string MessageClassList = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SOCassets//ScriptAssets//StrCodeClasses.xml");
+            string MessageClassList = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "StrCode32Classes.xml");
 
             if (!File.Exists(MessageClassList))
             {
@@ -62,7 +62,7 @@ namespace SOC.UI
                 return;
             }
 
-            StrCodeClasses = ChoiceKeyValuesList.LoadFromXml(MessageClassList);
+            StrCode32Classes = ChoiceKeyValuesList.LoadFromXml(MessageClassList);
         }
 
         public void Add(ScriptDetails incomingScriptDetails)
@@ -72,7 +72,7 @@ namespace SOC.UI
             var scripts = incomingScriptDetails.QStep_Main;
 
             var scriptals = scripts
-                .SelectMany(script => script.Preconditionals.Concat(script.Operationals))
+                .SelectMany(script => script.Preconditions.Concat(script.Operations))
                 .ToList();
 
             MapChoicesToCorrespondingRuntimeTokens(scriptals);
