@@ -69,7 +69,7 @@ namespace SOC.QuestObjects.Vehicle
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                    targetSenders.Add(Lua.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -81,7 +81,7 @@ namespace SOC.QuestObjects.Vehicle
 
                 foreach (string gameObjectName in vehiclesDetail.vehicles.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                    allSenders.Add(Lua.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);

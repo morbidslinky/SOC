@@ -66,7 +66,7 @@ namespace SOC.QuestObjects.Helicopter
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                    targetSenders.Add(Lua.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -78,7 +78,7 @@ namespace SOC.QuestObjects.Helicopter
 
                 foreach (string gameObjectName in detail.helicopters.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                    allSenders.Add(Lua.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);

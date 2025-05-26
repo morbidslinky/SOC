@@ -1,13 +1,15 @@
-﻿using SOC.UI;
-using System.Xml.Serialization;
-using System.Linq;
-using SOC.Core.Classes.Route;
-using System.Collections.Generic;
+﻿using SOC.Classes.Lua;
 using SOC.Classes.QuestBuild.Assets;
+using SOC.Core.Classes.Route;
+using SOC.QuestObjects.Enemy;
+using SOC.UI;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using SOC.Classes.Lua;
+using System.Xml.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.Classes.Common
 {
@@ -124,10 +126,19 @@ namespace SOC.Classes.Common
             }
         }
 
-        internal void AddToScriptChoosableValueSets(ChoiceKeyValuesList questDetailsValueSets) // For any future additions to SetupDetails that would send script data to the ScriptControl/ScriptDetails
+        internal void AddToScriptChoosableValueSets(ChoiceKeyValuesList questKeyValues)
         {
-            List<ChoiceKeyValues> SetupChoosableValuesSets = new List<ChoiceKeyValues>();
-            questDetailsValueSets.ChoiceKeyValues.AddRange(SetupChoosableValuesSets);
+            List<string> routeStrings = fileRoutes;
+            routeStrings.AddRange(EnemyInfo.GetCP(CPName).CPsoldierRoutes);
+
+            if (routeStrings.Count > 0)
+            {
+                ChoiceKeyValues routeKeyValues = new ChoiceKeyValues("Routes");
+
+                routeKeyValues.Values.AddRange(routeStrings.Select(routeString => Lua.Lua.GetEntryValueType(routeString)));
+
+                questKeyValues.Add(routeKeyValues);
+            }
         }
     }
 }

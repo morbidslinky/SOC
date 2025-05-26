@@ -269,7 +269,7 @@ namespace SOC.QuestObjects.Hostage
                     .Where(hostage => hostage.isTarget)
                     .Select(hostage => hostage.GetObjectName()))
                 {
-                    hostageTargetSenders.Add(Lua.FunctionCall("GetGameObjectId", hostageName));
+                    hostageTargetSenders.Add(Lua.String(hostageName));
                 }
 
                 questKeyValues.Add(hostageTargetSenders);
@@ -281,7 +281,7 @@ namespace SOC.QuestObjects.Hostage
 
                 foreach (string hostageName in hostagesDetail.hostages.Select(hostage => hostage.GetObjectName()))
                 {
-                    hostageSenders.Add(Lua.FunctionCall("GetGameObjectId", hostageName));
+                    hostageSenders.Add(Lua.String(hostageName));
                 }
 
                 questKeyValues.Add(hostageSenders);

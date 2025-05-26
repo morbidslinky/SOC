@@ -123,7 +123,7 @@ namespace SOC.QuestObjects.WalkerGear
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                    targetSenders.Add(Lua.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -135,7 +135,7 @@ namespace SOC.QuestObjects.WalkerGear
 
                 foreach (string gameObjectName in walkerGearsDetail.walkers.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.FunctionCall("GetGameObjectId", gameObjectName));
+                    allSenders.Add(Lua.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);
