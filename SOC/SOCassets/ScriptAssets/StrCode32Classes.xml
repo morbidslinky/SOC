@@ -9,7 +9,6 @@
     <Value xsi:type="LuaString" Text="Finish" />
   </KeyValuesSet>
   <KeyValuesSet Key="Mission">
-    <Value xsi:type="LuaString" Text="CustomMessage" />
   </KeyValuesSet>
   <KeyValuesSet Key="Marker">
     <Value xsi:type="LuaString" Text="ChangeToEnable" />

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Stop_Hidden_Timer</Name>
+  <Description>Stops a running background countdown timer.
+With the countdown averted, the timer will not send a Timer -&gt; &quot;Finish&quot; message.</Description>
+  <EventFunctionTemplate>
+if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+  </EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Sender</Name>
+	  <Description>The name of the timer. This will stop the timer's event from firing.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	</Choice>
+  </Choices>
+</Scriptal>

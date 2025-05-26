@@ -89,8 +89,8 @@ namespace SOC.UI
         private void SetDescription(Scriptal scriptal)
         {
             groupBoxDescription.Text = $"Template Description :: \"{scriptal.Name}\"";
-            textBoxDescription.Text = scriptal.Description +
-                $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate}";
+            textBoxDescription.Text = scriptal.Description.Replace("\n", "\r\n") +
+                $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate.Replace("\n", "\r\n")}";
             if (scriptal.EmbeddedChoosables.ChoiceKeyValues.Count > 0)
             {
                 textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n\r\n- {string.Join("\r\n\r\n- ", scriptal.EmbeddedChoosables.ChoiceKeyValues.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
@@ -194,7 +194,7 @@ namespace SOC.UI
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
 
             groupBoxChoice.Text = $"Choice :: \"{selectedChoice.Name}\"";
-            textBoxChoiceDescription.Text = selectedChoice.Description + RestrictionsToString(selectedChoice);
+            textBoxChoiceDescription.Text = selectedChoice.Description.Replace("\n", "\r\n") + RestrictionsToString(selectedChoice);
 
             RefreshChoiceSets(selectedScriptal, selectedChoice);
             comboBoxChoiceSet.Enabled = selectedChoice.AllowUIEdit;

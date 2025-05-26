@@ -13,6 +13,7 @@ namespace SOC.UI
     public partial class EmbeddedScriptSetControl : UserControl
     {
         ScriptControl ParentControl;
+        readonly string ScriptExportDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Exports");
 
         public EmbeddedScriptSetControl(ScriptControl parentControl)
         {
@@ -67,9 +68,13 @@ namespace SOC.UI
 
         private void buttonLoadScript_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(ScriptExportDir))
+            {
+                Directory.CreateDirectory(ScriptExportDir);
+            }
             OpenFileDialog loadFile = new OpenFileDialog();
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
-            loadFile.InitialDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Exports");
+            loadFile.InitialDirectory = ScriptExportDir;
 
             DialogResult result = loadFile.ShowDialog();
             if (result != DialogResult.OK)
@@ -90,9 +95,13 @@ namespace SOC.UI
 
         private void buttonSaveScript_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(ScriptExportDir))
+            {
+                Directory.CreateDirectory(ScriptExportDir);
+            }
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
-            saveFile.InitialDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Exports");
+            saveFile.InitialDirectory = ScriptExportDir;
             saveFile.FileName = $"{ParentControl.Quest.SetupDetails.FpkName}.ScriptExport";
             DialogResult saveResult = saveFile.ShowDialog();
 

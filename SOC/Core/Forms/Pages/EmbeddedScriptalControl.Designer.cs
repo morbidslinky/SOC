@@ -102,6 +102,8 @@
             // 
             // textBoxDescription
             // 
+            this.textBoxDescription.AcceptsReturn = true;
+            this.textBoxDescription.AcceptsTab = true;
             this.textBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -112,6 +114,7 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
+            this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.textBoxDescription.Size = new System.Drawing.Size(279, 334);
             this.textBoxDescription.TabIndex = 6;
             this.textBoxDescription.WordWrap = false;
@@ -322,7 +325,6 @@
             this.textBoxChoiceDescription.ReadOnly = true;
             this.textBoxChoiceDescription.Size = new System.Drawing.Size(279, 166);
             this.textBoxChoiceDescription.TabIndex = 6;
-            this.textBoxChoiceDescription.WordWrap = false;
             // 
             // labelChoice
             // 

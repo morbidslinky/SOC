@@ -2,13 +2,11 @@
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Print_Text</Name>
   <Description>Prints user string to notifications</Description>
-  <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. |[2|STRING,NUMBER]|)</EventFunctionTemplate>
+  <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. &quot; &quot; .. |[2|STRING,NUMBER]|)</EventFunctionTemplate>
   <EmbeddedChoosableValueSets>
 	<KeyValuesSet Key="GenericNotifStrings">
-	  <Value xsi:type="LuaString" Text="Some Generic String" />
-	  <Value xsi:type="LuaString" Text="Some Other Generic String" />
-	  <Value xsi:type="LuaString" Text="Hello There" />
-	  <Value xsi:type="LuaNumber" Number="10" />
+	  <Value xsi:type="LuaString" Text="Foo" />
+	  <Value xsi:type="LuaString" Text="Bar" />
 	</KeyValuesSet>
   </EmbeddedChoosableValueSets>
   <Choices>
@@ -22,7 +20,7 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>GenericNotifStrings</Key>
-	  <Value xsi:type="LuaString" Text="Some Generic String" />
+	  <Value xsi:type="LuaString" Text="Foo" />
 	</Choice>
 	<Choice>
 	  <Name>String 2</Name>
@@ -34,7 +32,7 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>GenericNotifStrings</Key>
-	  <Value xsi:type="LuaString" Text="Some Other Generic String" />
+	  <Value xsi:type="LuaString" Text="Bar" />
 	</Choice>
   </Choices>
   <CommonDefinitions />

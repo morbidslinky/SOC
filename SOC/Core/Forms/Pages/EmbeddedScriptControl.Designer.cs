@@ -52,6 +52,8 @@
             this.buttonUpOperation = new System.Windows.Forms.Button();
             this.buttonDownOperation = new System.Windows.Forms.Button();
             this.listBoxOperations = new System.Windows.Forms.ListBox();
+            this.buttonApplyMessage = new System.Windows.Forms.Button();
+            this.textBoxMessage = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
             this.splitContainerOuter.Panel1.SuspendLayout();
             this.splitContainerOuter.Panel2.SuspendLayout();
@@ -125,6 +127,8 @@
             this.groupBoxTrigger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxTrigger.BackColor = System.Drawing.Color.Silver;
+            this.groupBoxTrigger.Controls.Add(this.buttonApplyMessage);
+            this.groupBoxTrigger.Controls.Add(this.textBoxMessage);
             this.groupBoxTrigger.Controls.Add(this.buttonApplySender);
             this.groupBoxTrigger.Controls.Add(this.labelSenderValue);
             this.groupBoxTrigger.Controls.Add(this.labelStrCode32);
@@ -399,6 +403,28 @@
             this.listBoxOperations.SelectedIndexChanged += new System.EventHandler(this.listBoxOperations_SelectedIndexChanged);
             this.listBoxOperations.DoubleClick += new System.EventHandler(this.listBoxOperations_DoubleClick);
             // 
+            // buttonApplyMessage
+            // 
+            this.buttonApplyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonApplyMessage.Location = new System.Drawing.Point(211, 78);
+            this.buttonApplyMessage.Name = "buttonApplyMessage";
+            this.buttonApplyMessage.Size = new System.Drawing.Size(71, 23);
+            this.buttonApplyMessage.TabIndex = 18;
+            this.buttonApplyMessage.Text = "Apply >>";
+            this.buttonApplyMessage.UseVisualStyleBackColor = true;
+            this.buttonApplyMessage.Click += new System.EventHandler(this.buttonApplyMessage_Click);
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMessage.BackColor = System.Drawing.Color.LightGray;
+            this.textBoxMessage.Location = new System.Drawing.Point(6, 80);
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(199, 20);
+            this.textBoxMessage.TabIndex = 17;
+            this.textBoxMessage.Visible = false;
+            // 
             // EmbeddedScriptControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -450,5 +476,7 @@
         internal System.Windows.Forms.ComboBox comboBoxSenders;
         internal System.Windows.Forms.Label labelSenderValue;
         private System.Windows.Forms.Button buttonApplySender;
+        private System.Windows.Forms.Button buttonApplyMessage;
+        internal System.Windows.Forms.TextBox textBoxMessage;
     }
 }

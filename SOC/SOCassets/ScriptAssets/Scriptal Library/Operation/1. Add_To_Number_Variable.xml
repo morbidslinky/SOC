@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Add_To_Number_Variable</Name>
+  <Description>Adds a value to a number-variable. 
+Negative values will subtract from the number-variable.</Description>
+  <EventFunctionTemplate>
+|[1|NUMBER]| = |[1|NUMBER]| + |[2|NUMBER]|
+  </EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Number-Variable</Name>
+	  <Description>The custom variable that the value will be added to.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowUserVariable>true</AllowUserVariable>
+	</Choice>
+	<Choice>
+	  <Name>Value</Name>
+	  <Description>The number that is added to the variable.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	</Choice>
+  </Choices>
+</Scriptal>
