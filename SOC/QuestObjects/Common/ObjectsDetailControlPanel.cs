@@ -1,4 +1,5 @@
 ﻿using SOC.Classes.Common;
+using SOC.Classes.Lua;
 using SOC.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,21 +7,28 @@ using System.Windows.Forms;
 
 namespace SOC.QuestObjects.Common
 {
-    public abstract class ObjectsDetailVisualizer
+    public abstract class ObjectsDetailControlPanel
     {
         public UserControl detailControl { get; }
 
+        public List<ChoiceKeyValues> ScriptValueSets { get; }
+
         public FlowLayoutPanel flowPanel { get; }
 
-        public ObjectsDetailVisualizer(UserControl control, FlowLayoutPanel panel)
+        public ObjectsDetailControlPanel(UserControl control, FlowLayoutPanel panel)
         {
             detailControl = control; flowPanel = panel;
         }
 
-        public void VisualizeDetail(ObjectsDetail detail)
+        public void RedrawControl(ObjectsDetail detail)
         {
             DrawMetadata(detail.GetMetadata());
             DrawObjectsControls(detail.GetQuestObjects());
+        }
+
+        public void RefreshScriptValueSets(ObjectsDetail detail)
+        {
+
         }
 
         public void ShowDetail()
@@ -35,11 +43,11 @@ namespace SOC.QuestObjects.Common
 
         public abstract void DrawMetadata(ObjectsMetadata meta);
 
-        public void DrawObjectsControls(List<QuestObject> questObjects)
+        private void DrawObjectsControls(List<QuestObject> questObjects)
         {
             var questObjectBoxes = questObjects.Select(objects => NewQuestObjectBox(objects)).ToArray();
             flowPanel.Controls.Clear();
-            flowPanel.Controls.AddRange(questObjectBoxes);
+            flowPanel.Controls.AddRange(questObjectBoxes); // TODO this sucks on the loading time for the detail page. Gotta figure out some kind of optimization.
         }
 
         public ObjectsDetail GetDetailFromControl()

@@ -13,9 +13,9 @@ using SOC.Core.Classes.Route;
 
 namespace SOC.QuestObjects.Enemy
 {
-    class EnemiesDetailVisualizer : ObjectsDetailVisualizer
+    class EnemiesDetailControlPanel : ObjectsDetailControlPanel
     {
-        public EnemiesDetailVisualizer(EnemyControl control) : base(control, control.panelQuestBoxes) { }
+        public EnemiesDetailControlPanel(EnemyControl control) : base(control, control.panelQuestBoxes) { }
 
         List<string> routes = new List<string>();
         List<string> bodies = new List<string>();

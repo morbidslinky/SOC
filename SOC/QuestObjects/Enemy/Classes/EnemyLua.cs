@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Enemy
 {
@@ -20,29 +21,29 @@ namespace SOC.QuestObjects.Enemy
                 if (HasBalaclavas(detail.enemies))
                 {
                     definitionLua.AddToFaceIdList(new LuaTableIdentifier(
-                        "TppDefine", new LuaValue[]
+                        "TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaValue[]
                         {
-                            new LuaText("QUEST_FACE_ID_LIST"),
-                            new LuaText($"{region}_BALACLAVA")
+                            new LuaString("QUEST_FACE_ID_LIST"),
+                            new LuaString($"{region}_BALACLAVA")
                         }));
                 }
 
                 if (HasArmors(detail.enemies))
                 {
                     definitionLua.AddToBodyIdList(new LuaTableIdentifier(
-                        "TppDefine", new LuaValue[]
+                        "TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaValue[]
                         {
-                            new LuaText("QUEST_BODY_ID_LIST"),
-                            new LuaText($"{region}_ARMOR")
+                            new LuaString("QUEST_BODY_ID_LIST"),
+                            new LuaString($"{region}_ARMOR")
                         }));
                 }
 
                 foreach (string body in GetBodies(detail.enemies))
                 {
                     definitionLua.AddToBodyIdList(new LuaTableIdentifier(
-                        "TppEnemyBodyId", new LuaValue[]
+                        "TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaValue[]
                         {
-                            new LuaText($"{body}")
+                            new LuaString($"{body}")
                         }));
                 }
             }
@@ -150,7 +151,8 @@ namespace SOC.QuestObjects.Enemy
                         )
                     );
 
-                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
@@ -228,6 +230,49 @@ namespace SOC.QuestObjects.Enemy
         private static LuaTableEntry BuildCPList(List<Enemy> enemies)
         {
             return Lua.TableEntry("cpList", Lua.Table(Lua.Nil()));
+        }
+
+        internal static void GetScriptChoosableValueSets(EnemiesDetail detail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (detail.enemies.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Enemies (Targets)");
+
+                foreach (string gameObjectName in detail.enemies
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.enemies.Any(o => o.spawn))
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemies (Enabled)");
+
+                foreach (string gameObjectName in detail.enemies
+                    .Where(o => o.spawn)
+                    .Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
+
+            if (detail.enemies.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemies");
+
+                foreach (string gameObjectName in detail.enemies.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
+            }
         }
     }
 }

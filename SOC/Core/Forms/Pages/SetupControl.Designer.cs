@@ -1,6 +1,6 @@
 ﻿namespace SOC.UI
 {
-    partial class SetupDisplay
+    partial class SetupControl
     {
         /// <summary>
         /// Required designer variable.
@@ -112,7 +112,7 @@
             this.groupBoxSetup.Controls.Add(this.comboBoxRadius);
             this.groupBoxSetup.Controls.Add(this.comboBoxReward);
             this.groupBoxSetup.Controls.Add(this.comboBoxLoadArea);
-            this.groupBoxSetup.Location = new System.Drawing.Point(3, 3);
+            this.groupBoxSetup.Location = new System.Drawing.Point(1, 3);
             this.groupBoxSetup.Name = "groupBoxSetup";
             this.groupBoxSetup.Size = new System.Drawing.Size(514, 197);
             this.groupBoxSetup.TabIndex = 0;
@@ -392,6 +392,7 @@
             // 
             // comboBoxLoadArea
             // 
+            this.comboBoxLoadArea.BackColor = System.Drawing.SystemColors.Window;
             this.comboBoxLoadArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLoadArea.Enabled = false;
             this.comboBoxLoadArea.FormattingEnabled = true;
@@ -407,9 +408,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxLocations.BackColor = System.Drawing.Color.Transparent;
             this.groupBoxLocations.Controls.Add(this.flowPanelLocationalStubs);
-            this.groupBoxLocations.Location = new System.Drawing.Point(523, 3);
+            this.groupBoxLocations.Location = new System.Drawing.Point(521, 3);
             this.groupBoxLocations.Name = "groupBoxLocations";
-            this.groupBoxLocations.Size = new System.Drawing.Size(554, 444);
+            this.groupBoxLocations.Size = new System.Drawing.Size(558, 444);
             this.groupBoxLocations.TabIndex = 17;
             this.groupBoxLocations.TabStop = false;
             this.groupBoxLocations.Text = "Locational Data";
@@ -422,9 +423,9 @@
             this.flowPanelLocationalStubs.AutoScroll = true;
             this.flowPanelLocationalStubs.Controls.Add(this.labelFlowWidth);
             this.flowPanelLocationalStubs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelLocationalStubs.Location = new System.Drawing.Point(3, 16);
+            this.flowPanelLocationalStubs.Location = new System.Drawing.Point(6, 16);
             this.flowPanelLocationalStubs.Name = "flowPanelLocationalStubs";
-            this.flowPanelLocationalStubs.Size = new System.Drawing.Size(548, 425);
+            this.flowPanelLocationalStubs.Size = new System.Drawing.Size(549, 425);
             this.flowPanelLocationalStubs.TabIndex = 16;
             this.flowPanelLocationalStubs.WrapContents = false;
             this.flowPanelLocationalStubs.Layout += new System.Windows.Forms.LayoutEventHandler(this.flowPanelLocationalStubs_Layout);
@@ -449,7 +450,7 @@
             this.groupBoxFlavor.Controls.Add(this.label7);
             this.groupBoxFlavor.Controls.Add(this.textBoxQuestDesc);
             this.groupBoxFlavor.Controls.Add(this.textBoxQuestTitle);
-            this.groupBoxFlavor.Location = new System.Drawing.Point(3, 206);
+            this.groupBoxFlavor.Location = new System.Drawing.Point(1, 206);
             this.groupBoxFlavor.Name = "groupBoxFlavor";
             this.groupBoxFlavor.Size = new System.Drawing.Size(514, 241);
             this.groupBoxFlavor.TabIndex = 0;
@@ -527,13 +528,13 @@
             this.textBoxQuestTitle.Size = new System.Drawing.Size(502, 20);
             this.textBoxQuestTitle.TabIndex = 13;
             // 
-            // SetupDisplay
+            // SetupControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Controls.Add(this.panelSetup);
-            this.Name = "SetupDisplay";
+            this.Name = "SetupControl";
             this.Size = new System.Drawing.Size(1080, 450);
             this.panelSetup.ResumeLayout(false);
             this.groupBoxSetup.ResumeLayout(false);

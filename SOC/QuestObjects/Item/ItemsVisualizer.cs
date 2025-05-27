@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SOC.QuestObjects.Item
 {
-    class ItemsVisualizer : ObjectsDetailVisualizerLocational
+    class ItemsControlPanel : ObjectsDetailControlPanelLocational
     {
-        public ItemsVisualizer(LocationalDataStub stub, ItemControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public ItemsControlPanel(LocationalDataStub stub, ItemControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta)
         {

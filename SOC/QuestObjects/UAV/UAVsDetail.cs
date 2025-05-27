@@ -32,7 +32,7 @@ namespace SOC.QuestObjects.UAV
 
         static UAVControl control = new UAVControl();
 
-        static UAVsVisualizer visualizer = new UAVsVisualizer(stub, control);
+        static UAVsControlPanel controlPanel = new UAVsControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -64,9 +64,14 @@ namespace SOC.QuestObjects.UAV
             UAVFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
+        }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            UAVLua.GetScriptChoosableValueSets(this, questKeyValues);
         }
     }
 }

@@ -6,14 +6,14 @@ namespace SOC.QuestObjects.Common
     {
         public LocationalDataStub GetStub()
         {
-            var visualizer = (ObjectsDetailVisualizerLocational)this.GetVisualizer();
-            return visualizer.detailStub;
+            var controlPanel = (ObjectsDetailControlPanelLocational)this.GetControlPanel();
+            return controlPanel.detailStub;
         }
 
         public void RefreshStub()
         {
-            var visualizer = (ObjectsDetailVisualizerLocational)this.GetVisualizer();
-            visualizer.DrawStubText(this);
+            var controlPanel = (ObjectsDetailControlPanelLocational)this.GetControlPanel();
+            controlPanel.DrawStubText(this);
         }
     }
 }

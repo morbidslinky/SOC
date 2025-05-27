@@ -7,9 +7,9 @@ using SOC.Forms.Pages;
 
 namespace SOC.QuestObjects.GeoTrap
 {
-    class GeoTrapsVisualizer : ObjectsDetailVisualizerLocational
+    class GeoTrapsControlPanel : ObjectsDetailControlPanelLocational
     {
-        public GeoTrapsVisualizer(LocationalDataStub stub, GeoTrapControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public GeoTrapsControlPanel(LocationalDataStub stub, GeoTrapControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta) { }
 

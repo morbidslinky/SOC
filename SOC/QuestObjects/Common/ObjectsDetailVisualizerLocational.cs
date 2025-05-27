@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace SOC.QuestObjects.Common
 {
-    public abstract class ObjectsDetailVisualizerLocational : ObjectsDetailVisualizer
+    public abstract class ObjectsDetailControlPanelLocational : ObjectsDetailControlPanel
     {
         public LocationalDataStub detailStub { get; }
 
-        public ObjectsDetailVisualizerLocational(LocationalDataStub stub, UserControl control, FlowLayoutPanel panel) : base(control, panel)
+        public ObjectsDetailControlPanelLocational(LocationalDataStub stub, UserControl control, FlowLayoutPanel panel) : base(control, panel)
         {
             detailStub = stub;
         }

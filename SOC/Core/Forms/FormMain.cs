@@ -1,9 +1,9 @@
 ﻿using SOC.Classes.Common;
 using SOC.Classes.QuestBuild;
-using SOC.QuestObjects.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,22 +17,25 @@ namespace SOC.UI
             NONE,
             Setup,
             Detail,
+            Script,
             Build
         }
 
-        private ObjectsDetails objectsDetails;
-        private SetupDisplay setupPage;
-        private DetailsDisplay detailPage;
-        private Waiting waitingPage;
-        private Step currentStep;
+        private Quest Quest;
+        private SetupControl SetupControl;
+        private DetailsControl DetailControl;
+        private ScriptControl ScriptControl;
+        private WaitingControl WaitingControl;
+        private Step CurrentStep;
 
         public FormMain()
         {
-            objectsDetails = new ObjectsDetails();
-            setupPage = new SetupDisplay(objectsDetails);
-            detailPage = new DetailsDisplay(objectsDetails);
-            waitingPage = new Waiting();
-            currentStep = Step.NONE;
+            Quest = Quest.Create();
+            SetupControl = new SetupControl(Quest);
+            DetailControl = new DetailsControl(Quest);
+            ScriptControl = new ScriptControl(Quest);
+            WaitingControl = new WaitingControl();
+            CurrentStep = Step.NONE;
 
             InitializeComponent();
 
@@ -41,71 +44,68 @@ namespace SOC.UI
 
         private void buttonNext_Click(object sender, EventArgs e)
         {
-            GoToPage(currentStep + 1);
+            GoToPage(CurrentStep + 1);
         }
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
-            GoToPage(currentStep - 1);
-        }
-
-        private bool isFilled()
-        {
-            //return true; // FOR DEBUG
-            if (string.IsNullOrEmpty(setupPage.textBoxFPKName.Text) || string.IsNullOrEmpty(setupPage.textBoxQuestNum.Text) || string.IsNullOrEmpty(setupPage.textBoxQuestTitle.Text) || string.IsNullOrEmpty(setupPage.textBoxQuestDesc.Text))
-                return false;
-            if (setupPage.comboBoxCategory.SelectedIndex == -1 || setupPage.comboBoxReward.SelectedIndex == -1 || setupPage.comboBoxProgressNotifs.SelectedIndex == -1 || setupPage.comboBoxRegion.SelectedIndex == -1)
-                return false;
-            if (setupPage.comboBoxCP.Enabled)
-                if (setupPage.comboBoxCP.SelectedIndex == -1 || setupPage.comboBoxLoadArea.SelectedIndex == -1 || setupPage.comboBoxRadius.SelectedIndex == -1 || string.IsNullOrEmpty(setupPage.textBoxXCoord.Text) || string.IsNullOrEmpty(setupPage.textBoxYCoord.Text) || string.IsNullOrEmpty(setupPage.textBoxZCoord.Text))
-                    return false;
-
-            return true;
+            GoToPage(CurrentStep - 1);
         }
 
         private void GoToPage(Step step)
         {
-            if (step == currentStep)
+            if (step == CurrentStep)
             {
                 return;
             }
 
-            currentStep = step;
+            CurrentStep = step;
             switch (step)
             {
                 case Step.Setup:
+                    DetailControl.SyncQuestDataToUserInput();
+
                     ShowSetup();
                     break;
 
                 case Step.Detail:
-                    if (isFilled())
+                    if (SetupControl.IsFilled())
                     {
                         ShowWait();
+                        ScriptControl.SyncQuestDataToUserInput();
+                        SetupControl.SyncQuestDataToUserInput();
+
                         ShowDetails();
                     }
                     else
                     {
                         MessageBox.Show("Please fill in the remaining Setup and Flavor Text fields.", "Missing Details", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        currentStep--;
+                        CurrentStep--;
                         return;
                     }
                     break;
 
+                case Step.Script:
+                    ShowWait();
+                    DetailControl.SyncQuestDataToUserInput();
+
+                    ShowScript();
+                    break;
+
                 case Step.Build:
+                    ScriptControl.SyncQuestDataToUserInput();
+
                     BuildQuest();
-                    currentStep--;
+                    CurrentStep--;
                     break;
             }
         }
 
         private void ShowSetup()
         {
-            objectsDetails.UpdateAllDetailsFromVisualizers();
-            objectsDetails.RefreshAllStubTexts();
-
             panelMain.Controls.Clear();
-            setupPage.EnableScrolling(); 
-            panelMain.Controls.Add(setupPage);
+            SetupControl.EnableScrolling(); 
+            panelMain.Controls.Add(SetupControl);
 
             buttonNext.Text = "Next >>";
             buttonBack.Visible = false;
@@ -114,21 +114,32 @@ namespace SOC.UI
         private void ShowWait()
         {
             panelMain.Controls.Clear(); 
-            setupPage.DisableScrolling();
+            SetupControl.DisableScrolling();
 
             buttonNext.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
-            panelMain.Controls.Add(waitingPage);
-            waitingPage.Refresh();
+            panelMain.Controls.Add(WaitingControl);
+            WaitingControl.Refresh();
         }
 
         private async void ShowDetails()
         {
-            SetupDetails setupDetails = setupPage.GetSetupDetails();
-            detailPage.RefreshObjectPanels(setupDetails, objectsDetails);
+            panelMain.Controls.Add(DetailControl);
+            panelMain.Controls.Remove(WaitingControl);
 
-            panelMain.Controls.Add(detailPage);
-            panelMain.Controls.Remove(waitingPage);
+            buttonBack.Visible = true;
+            buttonNext.Text = "Next >>";
+            this.Cursor = Cursors.Default;
+
+            await Task.Delay(100);
+
+            buttonNext.Enabled = true;
+        }
+
+        private async void ShowScript()
+        {
+            panelMain.Controls.Add(ScriptControl);
+            panelMain.Controls.Remove(WaitingControl);
 
             buttonBack.Visible = true;
             buttonNext.Text = "Build";
@@ -141,10 +152,7 @@ namespace SOC.UI
 
         private void BuildQuest()
         {
-            objectsDetails.UpdateAllDetailsFromVisualizers();
-            Quest quest = new Quest(setupPage.GetSetupDetails(), objectsDetails.GetQuestObjectDetails());
-            
-            if (BuildManager.Build(quest))
+            if (BuildManager.Build(Quest))
             {
                 MessageBox.Show("Build Complete", "Sideop Companion", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -156,7 +164,7 @@ namespace SOC.UI
 
         private void FormMain_Activated(object sender, EventArgs e)
         {
-            setupPage.refreshNotifsList();
+            SetupControl.refreshNotifsList();
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
@@ -169,47 +177,55 @@ namespace SOC.UI
 
             GoToPage(Step.Setup);
 
-            Quest quest = new Quest();
-
-            if (quest.Load(loadFile.FileName))
+            if (Quest.Load(loadFile.FileName))
             {
-                objectsDetails = new ObjectsDetails(quest.questObjectDetails);
-                setupPage.managers.ToString();
-                setupPage.SetForm(quest.setupDetails);
-                objectsDetails.RefreshAllStubTexts();
+                SetupControl.SyncUserInputToQuestData();
+                ScriptControl = new ScriptControl(Quest);
             }
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Save();
+            DoSave();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (isFilled())
+            if (SetupControl.IsFilled())
             {
                 DialogResult result = MessageBox.Show("Do you want to save this Sideop to an Xml file?", "SOC", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
                 if (result == DialogResult.Yes)
-                    Save();
+                {
+                    if (!DoSave())
+                        e.Cancel = true;
+                }
                 else if (result == DialogResult.Cancel)
                     e.Cancel = true;
             }
         }
 
-        private void Save()
+        private bool DoSave()
         {
-            SetupDetails setup = setupPage.GetSetupDetails();
+            switch (CurrentStep)
+            {
+                case Step.Setup:
+                    SetupControl.SyncQuestDataToUserInput(true);
+                    break;
+                case Step.Detail:
+                    GoToPage(Step.Setup);
+                    break;
+                case Step.Script:
+                    ScriptControl.SyncQuestDataToUserInput();
+                    break;
+            }
+
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
-            saveFile.FileName = setup.FpkName;
+            saveFile.FileName = Quest.SetupDetails.FpkName;
             DialogResult saveResult = saveFile.ShowDialog();
-            if (saveResult != DialogResult.OK) return;
+            if (saveResult != DialogResult.OK) return true;
 
-            GoToPage(Step.Setup);
-
-            Quest quest = new Quest(setup, objectsDetails.GetQuestObjectDetails());
-            quest.Save(saveFile.FileName);
+            return Quest.Save(saveFile.FileName);
         }
 
         private void buttonOpenFolder_Click(object sender, EventArgs e)
@@ -217,6 +233,15 @@ namespace SOC.UI
             try
             {
                 Process.Start(AppDomain.CurrentDomain.BaseDirectory);
+            }
+            catch { }
+        }
+
+        private void buttonOpenScriptTemplates_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets"));
             }
             catch { }
         }
@@ -238,8 +263,8 @@ namespace SOC.UI
                 Quest quest = new Quest();
                 if (quest.Load(filePath))
                 {
-                    if (!quests.Exists(questInList => questInList.setupDetails.FpkName == quest.setupDetails.FpkName)
-                        && !quests.Exists(questInList => questInList.setupDetails.QuestNum == quest.setupDetails.QuestNum))
+                    if (!quests.Exists(questInList => questInList.SetupDetails.FpkName == quest.SetupDetails.FpkName)
+                        && !quests.Exists(questInList => questInList.SetupDetails.QuestNum == quest.SetupDetails.QuestNum))
                         quests.Add(quest);
                     else failedCount++;
                 }

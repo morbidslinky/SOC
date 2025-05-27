@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SOC.Classes.Lua;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SOC.Classes.Lua;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Helicopter
 {
@@ -38,7 +39,8 @@ namespace SOC.QuestObjects.Helicopter
                         )
                     );
 
-                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaNoCaptureTargetMessages);
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,
                         Lua.TableEntry(
@@ -51,6 +53,35 @@ namespace SOC.QuestObjects.Helicopter
                         if (heli.isTarget)
                             mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(heli.GetObjectName()))));
                 }
+            }
+        }
+
+        internal static void GetScriptChoosableValueSets(HelicoptersDetail detail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (detail.helicopters.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Helicopter (Target)");
+
+                foreach (string gameObjectName in detail.helicopters
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.helicopters.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Helicopter");
+
+                foreach (string gameObjectName in detail.helicopters.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
             }
         }
 

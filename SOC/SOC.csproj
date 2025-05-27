@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Classes\Assets\FileAssets.cs" />
+    <Compile Include="Core\Classes\Common\ScriptDetails.cs" />
     <Compile Include="Core\Classes\Common\SetupDetails.cs" />
     <Compile Include="Core\Classes\Fox2\EntityClasses\BoxShape.cs" />
     <Compile Include="Core\Classes\Fox2\EntityClasses\DataSet.cs" />
@@ -139,14 +140,13 @@
     <Compile Include="Core\Classes\Lua\LuaTableIdentifier.cs" />
     <Compile Include="Core\Classes\Lua\StrCode32Table.cs" />
     <Compile Include="Core\Classes\Lua\LuaTemplate.cs" />
-    <Compile Include="Core\Classes\Lua\LuaText.cs" />
+    <Compile Include="Core\Classes\Lua\LuaString.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\DefinitionScriptBuilder.cs" />
     <Compile Include="Core\Classes\Lua\LuaValue.cs" />
     <Compile Include="Core\Classes\Lua\LuaVariable.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\Messages.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\StaticObjectiveFunctions.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnAllocate.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnInitialize.cs" />
     <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnTerminate.cs" />
@@ -164,6 +164,37 @@
     <Compile Include="Core\Classes\LangTool\LangEntry.cs" />
     <Compile Include="Core\Classes\LangTool\LangFile.cs" />
     <Compile Include="Core\Classes\Common\Quest.cs" />
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.Designer.cs">
+      <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.Designer.cs">
+      <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptSetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\EmbeddedScriptSetControl.Designer.cs">
+      <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.Designer.cs">
+      <DependentUpon>ScriptControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.ScriptTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.VariableTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Core\Forms\Pages\ScriptControl.cs" />
     <Compile Include="Core\Forms\PanelScroll.cs" />
     <Compile Include="Core\Forms\QuestObjectBox.cs">
       <SubType>UserControl</SubType>
@@ -209,11 +240,10 @@
     <Compile Include="QuestObjects\Camera\Classes\CameraFox2.cs" />
     <Compile Include="QuestObjects\Camera\Classes\CameraLua.cs" />
     <Compile Include="QuestObjects\Camera\CamerasVisualizer.cs" />
-    <Compile Include="QuestObjects\Common\DetailTypes.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetailLocational.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetails.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetail.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetailVisualizer.cs" />
+    <Compile Include="QuestObjects\Common\ObjectsDetailControlPanel.cs" />
     <Compile Include="QuestObjects\Common\ObjectsDetailVisualizerLocational.cs" />
     <Compile Include="QuestObjects\Common\ObjectsMetadata.cs" />
     <Compile Include="QuestObjects\Common\QuestObject.cs" />
@@ -282,11 +312,11 @@
       <DependentUpon>formCustomProgressLang.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Classes\QuestBuild\Builders\Fox2Builder.cs" />
-    <Compile Include="Core\Forms\Pages\DetailsDisplay.cs">
+    <Compile Include="Core\Forms\Pages\DetailsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\DetailsDisplay.Designer.cs">
-      <DependentUpon>DetailsDisplay.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\DetailsControl.Designer.cs">
+      <DependentUpon>DetailsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Forms\Pages\LocationalDataStub.cs">
       <SubType>UserControl</SubType>
@@ -409,17 +439,17 @@
     <Compile Include="QuestObjects\WalkerGear\Forms\WalkerBox.Designer.cs">
       <DependentUpon>WalkerBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Forms\Pages\SetupDisplay.cs">
+    <Compile Include="Core\Forms\Pages\SetupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Setup.Designer.cs">
-      <DependentUpon>SetupDisplay.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\SetupControl.Designer.cs">
+      <DependentUpon>SetupControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Waiting.cs">
+    <Compile Include="Core\Forms\Pages\WaitingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\Waiting.Designer.cs">
-      <DependentUpon>Waiting.cs</DependentUpon>
+    <Compile Include="Core\Forms\Pages\WaitingControl.Designer.cs">
+      <DependentUpon>WaitingControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -458,17 +488,30 @@
       <DependentUpon>formCustomProgressLang.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\DetailsDisplay.resx">
-      <DependentUpon>DetailsDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\DetailsControl.resx">
+      <DependentUpon>DetailsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptControl.resx">
+      <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptalControl.resx">
+      <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptSetControl.resx">
+      <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
       <DependentUpon>LocationalDataStub.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\SetupDisplay.resx">
-      <DependentUpon>SetupDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\ScriptControl.resx">
+      <DependentUpon>ScriptControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\Waiting.resx">
-      <DependentUpon>Waiting.cs</DependentUpon>
+    <EmbeddedResource Include="Core\Forms\Pages\SetupControl.resx">
+      <DependentUpon>SetupControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Core\Forms\Pages\WaitingControl.resx">
+      <DependentUpon>WaitingControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

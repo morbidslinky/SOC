@@ -29,7 +29,7 @@ namespace SOC.QuestObjects.Item
 
         static ItemControl control = new ItemControl();
 
-        static ItemsVisualizer visualizer = new ItemsVisualizer(stub, control);
+        static ItemsControlPanel controlPanel = new ItemsControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -60,9 +60,14 @@ namespace SOC.QuestObjects.Item
             ItemLua.GetDefinition(this, definitionLua);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
+        }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            ItemLua.GetScriptChoosableValueSets(this, questKeyValues);
         }
     }
 }

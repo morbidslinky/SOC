@@ -1,8 +1,6 @@
-﻿using SOC.Classes;
-using SOC.QuestObjects.Common;
+﻿using SOC.QuestObjects.Common;
 using SOC.Core.Classes.Route;
 using System;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -11,41 +9,57 @@ using SOC.Classes.Common;
 using System.Globalization;
 using SOC.Classes.QuestBuild;
 using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.Vehicle;
 
 namespace SOC.UI
 {
-    public partial class SetupDisplay : UserControl
+    public partial class SetupControl : UserControl
     {
         PanelScroll locationalTabsScrolling;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
-        public int locationID = -1;
-        public ObjectsDetails managers;
 
-        public SetupDisplay(ObjectsDetails _managers)
+        public int locationID = -1;
+        public Quest Quest;
+
+        public SetupControl(Quest quest)
         {
             InitializeComponent();
             locationalTabsScrolling = new PanelScroll(this.flowPanelLocationalStubs, true);
-            managers = _managers;
             Dock = DockStyle.Fill;
             SendMessage(textBoxQuestNum.Handle, 0x1501, 1, "30103");
             SendMessage(textBoxFPKName.Handle, 0x1501, 1, "Example_Quest_Name");
             SendMessage(textBoxQuestTitle.Handle, 0x1501, 1, "Example Quest Title Text");
 
-            flowPanelLocationalStubs.Controls.AddRange(managers.GetLocationalStubs());
+            Quest = quest;
+            flowPanelLocationalStubs.Controls.AddRange(Quest.GetLocationalStubs());
 
             refreshNotifsList();
             refreshRoutesList();
         }
 
-        public void SetForm(SetupDetails setup)
+        public bool IsFilled()
         {
-            textBoxQuestTitle.Text = setup.QuestTitle;
-            textBoxQuestDesc.Text = setup.QuestDesc;
-            textBoxFPKName.Text = setup.FpkName;
-            textBoxQuestNum.Text = setup.QuestNum;
+            //return true; // FOR DEBUG
+            if (string.IsNullOrEmpty(textBoxFPKName.Text) || string.IsNullOrEmpty(textBoxQuestNum.Text) || string.IsNullOrEmpty(textBoxQuestTitle.Text) || string.IsNullOrEmpty(textBoxQuestDesc.Text))
+                return false;
+            if (comboBoxCategory.SelectedIndex == -1 || comboBoxReward.SelectedIndex == -1 || comboBoxProgressNotifs.SelectedIndex == -1 || comboBoxRegion.SelectedIndex == -1)
+                return false;
+            if (comboBoxCP.Enabled)
+                if (comboBoxCP.SelectedIndex == -1 || comboBoxLoadArea.SelectedIndex == -1 || comboBoxRadius.SelectedIndex == -1 || string.IsNullOrEmpty(textBoxXCoord.Text) || string.IsNullOrEmpty(textBoxYCoord.Text) || string.IsNullOrEmpty(textBoxZCoord.Text))
+                    return false;
 
-            locationID = setup.locationID;
+            return true;
+        }
+
+        public void SyncUserInputToQuestData()
+        {
+            textBoxQuestTitle.Text = Quest.SetupDetails.QuestTitle;
+            textBoxQuestDesc.Text = Quest.SetupDetails.QuestDesc;
+            textBoxFPKName.Text = Quest.SetupDetails.FpkName;
+            textBoxQuestNum.Text = Quest.SetupDetails.QuestNum;
+
+            locationID = Quest.SetupDetails.locationID;
 
             switch(locationID)
             {
@@ -60,35 +74,32 @@ namespace SOC.UI
                     break;
             }
 
-            comboBoxLoadArea.Text = setup.loadArea;
+            comboBoxLoadArea.Text = Quest.SetupDetails.loadArea;
 
-            textBoxXCoord.Text = setup.coords.xCoord;
-            textBoxYCoord.Text = setup.coords.yCoord;
-            textBoxZCoord.Text = setup.coords.zCoord;
+            textBoxXCoord.Text = Quest.SetupDetails.coords.xCoord;
+            textBoxYCoord.Text = Quest.SetupDetails.coords.yCoord;
+            textBoxZCoord.Text = Quest.SetupDetails.coords.zCoord;
 
-            comboBoxRadius.Text = setup.radius;
-            comboBoxCategory.Text = setup.category;
-            comboBoxReward.Text = setup.reward;
+            comboBoxRadius.Text = Quest.SetupDetails.radius;
+            comboBoxCategory.Text = Quest.SetupDetails.category;
+            comboBoxReward.Text = Quest.SetupDetails.reward;
             
-            comboBoxCP.Text = setup.CPName;
+            comboBoxCP.Text = Quest.SetupDetails.CPName;
 
             refreshNotifsList();
-            string displayNotification = UpdateNotifsManager.GetDisplayNotification(setup.progressLangID);
+            string displayNotification = UpdateNotifsManager.GetDisplayNotification(Quest.SetupDetails.progressLangID);
             if (displayNotification != null)
                 comboBoxProgressNotifs.Text = displayNotification;
             else if (comboBoxProgressNotifs.Items.Count > 0)
                 comboBoxProgressNotifs.SelectedIndex = 0;
 
             refreshRoutesList();
-            if (!string.IsNullOrEmpty(setup.routeName) && comboBoxRoute.Items.Contains(setup.routeName))
-                comboBoxRoute.SelectedItem = setup.routeName;
+            if (!string.IsNullOrEmpty(Quest.SetupDetails.routeName) && comboBoxRoute.Items.Contains(Quest.SetupDetails.routeName))
+                comboBoxRoute.SelectedItem = Quest.SetupDetails.routeName;
             else
                 comboBoxRoute.SelectedItem = "NONE";
-        }
 
-        public SetupDetails GetSetupDetails()
-        {
-            return new SetupDetails(this);
+            Quest.RefreshAllStubTexts();
         }
 
         public void refreshNotifsList()
@@ -121,7 +132,7 @@ namespace SOC.UI
             string[] loadArea = new string[0];
             string[] cpNames = new string[0];
             enableRegionInput();
-            managers.EnableVehicleBox();
+            Quest.EnableObjectTypeStub(typeof(VehiclesDetail));
 
             switch (comboBoxRegion.Text)
             {
@@ -142,7 +153,7 @@ namespace SOC.UI
                     loadArea = LoadAreas.mtbs;
                     cpNames = EnemyInfo.GetCPNames(EnemyInfo.MtbsCP);
                     disableRegionInput();
-                    managers.DisableVehicleBox();
+                    Quest.DisableObjectTypeStub(typeof(VehiclesDetail), "Disabled on Mother Base");
                     comboBoxRadius.Text = "1";
                     break;
             }
@@ -227,6 +238,30 @@ namespace SOC.UI
         public void DisableScrolling()
         {
             Application.RemoveMessageFilter(locationalTabsScrolling);
+        }
+
+        internal void SyncQuestDataToUserInput(bool saveOnly = false)
+        {
+            Quest.SetupDetails = new SetupDetails(this);
+
+            foreach (ObjectsDetail detail in Quest.ObjectsDetails.Details)
+            {
+                var controlPanel = detail.GetControlPanel();
+                controlPanel.SetDetailsFromSetup(detail, Quest.SetupDetails);
+
+                if (detail.GetQuestObjects().Count > 0 && !saveOnly)
+                {
+                    controlPanel.ShowDetail();
+                }
+                else
+                {
+                    controlPanel.HideDetail();
+                }
+
+                controlPanel.RedrawControl(detail);
+            }
+
+            Quest.ClearAllObjectsScriptValueSets();
         }
     }
 }

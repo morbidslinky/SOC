@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Item
 {
@@ -39,7 +40,7 @@ namespace SOC.QuestObjects.Item
                     )
                 );
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.dormantItemTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.dormantItemTargetMessages);
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                     Lua.TableEntry(
@@ -55,6 +56,35 @@ namespace SOC.QuestObjects.Item
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                 );
+            }
+        }
+
+        internal static void GetScriptChoosableValueSets(ItemsDetail detail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (detail.items.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Dormant Items (Targets)");
+
+                foreach (string gameObjectName in detail.items
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.items.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Dormant Items");
+
+                foreach (string gameObjectName in detail.items.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
             }
         }
 

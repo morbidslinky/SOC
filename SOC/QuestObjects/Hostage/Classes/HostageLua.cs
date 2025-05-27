@@ -1,6 +1,7 @@
 ﻿using SOC.Classes.Common;
 using SOC.Classes.Lua;
 using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.GeoTrap;
 using SOC.QuestObjects.Vehicle;
 using System;
 using System.Collections.Generic;
@@ -41,10 +42,10 @@ namespace SOC.QuestObjects.Hostage
             List<Hostage> hostages = hostageDetail.hostages;
             HostageMetadata meta = hostageDetail.hostageMetadata;
 
-            mainLua.QUEST_TABLE.Add(BuildHostageList(hostages, meta));
-
             if (hostages.Count > 0)
             {
+                mainLua.QUEST_TABLE.Add(BuildHostageList(hostages, meta));
+
                 if (meta.canInterrogate)
                 {
                     var cpInt = new LuaTable(
@@ -74,8 +75,6 @@ namespace SOC.QuestObjects.Hostage
                     );
                 }
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.genericTargetMessages);
-
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), SetHostageAttributes
@@ -90,6 +89,8 @@ namespace SOC.QuestObjects.Hostage
                             StaticObjectiveFunctions.TallyGenericTargets
                         )
                     );
+
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
@@ -243,10 +244,10 @@ namespace SOC.QuestObjects.Hostage
                     interrogationBuilder.AppendLuaValue(
                         Lua.FunctionCall(
                             Lua.TableIdentifier("TppMarker", "Enable"), 
-                            Lua.Text(hostage.GetObjectName()), 
+                            Lua.String(hostage.GetObjectName()), 
                             Lua.Number(0), 
-                            Lua.Text("defend"), 
-                            Lua.Text("map_and_world_only_icon"), 
+                            Lua.String("defend"), 
+                            Lua.String("map_and_world_only_icon"), 
                             Lua.Number(0), 
                             Lua.Boolean(false), 
                             Lua.Boolean(true)
@@ -256,6 +257,35 @@ namespace SOC.QuestObjects.Hostage
             }
 
             return interrogationBuilder.ToFunction();
+        }
+
+        internal static void GetScriptChoosableValueSets(HostagesDetail hostagesDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (hostagesDetail.hostages.Any(hostage => hostage.isTarget))
+            {
+                ChoiceKeyValues hostageTargetSenders = new ChoiceKeyValues("Prisoners (Targets)");
+
+                foreach (string hostageName in hostagesDetail.hostages
+                    .Where(hostage => hostage.isTarget)
+                    .Select(hostage => hostage.GetObjectName()))
+                {
+                    hostageTargetSenders.Add(Lua.String(hostageName));
+                }
+
+                questKeyValues.Add(hostageTargetSenders);
+            }
+
+            if (hostagesDetail.hostages.Count > 0)
+            {
+                ChoiceKeyValues hostageSenders = new ChoiceKeyValues("Prisoners");
+
+                foreach (string hostageName in hostagesDetail.hostages.Select(hostage => hostage.GetObjectName()))
+                {
+                    hostageSenders.Add(Lua.String(hostageName));
+                }
+
+                questKeyValues.Add(hostageSenders);
+            }
         }
     }
 }

@@ -28,16 +28,16 @@ namespace SOC.QuestObjects.Enemy
 
         static EnemyControl control = new EnemyControl();
 
-        static EnemiesDetailVisualizer visualizer = new EnemiesDetailVisualizer(control);
+        static EnemiesDetailControlPanel controlPanel = new EnemiesDetailControlPanel(control);
 
         public override ObjectsMetadata GetMetadata()
         {
             return enemyMetadata;
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
         }
 
         public override List<QuestObject> GetQuestObjects()
@@ -58,6 +58,11 @@ namespace SOC.QuestObjects.Enemy
         public override void AddToMainLua(MainScriptBuilder mainLua)
         {
             EnemyLua.GetMain(this, mainLua);
+        }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValueSets) 
+        {
+            EnemyLua.GetScriptChoosableValueSets(this, questKeyValueSets);
         }
 
         public override void AddToAssets(CommonAssetsBuilder assetsBuilder)

@@ -13,30 +13,9 @@ namespace SOC.QuestObjects.Common
 
         public abstract void SetQuestObjects(List<QuestObject> qObjects);
 
-        public abstract ObjectsDetailVisualizer GetVisualizer();
+        public abstract ObjectsDetailControlPanel GetControlPanel();
 
         public abstract ObjectsMetadata GetMetadata();
-
-        public void UpdateDetailFromSetup(SetupDetails setup)
-        {
-            var visualizer = this.GetVisualizer();
-            visualizer.SetDetailsFromSetup(this, setup);
-        }
-
-        public void RefreshPanel(SetupDetails setup)
-        {
-            var visualizer = this.GetVisualizer();
-            if (GetQuestObjects().Count > 0)
-            {
-                visualizer.ShowDetail();
-            }
-            else
-            {
-                visualizer.HideDetail();
-            }
-            
-            visualizer.VisualizeDetail(this);
-        }
 
         public virtual void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList) { return; }
 
@@ -45,5 +24,7 @@ namespace SOC.QuestObjects.Common
         public virtual void AddToMainLua(MainScriptBuilder mainLua) { return; }
 
         public virtual void AddToAssets(CommonAssetsBuilder assetsBuilder) { return; }
+
+        public virtual void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues) { return; }
     }
 }

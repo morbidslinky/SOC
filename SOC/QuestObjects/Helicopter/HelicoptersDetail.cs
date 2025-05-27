@@ -28,7 +28,7 @@ namespace SOC.QuestObjects.Helicopter
 
         static HelicopterControl control = new HelicopterControl();
 
-        static HelicopterVisualizer visualizer = new HelicopterVisualizer(control);
+        static HelicopterControlPanel controlPanel = new HelicopterControlPanel(control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -60,9 +60,14 @@ namespace SOC.QuestObjects.Helicopter
             HelicopterLua.GetMain(this, mainLua);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
+        }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            HelicopterLua.GetScriptChoosableValueSets(this, questKeyValues);
         }
     }
 }

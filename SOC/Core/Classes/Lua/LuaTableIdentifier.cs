@@ -15,12 +15,15 @@ namespace SOC.Classes.Lua
         [XmlArray("TableKeys")]
         [XmlArrayItem("Key")] 
         public LuaValue[] IdentifierKeys { get; set; }
+
+        public TemplateRestrictionType EvaluatesTo { get; set; }
         public override string Value => GetIdentifier();
 
         public LuaTableIdentifier() : base(TemplateRestrictionType.TABLE_IDENTIFIER) { }
-        public LuaTableIdentifier(string identifierVariableName, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
+        public LuaTableIdentifier(string identifierVariableName, TemplateRestrictionType evaluatesToType = TemplateRestrictionType.NIL, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
         {
             IdentifierVariableName = identifierVariableName;
+            EvaluatesTo = evaluatesToType;
             IdentifierKeys = identifierPath;
         }
 
@@ -30,7 +33,7 @@ namespace SOC.Classes.Lua
             luaBuilder.Append(IdentifierVariableName);
             foreach (var key in IdentifierKeys)
             {
-                if (key is LuaText luaString)
+                if (key is LuaString luaString)
                     luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
                 else
                     luaBuilder.Append($"[{key}]");
@@ -50,7 +53,7 @@ namespace SOC.Classes.Lua
                         luaBuilder.Append(identifierVariable.GetVarName());
                         foreach (var key in IdentifierKeys)
                         {
-                            if (key is LuaText luaString)
+                            if (key is LuaString luaString)
                                 luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
                             else
                                 luaBuilder.Append($"[{key}]");

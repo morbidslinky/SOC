@@ -1,10 +1,11 @@
 ﻿
+using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOC.Classes.Lua;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Camera
 {
@@ -17,8 +18,6 @@ namespace SOC.QuestObjects.Camera
             if (detail.cameras.Count > 0)
             {
                 mainLua.QUEST_TABLE.Add(BuildCameraList(detail.cameras));
-
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
@@ -35,6 +34,8 @@ namespace SOC.QuestObjects.Camera
                         )
                     );
 
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaNoCaptureTargetMessages);
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,
                         Lua.TableEntry(
@@ -49,6 +50,35 @@ namespace SOC.QuestObjects.Camera
                             mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(cam.GetObjectName()))));
                     }
                 }
+            }
+        }
+
+        internal static void GetScriptChoosableValueSets(CamerasDetail detail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (detail.cameras.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Cameras (Targets)");
+
+                foreach (string gameObjectName in detail.cameras
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.cameras.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Cameras");
+
+                foreach (string gameObjectName in detail.cameras.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
             }
         }
 

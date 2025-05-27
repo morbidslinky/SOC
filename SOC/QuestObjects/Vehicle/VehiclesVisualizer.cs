@@ -13,9 +13,9 @@ using SOC.Classes.Common;
 
 namespace SOC.QuestObjects.Vehicle
 {
-    class VehiclesVisualizer : ObjectsDetailVisualizerLocational
+    class VehiclesControlPanel : ObjectsDetailControlPanelLocational
     {
-        public VehiclesVisualizer(LocationalDataStub vehicleStub, VehicleControl vehicleControl) : base(vehicleStub, vehicleControl, vehicleControl.panelQuestBoxes) { }
+        public VehiclesControlPanel(LocationalDataStub vehicleStub, VehicleControl vehicleControl) : base(vehicleStub, vehicleControl, vehicleControl.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta)
         {

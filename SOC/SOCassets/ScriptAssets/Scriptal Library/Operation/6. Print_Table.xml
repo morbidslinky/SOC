@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Print_Table</Name>
+  <Description>Prints the contents of a table as an in-game, white-text notification.</Description>
+  <EventFunctionTemplate>
+local tempStringTable = {}
+for index, value in ipairs(|[1|TABLE]|) do
+  tempStringTable[index] = tostring(value)
+end
+InfCore.DebugPrint(table.concat(tempStringTable))
+  </EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Table</Name>
+	  <Description>The index-based table that will be concatenated into a notification.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowUserVariable>true</AllowUserVariable>
+	</Choice>
+  </Choices>
+</Scriptal>

@@ -1,5 +1,6 @@
 ﻿using SOC.Classes.Lua;
 using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.WalkerGear;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,6 @@ namespace SOC.QuestObjects.Vehicle
             {
                 mainLua.QUEST_TABLE.Add(BuildVehicleList(detail.vehicles));
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaCaptureTargetMessages);
-
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
                         Lua.TableIdentifier("InfCore", "PCall"), WarpVehicles
@@ -36,6 +35,8 @@ namespace SOC.QuestObjects.Vehicle
                             StaticObjectiveFunctions.TallyGenericTargets
                         )
                     );
+
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaCaptureTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         Lua.TableEntry(
@@ -55,6 +56,35 @@ namespace SOC.QuestObjects.Vehicle
                             mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(vehicle.GetObjectName()))));
                     }
                 }
+            }
+        }
+
+        internal static void GetScriptChoosableValueSets(VehiclesDetail vehiclesDetail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (vehiclesDetail.vehicles.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Heavy Vehicles (Targets)");
+
+                foreach (string gameObjectName in vehiclesDetail.vehicles
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (vehiclesDetail.vehicles.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Heavy Vehicles");
+
+                foreach (string gameObjectName in vehiclesDetail.vehicles.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
             }
         }
 

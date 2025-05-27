@@ -7,13 +7,13 @@
 
         public Messages()
         {
-            var blockScript = new StrCode32Script(new StrCode32Event("Block", "StageBlockCurrentSmallBlockIndexUpdated", ""), Lua.TableEntry("StageBlockCurrentSmallBlockIndexUpdatedFunc", Lua.Function("")));
+            var blockScript = new Script(new StrCode32("Block", Lua.String("StageBlockCurrentSmallBlockIndexUpdated")), Lua.TableEntry("StageBlockCurrentSmallBlockIndexUpdatedFunc", Lua.Function("")));
             StrCode32Table.Add(blockScript);
         }
 
         public LuaTableEntry Get()
         {
-            return Lua.TableEntry("Messages", Lua.Function("return |[0|function_call]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(TABLE_VAR_NAME))), true);
+            return Lua.TableEntry("Messages", Lua.Function("return |[1|FUNCTION_CALL]|", Lua.FunctionCall("StrCode32Table", StrCode32Table.ToStrCode32Table(TABLE_VAR_NAME))), true);
         }
 
         public LuaTable GetMessagesDefs()

@@ -20,8 +20,11 @@ namespace SOC.Classes.Lua
         private LuaTable disableLzs = new LuaTable();
         private LuaTable requestEquipIds = new LuaTable();
 
-        public DefinitionScriptBuilder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public DefinitionScriptBuilder(Quest quest)
         {
+            SetupDetails setupDetails = quest.SetupDetails;
+            ObjectsDetails objectsDetails = quest.ObjectsDetails;
+
             questPackList = Lua.Table(
                 Lua.TableEntry("randomFaceListIH", randomFaceListIH),
                 Lua.TableEntry("faceIdList", faceIdList),
@@ -46,7 +49,7 @@ namespace SOC.Classes.Lua
                 definitionTable.Add(Lua.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
             }
 
-            foreach (ObjectsDetail detail in objectsDetails.details)
+            foreach (ObjectsDetail detail in objectsDetails.Details)
             {
                 detail.AddToDefinitionLua(this);
             }
@@ -95,7 +98,7 @@ namespace SOC.Classes.Lua
 
         public void Build(string definitionLuaFilePath)
         {
-            var definitionScript = Lua.Function("local |[0|assign_variable]| return |[0|variable]|", Lua.Variable("this", definitionTable));
+            var definitionScript = Lua.Function("local |[1|ASSIGN_VARIABLE]| return |[1|VARIABLE]|", Lua.Variable("this", definitionTable));
             definitionScript.WriteToLua(definitionLuaFilePath);
         }
     }

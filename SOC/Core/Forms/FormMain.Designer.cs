@@ -35,6 +35,7 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonBatchBuild = new System.Windows.Forms.Button();
             this.buttonOpenFolder = new System.Windows.Forms.Button();
+            this.buttonOpenScriptTemplates = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonNext
@@ -43,7 +44,7 @@
             this.buttonNext.Location = new System.Drawing.Point(1037, 468);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(109, 38);
-            this.buttonNext.TabIndex = 6;
+            this.buttonNext.TabIndex = 8;
             this.buttonNext.Text = "Next >>";
             this.buttonNext.UseVisualStyleBackColor = true;
             this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
@@ -54,7 +55,7 @@
             this.buttonBack.Location = new System.Drawing.Point(922, 468);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(109, 38);
-            this.buttonBack.TabIndex = 5;
+            this.buttonBack.TabIndex = 7;
             this.buttonBack.Text = "<< Back";
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
@@ -97,7 +98,7 @@
             this.buttonBatchBuild.Location = new System.Drawing.Point(242, 468);
             this.buttonBatchBuild.Name = "buttonBatchBuild";
             this.buttonBatchBuild.Size = new System.Drawing.Size(109, 38);
-            this.buttonBatchBuild.TabIndex = 7;
+            this.buttonBatchBuild.TabIndex = 4;
             this.buttonBatchBuild.Text = "Batch Build Xml...";
             this.buttonBatchBuild.UseVisualStyleBackColor = true;
             this.buttonBatchBuild.Click += new System.EventHandler(this.buttonBatchBuild_Click);
@@ -108,10 +109,21 @@
             this.buttonOpenFolder.Location = new System.Drawing.Point(373, 468);
             this.buttonOpenFolder.Name = "buttonOpenFolder";
             this.buttonOpenFolder.Size = new System.Drawing.Size(129, 38);
-            this.buttonOpenFolder.TabIndex = 4;
+            this.buttonOpenFolder.TabIndex = 5;
             this.buttonOpenFolder.Text = "Open SOC Folder";
             this.buttonOpenFolder.UseVisualStyleBackColor = true;
             this.buttonOpenFolder.Click += new System.EventHandler(this.buttonOpenFolder_Click);
+            // 
+            // buttonOpenScriptTemplates
+            // 
+            this.buttonOpenScriptTemplates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonOpenScriptTemplates.Location = new System.Drawing.Point(508, 468);
+            this.buttonOpenScriptTemplates.Name = "buttonOpenScriptTemplates";
+            this.buttonOpenScriptTemplates.Size = new System.Drawing.Size(129, 38);
+            this.buttonOpenScriptTemplates.TabIndex = 6;
+            this.buttonOpenScriptTemplates.Text = "Open Scripts Folder";
+            this.buttonOpenScriptTemplates.UseVisualStyleBackColor = true;
+            this.buttonOpenScriptTemplates.Click += new System.EventHandler(this.buttonOpenScriptTemplates_Click);
             // 
             // FormMain
             // 
@@ -119,6 +131,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(1158, 512);
+            this.Controls.Add(this.buttonOpenScriptTemplates);
             this.Controls.Add(this.buttonBatchBuild);
             this.Controls.Add(this.buttonOpenFolder);
             this.Controls.Add(this.buttonSave);
@@ -146,6 +159,7 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonBatchBuild;
         private System.Windows.Forms.Button buttonOpenFolder;
+        private System.Windows.Forms.Button buttonOpenScriptTemplates;
     }
 }
 

@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace SOC.UI
 {
-    public partial class Waiting : UserControl
+    public partial class WaitingControl : UserControl
     {
-        public Waiting()
+        public WaitingControl()
         {
             InitializeComponent();
             Dock = DockStyle.Fill;

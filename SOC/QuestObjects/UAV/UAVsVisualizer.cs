@@ -15,9 +15,9 @@ using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.UAV
 {
-    class UAVsVisualizer : ObjectsDetailVisualizerLocational
+    class UAVsControlPanel : ObjectsDetailControlPanelLocational
     {
-        public UAVsVisualizer(LocationalDataStub stub, UAVControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public UAVsControlPanel(LocationalDataStub stub, UAVControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         List<string> routes = new List<string>();
 

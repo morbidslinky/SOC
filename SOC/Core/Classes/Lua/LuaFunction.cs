@@ -86,7 +86,10 @@ namespace SOC.Classes.Lua
         }
         public void AppendParameter(params LuaVariable[] functionParameters)
         {
-            Parameters.AddRange(functionParameters);
+            if (functionParameters != null)
+            {
+                Parameters.AddRange(functionParameters);
+            }
         }
 
         public void AppendPlainText(string plainText)
@@ -114,7 +117,7 @@ namespace SOC.Classes.Lua
             StringBuilder templateBuilder = new StringBuilder();
             List<LuaValue> templateValues = new List<LuaValue>();
 
-            int index = 0;
+            int index = 1;
             foreach (FunctionToken token in Values)
             {
                 if (token is FunctionTokenPlainText t)

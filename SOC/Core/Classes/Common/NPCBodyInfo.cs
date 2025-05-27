@@ -121,7 +121,7 @@ namespace SOC.Classes.Common
         public static BodyInfoEntry[] BodyInfoArray = {
              new BodyInfoEntry(
                 "AFGH_HOSTAGE",
-                new LuaTableIdentifier("TppDefine", new LuaText("QUEST_BODY_ID_LIST"), new LuaText("AFGH_HOSTAGE_MALE")),
+                new LuaTableIdentifier("TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaString("QUEST_BODY_ID_LIST"), new LuaString("AFGH_HOSTAGE_MALE")),
                 "/Assets/tpp/parts/chara/prs/prs2_main0_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/prs2_main0_mdl.fpk",
                 false,
@@ -129,7 +129,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "AFGH_HOSTAGE_FEMALE",
-                new LuaTableIdentifier("TppDefine", new LuaText("QUEST_BODY_ID_LIST"), new LuaText("AFGH_HOSTAGE_FEMALE")),
+                new LuaTableIdentifier("TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaString("QUEST_BODY_ID_LIST"), new LuaString("AFGH_HOSTAGE_FEMALE")),
                 "/Assets/tpp/parts/chara/prs/prs3_main0_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/prs3_main0_mdl.fpk",
                 true,
@@ -137,7 +137,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "MAFR_HOSTAGE",
-                new LuaTableIdentifier("TppDefine", new LuaText("QUEST_BODY_ID_LIST"), new LuaText("MAFR_HOSTAGE_MALE")),
+                new LuaTableIdentifier("TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaString("QUEST_BODY_ID_LIST"), new LuaString("MAFR_HOSTAGE_MALE")),
                 "/Assets/tpp/parts/chara/prs/prs5_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/ih/prs5_main0_mdl.fpk",
                 false,
@@ -145,7 +145,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "MAFR_HOSTAGE_FEMALE",
-                new LuaTableIdentifier("TppDefine", new LuaText("QUEST_BODY_ID_LIST"), new LuaText("MAFR_HOSTAGE_FEMALE")),
+                new LuaTableIdentifier("TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaString("QUEST_BODY_ID_LIST"), new LuaString("MAFR_HOSTAGE_FEMALE")),
                 "/Assets/tpp/parts/chara/prs/prs6_main0_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/prs6_main0_mdl.fpk",
                 true,
@@ -153,7 +153,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "DDS_RESEARCHER",
-                new LuaTableIdentifier("TppDefine", new LuaText("QUEST_BODY_ID_LIST"), new LuaText("AFGH_HOSTAGE_MALE")),
+                new LuaTableIdentifier("TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaString("QUEST_BODY_ID_LIST"), new LuaString("AFGH_HOSTAGE_MALE")),
                 "/Assets/tpp/parts/chara/dds/ddr0_main0_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/ddr0_main0_mdl.fpk",
                 false,
@@ -161,7 +161,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "DDS_RESEARCHER_FEMALE",
-                new LuaTableIdentifier("TppDefine", new LuaText("QUEST_BODY_ID_LIST"), new LuaText("AFGH_HOSTAGE_FEMALE")),
+                new LuaTableIdentifier("TppDefine", LuaValue.TemplateRestrictionType.STRING, new LuaString("QUEST_BODY_ID_LIST"), new LuaString("AFGH_HOSTAGE_FEMALE")),
                 "/Assets/tpp/parts/chara/dds/ddr1_main0_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/ddr1_main0_mdl.fpk",
                 true,
@@ -169,7 +169,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "DRAB",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds3_main0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds3_main0_v00")),
                 "/Assets/tpp/parts/chara/dds/dds3_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_wait.fpk",
                 false,
@@ -177,7 +177,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "DRAB_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds8_main0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds8_main0_v00")),
                 "/Assets/tpp/parts/chara/dds/dds8_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_wait.fpk",
                 true,
@@ -185,7 +185,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "TIGER",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds5_main0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds5_main0_v00")),
                 "/Assets/tpp/parts/chara/dds/dds5_enem0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_attack.fpk",
                 false,
@@ -193,7 +193,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "TIGER_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds6_main0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds6_main0_v00")),
                 "/Assets/tpp/parts/chara/dds/dds6_enef0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_attack.fpk",
                 true,
@@ -201,7 +201,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SNEAKING_SUIT",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds4_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds4_enem0_def")),
                 "/Assets/tpp/parts/chara/sna/sna4_enem0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_sneak.fpk",
                 false,
@@ -209,7 +209,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SNEAKING_SUIT_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds4_enef0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds4_enef0_def")),
                 "/Assets/tpp/parts/chara/sna/sna4_enef0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_sneak.fpk",
                 true,
@@ -217,7 +217,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "BATTLE_DRESS",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds5_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds5_enem0_def")),
                 "/Assets/tpp/parts/chara/sna/sna5_enem0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_btdrs.fpk",
                 false,
@@ -225,7 +225,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "BATTLE_DRESS_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds5_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds5_enem0_def")),
                 "/Assets/tpp/parts/chara/sna/sna5_enef0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_btdrs.fpk",
                 true,
@@ -233,7 +233,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "XOF_GASMASK",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("wss0_main0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("wss0_main0_v00")),
                 "/Assets/tpp/parts/chara/wss/wss0_main0_def_v00_ih_sol.parts",
                 "/Assets/tpp/pack/mission2/ih/wss0_main0_mdl.fpk",
                 false,
@@ -241,7 +241,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "XOF",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("wss4_main0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("wss4_main0_v00")),
                 "/Assets/tpp/parts/chara/wss/wss4_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_xof_soldier.fpk",
                 false,
@@ -249,7 +249,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "MSF_TPP",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds0_main1_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds0_main1_v00")),
                 "/Assets/tpp/parts/chara/dds/dds0_main1_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/dds0_main1_mdl.fpk",
                 false,
@@ -257,7 +257,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "DDS_PILOT2",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dds5_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dds5_enem0_def")),
                 "/Assets/tpp/parts/chara/dds/dds9_main0_def_v00_ih_hos.parts",
                 "/Assets/tpp/pack/mission2/ih/dds9_main0_mdl.fpk",
                 false,
@@ -265,7 +265,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "WANDERING_MSF",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("pfs0_dds0_v00")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("pfs0_dds0_v00")),
                 "/Assets/tpp/parts/chara/svs/svs0_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_afgh.fpk",
                 false,
@@ -273,7 +273,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SOVIET_BERET",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("svs0_unq_v010")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("svs0_unq_v010")),
                 "/Assets/tpp/parts/chara/svs/svs0_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_afgh.fpk",
                 false,
@@ -281,7 +281,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SOVIET_HOODIE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("svs0_unq_v060")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("svs0_unq_v060")),
                 "/Assets/tpp/parts/chara/svs/svs0_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_afgh.fpk",
                 false,
@@ -289,7 +289,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SOVIET_SOLDIER",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("svs0_snp_v00_b")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("svs0_snp_v00_b")),
                 "/Assets/tpp/parts/chara/svs/svs0_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_afgh.fpk",
                 false,
@@ -297,7 +297,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "PF_C_BERET",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("pfs0_unq_v450")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("pfs0_unq_v450")),
                 "/Assets/tpp/parts/chara/pfs/pfs0_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_mafr.fpk",
                 false,
@@ -305,7 +305,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "PF_SOLDIER",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("pfs0_snp_v00_a")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("pfs0_snp_v00_a")),
                 "/Assets/tpp/parts/chara/pfs/pfs0_main0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_mafr.fpk",
                 false,
@@ -313,7 +313,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SWIMWEAR_GW",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dlf_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dlf_enem0_def")),
                 "/Assets/tpp/parts/chara/dlf/dlf1_enem0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_swim_suit.fpk",
                 false,
@@ -321,7 +321,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SWIMWEAR_GW_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dlf_enef0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dlf_enef0_def")),
                 "/Assets/tpp/parts/chara/dlf/dlf0_enem0_def_f_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_swim_suit.fpk",
                 true,
@@ -329,7 +329,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SWIMWEAR_GOB",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dlg_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dlg_enem0_def")),
                 "/Assets/tpp/parts/chara/dlg/dlg1_enem0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_swim_suit2.fpk",
                 false,
@@ -337,7 +337,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SWIMWEAR_GOB_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dlg_enef0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dlg_enef0_def")),
                 "/Assets/tpp/parts/chara/dlg/dlg0_enem0_def_f_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_swim_suit2.fpk",
                 true,
@@ -345,7 +345,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SWIMWEAR_MEG",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dlh_enem0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dlh_enem0_def")),
                 "/Assets/tpp/parts/chara/dlh/dlh1_enem0_def_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_swim_suit3.fpk",
                 false,
@@ -353,7 +353,7 @@ namespace SOC.Classes.Common
                 ),
             new BodyInfoEntry(
                 "SWIMWEAR_MEG_FEMALE",
-                new LuaTableIdentifier("TppEnemyBodyId", new LuaText("dlh_enef0_def")),
+                new LuaTableIdentifier("TppEnemyBodyId", LuaValue.TemplateRestrictionType.STRING, new LuaString("dlh_enef0_def")),
                 "/Assets/tpp/parts/chara/dlh/dlh0_enem0_def_f_v00.parts",
                 "/Assets/tpp/pack/mission2/common/mis_com_dd_soldier_swim_suit3.fpk",
                 true,

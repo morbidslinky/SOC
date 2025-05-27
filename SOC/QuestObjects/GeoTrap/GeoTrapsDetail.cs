@@ -29,11 +29,11 @@ namespace SOC.QuestObjects.GeoTrap
         [XmlArray]
         public List<GeoTrap> trapShapes { get; set; } = new List<GeoTrap>();
 
-        static LocationalDataStub stub = new LocationalDataStub("[Advanced] GeoTrap Shape Locations");
+        static LocationalDataStub stub = new LocationalDataStub("GeoTrap Locations");
 
         static GeoTrapControl control = new GeoTrapControl();
 
-        static GeoTrapsVisualizer visualizer = new GeoTrapsVisualizer(stub, control);
+        static GeoTrapsControlPanel controlPanel = new GeoTrapsControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -50,9 +50,9 @@ namespace SOC.QuestObjects.GeoTrap
             trapShapes = qObjects.Cast<GeoTrap>().ToList();
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
         }
 
         public override void AddToFox2Entities(DataSet dataSet, List<Fox2EntityClass> entityList)
@@ -60,9 +60,9 @@ namespace SOC.QuestObjects.GeoTrap
             GeoTrapFox2.AddQuestEntities(this, dataSet, entityList);
         }
 
-        public override void AddToMainLua(MainScriptBuilder mainLua)
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
         {
-            GeoTrapLua.GetMain(this, mainLua);
+            GeoTrapLua.GetScriptChoosableValueSets(this, questKeyValues);
         }
     }
 }

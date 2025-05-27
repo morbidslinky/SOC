@@ -1,10 +1,12 @@
 ﻿
+using SOC.QuestObjects.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SOC.Classes.Lua
 {
@@ -45,6 +47,21 @@ namespace SOC.Classes.Lua
         }
 
         public void Add(params LuaTableEntry[] entries)
+        {
+            foreach (LuaTableEntry entry in entries)
+            {
+                if (entry.Key is LuaTableIdentifier id)
+                {
+                    TryAdd(id.IdentifierKeys, entry.Value, entry.ExtrudeForAssignmentVariable);
+                }
+                else
+                {
+                    TryAdd(entry);
+                }
+            }
+        }
+
+        public void Add(List<LuaTableEntry> entries)
         {
             foreach (LuaTableEntry entry in entries)
             {
@@ -286,7 +303,7 @@ namespace SOC.Classes.Lua
 
         private string FormatKey(LuaValue key)
         {
-            if (key is LuaText luaString)
+            if (key is LuaString luaString)
             {
                 string keyStr = luaString.Text;
                 return IsValidLuaIdentifier(keyStr) ? keyStr : $"[{luaString.Value}]";
@@ -317,6 +334,22 @@ namespace SOC.Classes.Lua
         public bool ExtrudeForAssignmentVariable { get; set; }
 
         public LuaTableEntry() { }
+
+        public override string ToString()
+        {
+            if (Value is LuaTable table)
+            {
+                return string.Format(" {0,-18}:: {1}", Key, LuaTemplate.GetTemplateRestrictionTypeString(Value));
+            }
+            else if (Key is LuaNumber)
+            {
+                return string.Format(" {0,-7}:: {1, -8}:: {2}", Key, LuaTemplate.GetTemplateRestrictionTypeString(Value), Value);
+            }
+            else
+            {
+                return string.Format(" {0,-18}:: {1, -8}:: {2}", Key, LuaTemplate.GetTemplateRestrictionTypeString(Value), Value);
+            }
+        }
     }
 
 }

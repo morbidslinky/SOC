@@ -1,12 +1,15 @@
-﻿using SOC.UI;
-using System.Xml.Serialization;
-using System.Linq;
-using SOC.Core.Classes.Route;
-using System.Collections.Generic;
+﻿using SOC.Classes.Lua;
 using SOC.Classes.QuestBuild.Assets;
+using SOC.Core.Classes.Route;
+using SOC.QuestObjects.Enemy;
+using SOC.UI;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Xml.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.Classes.Common
 {
@@ -81,7 +84,7 @@ namespace SOC.Classes.Common
             GetRoutesFromFile();
         }
 
-        public SetupDetails(SetupDisplay setupPage)
+        public SetupDetails(SetupControl setupPage)
         {
             QuestTitle = setupPage.textBoxQuestTitle.Text;
             QuestDesc = setupPage.textBoxQuestDesc.Text;
@@ -120,6 +123,21 @@ namespace SOC.Classes.Common
             {
                 string frtFilePath = Path.Combine(RouteManager.routeAssetsPath, routeName) + ".frt";
                 assetsBuilder.AddFPKAssetPath(frtFilePath);
+            }
+        }
+
+        internal void AddToScriptChoosableValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            List<string> routeStrings = fileRoutes;
+            routeStrings.AddRange(EnemyInfo.GetCP(CPName).CPsoldierRoutes);
+
+            if (routeStrings.Count > 0)
+            {
+                ChoiceKeyValues routeKeyValues = new ChoiceKeyValues("Routes");
+
+                routeKeyValues.Values.AddRange(routeStrings.Select(routeString => Lua.Lua.GetEntryValueType(routeString)));
+
+                questKeyValues.Add(routeKeyValues);
             }
         }
     }

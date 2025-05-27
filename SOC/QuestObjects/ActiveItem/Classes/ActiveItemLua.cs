@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.ActiveItem
 {
@@ -22,7 +23,7 @@ namespace SOC.QuestObjects.ActiveItem
                     )
                 );
 
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.activeItemTargetMessages);
+                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.activeItemTargetMessages);
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                     Lua.TableEntry(
@@ -38,6 +39,35 @@ namespace SOC.QuestObjects.ActiveItem
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                 );
+            }
+        }
+
+        internal static void GetScriptChoosableValueSets(ActiveItemsDetail detail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (detail.activeItems.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Active Items (Targets)");
+
+                foreach (string gameObjectName in detail.activeItems
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.activeItems.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Active Items");
+
+                foreach (string gameObjectName in detail.activeItems.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
             }
         }
 

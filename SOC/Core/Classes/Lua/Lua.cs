@@ -45,7 +45,7 @@ namespace SOC.Classes.Lua
                     {
                         return new LuaVariable(name, new LuaNumber(n));
                     }
-                    return new LuaVariable(name, new LuaText(s));
+                    return new LuaVariable(name, new LuaString(s));
                 case double d: return new LuaVariable(name, new LuaNumber(d));
                 case bool b: return new LuaVariable(name, new LuaBoolean(b));
                 default: return new LuaVariable(name);
@@ -57,7 +57,7 @@ namespace SOC.Classes.Lua
             return new LuaVariable(name);
         }
 
-        public static LuaText Text(string text) { return new LuaText(text); }
+        public static LuaString String(string text) { return new LuaString(text); }
 
         public static LuaTemplate Template(string text) { return new LuaTemplate(text); }
 
@@ -110,7 +110,7 @@ namespace SOC.Classes.Lua
                         }
                         else
                         {
-                            luaValues[i] = new LuaText(stringArray[i]);
+                            luaValues[i] = new LuaString(stringArray[i]);
                         }
                     }
                     return luaValues;
@@ -149,7 +149,7 @@ namespace SOC.Classes.Lua
                 case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
                 case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
                 case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunctionValue()})"; break;
-                case LuaText t: call.FunctionVariableName = t.Text; break;
+                case LuaString t: call.FunctionVariableName = t.Text; break;
                 default: call.FunctionVariableName = "Unsupported Function Name Value"; break;
             }
 
@@ -194,7 +194,7 @@ namespace SOC.Classes.Lua
             return tableEntry;
         }
 
-        private static LuaValue GetEntryValueType<TableValue>(TableValue val)
+        public static LuaValue GetEntryValueType<TableValue>(TableValue val)
         {
             switch (val)
             {
@@ -203,7 +203,7 @@ namespace SOC.Classes.Lua
                     {
                         return new LuaNumber(n);
                     }
-                    return new LuaText(valueString);
+                    return new LuaString(valueString);
                 case double valueDouble:
                     return new LuaNumber(valueDouble);
                 case int valueInt:
@@ -219,9 +219,8 @@ namespace SOC.Classes.Lua
                 case LuaValue value:
                     return value;
                 default:
-                    return new LuaText("Unsupported Value Type");
+                    return new LuaString("Unsupported Value Type");
             }
         }
-
     }
 }

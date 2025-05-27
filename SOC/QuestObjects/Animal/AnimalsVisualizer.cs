@@ -7,9 +7,9 @@ using SOC.Forms.Pages;
 
 namespace SOC.QuestObjects.Animal
 {
-    class AnimalsVisualizer : ObjectsDetailVisualizerLocational
+    class AnimalsControlPanel : ObjectsDetailControlPanelLocational
     {
-        public AnimalsVisualizer(LocationalDataStub stub, AnimalControl control) : base(stub, control, control.panelQuestBoxes) { }
+        public AnimalsControlPanel(LocationalDataStub stub, AnimalControl control) : base(stub, control, control.panelQuestBoxes) { }
 
         public override void DrawMetadata(ObjectsMetadata meta)
         {

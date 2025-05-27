@@ -31,7 +31,7 @@ namespace SOC.QuestObjects.ActiveItem
 
         static ActiveItemControl control = new ActiveItemControl();
 
-        static ActiveItemsVisualizer visualizer = new ActiveItemsVisualizer(stub, control);
+        static ActiveItemsControlPanel controlPanel = new ActiveItemsControlPanel(stub, control);
 
         public override ObjectsMetadata GetMetadata()
         {
@@ -58,9 +58,14 @@ namespace SOC.QuestObjects.ActiveItem
             ActiveItemLua.GetMain(this, mainLua);
         }
 
-        public override ObjectsDetailVisualizer GetVisualizer()
+        public override ObjectsDetailControlPanel GetControlPanel()
         {
-            return visualizer;
+            return controlPanel;
+        }
+
+        public override void AddToScriptKeyValueSets(ChoiceKeyValuesList questKeyValues)
+        {
+            ActiveItemLua.GetScriptChoosableValueSets(this, questKeyValues);
         }
     }
 

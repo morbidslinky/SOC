@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SOC.Classes.Lua;
+using SOC.QuestObjects.Enemy;
+using SOC.QuestObjects.Vehicle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SOC.Classes.Lua;
-using SOC.QuestObjects.Enemy;
 
 namespace SOC.QuestObjects.UAV
 {
@@ -17,8 +18,6 @@ namespace SOC.QuestObjects.UAV
             if (detail.UAVs.Count > 0)
             {
                 mainLua.QUEST_TABLE.Add(BuildUAVList(detail.UAVs));
-
-                mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_CommonMessages.mechaNoCaptureTargetMessages);
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
                     Lua.FunctionCall(
@@ -35,6 +34,8 @@ namespace SOC.QuestObjects.UAV
                         )
                     );
 
+                    mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaNoCaptureTargetMessages);
+
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,
                         Lua.TableEntry(
@@ -49,6 +50,35 @@ namespace SOC.QuestObjects.UAV
                             mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(drone.GetObjectName()))));
                     }
                 }
+            }
+        }
+
+        internal static void GetScriptChoosableValueSets(UAVsDetail detail, ChoiceKeyValuesList questKeyValues)
+        {
+            if (detail.UAVs.Any(o => o.isTarget))
+            {
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("UAVs (Targets)");
+
+                foreach (string gameObjectName in detail.UAVs
+                    .Where(o => o.isTarget)
+                    .Select(o => o.GetObjectName()))
+                {
+                    targetSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(targetSenders);
+            }
+
+            if (detail.UAVs.Count > 0)
+            {
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("UAVs");
+
+                foreach (string gameObjectName in detail.UAVs.Select(o => o.GetObjectName()))
+                {
+                    allSenders.Add(Lua.String(gameObjectName));
+                }
+
+                questKeyValues.Add(allSenders);
             }
         }
 

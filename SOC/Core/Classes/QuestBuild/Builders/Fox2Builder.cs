@@ -11,9 +11,9 @@ namespace SOC.Classes.QuestBuild.Fox2
     {
         List<Fox2EntityClass> entityList;
 
-        public Fox2Builder(SetupDetails setupDetails, ObjectsDetails objectsDetails)
+        public Fox2Builder(Quest quest)
         {
-            entityList = BuildQuestEntityList(setupDetails.FpkName, objectsDetails);
+            entityList = BuildQuestEntityList(quest.SetupDetails.FpkName, quest.ObjectsDetails);
             SetAddresses(entityList, Fox2Info.baseQuestAddress);
         }
 
@@ -61,7 +61,7 @@ namespace SOC.Classes.QuestBuild.Fox2
             entityList.Add(entityDataSet);
             entityList.Add(new ScriptBlockScript("ScriptBlockScript0000", entityDataSet, fpkName));
 
-            foreach (ObjectsDetail detail in objectsDetails.details)
+            foreach (ObjectsDetail detail in objectsDetails.Details)
             {
                 detail.AddToFox2Entities(entityDataSet, entityList);
             }
