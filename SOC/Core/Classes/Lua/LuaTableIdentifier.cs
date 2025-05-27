@@ -12,7 +12,7 @@ namespace SOC.Classes.Lua
     {
         [XmlAttribute] public string IdentifierVariableName {  get; set; }
 
-        [XmlArray("TableKeys")]
+        [XmlArray("TableKeyPath")]
         [XmlArrayItem("Key")] 
         public LuaValue[] IdentifierKeys { get; set; }
 

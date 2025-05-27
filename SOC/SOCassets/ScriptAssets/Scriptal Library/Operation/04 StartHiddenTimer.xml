@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Start_Hidden_Timer</Name>
+  <Name>Start Hidden Timer</Name>
   <Description>Begins a background countdown that sends a Timer -&gt; &quot;Start&quot; and Timer -&gt; &quot;Finish&quot; event.
 The name of the timer is the sender of the event.</Description>
-  <EventFunctionTemplate>
-GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)
-  </EventFunctionTemplate>
+  <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Sender</Name>

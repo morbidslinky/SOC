@@ -10,9 +10,6 @@ namespace SOC.QuestObjects.Item
 {
     class ItemLua
     {
-
-        static readonly LuaTableEntry checkIsDormantItem = LuaFunction.ToTableEntry("checkIsDormantItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == false); ");
-        
         internal static void GetDefinition(ItemsDetail questDetail, DefinitionScriptBuilder definitionLua)
         {
             List<string> requestList = new List<string>();
@@ -37,7 +34,7 @@ namespace SOC.QuestObjects.Item
                     Lua.Table(
                         StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
                         StaticObjectiveFunctions.TallyItemTargets
-                    )
+                    ), true
                 );
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.dormantItemTargetMessages);
@@ -52,7 +49,8 @@ namespace SOC.QuestObjects.Item
                     methodPair,
                     Lua.TableEntry(
                         "CheckQuestMethodPairs",
-                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets")))
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets"))),
+                        true
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                 );

@@ -21,7 +21,7 @@ namespace SOC.QuestObjects.Animal
                         Lua.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForAnimal,
                             StaticObjectiveFunctions.TallyAnimalTargets
-                        )
+                        ), true
                     );
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
@@ -32,7 +32,8 @@ namespace SOC.QuestObjects.Animal
                         methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.methodPair.TallyAnimalTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.methodPair.TallyAnimalTargets"))),
+                            true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );

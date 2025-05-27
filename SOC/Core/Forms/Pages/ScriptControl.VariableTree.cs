@@ -23,7 +23,7 @@ namespace SOC.UI
             {
                 i++;
             }
-            VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.Number(0)));
+            VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.String("Text Value Goes Here")));
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
 

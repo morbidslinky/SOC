@@ -11,8 +11,6 @@ namespace SOC.QuestObjects.Enemy
 {
     static class EnemyLua
     {
-        static readonly LuaTableEntry CheckIsSoldier = LuaFunction.ToTableEntry("CheckIsSoldier", new string[] { "gameId" }, " return Tpp.IsSoldier(gameId); ");
-
         public static void GetDefinition(EnemiesDetail detail, DefinitionScriptBuilder definitionLua)
         {
             if (detail.enemies.Count > 0)
@@ -148,7 +146,7 @@ namespace SOC.QuestObjects.Enemy
                         Lua.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
-                        )
+                        ), true
                     );
 
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
@@ -161,7 +159,8 @@ namespace SOC.QuestObjects.Enemy
                         methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );

@@ -114,10 +114,9 @@
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
-            this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxDescription.Size = new System.Drawing.Size(279, 334);
             this.textBoxDescription.TabIndex = 6;
-            this.textBoxDescription.WordWrap = false;
             // 
             // groupBoxScriptalSelect
             // 
@@ -323,6 +322,7 @@
             this.textBoxChoiceDescription.Multiline = true;
             this.textBoxChoiceDescription.Name = "textBoxChoiceDescription";
             this.textBoxChoiceDescription.ReadOnly = true;
+            this.textBoxChoiceDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxChoiceDescription.Size = new System.Drawing.Size(279, 166);
             this.textBoxChoiceDescription.TabIndex = 6;
             // 

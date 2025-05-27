@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Set String Variable</Name>
+  <Description>Stores a string to a user variable.</Description>
+  <EventFunctionTemplate>|[1|STRING]| = |[2|STRING]|</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>User Variable</Name>
+	  <Description>The custom variable that the value will be set to.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <AllowLiteral>false</AllowLiteral>
+	</Choice>
+	<Choice>
+	  <Name>String Value</Name>
+	  <Description>The value to set to the User Variable.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Active Items (Targets)</Key>
+	    <Key>Active Items</Key>
+	    <Key>Animal Clusters (Targets)</Key>
+	    <Key>Animal Clusters</Key>
+	    <Key>Cameras (Targets)</Key>
+	    <Key>Cameras</Key>
+	    <Key>Enemies (Targets)</Key>
+	    <Key>Enemies (Enabled)</Key>
+	    <Key>Enemies</Key>
+	    <Key>GeoTraps</Key>
+	    <Key>Helicopter (Target)</Key>
+	    <Key>Helicopter</Key>
+	    <Key>Prisoners (Targets)</Key>
+	    <Key>Prisoners</Key>
+	    <Key>Dormant Items (Targets)</Key>
+	    <Key>Dormant Items</Key>
+	    <Key>UAVs (Targets)</Key>
+	    <Key>UAVs</Key>
+	    <Key>Heavy Vehicles (Targets)</Key>
+	    <Key>Heavy Vehicles</Key>
+	    <Key>Walker Gears (Targets)</Key>
+	    <Key>Walker Gears</Key>
+	    <Key>Routes</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaNumber" Number="1" />
+	</Choice>
+  </Choices>
+</Scriptal>

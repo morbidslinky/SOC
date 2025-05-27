@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Custom_Event_Trigger</Name>
+  <Name>Custom Event Trigger</Name>
   <Description>Immediately triggers a Mission -&gt; &quot;CustomMessage&quot; event.
 This can be useful for daisy-chaining events together.</Description>
-  <EventFunctionTemplate>
-Mission.SendMessage(&quot;Mission&quot;, |[1|STRING]|, arg1, arg2, arg3, arg4)
-  </EventFunctionTemplate>
+  <EventFunctionTemplate>Mission.SendMessage(&quot;Mission&quot;, |[1|STRING]|, arg1, arg2, arg3, arg4)</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Message</Name>

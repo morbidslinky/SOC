@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Print_Args (DEBUG)</Name>
-  <Description>Prints arguments from the event, for debugging purposes.</Description>
-  <EventFunctionTemplate>
-InfCore.DebugPrint(&quot;DEBUG: | &quot;.. tostring(arg1) ..&quot; | &quot;.. tostring(arg2) ..&quot; | &quot;.. tostring(arg3) ..&quot; | &quot;.. tostring(arg4) ..&quot; | &quot;)
-  </EventFunctionTemplate>
-</Scriptal>

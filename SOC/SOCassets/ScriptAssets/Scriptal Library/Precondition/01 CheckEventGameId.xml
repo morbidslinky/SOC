@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Compare GameId To Event Arguments</Name>
+  <Description>Compares an event argument to the GameObjectId of a string. 
+Comparing against arg1 is similar to checking the Sender.
+Note: For most events, 'arg1' represents the GameObjectId that sent the event.
+Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+  <EventFunctionTemplate>return |[1|NUMBER]| == GetGameObjectId(|[2|STRING]|)</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Event Arg</Name>
+	  <Description>The new value for the key.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Name="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Number="-1" />
+	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Game Object Name</Name>
+	  <Description>The name of the timer.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Active Items (Targets)</Key>
+	    <Key>Active Items</Key>
+	    <Key>Animal Clusters (Targets)</Key>
+	    <Key>Animal Clusters</Key>
+	    <Key>Cameras (Targets)</Key>
+	    <Key>Cameras</Key>
+	    <Key>Enemies (Targets)</Key>
+	    <Key>Enemies (Enabled)</Key>
+	    <Key>Enemies</Key>
+	    <Key>GeoTraps</Key>
+	    <Key>Helicopter (Target)</Key>
+	    <Key>Helicopter</Key>
+	    <Key>Prisoners (Targets)</Key>
+	    <Key>Prisoners</Key>
+	    <Key>Dormant Items (Targets)</Key>
+	    <Key>Dormant Items</Key>
+	    <Key>UAVs (Targets)</Key>
+	    <Key>UAVs</Key>
+	    <Key>Heavy Vehicles (Targets)</Key>
+	    <Key>Heavy Vehicles</Key>
+	    <Key>Walker Gears (Targets)</Key>
+	    <Key>Walker Gears</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Literal String</Key>
+	  <Value xsi:type="LuaString" Text=""/>
+	</Choice>
+  </Choices>
+</Scriptal>

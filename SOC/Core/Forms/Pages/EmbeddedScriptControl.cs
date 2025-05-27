@@ -85,7 +85,7 @@ namespace SOC.UI
                 }
             );
 
-            chooseableSets.AddRange(ParentControl.Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues.Where(set => set.Key != "Routes"));
+            chooseableSets.AddRange(ParentControl.Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues.Where(set => set.Key != "Routes" && set.Key != "Event Default Arguments"));
 
             return chooseableSets.ToArray();
         }

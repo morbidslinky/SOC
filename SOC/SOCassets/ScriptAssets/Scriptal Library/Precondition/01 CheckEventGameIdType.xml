@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Check GameId Type</Name>
+  <Description>Check the type of a GameId using a selection of type-check functions.
+Note: For most events, 'arg1' represents the GameObjectId that sent the event.
+Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+  <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|)</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Type Check Functions">
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsSoldier" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsPlayer" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsCommandPost" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsHostage" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsHelicopter" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsEnemyHelicopter" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsHorse" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsVehicle" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsPlayerWalkerGear" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsEnemyWalkerGear" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsUav" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsSecurityCamera" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsGunCamera" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsAnimal" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsMarkerLocator" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsGunCamera" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="IsGunCamera" />
+		</TableKeyPath>
+	  </Value>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Type Check</Name>
+	  <Description>The function that checks the GameObject type.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <ChoosableValueSetsFilter>
+	    <Key>Type Check Functions</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Type Check Functions</Key>
+	  <Value xsi:type="LuaString" Text="IsSoldier" />
+	</Choice>
+	<Choice>
+	  <Name>Value</Name>
+	  <Description>The value to check the type of.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Name="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Number="-1" />
+	  </Value>
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsSoldier" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsSoldier(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsPlayer" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsPlayer(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsEnemyWalkerGear" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsEnemyWalkerGear(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsPlayerWalkerGear" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsPlayerWalkerGear(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsCommandPost" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsCommandPost(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsHostage" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsHostage(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsHelicopter" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsHelicopter(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsEnemyHelicopter" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsEnemyHelicopter(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsHorse" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsHorse(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsVehicle" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsVehicle(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsUav" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsUav(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsSecurityCamera" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsSecurityCamera(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsGunCamera" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsGunCamera(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsAnimal" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsAnimal(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="IsMarkerLocator" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="gameId"/>
+	    </Parameters>
+	    <Template>  return Tpp.IsMarkerLocator(gameId)</Template>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

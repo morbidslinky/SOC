@@ -28,10 +28,10 @@ namespace SOC.Classes.Lua
         {
             Quest = quest;
 
-            QStep_Main.StrCode32Table.AddCommonDefinitions(Quest.ScriptDetails.VariableDeclarations);
+            QStep_Main.StrCode32Table.AddCommonDefinitions(Quest.ScriptDetails.VariableDeclarations.ToArray());
             QStep_Main.StrCode32Table.Add(Quest.ScriptDetails.QStep_Main);
 
-            QStep_Main.StrCode32Table.AddCommonDefinitions( // TODO create a qvars table first, add these, and merge it with the CommonDefinitions table?
+            QStep_Main.StrCode32Table.AddCommonDefinitions(
                 Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(Quest.SetupDetails.CPName, Quest.SetupDetails.locationID)),
                 Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}")
             );

@@ -167,7 +167,7 @@ namespace SOC.Classes.Common
                     detail.AddToScriptKeyValueSets(ScriptDetails.QuestKeyValueSetsCache);
                 }
 
-                SetupDetails.AddToScriptChoosableValueSets(ScriptDetails.QuestKeyValueSetsCache);
+                SetupDetails.GetScriptChoosableValueSets(ScriptDetails.QuestKeyValueSetsCache);
             }
 
             return ScriptDetails.QuestKeyValueSetsCache;
