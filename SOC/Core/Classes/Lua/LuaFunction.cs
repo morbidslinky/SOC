@@ -13,14 +13,24 @@ namespace SOC.Classes.Lua
 {
     public class LuaFunction : LuaValue
     {
-
         [XmlArray("Parameters")]
         [XmlArrayItem("Parameter")]
         public LuaVariable[] Parameters { get; set; }
+
+        [XmlIgnore]
         public LuaTemplate Body { get; set; }
+
+        [XmlElement("Template")]
+        public string Template
+        {
+            get => Body?.Template;
+            set => Body = new LuaTemplate(value);
+        }
+
         [XmlArray("PopulationValues")]
         [XmlArrayItem("Value")]
-        public LuaValue[] PopulationValues { get; set; }
+        public LuaValue[] PopulationValues { get; set; } = new LuaValue[0];
+
         public override string Value => GetLuaFunctionValue();
 
         public LuaFunction() : base(TemplateRestrictionType.FUNCTION) { }
@@ -68,10 +78,10 @@ namespace SOC.Classes.Lua
             }
         }
 
-        public static LuaTableEntry ToTableEntry(string functionName, string[] functionParameters, string functionBody)
+        public static LuaTableEntry ToTableEntry(string functionName, string[] functionParameters, string functionBody, bool extrude = false)
         {
             LuaTableEntry entry = new LuaTableEntry();
-            return Lua.TableEntry(functionName, Lua.Function(functionBody, functionParameters));
+            return Lua.TableEntry(functionName, Lua.Function(functionBody, functionParameters), extrude);
         }
     }
 

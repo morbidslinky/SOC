@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Check_Hidden_Timer</Name>
+  <Name>Check Hidden Timer</Name>
   <Description>Checks whether or not a background timer is ticking.</Description>
-  <EventFunctionTemplate>
-return GkEventTimerManager.IsTimerActive(|[1|STRING]|) == |[2|BOOLEAN]|
-  </EventFunctionTemplate>
+  <EventFunctionTemplate>return GkEventTimerManager.IsTimerActive(|[1|STRING]|) == |[2|BOOLEAN]|</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Sender</Name>

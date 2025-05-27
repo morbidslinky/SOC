@@ -343,6 +343,6 @@ public static class StaticObjectiveFunctions
               end
             end
           end
-          return TppDefine.QUEST_CLEAR_TYPE.NONE");
+          return TppDefine.QUEST_CLEAR_TYPE.NONE", true);
 
 }

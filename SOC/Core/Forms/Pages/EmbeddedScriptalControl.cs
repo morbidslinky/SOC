@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using static SOC.Classes.Lua.Choice;
 
@@ -89,12 +90,25 @@ namespace SOC.UI
         private void SetDescription(Scriptal scriptal)
         {
             groupBoxDescription.Text = $"Template Description :: \"{scriptal.Name}\"";
-            textBoxDescription.Text = scriptal.Description.Replace("\n", "\r\n") +
-                $"\r\n\r\nEvent Function:\r\n{scriptal.EventFunctionTemplate.Replace("\n", "\r\n")}";
+
+            StringBuilder descriptionBuilder = new StringBuilder(scriptal.Description);
+
+            if (!string.IsNullOrEmpty(scriptal.EventFunctionTemplate))
+            {
+                descriptionBuilder.Append($"\n\n\nEvent Function:\n{scriptal.EventFunctionTemplate}");
+            }
+
             if (scriptal.EmbeddedChoosables.ChoiceKeyValues.Count > 0)
             {
-                textBoxDescription.Text += $"\r\n\r\nProvided Value Sets:\r\n\r\n- {string.Join("\r\n\r\n- ", scriptal.EmbeddedChoosables.ChoiceKeyValues.Select(choosable => $"{choosable.Key}:\r\n     {string.Join("\r\n     ", choosable.Values)}"))}";
+                descriptionBuilder.Append($"\n\n\nProvided Value Sets:\n\n- {string.Join("\n\n- ", scriptal.EmbeddedChoosables.ChoiceKeyValues.Select(choosable => $"{choosable.Key}:\n     {string.Join("\n     ", choosable.Values)}"))}");
             }
+
+            if (scriptal.CommonDefinitions.Count > 0)
+            {
+                descriptionBuilder.Append($"\n\n\nProvided qvars Definitions:\n\n- {string.Join("\n\n- ", scriptal.CommonDefinitions.Select(definition => $"{definition.Key}:\n{definition.Value}"))}");
+            }
+
+            textBoxDescription.Text = descriptionBuilder.ToString().Replace("\n", "\r\n");
         }
 
         private void SetChoiceMenu(Scriptal scriptal)
@@ -244,18 +258,18 @@ string.Format(@"
                 .Union(ParentControl.Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues)
                 .Where(set => selectedChoice.ChoosableValueSetsFilter.Contains(set.Key)));
 
-            if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)
-                chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.CUSTOM_VARIABLE_SET });
-
             if (selectedChoice.AllowLiteral)
             {
-                if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.NUMBER))
-                    chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.NUMBER_LITERAL_SET });
                 if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.STRING))
                     chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.STRING_LITERAL_SET });
+                if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.NUMBER))
+                    chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.NUMBER_LITERAL_SET });
                 if (selectedChoice.CorrespondingRuntimeToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.BOOLEAN))
                     chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.BOOLEAN_LITERAL_SET });
             }
+
+            if (selectedChoice.AllowUserVariable && selectedChoice.AllowUIEdit)
+                chooseableSets.Add(new ChoiceKeyValues() { Key = ScriptControl.CUSTOM_VARIABLE_SET });
 
             return chooseableSets.ToArray();
         }

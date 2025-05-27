@@ -32,6 +32,8 @@
             this.groupBoxDescription = new System.Windows.Forms.GroupBox();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.groupBoxTrigger = new System.Windows.Forms.GroupBox();
+            this.buttonApplyMessage = new System.Windows.Forms.Button();
+            this.textBoxMessage = new System.Windows.Forms.TextBox();
             this.buttonApplySender = new System.Windows.Forms.Button();
             this.labelSenderValue = new System.Windows.Forms.Label();
             this.labelStrCode32 = new System.Windows.Forms.Label();
@@ -52,8 +54,6 @@
             this.buttonUpOperation = new System.Windows.Forms.Button();
             this.buttonDownOperation = new System.Windows.Forms.Button();
             this.listBoxOperations = new System.Windows.Forms.ListBox();
-            this.buttonApplyMessage = new System.Windows.Forms.Button();
-            this.textBoxMessage = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
             this.splitContainerOuter.Panel1.SuspendLayout();
             this.splitContainerOuter.Panel2.SuspendLayout();
@@ -117,9 +117,9 @@
             this.textBoxDescription.Location = new System.Drawing.Point(3, 16);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
+            this.textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxDescription.Size = new System.Drawing.Size(279, 225);
             this.textBoxDescription.TabIndex = 21;
-            this.textBoxDescription.WordWrap = false;
             this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
             // 
             // groupBoxTrigger
@@ -146,6 +146,28 @@
             this.groupBoxTrigger.TabIndex = 31;
             this.groupBoxTrigger.TabStop = false;
             this.groupBoxTrigger.Text = "Trigger :: \"When\"";
+            // 
+            // buttonApplyMessage
+            // 
+            this.buttonApplyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonApplyMessage.Location = new System.Drawing.Point(211, 78);
+            this.buttonApplyMessage.Name = "buttonApplyMessage";
+            this.buttonApplyMessage.Size = new System.Drawing.Size(71, 23);
+            this.buttonApplyMessage.TabIndex = 18;
+            this.buttonApplyMessage.Text = "Apply >>";
+            this.buttonApplyMessage.UseVisualStyleBackColor = true;
+            this.buttonApplyMessage.Click += new System.EventHandler(this.buttonApplyMessage_Click);
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMessage.BackColor = System.Drawing.Color.LightGray;
+            this.textBoxMessage.Location = new System.Drawing.Point(6, 80);
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(199, 20);
+            this.textBoxMessage.TabIndex = 17;
+            this.textBoxMessage.Visible = false;
             // 
             // buttonApplySender
             // 
@@ -402,28 +424,6 @@
             this.listBoxOperations.TabIndex = 13;
             this.listBoxOperations.SelectedIndexChanged += new System.EventHandler(this.listBoxOperations_SelectedIndexChanged);
             this.listBoxOperations.DoubleClick += new System.EventHandler(this.listBoxOperations_DoubleClick);
-            // 
-            // buttonApplyMessage
-            // 
-            this.buttonApplyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonApplyMessage.Location = new System.Drawing.Point(211, 78);
-            this.buttonApplyMessage.Name = "buttonApplyMessage";
-            this.buttonApplyMessage.Size = new System.Drawing.Size(71, 23);
-            this.buttonApplyMessage.TabIndex = 18;
-            this.buttonApplyMessage.Text = "Apply >>";
-            this.buttonApplyMessage.UseVisualStyleBackColor = true;
-            this.buttonApplyMessage.Click += new System.EventHandler(this.buttonApplyMessage_Click);
-            // 
-            // textBoxMessage
-            // 
-            this.textBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxMessage.BackColor = System.Drawing.Color.LightGray;
-            this.textBoxMessage.Location = new System.Drawing.Point(6, 80);
-            this.textBoxMessage.Name = "textBoxMessage";
-            this.textBoxMessage.Size = new System.Drawing.Size(199, 20);
-            this.textBoxMessage.TabIndex = 17;
-            this.textBoxMessage.Visible = false;
             // 
             // EmbeddedScriptControl
             // 

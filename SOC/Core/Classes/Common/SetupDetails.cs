@@ -126,7 +126,7 @@ namespace SOC.Classes.Common
             }
         }
 
-        internal void AddToScriptChoosableValueSets(ChoiceKeyValuesList questKeyValues)
+        internal void GetScriptChoosableValueSets(ChoiceKeyValuesList questKeyValues)
         {
             List<string> routeStrings = fileRoutes;
             routeStrings.AddRange(EnemyInfo.GetCP(CPName).CPsoldierRoutes);
@@ -139,6 +139,15 @@ namespace SOC.Classes.Common
 
                 questKeyValues.Add(routeKeyValues);
             }
+
+            ChoiceKeyValues defaultEventArgs = new ChoiceKeyValues("Event Default Arguments");
+            foreach (var defaultArg in StrCode32.GetDefaultParametersAsVariables())
+            {
+                defaultEventArgs.Add(defaultArg);
+            }
+
+            questKeyValues.Add(defaultEventArgs);
+
         }
     }
 }

@@ -36,7 +36,7 @@ namespace SOC.QuestObjects.Helicopter
                         Lua.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
-                        )
+                        ), true
                     );
 
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaNoCaptureTargetMessages);
@@ -45,7 +45,8 @@ namespace SOC.QuestObjects.Helicopter
                         methodPair,
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
@@ -72,7 +73,7 @@ namespace SOC.QuestObjects.Helicopter
                 questKeyValues.Add(targetSenders);
             }
 
-            if (detail.helicopters.Count > 0)
+            if (detail.helicopters.Any(heli => heli.isSpawn))
             {
                 ChoiceKeyValues allSenders = new ChoiceKeyValues("Helicopter");
 

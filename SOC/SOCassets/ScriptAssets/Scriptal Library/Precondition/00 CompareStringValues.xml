@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Compare String Values</Name>
+  <Description>Compares two strings. 
+Use 'qvars.Equals' to return true when Str1 and Str2 are the same value.
+Use 'qvars.NotEquals' to return true when Str1 and Str2 are not the same value.</Description>
+  <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|STRING]|, |[3|STRING]|)</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Comparison Functions">
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="Equals" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Text="NotEquals" />
+		</TableKeyPath>
+	  </Value>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Comparison</Name>
+	  <Description>The comparison function.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <ChoosableValueSetsFilter>
+	    <Key>Comparison Functions</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Comparison Functions</Key>
+	  <Value xsi:type="LuaString" Text="Equal" />
+	</Choice>
+	<Choice>
+	  <Name>Str1</Name>
+	  <Description>The string on the left-hand side of the comparison.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Text="Foo" />
+	</Choice>
+	<Choice>
+	  <Name>Str2</Name>
+	  <Description>The string on the right-hand side of the comparison.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Text="Bar" />
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="Equals" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+	    </Parameters>
+	    <Template>  return thisValue == thatValue</Template>
+	  </Value>
+    </qvarsDefinition>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Text="NotEquals" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+	    </Parameters>
+	    <Template>  return thisValue ~= thatValue</Template>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

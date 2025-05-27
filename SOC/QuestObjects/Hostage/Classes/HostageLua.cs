@@ -17,11 +17,7 @@ namespace SOC.QuestObjects.Hostage
             new string[] { "flag", "commandPostName", "questCpInterrogation" },
             " local commandPostId = GetGameObjectId(\"TppCommandPost2\", commandPostName)\nif flag then TppInterrogation.SetQuestHighIntTable(commandPostId, questCpInterrogation)\n else TppInterrogation.RemoveQuestHighIntTable(commandPostId, questCpInterrogation)\n end");
 
-        static readonly LuaTableEntry WarpHostages = LuaFunction.ToTableEntry("WarpHostages", new string[] { }, " for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nlocal gameObjectId= GetGameObjectId(hostageInfo.hostageName)\nif gameObjectId~=GameObject.NULL_ID then local position=hostageInfo.position\nlocal command={id=\"Warp\",degRotationY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3])}\nGameObject.SendCommand(gameObjectId,command)\nend\nend");
-        
         static readonly LuaFunction SetHostageAttributes = Lua.Function("for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nlocal gameObjectId= GetGameObjectId(hostageInfo.hostageName)\nif gameObjectId~=GameObject.NULL_ID then if hostageInfo.commands then for j,hostageCommand in ipairs(hostageInfo.commands) do \n GameObject.SendCommand(gameObjectId, hostageCommand)\nend\nend\nend\nend");
-
-        static readonly LuaTableEntry CheckIsHostage = LuaFunction.ToTableEntry("CheckIsHostage", new string[] { "gameId" }, " return Tpp.IsHostage(gameId)");
 
         public static void GetDefinition(HostagesDetail hostageDetail, DefinitionScriptBuilder definitionLua)
         {
@@ -87,7 +83,7 @@ namespace SOC.QuestObjects.Hostage
                         Lua.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
-                        )
+                        ), true
                     );
 
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
@@ -101,7 +97,8 @@ namespace SOC.QuestObjects.Hostage
                         Lua.TableEntry(
                             "CheckQuestMethodPairs",
                             Lua.Table(
-                                Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
+                                Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );

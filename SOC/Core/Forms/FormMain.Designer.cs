@@ -119,9 +119,9 @@
             this.buttonOpenScriptTemplates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonOpenScriptTemplates.Location = new System.Drawing.Point(508, 468);
             this.buttonOpenScriptTemplates.Name = "buttonOpenScriptTemplates";
-            this.buttonOpenScriptTemplates.Size = new System.Drawing.Size(129, 38);
+            this.buttonOpenScriptTemplates.Size = new System.Drawing.Size(155, 38);
             this.buttonOpenScriptTemplates.TabIndex = 6;
-            this.buttonOpenScriptTemplates.Text = "Open Scripts Folder";
+            this.buttonOpenScriptTemplates.Text = "Open ScriptAssets Folder";
             this.buttonOpenScriptTemplates.UseVisualStyleBackColor = true;
             this.buttonOpenScriptTemplates.Click += new System.EventHandler(this.buttonOpenScriptTemplates_Click);
             // 

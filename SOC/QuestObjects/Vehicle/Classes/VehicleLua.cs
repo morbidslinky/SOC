@@ -11,8 +11,6 @@ namespace SOC.QuestObjects.Vehicle
 {
     class VehicleLua
     {
-        static readonly LuaTableEntry CheckIsVehicle = LuaFunction.ToTableEntry("CheckIsVehicle", new string[] { "gameId" }, " return Tpp.IsVehicle(gameId) ");
-
         static readonly LuaFunction WarpVehicles = Lua.Function("for i,vehicleInfo in ipairs(this.QUEST_TABLE.vehicleList) do \nlocal gameObjectId= GetGameObjectId(vehicleInfo.locator); if gameObjectId~=GameObject.NULL_ID then local position=vehicleInfo.position; local command={id=\"SetPosition\",rotY=position.rotY,position=Vector3(position.pos[1],position.pos[2],position.pos[3]) } ; GameObject.SendCommand(gameObjectId,command); end; end");
         
         public static void GetMain(VehiclesDetail detail, MainScriptBuilder mainLua)
@@ -33,7 +31,7 @@ namespace SOC.QuestObjects.Vehicle
                         Lua.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
-                        )
+                        ), true
                     );
 
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.mechaCaptureTargetMessages);
@@ -46,7 +44,8 @@ namespace SOC.QuestObjects.Vehicle
                         methodPair,
                         Lua.TableEntry(
                             Lua.TableIdentifier("qvars", "CheckQuestMethodPairs"),
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets")))
+                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );

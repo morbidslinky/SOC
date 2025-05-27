@@ -581,7 +581,7 @@ namespace SOC.UI
             int index = 1;
             foreach (ScriptalNode scriptalNode in Nodes)
             {
-                scriptalNode.Scriptal.ScriptPrefixID = $"{Text}_{index++}_";
+                scriptalNode.Scriptal.ScriptPrefixID = $"{(ScriptalType == ScriptalType.Precondition ? "Precondition" : "Operation")} {index++}: ";
                 childScriptals.Add(scriptalNode.Scriptal);
             }
 

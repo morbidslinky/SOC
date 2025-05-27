@@ -10,8 +10,6 @@ namespace SOC.QuestObjects.ActiveItem
 {
     class ActiveItemLua
     {
-        static readonly LuaTableEntry checkIsActiveItem = LuaFunction.ToTableEntry("checkIsActiveItem", new string[] { "targetItemInfo" }, " return (targetItemInfo.active == true); ");
-
         internal static void GetMain(ActiveItemsDetail questDetail, MainScriptBuilder mainLua)
         {
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
@@ -20,7 +18,7 @@ namespace SOC.QuestObjects.ActiveItem
                     Lua.Table(
                         StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
                         StaticObjectiveFunctions.TallyItemTargets
-                    )
+                    ), true
                 );
 
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.activeItemTargetMessages);
@@ -35,7 +33,8 @@ namespace SOC.QuestObjects.ActiveItem
                     methodPair,
                     Lua.TableEntry(
                         "CheckQuestMethodPairs",
-                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets")))
+                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets"))),
+                        true
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                 );

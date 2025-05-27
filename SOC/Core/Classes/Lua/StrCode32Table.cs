@@ -46,17 +46,6 @@ namespace SOC.Classes.Lua
 
         public void AddCommonDefinitions(params LuaTableEntry[] definitionEntries)
         {
-            foreach (LuaTableEntry entry in definitionEntries)
-                entry.ExtrudeForAssignmentVariable = true;
-
-            CommonDefinitions.AddRange(definitionEntries);
-        }
-
-        public void AddCommonDefinitions(List<LuaTableEntry> definitionEntries)
-        {
-            foreach (LuaTableEntry entry in definitionEntries)
-                entry.ExtrudeForAssignmentVariable = true;
-
             CommonDefinitions.AddRange(definitionEntries);
         }
 
@@ -308,7 +297,7 @@ namespace SOC.Classes.Lua
 
         public static LuaVariable[] GetDefaultParametersAsVariables()
         {
-            return DefaultParameters.Select(parameter => Lua.Variable(parameter)).ToArray();
+            return DefaultParameters.Select(parameter => new LuaVariable(parameter, Lua.Number(-1))).ToArray();
         }
 
         public override bool Equals(object obj)
@@ -354,8 +343,8 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Choice")]
         public List<Choice> Choices = new List<Choice>();
 
-        [XmlArray("CommonDefinitions")]
-        [XmlArrayItem("Definition")]
+        [XmlArray("EmbeddedCommonDefinitions")]
+        [XmlArrayItem("qvarsDefinition")]
         public List<LuaTableEntry> CommonDefinitions = new List<LuaTableEntry>();
 
         [XmlIgnore]
@@ -365,8 +354,8 @@ namespace SOC.Classes.Lua
         {
             Scriptal defaultScriptal = new Scriptal();
 
-            defaultScriptal.Name = "Always_True";
-            defaultScriptal.Description = "Empty Precondition.\r\n\r\n- Always returns true (same as having no preconditions at all).";
+            defaultScriptal.Name = "Always True";
+            defaultScriptal.Description = "Empty Precondition.\r\n\r\n- Always returns true (same as having no preconditions at all).\r\n\r\nThis particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.\r\nOpen the ScriptAssets folder to view and create custom scriptal templates for the library.";
             defaultScriptal.EventFunctionTemplate = "return true";
 
             return defaultScriptal;
@@ -376,8 +365,8 @@ namespace SOC.Classes.Lua
         {
             Scriptal defaultScriptal = new Scriptal();
 
-            defaultScriptal.Name = "Do_Nothing";
-            defaultScriptal.Description = "Empty Operation.\r\n\r\n- Does nothing (same as having no operations at all).";
+            defaultScriptal.Name = "Do Nothing";
+            defaultScriptal.Description = "Empty Operation.\r\n\r\n- Does nothing (same as having no operations at all).\r\n\r\nThis particular operation is baked into SOC, but the other operation templates are saved as xml files in the Scriptal Library folder.\r\nOpen the ScriptAssets folder to view and create custom scriptal templates for the library.";
             defaultScriptal.EventFunctionTemplate = "";
 
             return defaultScriptal;
@@ -531,10 +520,10 @@ namespace SOC.Classes.Lua
         public bool AllowUIEdit = true;
 
         [XmlElement]
-        public bool AllowLiteral = true;
+        public bool AllowLiteral = false;
 
         [XmlElement]
-        public bool AllowUserVariable = true;
+        public bool AllowUserVariable = false;
 
         [XmlElement]
         public string Key = "";

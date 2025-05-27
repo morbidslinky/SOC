@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Mark As Target</Name>
+  <Description>Displays a Quest Target marker on the Game Object. 
+Accepts both GameObjectIds and GameObject Names.
+Note: For most events, 'arg1' represents the GameObjectId that sent the event.
+Note: This operation is purely visual and does not handle actual target logic.</Description>
+  <EventFunctionTemplate>local tempVal = |[1|STRING,NUMBER]|
+if type(tempVal) == "string" then
+  tempVal = GetGameObjectId(tempVal)
+end
+TppMarker.EnableQuestTargetMarker(tempVal)
+TppSoundDaemon.PostEvent&quot;sfx_s_enemytag_quest_tgt&quot;</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Value</Name>
+	  <Description>The new value for the key.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Name="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Number="-1" />
+	  </Value>
+	</Choice>
+  </Choices>
+</Scriptal>
