@@ -47,7 +47,7 @@ namespace SOC.QuestObjects.Animal
         {
             if (detail.animals.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Animal Clusters (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Animal Cluster Names (Targets)");
 
                 foreach (string gameObjectName in detail.animals
                     .Where(o => o.isTarget)
@@ -61,7 +61,7 @@ namespace SOC.QuestObjects.Animal
 
             if (detail.animals.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Animal Clusters");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Animal Cluster Names");
 
                 foreach (string gameObjectName in detail.animals.Select(o => o.GetObjectName()))
                 {

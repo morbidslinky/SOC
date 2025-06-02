@@ -14,7 +14,7 @@ namespace SOC.QuestObjects.GeoTrap
         {
             if (geoTrapsDetail.trapShapes.Count > 0)
             {
-                ChoiceKeyValues geoTrapSenders = new ChoiceKeyValues("GeoTraps");
+                ChoiceKeyValues geoTrapSenders = new ChoiceKeyValues("GeoTrap Names");
 
                 foreach (string geoTrapName in geoTrapsDetail.trapShapes.Select(shape => shape.geoTrap).Distinct())
                 {

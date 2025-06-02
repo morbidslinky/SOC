@@ -28,453 +28,483 @@
         /// </summary>
         internal void InitializeComponent()
         {
-            this.groupBoxVariables = new System.Windows.Forms.GroupBox();
-            this.comboBoxVarType = new System.Windows.Forms.ComboBox();
-            this.textBoxVarName = new System.Windows.Forms.TextBox();
-            this.buttonNewVariable = new System.Windows.Forms.Button();
-            this.buttonRemoveVariableIdentifier = new System.Windows.Forms.Button();
-            this.treeViewVariables = new System.Windows.Forms.TreeView();
-            this.panelBoolean = new System.Windows.Forms.Panel();
-            this.radioButtonFalse = new System.Windows.Forms.RadioButton();
-            this.radioButtonTrue = new System.Windows.Forms.RadioButton();
-            this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
-            this.buttonNewIdentifier = new System.Windows.Forms.Button();
-            this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
-            this.panelPlaceholder = new System.Windows.Forms.Panel();
-            this.groupBoxScripts = new System.Windows.Forms.GroupBox();
-            this.splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
-            this.buttonNewPrecondition = new System.Windows.Forms.Button();
-            this.buttonNewOperation = new System.Windows.Forms.Button();
-            this.textBoxScriptName = new System.Windows.Forms.TextBox();
-            this.buttonRemoveScript = new System.Windows.Forms.Button();
-            this.buttonNewScript = new System.Windows.Forms.Button();
-            this.treeViewScripts = new System.Windows.Forms.TreeView();
-            this.panelScripting = new System.Windows.Forms.Panel();
-            this.splitContainerOuter = new System.Windows.Forms.SplitContainer();
-            this.splitContainerInner = new System.Windows.Forms.SplitContainer();
-            this.groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
-            this.panelComponentDetails = new System.Windows.Forms.Panel();
-            this.groupBoxVariables.SuspendLayout();
-            this.panelBoolean.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
-            this.groupBoxScripts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).BeginInit();
-            this.splitContainerPreconditionOperation.Panel1.SuspendLayout();
-            this.splitContainerPreconditionOperation.Panel2.SuspendLayout();
-            this.splitContainerPreconditionOperation.SuspendLayout();
-            this.panelScripting.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).BeginInit();
-            this.splitContainerOuter.Panel1.SuspendLayout();
-            this.splitContainerOuter.Panel2.SuspendLayout();
-            this.splitContainerOuter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).BeginInit();
-            this.splitContainerInner.Panel1.SuspendLayout();
-            this.splitContainerInner.Panel2.SuspendLayout();
-            this.splitContainerInner.SuspendLayout();
-            this.groupBoxScriptDetails.SuspendLayout();
-            this.SuspendLayout();
+            groupBoxVariables = new System.Windows.Forms.GroupBox();
+            panelNewIdentifier = new System.Windows.Forms.Panel();
+            comboBoxTableAddOptions = new System.Windows.Forms.ComboBox();
+            buttonNewIdentifier = new System.Windows.Forms.Button();
+            comboBoxVarType = new System.Windows.Forms.ComboBox();
+            textBoxVarName = new System.Windows.Forms.TextBox();
+            buttonNewVariable = new System.Windows.Forms.Button();
+            buttonRemoveVariableIdentifier = new System.Windows.Forms.Button();
+            treeViewVariables = new System.Windows.Forms.TreeView();
+            panelBoolean = new System.Windows.Forms.Panel();
+            radioButtonFalse = new System.Windows.Forms.RadioButton();
+            radioButtonTrue = new System.Windows.Forms.RadioButton();
+            numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
+            textBoxVarStringValue = new System.Windows.Forms.TextBox();
+            panelPlaceholder = new System.Windows.Forms.Panel();
+            groupBoxScripts = new System.Windows.Forms.GroupBox();
+            splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
+            buttonNewPrecondition = new System.Windows.Forms.Button();
+            buttonNewOperation = new System.Windows.Forms.Button();
+            textBoxScriptName = new System.Windows.Forms.TextBox();
+            buttonRemoveScript = new System.Windows.Forms.Button();
+            buttonNewScript = new System.Windows.Forms.Button();
+            treeViewScripts = new System.Windows.Forms.TreeView();
+            panelScripting = new System.Windows.Forms.Panel();
+            splitContainerOuter = new System.Windows.Forms.SplitContainer();
+            splitContainerInner = new System.Windows.Forms.SplitContainer();
+            groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
+            panelComponentDetails = new System.Windows.Forms.Panel();
+            groupBoxVariables.SuspendLayout();
+            panelNewIdentifier.SuspendLayout();
+            panelBoolean.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownVarNumberValue).BeginInit();
+            groupBoxScripts.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerPreconditionOperation).BeginInit();
+            splitContainerPreconditionOperation.Panel1.SuspendLayout();
+            splitContainerPreconditionOperation.Panel2.SuspendLayout();
+            splitContainerPreconditionOperation.SuspendLayout();
+            panelScripting.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerOuter).BeginInit();
+            splitContainerOuter.Panel1.SuspendLayout();
+            splitContainerOuter.Panel2.SuspendLayout();
+            splitContainerOuter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerInner).BeginInit();
+            splitContainerInner.Panel1.SuspendLayout();
+            splitContainerInner.Panel2.SuspendLayout();
+            splitContainerInner.SuspendLayout();
+            groupBoxScriptDetails.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBoxVariables
             // 
-            this.groupBoxVariables.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxVariables.Controls.Add(this.comboBoxVarType);
-            this.groupBoxVariables.Controls.Add(this.textBoxVarName);
-            this.groupBoxVariables.Controls.Add(this.buttonNewVariable);
-            this.groupBoxVariables.Controls.Add(this.buttonRemoveVariableIdentifier);
-            this.groupBoxVariables.Controls.Add(this.treeViewVariables);
-            this.groupBoxVariables.Controls.Add(this.panelBoolean);
-            this.groupBoxVariables.Controls.Add(this.numericUpDownVarNumberValue);
-            this.groupBoxVariables.Controls.Add(this.buttonNewIdentifier);
-            this.groupBoxVariables.Controls.Add(this.textBoxVarStringValue);
-            this.groupBoxVariables.Controls.Add(this.panelPlaceholder);
-            this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxVariables.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxVariables.Name = "groupBoxVariables";
-            this.groupBoxVariables.Size = new System.Drawing.Size(260, 450);
-            this.groupBoxVariables.TabIndex = 0;
-            this.groupBoxVariables.TabStop = false;
-            this.groupBoxVariables.Text = "Custom Variables :: Type :: Initial Value";
+            groupBoxVariables.BackColor = System.Drawing.Color.Transparent;
+            groupBoxVariables.Controls.Add(panelNewIdentifier);
+            groupBoxVariables.Controls.Add(comboBoxVarType);
+            groupBoxVariables.Controls.Add(textBoxVarName);
+            groupBoxVariables.Controls.Add(buttonNewVariable);
+            groupBoxVariables.Controls.Add(buttonRemoveVariableIdentifier);
+            groupBoxVariables.Controls.Add(treeViewVariables);
+            groupBoxVariables.Controls.Add(panelBoolean);
+            groupBoxVariables.Controls.Add(numericUpDownVarNumberValue);
+            groupBoxVariables.Controls.Add(textBoxVarStringValue);
+            groupBoxVariables.Controls.Add(panelPlaceholder);
+            groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBoxVariables.Location = new System.Drawing.Point(0, 0);
+            groupBoxVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxVariables.Name = "groupBoxVariables";
+            groupBoxVariables.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxVariables.Size = new System.Drawing.Size(302, 519);
+            groupBoxVariables.TabIndex = 0;
+            groupBoxVariables.TabStop = false;
+            groupBoxVariables.Text = "Custom Variables :: Type :: Initial Value";
             // 
-            // comboBoxVarType
+            // panelNewIdentifier
             // 
-            this.comboBoxVarType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxVarType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxVarType.Enabled = false;
-            this.comboBoxVarType.FormattingEnabled = true;
-            this.comboBoxVarType.Items.AddRange(new object[] {
-            "STRING",
-            "NUMBER",
-            "BOOLEAN",
-            "TABLE"});
-            this.comboBoxVarType.Location = new System.Drawing.Point(136, 369);
-            this.comboBoxVarType.Name = "comboBoxVarType";
-            this.comboBoxVarType.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxVarType.TabIndex = 3;
-            this.comboBoxVarType.SelectedIndexChanged += new System.EventHandler(this.comboBoxVarType_SelectedIndexChanged);
+            panelNewIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelNewIdentifier.Controls.Add(comboBoxTableAddOptions);
+            panelNewIdentifier.Controls.Add(buttonNewIdentifier);
+            panelNewIdentifier.Location = new System.Drawing.Point(4, 456);
+            panelNewIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelNewIdentifier.Name = "panelNewIdentifier";
+            panelNewIdentifier.Size = new System.Drawing.Size(295, 24);
+            panelNewIdentifier.TabIndex = 11;
+            panelNewIdentifier.Visible = false;
+            panelNewIdentifier.VisibleChanged += panelNewIdentifier_VisibleChanged;
             // 
-            // textBoxVarName
+            // comboBoxTableAddOptions
             // 
-            this.textBoxVarName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVarName.BackColor = System.Drawing.Color.Silver;
-            this.textBoxVarName.Enabled = false;
-            this.textBoxVarName.Location = new System.Drawing.Point(3, 369);
-            this.textBoxVarName.Name = "textBoxVarName";
-            this.textBoxVarName.Size = new System.Drawing.Size(127, 20);
-            this.textBoxVarName.TabIndex = 2;
-            this.textBoxVarName.TextChanged += new System.EventHandler(this.textBoxVarName_TextChanged);
-            this.textBoxVarName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxName_KeyDown);
-            // 
-            // buttonNewVariable
-            // 
-            this.buttonNewVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNewVariable.Location = new System.Drawing.Point(3, 340);
-            this.buttonNewVariable.Name = "buttonNewVariable";
-            this.buttonNewVariable.Size = new System.Drawing.Size(254, 23);
-            this.buttonNewVariable.TabIndex = 1;
-            this.buttonNewVariable.Text = "Add New Variable";
-            this.buttonNewVariable.UseVisualStyleBackColor = true;
-            this.buttonNewVariable.Click += new System.EventHandler(this.buttonNewVariable_Click);
-            // 
-            // buttonRemoveVariableIdentifier
-            // 
-            this.buttonRemoveVariableIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemoveVariableIdentifier.Location = new System.Drawing.Point(3, 421);
-            this.buttonRemoveVariableIdentifier.Name = "buttonRemoveVariableIdentifier";
-            this.buttonRemoveVariableIdentifier.Size = new System.Drawing.Size(254, 23);
-            this.buttonRemoveVariableIdentifier.TabIndex = 5;
-            this.buttonRemoveVariableIdentifier.Text = "Delete Selected Node";
-            this.buttonRemoveVariableIdentifier.UseVisualStyleBackColor = true;
-            this.buttonRemoveVariableIdentifier.Click += new System.EventHandler(this.buttonRemoveVariableIdentifier_Click);
-            // 
-            // treeViewVariables
-            // 
-            this.treeViewVariables.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeViewVariables.BackColor = System.Drawing.Color.Silver;
-            this.treeViewVariables.Font = new System.Drawing.Font("Consolas", 8.5F);
-            this.treeViewVariables.HideSelection = false;
-            this.treeViewVariables.Indent = 15;
-            this.treeViewVariables.ItemHeight = 19;
-            this.treeViewVariables.Location = new System.Drawing.Point(3, 19);
-            this.treeViewVariables.Name = "treeViewVariables";
-            this.treeViewVariables.Size = new System.Drawing.Size(254, 315);
-            this.treeViewVariables.TabIndex = 0;
-            this.treeViewVariables.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewVariables_AfterSelect);
-            // 
-            // panelBoolean
-            // 
-            this.panelBoolean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelBoolean.BackColor = System.Drawing.Color.Silver;
-            this.panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelBoolean.Controls.Add(this.radioButtonFalse);
-            this.panelBoolean.Controls.Add(this.radioButtonTrue);
-            this.panelBoolean.Location = new System.Drawing.Point(3, 395);
-            this.panelBoolean.Name = "panelBoolean";
-            this.panelBoolean.Size = new System.Drawing.Size(254, 20);
-            this.panelBoolean.TabIndex = 4;
-            this.panelBoolean.Visible = false;
-            // 
-            // radioButtonFalse
-            // 
-            this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButtonFalse.AutoSize = true;
-            this.radioButtonFalse.Checked = true;
-            this.radioButtonFalse.Location = new System.Drawing.Point(75, 0);
-            this.radioButtonFalse.Name = "radioButtonFalse";
-            this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
-            this.radioButtonFalse.TabIndex = 6;
-            this.radioButtonFalse.TabStop = true;
-            this.radioButtonFalse.Text = "False";
-            this.radioButtonFalse.UseVisualStyleBackColor = true;
-            this.radioButtonFalse.CheckedChanged += new System.EventHandler(this.radioButtonFalse_CheckedChanged);
-            // 
-            // radioButtonTrue
-            // 
-            this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.radioButtonTrue.AutoSize = true;
-            this.radioButtonTrue.Location = new System.Drawing.Point(134, 0);
-            this.radioButtonTrue.Name = "radioButtonTrue";
-            this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
-            this.radioButtonTrue.TabIndex = 7;
-            this.radioButtonTrue.Text = "True";
-            this.radioButtonTrue.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownVarNumberValue
-            // 
-            this.numericUpDownVarNumberValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDownVarNumberValue.Location = new System.Drawing.Point(3, 395);
-            this.numericUpDownVarNumberValue.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.numericUpDownVarNumberValue.Minimum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            -2147483648});
-            this.numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
-            this.numericUpDownVarNumberValue.Size = new System.Drawing.Size(254, 20);
-            this.numericUpDownVarNumberValue.TabIndex = 4;
-            this.numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDownVarNumberValue.Visible = false;
-            this.numericUpDownVarNumberValue.ValueChanged += new System.EventHandler(this.numericUpDownVarNumberValue_ValueChanged);
+            comboBoxTableAddOptions.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxTableAddOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxTableAddOptions.FormattingEnabled = true;
+            comboBoxTableAddOptions.Items.AddRange(new object[] { "STRING", "NUMBER", "BOOLEAN", "TABLE" });
+            comboBoxTableAddOptions.Location = new System.Drawing.Point(1, 0);
+            comboBoxTableAddOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxTableAddOptions.Name = "comboBoxTableAddOptions";
+            comboBoxTableAddOptions.Size = new System.Drawing.Size(210, 23);
+            comboBoxTableAddOptions.TabIndex = 10;
             // 
             // buttonNewIdentifier
             // 
-            this.buttonNewIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNewIdentifier.Location = new System.Drawing.Point(3, 395);
-            this.buttonNewIdentifier.Name = "buttonNewIdentifier";
-            this.buttonNewIdentifier.Size = new System.Drawing.Size(254, 20);
-            this.buttonNewIdentifier.TabIndex = 4;
-            this.buttonNewIdentifier.Text = "Add New Identifier";
-            this.buttonNewIdentifier.UseVisualStyleBackColor = true;
-            this.buttonNewIdentifier.Visible = false;
-            this.buttonNewIdentifier.Click += new System.EventHandler(this.buttonNewIdentifier_Click);
+            buttonNewIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            buttonNewIdentifier.Location = new System.Drawing.Point(219, 0);
+            buttonNewIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNewIdentifier.Name = "buttonNewIdentifier";
+            buttonNewIdentifier.Size = new System.Drawing.Size(76, 24);
+            buttonNewIdentifier.TabIndex = 4;
+            buttonNewIdentifier.Text = "Add >>";
+            buttonNewIdentifier.UseVisualStyleBackColor = true;
+            buttonNewIdentifier.Click += buttonNewIdentifier_Click;
+            // 
+            // comboBoxVarType
+            // 
+            comboBoxVarType.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxVarType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxVarType.Enabled = false;
+            comboBoxVarType.FormattingEnabled = true;
+            comboBoxVarType.Items.AddRange(new object[] { "STRING", "NUMBER", "BOOLEAN", "TABLE" });
+            comboBoxVarType.Location = new System.Drawing.Point(158, 426);
+            comboBoxVarType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxVarType.Name = "comboBoxVarType";
+            comboBoxVarType.Size = new System.Drawing.Size(140, 23);
+            comboBoxVarType.TabIndex = 3;
+            comboBoxVarType.SelectedIndexChanged += comboBoxVarType_SelectedIndexChanged;
+            // 
+            // textBoxVarName
+            // 
+            textBoxVarName.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxVarName.BackColor = System.Drawing.Color.Silver;
+            textBoxVarName.Enabled = false;
+            textBoxVarName.Location = new System.Drawing.Point(4, 426);
+            textBoxVarName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxVarName.Name = "textBoxVarName";
+            textBoxVarName.Size = new System.Drawing.Size(147, 23);
+            textBoxVarName.TabIndex = 2;
+            textBoxVarName.TextChanged += textBoxVarName_TextChanged;
+            textBoxVarName.KeyDown += textBoxName_KeyDown;
+            // 
+            // buttonNewVariable
+            // 
+            buttonNewVariable.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            buttonNewVariable.Location = new System.Drawing.Point(4, 392);
+            buttonNewVariable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNewVariable.Name = "buttonNewVariable";
+            buttonNewVariable.Size = new System.Drawing.Size(295, 27);
+            buttonNewVariable.TabIndex = 1;
+            buttonNewVariable.Text = "Add New Variable";
+            buttonNewVariable.UseVisualStyleBackColor = true;
+            buttonNewVariable.Click += buttonNewVariable_Click;
+            // 
+            // buttonRemoveVariableIdentifier
+            // 
+            buttonRemoveVariableIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            buttonRemoveVariableIdentifier.Location = new System.Drawing.Point(4, 486);
+            buttonRemoveVariableIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonRemoveVariableIdentifier.Name = "buttonRemoveVariableIdentifier";
+            buttonRemoveVariableIdentifier.Size = new System.Drawing.Size(295, 27);
+            buttonRemoveVariableIdentifier.TabIndex = 5;
+            buttonRemoveVariableIdentifier.Text = "Delete Selected Node";
+            buttonRemoveVariableIdentifier.UseVisualStyleBackColor = true;
+            buttonRemoveVariableIdentifier.Click += buttonRemoveVariableIdentifier_Click;
+            // 
+            // treeViewVariables
+            // 
+            treeViewVariables.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            treeViewVariables.BackColor = System.Drawing.Color.Silver;
+            treeViewVariables.Font = new System.Drawing.Font("Consolas", 8.5F);
+            treeViewVariables.HideSelection = false;
+            treeViewVariables.Indent = 15;
+            treeViewVariables.ItemHeight = 19;
+            treeViewVariables.Location = new System.Drawing.Point(4, 22);
+            treeViewVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            treeViewVariables.Name = "treeViewVariables";
+            treeViewVariables.Size = new System.Drawing.Size(295, 363);
+            treeViewVariables.TabIndex = 0;
+            treeViewVariables.AfterSelect += treeViewVariables_AfterSelect;
+            // 
+            // panelBoolean
+            // 
+            panelBoolean.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelBoolean.BackColor = System.Drawing.Color.Silver;
+            panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panelBoolean.Controls.Add(radioButtonFalse);
+            panelBoolean.Controls.Add(radioButtonTrue);
+            panelBoolean.Location = new System.Drawing.Point(4, 456);
+            panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelBoolean.Name = "panelBoolean";
+            panelBoolean.Size = new System.Drawing.Size(295, 24);
+            panelBoolean.TabIndex = 4;
+            panelBoolean.Visible = false;
+            // 
+            // radioButtonFalse
+            // 
+            radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            radioButtonFalse.AutoSize = true;
+            radioButtonFalse.Checked = true;
+            radioButtonFalse.Location = new System.Drawing.Point(88, 2);
+            radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButtonFalse.Name = "radioButtonFalse";
+            radioButtonFalse.Size = new System.Drawing.Size(51, 19);
+            radioButtonFalse.TabIndex = 6;
+            radioButtonFalse.TabStop = true;
+            radioButtonFalse.Text = "False";
+            radioButtonFalse.UseVisualStyleBackColor = true;
+            radioButtonFalse.CheckedChanged += radioButtonFalse_CheckedChanged;
+            // 
+            // radioButtonTrue
+            // 
+            radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            radioButtonTrue.AutoSize = true;
+            radioButtonTrue.Location = new System.Drawing.Point(156, 2);
+            radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButtonTrue.Name = "radioButtonTrue";
+            radioButtonTrue.Size = new System.Drawing.Size(47, 19);
+            radioButtonTrue.TabIndex = 7;
+            radioButtonTrue.Text = "True";
+            radioButtonTrue.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownVarNumberValue
+            // 
+            numericUpDownVarNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            numericUpDownVarNumberValue.Location = new System.Drawing.Point(4, 456);
+            numericUpDownVarNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            numericUpDownVarNumberValue.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
+            numericUpDownVarNumberValue.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
+            numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
+            numericUpDownVarNumberValue.Size = new System.Drawing.Size(295, 23);
+            numericUpDownVarNumberValue.TabIndex = 4;
+            numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            numericUpDownVarNumberValue.Visible = false;
+            numericUpDownVarNumberValue.ValueChanged += numericUpDownVarNumberValue_ValueChanged;
             // 
             // textBoxVarStringValue
             // 
-            this.textBoxVarStringValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxVarStringValue.BackColor = System.Drawing.Color.Silver;
-            this.textBoxVarStringValue.Location = new System.Drawing.Point(3, 395);
-            this.textBoxVarStringValue.Name = "textBoxVarStringValue";
-            this.textBoxVarStringValue.Size = new System.Drawing.Size(254, 20);
-            this.textBoxVarStringValue.TabIndex = 4;
-            this.textBoxVarStringValue.Visible = false;
-            this.textBoxVarStringValue.TextChanged += new System.EventHandler(this.textBoxTextVarValue_TextChanged);
+            textBoxVarStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxVarStringValue.BackColor = System.Drawing.Color.Silver;
+            textBoxVarStringValue.Location = new System.Drawing.Point(4, 456);
+            textBoxVarStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxVarStringValue.Name = "textBoxVarStringValue";
+            textBoxVarStringValue.Size = new System.Drawing.Size(295, 23);
+            textBoxVarStringValue.TabIndex = 4;
+            textBoxVarStringValue.Visible = false;
+            textBoxVarStringValue.TextChanged += textBoxTextVarValue_TextChanged;
             // 
             // panelPlaceholder
             // 
-            this.panelPlaceholder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPlaceholder.BackColor = System.Drawing.Color.Silver;
-            this.panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelPlaceholder.Location = new System.Drawing.Point(3, 395);
-            this.panelPlaceholder.Name = "panelPlaceholder";
-            this.panelPlaceholder.Size = new System.Drawing.Size(254, 20);
-            this.panelPlaceholder.TabIndex = 9;
+            panelPlaceholder.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelPlaceholder.BackColor = System.Drawing.Color.Silver;
+            panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panelPlaceholder.Location = new System.Drawing.Point(4, 456);
+            panelPlaceholder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelPlaceholder.Name = "panelPlaceholder";
+            panelPlaceholder.Size = new System.Drawing.Size(295, 23);
+            panelPlaceholder.TabIndex = 9;
             // 
             // groupBoxScripts
             // 
-            this.groupBoxScripts.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxScripts.Controls.Add(this.splitContainerPreconditionOperation);
-            this.groupBoxScripts.Controls.Add(this.textBoxScriptName);
-            this.groupBoxScripts.Controls.Add(this.buttonRemoveScript);
-            this.groupBoxScripts.Controls.Add(this.buttonNewScript);
-            this.groupBoxScripts.Controls.Add(this.treeViewScripts);
-            this.groupBoxScripts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxScripts.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxScripts.Name = "groupBoxScripts";
-            this.groupBoxScripts.Size = new System.Drawing.Size(311, 450);
-            this.groupBoxScripts.TabIndex = 6;
-            this.groupBoxScripts.TabStop = false;
-            this.groupBoxScripts.Text = "Custom Scripts";
+            groupBoxScripts.BackColor = System.Drawing.Color.Transparent;
+            groupBoxScripts.Controls.Add(splitContainerPreconditionOperation);
+            groupBoxScripts.Controls.Add(textBoxScriptName);
+            groupBoxScripts.Controls.Add(buttonRemoveScript);
+            groupBoxScripts.Controls.Add(buttonNewScript);
+            groupBoxScripts.Controls.Add(treeViewScripts);
+            groupBoxScripts.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBoxScripts.Location = new System.Drawing.Point(0, 0);
+            groupBoxScripts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxScripts.Name = "groupBoxScripts";
+            groupBoxScripts.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxScripts.Size = new System.Drawing.Size(363, 519);
+            groupBoxScripts.TabIndex = 6;
+            groupBoxScripts.TabStop = false;
+            groupBoxScripts.Text = "Custom Scripts";
             // 
             // splitContainerPreconditionOperation
             // 
-            this.splitContainerPreconditionOperation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainerPreconditionOperation.IsSplitterFixed = true;
-            this.splitContainerPreconditionOperation.Location = new System.Drawing.Point(3, 395);
-            this.splitContainerPreconditionOperation.Name = "splitContainerPreconditionOperation";
+            splitContainerPreconditionOperation.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            splitContainerPreconditionOperation.IsSplitterFixed = true;
+            splitContainerPreconditionOperation.Location = new System.Drawing.Point(4, 456);
+            splitContainerPreconditionOperation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            splitContainerPreconditionOperation.Name = "splitContainerPreconditionOperation";
             // 
             // splitContainerPreconditionOperation.Panel1
             // 
-            this.splitContainerPreconditionOperation.Panel1.Controls.Add(this.buttonNewPrecondition);
+            splitContainerPreconditionOperation.Panel1.Controls.Add(buttonNewPrecondition);
             // 
             // splitContainerPreconditionOperation.Panel2
             // 
-            this.splitContainerPreconditionOperation.Panel2.Controls.Add(this.buttonNewOperation);
-            this.splitContainerPreconditionOperation.Size = new System.Drawing.Size(305, 21);
-            this.splitContainerPreconditionOperation.SplitterDistance = 150;
-            this.splitContainerPreconditionOperation.SplitterWidth = 6;
-            this.splitContainerPreconditionOperation.TabIndex = 9;
+            splitContainerPreconditionOperation.Panel2.Controls.Add(buttonNewOperation);
+            splitContainerPreconditionOperation.Size = new System.Drawing.Size(356, 24);
+            splitContainerPreconditionOperation.SplitterDistance = 175;
+            splitContainerPreconditionOperation.SplitterWidth = 7;
+            splitContainerPreconditionOperation.TabIndex = 9;
             // 
             // buttonNewPrecondition
             // 
-            this.buttonNewPrecondition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonNewPrecondition.Location = new System.Drawing.Point(0, 0);
-            this.buttonNewPrecondition.Name = "buttonNewPrecondition";
-            this.buttonNewPrecondition.Size = new System.Drawing.Size(150, 21);
-            this.buttonNewPrecondition.TabIndex = 3;
-            this.buttonNewPrecondition.Text = "Add New Precondition";
-            this.buttonNewPrecondition.UseVisualStyleBackColor = true;
-            this.buttonNewPrecondition.Click += new System.EventHandler(this.buttonNewPrecondition_Click);
+            buttonNewPrecondition.Dock = System.Windows.Forms.DockStyle.Fill;
+            buttonNewPrecondition.Location = new System.Drawing.Point(0, 0);
+            buttonNewPrecondition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNewPrecondition.Name = "buttonNewPrecondition";
+            buttonNewPrecondition.Size = new System.Drawing.Size(175, 24);
+            buttonNewPrecondition.TabIndex = 3;
+            buttonNewPrecondition.Text = "Add New Precondition";
+            buttonNewPrecondition.UseVisualStyleBackColor = true;
+            buttonNewPrecondition.Click += buttonNewPrecondition_Click;
             // 
             // buttonNewOperation
             // 
-            this.buttonNewOperation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonNewOperation.Location = new System.Drawing.Point(0, 0);
-            this.buttonNewOperation.Name = "buttonNewOperation";
-            this.buttonNewOperation.Size = new System.Drawing.Size(149, 21);
-            this.buttonNewOperation.TabIndex = 4;
-            this.buttonNewOperation.Text = "Add New Operation";
-            this.buttonNewOperation.UseVisualStyleBackColor = true;
-            this.buttonNewOperation.Click += new System.EventHandler(this.buttonNewOperation_Click);
+            buttonNewOperation.Dock = System.Windows.Forms.DockStyle.Fill;
+            buttonNewOperation.Location = new System.Drawing.Point(0, 0);
+            buttonNewOperation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNewOperation.Name = "buttonNewOperation";
+            buttonNewOperation.Size = new System.Drawing.Size(174, 24);
+            buttonNewOperation.TabIndex = 4;
+            buttonNewOperation.Text = "Add New Operation";
+            buttonNewOperation.UseVisualStyleBackColor = true;
+            buttonNewOperation.Click += buttonNewOperation_Click;
             // 
             // textBoxScriptName
             // 
-            this.textBoxScriptName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxScriptName.BackColor = System.Drawing.Color.Silver;
-            this.textBoxScriptName.Enabled = false;
-            this.textBoxScriptName.Location = new System.Drawing.Point(3, 369);
-            this.textBoxScriptName.Name = "textBoxScriptName";
-            this.textBoxScriptName.Size = new System.Drawing.Size(305, 20);
-            this.textBoxScriptName.TabIndex = 2;
-            this.textBoxScriptName.TextChanged += new System.EventHandler(this.textBoxScriptName_TextChanged);
-            this.textBoxScriptName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxScriptName_KeyDown);
+            textBoxScriptName.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxScriptName.BackColor = System.Drawing.Color.Silver;
+            textBoxScriptName.Enabled = false;
+            textBoxScriptName.Location = new System.Drawing.Point(4, 426);
+            textBoxScriptName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxScriptName.Name = "textBoxScriptName";
+            textBoxScriptName.Size = new System.Drawing.Size(355, 23);
+            textBoxScriptName.TabIndex = 2;
+            textBoxScriptName.TextChanged += textBoxScriptName_TextChanged;
+            textBoxScriptName.KeyDown += textBoxScriptName_KeyDown;
             // 
             // buttonRemoveScript
             // 
-            this.buttonRemoveScript.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonRemoveScript.Location = new System.Drawing.Point(3, 421);
-            this.buttonRemoveScript.Name = "buttonRemoveScript";
-            this.buttonRemoveScript.Size = new System.Drawing.Size(305, 23);
-            this.buttonRemoveScript.TabIndex = 5;
-            this.buttonRemoveScript.Text = "Delete Selected Node";
-            this.buttonRemoveScript.UseVisualStyleBackColor = true;
-            this.buttonRemoveScript.Click += new System.EventHandler(this.buttonRemoveScript_Click);
+            buttonRemoveScript.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            buttonRemoveScript.Location = new System.Drawing.Point(4, 486);
+            buttonRemoveScript.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonRemoveScript.Name = "buttonRemoveScript";
+            buttonRemoveScript.Size = new System.Drawing.Size(356, 27);
+            buttonRemoveScript.TabIndex = 5;
+            buttonRemoveScript.Text = "Delete Selected Node";
+            buttonRemoveScript.UseVisualStyleBackColor = true;
+            buttonRemoveScript.Click += buttonRemoveScript_Click;
             // 
             // buttonNewScript
             // 
-            this.buttonNewScript.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNewScript.Location = new System.Drawing.Point(3, 340);
-            this.buttonNewScript.Name = "buttonNewScript";
-            this.buttonNewScript.Size = new System.Drawing.Size(305, 23);
-            this.buttonNewScript.TabIndex = 1;
-            this.buttonNewScript.Text = "Add New Script Event";
-            this.buttonNewScript.UseVisualStyleBackColor = true;
-            this.buttonNewScript.Click += new System.EventHandler(this.buttonNewScript_Click);
+            buttonNewScript.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            buttonNewScript.Location = new System.Drawing.Point(4, 392);
+            buttonNewScript.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNewScript.Name = "buttonNewScript";
+            buttonNewScript.Size = new System.Drawing.Size(356, 27);
+            buttonNewScript.TabIndex = 1;
+            buttonNewScript.Text = "Add New Script Event";
+            buttonNewScript.UseVisualStyleBackColor = true;
+            buttonNewScript.Click += buttonNewScript_Click;
             // 
             // treeViewScripts
             // 
-            this.treeViewScripts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeViewScripts.BackColor = System.Drawing.Color.Silver;
-            this.treeViewScripts.Font = new System.Drawing.Font("Consolas", 8.5F);
-            this.treeViewScripts.HideSelection = false;
-            this.treeViewScripts.Indent = 21;
-            this.treeViewScripts.ItemHeight = 19;
-            this.treeViewScripts.Location = new System.Drawing.Point(3, 19);
-            this.treeViewScripts.Name = "treeViewScripts";
-            this.treeViewScripts.ShowRootLines = false;
-            this.treeViewScripts.Size = new System.Drawing.Size(305, 315);
-            this.treeViewScripts.TabIndex = 0;
-            this.treeViewScripts.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewScripts_AfterSelect);
+            treeViewScripts.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            treeViewScripts.BackColor = System.Drawing.Color.Silver;
+            treeViewScripts.Font = new System.Drawing.Font("Consolas", 8.5F);
+            treeViewScripts.HideSelection = false;
+            treeViewScripts.Indent = 21;
+            treeViewScripts.ItemHeight = 19;
+            treeViewScripts.Location = new System.Drawing.Point(4, 22);
+            treeViewScripts.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            treeViewScripts.Name = "treeViewScripts";
+            treeViewScripts.ShowRootLines = false;
+            treeViewScripts.Size = new System.Drawing.Size(355, 363);
+            treeViewScripts.TabIndex = 0;
+            treeViewScripts.AfterSelect += treeViewScripts_AfterSelect;
             // 
             // panelScripting
             // 
-            this.panelScripting.AutoScroll = true;
-            this.panelScripting.AutoSize = true;
-            this.panelScripting.Controls.Add(this.splitContainerOuter);
-            this.panelScripting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelScripting.Location = new System.Drawing.Point(0, 0);
-            this.panelScripting.Name = "panelScripting";
-            this.panelScripting.Size = new System.Drawing.Size(1160, 450);
-            this.panelScripting.TabIndex = 2;
+            panelScripting.AutoScroll = true;
+            panelScripting.AutoSize = true;
+            panelScripting.Controls.Add(splitContainerOuter);
+            panelScripting.Dock = System.Windows.Forms.DockStyle.Fill;
+            panelScripting.Location = new System.Drawing.Point(0, 0);
+            panelScripting.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelScripting.Name = "panelScripting";
+            panelScripting.Size = new System.Drawing.Size(1353, 519);
+            panelScripting.TabIndex = 2;
             // 
             // splitContainerOuter
             // 
-            this.splitContainerOuter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerOuter.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerOuter.Name = "splitContainerOuter";
+            splitContainerOuter.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainerOuter.Location = new System.Drawing.Point(0, 0);
+            splitContainerOuter.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            splitContainerOuter.Name = "splitContainerOuter";
             // 
             // splitContainerOuter.Panel1
             // 
-            this.splitContainerOuter.Panel1.Controls.Add(this.splitContainerInner);
-            this.splitContainerOuter.Panel1MinSize = 512;
+            splitContainerOuter.Panel1.Controls.Add(splitContainerInner);
+            splitContainerOuter.Panel1MinSize = 512;
             // 
             // splitContainerOuter.Panel2
             // 
-            this.splitContainerOuter.Panel2.Controls.Add(this.groupBoxScriptDetails);
-            this.splitContainerOuter.Panel2MinSize = 250;
-            this.splitContainerOuter.Size = new System.Drawing.Size(1160, 450);
-            this.splitContainerOuter.SplitterDistance = 575;
-            this.splitContainerOuter.TabIndex = 8;
+            splitContainerOuter.Panel2.Controls.Add(groupBoxScriptDetails);
+            splitContainerOuter.Panel2MinSize = 250;
+            splitContainerOuter.Size = new System.Drawing.Size(1353, 519);
+            splitContainerOuter.SplitterDistance = 670;
+            splitContainerOuter.SplitterWidth = 5;
+            splitContainerOuter.TabIndex = 8;
             // 
             // splitContainerInner
             // 
-            this.splitContainerInner.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerInner.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerInner.Name = "splitContainerInner";
+            splitContainerInner.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainerInner.Location = new System.Drawing.Point(0, 0);
+            splitContainerInner.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            splitContainerInner.Name = "splitContainerInner";
             // 
             // splitContainerInner.Panel1
             // 
-            this.splitContainerInner.Panel1.Controls.Add(this.groupBoxVariables);
-            this.splitContainerInner.Panel1MinSize = 254;
+            splitContainerInner.Panel1.Controls.Add(groupBoxVariables);
+            splitContainerInner.Panel1MinSize = 254;
             // 
             // splitContainerInner.Panel2
             // 
-            this.splitContainerInner.Panel2.Controls.Add(this.groupBoxScripts);
-            this.splitContainerInner.Panel2MinSize = 254;
-            this.splitContainerInner.Size = new System.Drawing.Size(575, 450);
-            this.splitContainerInner.SplitterDistance = 260;
-            this.splitContainerInner.TabIndex = 0;
+            splitContainerInner.Panel2.Controls.Add(groupBoxScripts);
+            splitContainerInner.Panel2MinSize = 254;
+            splitContainerInner.Size = new System.Drawing.Size(670, 519);
+            splitContainerInner.SplitterDistance = 302;
+            splitContainerInner.SplitterWidth = 5;
+            splitContainerInner.TabIndex = 0;
             // 
             // groupBoxScriptDetails
             // 
-            this.groupBoxScriptDetails.Controls.Add(this.panelComponentDetails);
-            this.groupBoxScriptDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBoxScriptDetails.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxScriptDetails.Name = "groupBoxScriptDetails";
-            this.groupBoxScriptDetails.Size = new System.Drawing.Size(581, 450);
-            this.groupBoxScriptDetails.TabIndex = 20;
-            this.groupBoxScriptDetails.TabStop = false;
-            this.groupBoxScriptDetails.Text = "Script Component Details";
+            groupBoxScriptDetails.Controls.Add(panelComponentDetails);
+            groupBoxScriptDetails.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBoxScriptDetails.Location = new System.Drawing.Point(0, 0);
+            groupBoxScriptDetails.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxScriptDetails.Name = "groupBoxScriptDetails";
+            groupBoxScriptDetails.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxScriptDetails.Size = new System.Drawing.Size(678, 519);
+            groupBoxScriptDetails.TabIndex = 20;
+            groupBoxScriptDetails.TabStop = false;
+            groupBoxScriptDetails.Text = "Script Component Details";
             // 
             // panelComponentDetails
             // 
-            this.panelComponentDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelComponentDetails.Location = new System.Drawing.Point(3, 19);
-            this.panelComponentDetails.Name = "panelComponentDetails";
-            this.panelComponentDetails.Size = new System.Drawing.Size(575, 425);
-            this.panelComponentDetails.TabIndex = 0;
+            panelComponentDetails.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelComponentDetails.Location = new System.Drawing.Point(4, 22);
+            panelComponentDetails.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelComponentDetails.Name = "panelComponentDetails";
+            panelComponentDetails.Size = new System.Drawing.Size(670, 491);
+            panelComponentDetails.TabIndex = 0;
             // 
             // ScriptControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.Controls.Add(this.panelScripting);
-            this.Name = "ScriptControl";
-            this.Size = new System.Drawing.Size(1160, 450);
-            this.groupBoxVariables.ResumeLayout(false);
-            this.groupBoxVariables.PerformLayout();
-            this.panelBoolean.ResumeLayout(false);
-            this.panelBoolean.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();
-            this.groupBoxScripts.ResumeLayout(false);
-            this.groupBoxScripts.PerformLayout();
-            this.splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
-            this.splitContainerPreconditionOperation.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerPreconditionOperation)).EndInit();
-            this.splitContainerPreconditionOperation.ResumeLayout(false);
-            this.panelScripting.ResumeLayout(false);
-            this.splitContainerOuter.Panel1.ResumeLayout(false);
-            this.splitContainerOuter.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerOuter)).EndInit();
-            this.splitContainerOuter.ResumeLayout(false);
-            this.splitContainerInner.Panel1.ResumeLayout(false);
-            this.splitContainerInner.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerInner)).EndInit();
-            this.splitContainerInner.ResumeLayout(false);
-            this.groupBoxScriptDetails.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            Controls.Add(panelScripting);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "ScriptControl";
+            Size = new System.Drawing.Size(1353, 519);
+            groupBoxVariables.ResumeLayout(false);
+            groupBoxVariables.PerformLayout();
+            panelNewIdentifier.ResumeLayout(false);
+            panelBoolean.ResumeLayout(false);
+            panelBoolean.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownVarNumberValue).EndInit();
+            groupBoxScripts.ResumeLayout(false);
+            groupBoxScripts.PerformLayout();
+            splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
+            splitContainerPreconditionOperation.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerPreconditionOperation).EndInit();
+            splitContainerPreconditionOperation.ResumeLayout(false);
+            panelScripting.ResumeLayout(false);
+            splitContainerOuter.Panel1.ResumeLayout(false);
+            splitContainerOuter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerOuter).EndInit();
+            splitContainerOuter.ResumeLayout(false);
+            splitContainerInner.Panel1.ResumeLayout(false);
+            splitContainerInner.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerInner).EndInit();
+            splitContainerInner.ResumeLayout(false);
+            groupBoxScriptDetails.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -506,5 +536,7 @@
         internal System.Windows.Forms.RadioButton radioButtonFalse;
         internal System.Windows.Forms.Panel panelBoolean;
         internal System.Windows.Forms.Panel panelPlaceholder;
+        internal System.Windows.Forms.ComboBox comboBoxTableAddOptions;
+        internal System.Windows.Forms.Panel panelNewIdentifier;
     }
 }

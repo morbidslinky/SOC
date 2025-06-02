@@ -62,7 +62,7 @@ namespace SOC.QuestObjects.Vehicle
         {
             if (vehiclesDetail.vehicles.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Heavy Vehicles (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Heavy Vehicle Names (Targets)");
 
                 foreach (string gameObjectName in vehiclesDetail.vehicles
                     .Where(o => o.isTarget)
@@ -76,7 +76,7 @@ namespace SOC.QuestObjects.Vehicle
 
             if (vehiclesDetail.vehicles.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Heavy Vehicles");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Heavy Vehicle Names");
 
                 foreach (string gameObjectName in vehiclesDetail.vehicles.Select(o => o.GetObjectName()))
                 {

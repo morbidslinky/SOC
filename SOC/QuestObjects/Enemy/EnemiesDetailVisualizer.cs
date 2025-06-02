@@ -45,7 +45,8 @@ namespace SOC.QuestObjects.Enemy
         public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             // Routes
-            List<string> eneRoutes = setup.fileRoutes;
+            List<string> eneRoutes = new List<string>();
+            eneRoutes.AddRange(setup.fileRoutes);
             eneRoutes.AddRange(EnemyInfo.GetCP(setup.CPName).CPsoldierRoutes);
             routes = eneRoutes;
 
