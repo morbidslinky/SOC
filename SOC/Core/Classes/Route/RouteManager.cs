@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using static FoxLib.Tpp.RouteSet;
 
@@ -65,6 +66,7 @@ namespace SOC.Core.Classes.Route
 
             if (File.Exists(frtPath))
             {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 using (var reader = new BinaryReader(new FileStream(frtPath, FileMode.Open), getEncoding()))
                 {
                     Action<int> skipBytes = numberOfBytes => SkipBytes(reader, numberOfBytes);

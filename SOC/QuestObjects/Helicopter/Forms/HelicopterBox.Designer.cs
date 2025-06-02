@@ -55,7 +55,7 @@
             this.groupBox_main.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.groupBox_main.Location = new System.Drawing.Point(0, 0);
             this.groupBox_main.Name = "groupBox_main";
-            this.groupBox_main.Size = new System.Drawing.Size(334, 168);
+            this.groupBox_main.Size = new System.Drawing.Size(268, 168);
             this.groupBox_main.TabIndex = 2;
             this.groupBox_main.TabStop = false;
             this.groupBox_main.Text = "HelicopterBox";

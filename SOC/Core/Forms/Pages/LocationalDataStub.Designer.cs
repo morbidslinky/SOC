@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panelStub = new System.Windows.Forms.Panel();
-            this.textBoxCoords = new System.Windows.Forms.TextBox();
+            this.textBoxCoords = new ScrollPassthroughTextBox();
             this.labelStub = new System.Windows.Forms.Label();
             this.panelStub.SuspendLayout();
             this.SuspendLayout();
