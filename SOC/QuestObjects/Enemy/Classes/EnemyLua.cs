@@ -3,9 +3,6 @@ using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SOC.QuestObjects.Enemy
 {
@@ -235,7 +232,7 @@ namespace SOC.QuestObjects.Enemy
         {
             if (detail.enemies.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Enemies (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Enemy Names (Targets)");
 
                 foreach (string gameObjectName in detail.enemies
                     .Where(o => o.isTarget)
@@ -249,7 +246,7 @@ namespace SOC.QuestObjects.Enemy
 
             if (detail.enemies.Any(o => o.spawn))
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemies (Enabled)");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemy Names (Enabled/Customized)");
 
                 foreach (string gameObjectName in detail.enemies
                     .Where(o => o.spawn)
@@ -263,9 +260,11 @@ namespace SOC.QuestObjects.Enemy
 
             if (detail.enemies.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemies");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Enemy Names");
 
-                foreach (string gameObjectName in detail.enemies.Select(o => o.GetObjectName()))
+                foreach (string gameObjectName in detail.enemies
+                    .Where(o => o.spawn || !o.name.Contains("quest"))
+                    .Select(o => o.GetObjectName()))
                 {
                     allSenders.Add(Lua.String(gameObjectName));
                 }

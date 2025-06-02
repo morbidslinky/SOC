@@ -29,6 +29,9 @@
         internal void InitializeComponent()
         {
             this.groupBoxVariables = new System.Windows.Forms.GroupBox();
+            this.panelNewIdentifier = new System.Windows.Forms.Panel();
+            this.comboBoxTableAddOptions = new System.Windows.Forms.ComboBox();
+            this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.comboBoxVarType = new System.Windows.Forms.ComboBox();
             this.textBoxVarName = new System.Windows.Forms.TextBox();
             this.buttonNewVariable = new System.Windows.Forms.Button();
@@ -38,7 +41,6 @@
             this.radioButtonFalse = new System.Windows.Forms.RadioButton();
             this.radioButtonTrue = new System.Windows.Forms.RadioButton();
             this.numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
-            this.buttonNewIdentifier = new System.Windows.Forms.Button();
             this.textBoxVarStringValue = new System.Windows.Forms.TextBox();
             this.panelPlaceholder = new System.Windows.Forms.Panel();
             this.groupBoxScripts = new System.Windows.Forms.GroupBox();
@@ -55,6 +57,7 @@
             this.groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
             this.panelComponentDetails = new System.Windows.Forms.Panel();
             this.groupBoxVariables.SuspendLayout();
+            this.panelNewIdentifier.SuspendLayout();
             this.panelBoolean.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).BeginInit();
             this.groupBoxScripts.SuspendLayout();
@@ -77,6 +80,7 @@
             // groupBoxVariables
             // 
             this.groupBoxVariables.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxVariables.Controls.Add(this.panelNewIdentifier);
             this.groupBoxVariables.Controls.Add(this.comboBoxVarType);
             this.groupBoxVariables.Controls.Add(this.textBoxVarName);
             this.groupBoxVariables.Controls.Add(this.buttonNewVariable);
@@ -84,7 +88,6 @@
             this.groupBoxVariables.Controls.Add(this.treeViewVariables);
             this.groupBoxVariables.Controls.Add(this.panelBoolean);
             this.groupBoxVariables.Controls.Add(this.numericUpDownVarNumberValue);
-            this.groupBoxVariables.Controls.Add(this.buttonNewIdentifier);
             this.groupBoxVariables.Controls.Add(this.textBoxVarStringValue);
             this.groupBoxVariables.Controls.Add(this.panelPlaceholder);
             this.groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -94,6 +97,46 @@
             this.groupBoxVariables.TabIndex = 0;
             this.groupBoxVariables.TabStop = false;
             this.groupBoxVariables.Text = "Custom Variables :: Type :: Initial Value";
+            // 
+            // panelNewIdentifier
+            // 
+            this.panelNewIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelNewIdentifier.Controls.Add(this.comboBoxTableAddOptions);
+            this.panelNewIdentifier.Controls.Add(this.buttonNewIdentifier);
+            this.panelNewIdentifier.Location = new System.Drawing.Point(3, 395);
+            this.panelNewIdentifier.Name = "panelNewIdentifier";
+            this.panelNewIdentifier.Size = new System.Drawing.Size(254, 21);
+            this.panelNewIdentifier.TabIndex = 11;
+            this.panelNewIdentifier.Visible = false;
+            this.panelNewIdentifier.VisibleChanged += new System.EventHandler(this.panelNewIdentifier_VisibleChanged);
+            // 
+            // comboBoxTableAddOptions
+            // 
+            this.comboBoxTableAddOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxTableAddOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTableAddOptions.FormattingEnabled = true;
+            this.comboBoxTableAddOptions.Items.AddRange(new object[] {
+            "STRING",
+            "NUMBER",
+            "BOOLEAN",
+            "TABLE"});
+            this.comboBoxTableAddOptions.Location = new System.Drawing.Point(1, 0);
+            this.comboBoxTableAddOptions.Name = "comboBoxTableAddOptions";
+            this.comboBoxTableAddOptions.Size = new System.Drawing.Size(181, 21);
+            this.comboBoxTableAddOptions.TabIndex = 10;
+            // 
+            // buttonNewIdentifier
+            // 
+            this.buttonNewIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonNewIdentifier.Location = new System.Drawing.Point(189, -1);
+            this.buttonNewIdentifier.Name = "buttonNewIdentifier";
+            this.buttonNewIdentifier.Size = new System.Drawing.Size(65, 23);
+            this.buttonNewIdentifier.TabIndex = 4;
+            this.buttonNewIdentifier.Text = "Add >>";
+            this.buttonNewIdentifier.UseVisualStyleBackColor = true;
+            this.buttonNewIdentifier.Click += new System.EventHandler(this.buttonNewIdentifier_Click);
             // 
             // comboBoxVarType
             // 
@@ -175,7 +218,7 @@
             this.panelBoolean.Controls.Add(this.radioButtonTrue);
             this.panelBoolean.Location = new System.Drawing.Point(3, 395);
             this.panelBoolean.Name = "panelBoolean";
-            this.panelBoolean.Size = new System.Drawing.Size(254, 20);
+            this.panelBoolean.Size = new System.Drawing.Size(254, 21);
             this.panelBoolean.TabIndex = 4;
             this.panelBoolean.Visible = false;
             // 
@@ -184,7 +227,7 @@
             this.radioButtonFalse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.radioButtonFalse.AutoSize = true;
             this.radioButtonFalse.Checked = true;
-            this.radioButtonFalse.Location = new System.Drawing.Point(75, 0);
+            this.radioButtonFalse.Location = new System.Drawing.Point(75, 1);
             this.radioButtonFalse.Name = "radioButtonFalse";
             this.radioButtonFalse.Size = new System.Drawing.Size(50, 17);
             this.radioButtonFalse.TabIndex = 6;
@@ -197,7 +240,7 @@
             // 
             this.radioButtonTrue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.radioButtonTrue.AutoSize = true;
-            this.radioButtonTrue.Location = new System.Drawing.Point(134, 0);
+            this.radioButtonTrue.Location = new System.Drawing.Point(134, 1);
             this.radioButtonTrue.Name = "radioButtonTrue";
             this.radioButtonTrue.Size = new System.Drawing.Size(47, 17);
             this.radioButtonTrue.TabIndex = 7;
@@ -225,19 +268,6 @@
             this.numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numericUpDownVarNumberValue.Visible = false;
             this.numericUpDownVarNumberValue.ValueChanged += new System.EventHandler(this.numericUpDownVarNumberValue_ValueChanged);
-            // 
-            // buttonNewIdentifier
-            // 
-            this.buttonNewIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNewIdentifier.Location = new System.Drawing.Point(3, 395);
-            this.buttonNewIdentifier.Name = "buttonNewIdentifier";
-            this.buttonNewIdentifier.Size = new System.Drawing.Size(254, 20);
-            this.buttonNewIdentifier.TabIndex = 4;
-            this.buttonNewIdentifier.Text = "Add New Identifier";
-            this.buttonNewIdentifier.UseVisualStyleBackColor = true;
-            this.buttonNewIdentifier.Visible = false;
-            this.buttonNewIdentifier.Click += new System.EventHandler(this.buttonNewIdentifier_Click);
             // 
             // textBoxVarStringValue
             // 
@@ -454,6 +484,7 @@
             this.Size = new System.Drawing.Size(1160, 450);
             this.groupBoxVariables.ResumeLayout(false);
             this.groupBoxVariables.PerformLayout();
+            this.panelNewIdentifier.ResumeLayout(false);
             this.panelBoolean.ResumeLayout(false);
             this.panelBoolean.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownVarNumberValue)).EndInit();
@@ -506,5 +537,7 @@
         internal System.Windows.Forms.RadioButton radioButtonFalse;
         internal System.Windows.Forms.Panel panelBoolean;
         internal System.Windows.Forms.Panel panelPlaceholder;
+        internal System.Windows.Forms.ComboBox comboBoxTableAddOptions;
+        internal System.Windows.Forms.Panel panelNewIdentifier;
     }
 }

@@ -58,7 +58,7 @@ namespace SOC.QuestObjects.UAV
         {
             if (detail.UAVs.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("UAVs (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("UAV Names (Targets)");
 
                 foreach (string gameObjectName in detail.UAVs
                     .Where(o => o.isTarget)
@@ -72,7 +72,7 @@ namespace SOC.QuestObjects.UAV
 
             if (detail.UAVs.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("UAVs");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("UAV Names");
 
                 foreach (string gameObjectName in detail.UAVs.Select(o => o.GetObjectName()))
                 {

@@ -128,12 +128,13 @@ namespace SOC.Classes.Common
 
         internal void GetScriptChoosableValueSets(ChoiceKeyValuesList questKeyValues)
         {
-            List<string> routeStrings = fileRoutes;
+            List<string> routeStrings = new List<string>();
+            routeStrings.AddRange(fileRoutes);
             routeStrings.AddRange(EnemyInfo.GetCP(CPName).CPsoldierRoutes);
 
             if (routeStrings.Count > 0)
             {
-                ChoiceKeyValues routeKeyValues = new ChoiceKeyValues("Routes");
+                ChoiceKeyValues routeKeyValues = new ChoiceKeyValues("Route Names");
 
                 routeKeyValues.Values.AddRange(routeStrings.Select(routeString => Lua.Lua.GetEntryValueType(routeString)));
 

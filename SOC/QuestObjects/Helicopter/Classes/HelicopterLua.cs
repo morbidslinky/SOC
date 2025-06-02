@@ -61,7 +61,7 @@ namespace SOC.QuestObjects.Helicopter
         {
             if (detail.helicopters.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Helicopter (Target)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Helicopter Name (Target)");
 
                 foreach (string gameObjectName in detail.helicopters
                     .Where(o => o.isTarget)
@@ -75,7 +75,7 @@ namespace SOC.QuestObjects.Helicopter
 
             if (detail.helicopters.Any(heli => heli.isSpawn))
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Helicopter");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Helicopter Name");
 
                 foreach (string gameObjectName in detail.helicopters.Select(o => o.GetObjectName()))
                 {

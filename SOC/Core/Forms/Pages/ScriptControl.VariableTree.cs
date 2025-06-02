@@ -23,7 +23,7 @@ namespace SOC.UI
             {
                 i++;
             }
-            VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.String("Text Value Goes Here")));
+            VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.String("Add Text Here")));
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
 
@@ -36,7 +36,29 @@ namespace SOC.UI
             if (treeViewVariables.SelectedNode == null) { return; }
 
             var selectedNode = (VariableNode)treeViewVariables.SelectedNode;
+            TreeNodeCollection siblings = selectedNode.Parent == null ? treeViewVariables.Nodes : selectedNode.Parent.Nodes;
+
             selectedNode.Remove();
+
+            if (selectedNode.Entry.Key is LuaNumber n)
+            {
+                int i = (int)n.Number + 1;
+                for (int j = 0; j < siblings.Count; j++)
+                {
+                    VariableNode next = siblings.OfType<VariableNode>().FirstOrDefault(node => node.Entry.Key is LuaNumber m && (int)m.Number == i);
+                    if (next == null)
+                    {
+                        break;
+                    }
+                    next.Entry.Key = Lua.Number(i - 1);
+                    next.Name = next.Entry.Key.Value;
+                    next.UpdateText();
+                    if (next.IsSelected)
+                        UpdateVariableControlsToSelectedNode();
+                    i++;
+                }
+            }
+
 
             if (treeViewVariables.SelectedNode == null)
             {
@@ -56,15 +78,17 @@ namespace SOC.UI
         private void buttonNewIdentifier_Click(object sender, EventArgs e)
         {
             VariableNode parentNode = (VariableNode)treeViewVariables.SelectedNode;
-
-            int i = 1;
-            while (parentNode.Nodes.ContainsKey($"{i}"))
+            foreach (LuaValue value in ((ChoiceKeyValues)comboBoxTableAddOptions.SelectedItem).Values)
             {
-                i++;
-            }
+                int i = 1;
+                while (parentNode.Nodes.ContainsKey($"{i}"))
+                {
+                    i++;
+                }
 
-            VariableNode node = new VariableNode(Lua.TableEntry(i, Lua.Number(0)));
-            parentNode.Nodes.Add(node);
+                VariableNode node = new VariableNode(Lua.TableEntry(i, value));
+                parentNode.Nodes.Add(node);
+            }
             parentNode.Expand();
         }
 
@@ -131,7 +155,7 @@ namespace SOC.UI
 
         private void ShowVarTypeValueControl(Control control)
         {
-            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, buttonNewIdentifier, panelPlaceholder };
+            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, panelNewIdentifier, panelPlaceholder };
 
             foreach (Control valueControl in valueControls)
             {
@@ -155,16 +179,16 @@ namespace SOC.UI
         {
             string userInputText = textBoxVarName.Text.Trim();
 
-            VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
-            if (currentNode == null) return;
+            VariableNode selectedNode = (VariableNode)treeViewVariables.SelectedNode;
+            if (selectedNode == null) return;
 
-            TreeNodeCollection siblings = currentNode.Parent != null ? currentNode.Parent.Nodes : treeViewVariables.Nodes;
+            TreeNodeCollection siblings = selectedNode.Parent == null ? treeViewVariables.Nodes : selectedNode.Parent.Nodes;
 
-            bool found = VariableNameExists(userInputText, siblings, currentNode);
+            bool found = VariableNameExists(userInputText, siblings, selectedNode);
 
-            currentNode.Entry.Key = Lua.GetEntryValueType(userInputText);
-            currentNode.Name = currentNode.Entry.Key.Value;
-            currentNode.UpdateText();
+            selectedNode.Entry.Key = Lua.GetEntryValueType(userInputText);
+            selectedNode.Name = selectedNode.Entry.Key.Value;
+            selectedNode.UpdateText();
 
             if (found)
             {
@@ -250,7 +274,7 @@ namespace SOC.UI
                     currentNode.Entry.Value = Lua.Boolean(radioButtonTrue.Checked);
                     break;
                 case "TABLE":
-                    ShowVarTypeValueControl(buttonNewIdentifier);
+                    ShowVarTypeValueControl(panelNewIdentifier);
                     currentNode.Entry.Value = new LuaTable();
                     break;
             }
@@ -264,6 +288,16 @@ namespace SOC.UI
         private void textBoxName_KeyDown(object sender, KeyEventArgs e)
         {
             userPressedBackspace = e.KeyCode == Keys.Back;
+        }
+
+        private void panelNewIdentifier_VisibleChanged(object sender, EventArgs e)
+        {
+            if (panelNewIdentifier.Visible) {
+                comboBoxTableAddOptions.Items.Clear();
+                comboBoxTableAddOptions.Items.Add(new ChoiceKeyValues("New Table Value") { Values = new List<LuaValue>() { new LuaString("Add Text Here") } });
+                comboBoxTableAddOptions.Items.AddRange(Quest.GetAllObjectsScriptValueSets().ChoiceKeyValues.Where(set => set.Key != "Event Default Arguments").ToArray());
+                comboBoxTableAddOptions.SelectedIndex = 0;
+            }
         }
     }
     public class VariableNode : TreeNode

@@ -260,7 +260,7 @@ namespace SOC.QuestObjects.Hostage
         {
             if (hostagesDetail.hostages.Any(hostage => hostage.isTarget))
             {
-                ChoiceKeyValues hostageTargetSenders = new ChoiceKeyValues("Prisoners (Targets)");
+                ChoiceKeyValues hostageTargetSenders = new ChoiceKeyValues("Prisoner Names (Targets)");
 
                 foreach (string hostageName in hostagesDetail.hostages
                     .Where(hostage => hostage.isTarget)
@@ -274,7 +274,7 @@ namespace SOC.QuestObjects.Hostage
 
             if (hostagesDetail.hostages.Count > 0)
             {
-                ChoiceKeyValues hostageSenders = new ChoiceKeyValues("Prisoners");
+                ChoiceKeyValues hostageSenders = new ChoiceKeyValues("Prisoner Names");
 
                 foreach (string hostageName in hostagesDetail.hostages.Select(hostage => hostage.GetObjectName()))
                 {

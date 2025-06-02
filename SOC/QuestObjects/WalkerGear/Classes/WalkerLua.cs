@@ -116,7 +116,7 @@ namespace SOC.QuestObjects.WalkerGear
         {
             if (walkerGearsDetail.walkers.Any(walker => walker.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Walker Gears (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Walker Gear Names (Targets)");
 
                 foreach (string gameObjectName in walkerGearsDetail.walkers
                     .Where(o => o.isTarget)
@@ -130,7 +130,7 @@ namespace SOC.QuestObjects.WalkerGear
 
             if (walkerGearsDetail.walkers.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Walker Gears");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Walker Gear Names");
 
                 foreach (string gameObjectName in walkerGearsDetail.walkers.Select(o => o.GetObjectName()))
                 {

@@ -58,7 +58,7 @@ namespace SOC.QuestObjects.Camera
         {
             if (detail.cameras.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Cameras (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Camera Names (Targets)");
 
                 foreach (string gameObjectName in detail.cameras
                     .Where(o => o.isTarget)
@@ -72,7 +72,7 @@ namespace SOC.QuestObjects.Camera
 
             if (detail.cameras.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Cameras");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Camera Names");
 
                 foreach (string gameObjectName in detail.cameras.Select(o => o.GetObjectName()))
                 {

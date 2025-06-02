@@ -44,7 +44,8 @@ namespace SOC.QuestObjects.Helicopter
         public override void SetDetailsFromSetup(ObjectsDetail detail, SetupDetails setup)
         {
             // Routes
-            List<string> heliRoutes = setup.fileRoutes;
+            List<string> heliRoutes = new List<string>();
+            heliRoutes.AddRange(setup.fileRoutes);
             heliRoutes.AddRange(EnemyInfo.GetCP(setup.CPName).CPheliRoutes);
 
             routes = heliRoutes;

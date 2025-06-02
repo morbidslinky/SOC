@@ -61,7 +61,7 @@ namespace SOC.QuestObjects.Item
         {
             if (detail.items.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Dormant Items (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Dormant Item Names (Targets)");
 
                 foreach (string gameObjectName in detail.items
                     .Where(o => o.isTarget)
@@ -75,7 +75,7 @@ namespace SOC.QuestObjects.Item
 
             if (detail.items.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Dormant Items");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Dormant Item Names");
 
                 foreach (string gameObjectName in detail.items.Select(o => o.GetObjectName()))
                 {

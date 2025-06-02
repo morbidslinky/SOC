@@ -45,7 +45,7 @@ namespace SOC.QuestObjects.ActiveItem
         {
             if (detail.activeItems.Any(o => o.isTarget))
             {
-                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Active Items (Targets)");
+                ChoiceKeyValues targetSenders = new ChoiceKeyValues("Active Item Names (Targets)");
 
                 foreach (string gameObjectName in detail.activeItems
                     .Where(o => o.isTarget)
@@ -59,7 +59,7 @@ namespace SOC.QuestObjects.ActiveItem
 
             if (detail.activeItems.Count > 0)
             {
-                ChoiceKeyValues allSenders = new ChoiceKeyValues("Active Items");
+                ChoiceKeyValues allSenders = new ChoiceKeyValues("Active Item Names");
 
                 foreach (string gameObjectName in detail.activeItems.Select(o => o.GetObjectName()))
                 {
