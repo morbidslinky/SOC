@@ -104,7 +104,6 @@ namespace SOC.UI
         private void ShowSetup()
         {
             panelMain.Controls.Clear();
-            SetupControl.EnableScrolling(); 
             panelMain.Controls.Add(SetupControl);
 
             buttonNext.Text = "Next >>";
@@ -114,7 +113,6 @@ namespace SOC.UI
         private void ShowWait()
         {
             panelMain.Controls.Clear(); 
-            SetupControl.DisableScrolling();
 
             buttonNext.Enabled = false;
             this.Cursor = Cursors.WaitCursor;
@@ -230,20 +228,54 @@ namespace SOC.UI
 
         private void buttonOpenFolder_Click(object sender, EventArgs e)
         {
+            string folderPath = AppDomain.CurrentDomain.BaseDirectory;
+
             try
             {
-                Process.Start(AppDomain.CurrentDomain.BaseDirectory);
+                if (Directory.Exists(folderPath))
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = folderPath,
+                        UseShellExecute = true,
+                        Verb = "open"
+                    });
+                }
+                else
+                {
+                    MessageBox.Show("Folder not found: " + folderPath);
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open folder: " + ex.Message);
+            }
         }
 
         private void buttonOpenScriptTemplates_Click(object sender, EventArgs e)
         {
+            string folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets");
+
             try
             {
-                Process.Start(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets"));
+                if (Directory.Exists(folderPath))
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = folderPath,
+                        UseShellExecute = true,
+                        Verb = "open"
+                    });
+                }
+                else
+                {
+                    MessageBox.Show("Folder not found: " + folderPath);
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open folder: " + ex.Message);
+            }
         }
 
         private void buttonBatchBuild_Click(object sender, EventArgs e)

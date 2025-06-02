@@ -15,7 +15,6 @@ namespace SOC.UI
 {
     public partial class SetupControl : UserControl
     {
-        PanelScroll locationalTabsScrolling;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg, int wParam, [MarshalAs(UnmanagedType.LPWStr)]string lParam);
 
@@ -25,7 +24,6 @@ namespace SOC.UI
         public SetupControl(Quest quest)
         {
             InitializeComponent();
-            locationalTabsScrolling = new PanelScroll(this.flowPanelLocationalStubs, true);
             Dock = DockStyle.Fill;
             SendMessage(textBoxQuestNum.Handle, 0x1501, 1, "30103");
             SendMessage(textBoxFPKName.Handle, 0x1501, 1, "Example_Quest_Name");
@@ -228,16 +226,6 @@ namespace SOC.UI
             box.Items.Clear();
             box.Items.AddRange(itemList);
             box.SelectedIndex = currentIndex;
-        }
-
-        public void EnableScrolling()
-        {
-            Application.AddMessageFilter(locationalTabsScrolling);
-        }
-
-        public void DisableScrolling()
-        {
-            Application.RemoveMessageFilter(locationalTabsScrolling);
         }
 
         internal void SyncQuestDataToUserInput(bool saveOnly = false)

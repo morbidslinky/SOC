@@ -1,6 +1,7 @@
 ﻿using SOC.Core.Classes.InfiniteHeaven;
 using SOC.QuestObjects.Common;
 using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SOC.Forms.Pages
@@ -43,6 +44,28 @@ namespace SOC.Forms.Pages
         public void SetStubText(IHLogPositions positions)
         {
             textBoxCoords.Text = positions.GetPositionsFormatted();
+        }
+    }
+    public class ScrollPassthroughTextBox : TextBox
+    {
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        private const int WM_MOUSEWHEEL = 0x020A;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_MOUSEWHEEL && this.Multiline)
+            {
+                // Forward mouse wheel message to parent window
+                if (this.Parent != null)
+                {
+                    SendMessage(this.Parent.Handle, m.Msg, m.WParam, m.LParam);
+                    return;
+                }
+            }
+
+            base.WndProc(ref m);
         }
     }
 }

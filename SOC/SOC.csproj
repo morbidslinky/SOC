@@ -1,19 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{349A5F8D-0FF2-416A-A0EA-93E41054BE39}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SOC</RootNamespace>
-    <AssemblyName>SOC</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile />
     <PublishUrl>C:\Users\Joe\Desktop\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,585 +18,137 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationIcon>untitled_1_yT3_icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
     <ManifestCertificateThumbprint>20473555A50B764A0A07E568E491DB04093BCFA9</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
     <ManifestKeyFile>SOC_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
-  </PropertyGroup>
-  <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
     <SignManifests>false</SignManifests>
+    <AssemblyVersion>0.8.0.0</AssemblyVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CityHash, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\CityHash.dll</HintPath>
-    </Reference>
-    <Reference Include="FoxLib, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\FoxLib.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Classes\Assets\FileAssets.cs" />
-    <Compile Include="Core\Classes\Common\ScriptDetails.cs" />
-    <Compile Include="Core\Classes\Common\SetupDetails.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\BoxShape.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\DataSet.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\GameObject.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\GameObjectLocator.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\GeoModuleCondition.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\GeoTrap.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\ScriptBlockScript.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\SphereShape.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\StaticModel.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TexturePackLoadConditioner.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppAnimalLocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppAnimalParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppBearLocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppBearParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppHeli2LocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppHostage2LocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppHostage2Parameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppPickableLocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppPlacedLocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppSecurityCamera2LocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppSecurityCamera2Parameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppTrapCheckIsPlayerCallbackDataElement.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppUavLocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppUavParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppVehicle2AttachmentData.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppVehicle2BodyData.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppVehicle2LocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppWalkerGear2LocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppWalkerGear2Parameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppWolfLocatorParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\TppWolfParameter.cs" />
-    <Compile Include="Core\Classes\Fox2\EntityClasses\Transform.cs" />
-    <Compile Include="Core\Classes\Fox2\Fox2EntityClass.cs" />
-    <Compile Include="Core\Classes\InfiniteHeaven\Position.cs" />
-    <Compile Include="Core\Classes\Lua\Lua.cs" />
-    <Compile Include="Core\Classes\Lua\LuaBoolean.cs" />
-    <Compile Include="Core\Classes\Lua\LuaFunction.cs" />
-    <Compile Include="Core\Classes\Lua\LuaFunctionCall.cs" />
-    <Compile Include="Core\Classes\Lua\LuaLexer.cs" />
-    <Compile Include="Core\Classes\Lua\LuaNil.cs" />
-    <Compile Include="Core\Classes\Lua\LuaNumber.cs" />
-    <Compile Include="Core\Classes\Lua\LuaTable.cs" />
-    <Compile Include="Core\Classes\Lua\LuaTableIdentifier.cs" />
-    <Compile Include="Core\Classes\Lua\StrCode32Table.cs" />
-    <Compile Include="Core\Classes\Lua\LuaTemplate.cs" />
-    <Compile Include="Core\Classes\Lua\LuaString.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\DefinitionScriptBuilder.cs" />
-    <Compile Include="Core\Classes\Lua\LuaValue.cs" />
-    <Compile Include="Core\Classes\Lua\LuaVariable.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\CommonAssetsBuilder.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\Messages.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnAllocate.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnInitialize.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnTerminate.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\OnUpdate.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\QStep_Main.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\MainScriptBuilder\QStep_Start.cs" />
-    <Compile Include="Core\Classes\QuestBuild\BuildManager.cs" />
-    <Compile Include="Core\Classes\Common\LoadAreas.cs" />
-    <Compile Include="Core\Classes\Common\NPCMtbsInfo.cs" />
-    <Compile Include="Core\Classes\Common\Rotation.cs" />
-    <Compile Include="Core\Classes\GzsTool\Hashing.cs" />
-    <Compile Include="Core\Classes\QuestBuild\Builders\LangBuilder.cs" />
-    <Compile Include="Core\Classes\LangTool\BigEndianBinaryWriter.cs" />
-    <Compile Include="Core\Classes\LangTool\ExtensionMethods.cs" />
-    <Compile Include="Core\Classes\LangTool\LangEntry.cs" />
-    <Compile Include="Core\Classes\LangTool\LangFile.cs" />
-    <Compile Include="Core\Classes\Common\Quest.cs" />
-    <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.cs">
+    <Compile Update="Core\Forms\Pages\EmbeddedScriptControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\EmbeddedScriptControl.Designer.cs">
-      <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.cs">
+    <Compile Update="Core\Forms\Pages\EmbeddedScriptalControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\EmbeddedScriptalControl.Designer.cs">
-      <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\EmbeddedScriptSetControl.cs">
+    <Compile Update="Core\Forms\Pages\EmbeddedScriptSetControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\EmbeddedScriptSetControl.Designer.cs">
-      <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\ScriptControl.cs">
+    <Compile Update="Core\Forms\Pages\ScriptControl.ScriptTree.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\ScriptControl.Designer.cs">
-      <DependentUpon>ScriptControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\ScriptControl.ScriptTree.cs">
+    <Compile Update="Core\Forms\Pages\ScriptControl.VariableTree.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\ScriptControl.VariableTree.cs">
+    <Compile Update="Core\Forms\QuestObjectBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Core\Forms\Pages\ScriptControl.cs" />
-    <Compile Include="Core\Forms\PanelScroll.cs" />
-    <Compile Include="Core\Forms\QuestObjectBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\ActiveItem\ActiveItem.cs" />
-    <Compile Include="QuestObjects\ActiveItem\ActiveItemsMetadata.cs" />
-    <Compile Include="QuestObjects\ActiveItem\ActiveItemsVisualizer.cs" />
-    <Compile Include="QuestObjects\ActiveItem\Classes\ActiveItemFox2.cs" />
-    <Compile Include="QuestObjects\ActiveItem\Classes\ActiveItemLua.cs" />
-    <Compile Include="QuestObjects\ActiveItem\Forms\ActiveItemBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\ActiveItem\Forms\ActiveItemBox.Designer.cs">
-      <DependentUpon>ActiveItemBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Animal\Animal.cs" />
-    <Compile Include="QuestObjects\Animal\AnimalsMetadata.cs" />
-    <Compile Include="QuestObjects\Animal\AnimalsVisualizer.cs" />
-    <Compile Include="QuestObjects\Animal\Classes\AnimalFox2.cs" />
-    <Compile Include="QuestObjects\Animal\Classes\AnimalLua.cs" />
-    <Compile Include="QuestObjects\Animal\Forms\AnimalBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Animal\Forms\AnimalBox.Designer.cs">
-      <DependentUpon>AnimalBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Camera\Camera.cs" />
-    <Compile Include="QuestObjects\Camera\CamerasMetadata.cs" />
-    <Compile Include="QuestObjects\Camera\Classes\CameraAssets.cs" />
-    <Compile Include="QuestObjects\Camera\Forms\CameraBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Camera\Forms\CameraBox.Designer.cs">
-      <DependentUpon>CameraBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Camera\Forms\CameraControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Camera\Forms\CameraControl.Designer.cs">
-      <DependentUpon>CameraControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Camera\CamerasDetail.cs" />
-    <Compile Include="QuestObjects\Camera\Classes\CameraFox2.cs" />
-    <Compile Include="QuestObjects\Camera\Classes\CameraLua.cs" />
-    <Compile Include="QuestObjects\Camera\CamerasVisualizer.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetailLocational.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetails.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetail.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetailControlPanel.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsDetailVisualizerLocational.cs" />
-    <Compile Include="QuestObjects\Common\ObjectsMetadata.cs" />
-    <Compile Include="QuestObjects\Common\QuestObject.cs" />
-    <Compile Include="QuestObjects\Enemy\Classes\EnemyLua.cs" />
-    <Compile Include="QuestObjects\Enemy\Enemy.cs" />
-    <Compile Include="QuestObjects\Enemy\EnemiesMetadata.cs" />
-    <Compile Include="QuestObjects\Enemy\EnemiesDetailVisualizer.cs" />
-    <Compile Include="QuestObjects\Enemy\Forms\EnemyBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Enemy\Forms\EnemyBox.Designer.cs">
-      <DependentUpon>EnemyBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\GeoTrap\Classes\GeoTrapFox2.cs" />
-    <Compile Include="QuestObjects\GeoTrap\Classes\GeoTrapLua.cs" />
-    <Compile Include="QuestObjects\GeoTrap\Forms\GeoTrapBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\GeoTrap\Forms\GeoTrapBox.Designer.cs">
-      <DependentUpon>GeoTrapBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\GeoTrap\Forms\GeoTrapControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\GeoTrap\Forms\GeoTrapControl.Designer.cs">
-      <DependentUpon>GeoTrapControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\GeoTrap\GeoTrap.cs" />
-    <Compile Include="QuestObjects\GeoTrap\GeoTrapsDetail.cs" />
-    <Compile Include="QuestObjects\GeoTrap\GeoTrapsMetadata.cs" />
-    <Compile Include="QuestObjects\GeoTrap\GeoTrapsVisualizer.cs" />
-    <Compile Include="QuestObjects\Helicopter\Classes\HelicopterFox2.cs" />
-    <Compile Include="QuestObjects\Helicopter\Classes\HelicopterLua.cs" />
-    <Compile Include="QuestObjects\Helicopter\Forms\HelicopterBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Helicopter\Forms\HelicopterBox.Designer.cs">
-      <DependentUpon>HelicopterBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Helicopter\Helicopter.cs" />
-    <Compile Include="QuestObjects\Helicopter\HelicoptersMetadata.cs" />
-    <Compile Include="QuestObjects\Helicopter\HelicopterVisualizer.cs" />
-    <Compile Include="QuestObjects\Hostage\Forms\HostageBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Hostage\Forms\HostageBox.Designer.cs">
-      <DependentUpon>HostageBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Hostage\Hostage.cs" />
-    <Compile Include="QuestObjects\Hostage\HostagesDetail.cs" />
-    <Compile Include="QuestObjects\Hostage\HostagesMetadata.cs" />
-    <Compile Include="QuestObjects\Hostage\HostagesVisualizer.cs" />
-    <Compile Include="Core\Classes\Route\RouteManager.cs" />
-    <Compile Include="Core\Classes\Common\Coordinates.cs" />
-    <Compile Include="Core\Classes\QuestBuild\UpdateNotifsManager.cs" />
-    <Compile Include="Core\Forms\FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Core\Forms\FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\formCustomProgressLang.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Core\Forms\formCustomProgressLang.Designer.cs">
-      <DependentUpon>formCustomProgressLang.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Classes\QuestBuild\Builders\Fox2Builder.cs" />
-    <Compile Include="Core\Forms\Pages\DetailsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\DetailsControl.Designer.cs">
-      <DependentUpon>DetailsControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\LocationalDataStub.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\LocationalDataStub.Designer.cs">
-      <DependentUpon>LocationalDataStub.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\ActiveItem\Classes\ActiveItemNames.cs" />
-    <Compile Include="QuestObjects\ActiveItem\Forms\ActiveItemControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\ActiveItem\Forms\ActiveItemControl.Designer.cs">
-      <DependentUpon>ActiveItemControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Animal\Classes\AnimalAssets.cs" />
-    <Compile Include="QuestObjects\Animal\Forms\AnimalControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Animal\Forms\AnimalControl.Designer.cs">
-      <DependentUpon>AnimalControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Enemy\Classes\EnemyAssets.cs" />
-    <Compile Include="QuestObjects\Enemy\Forms\EnemyControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Enemy\Forms\EnemyControl.Designer.cs">
-      <DependentUpon>EnemyControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Helicopter\Forms\HelicopterControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Helicopter\Forms\HelicopterControl.Designer.cs">
-      <DependentUpon>HelicopterControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Hostage\Forms\HostageControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Hostage\Forms\HostageControl.Designer.cs">
-      <DependentUpon>HostageControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Item\Classes\ItemFox2.cs" />
-    <Compile Include="QuestObjects\Item\Classes\ItemLua.cs" />
-    <Compile Include="QuestObjects\Item\Classes\ItemNames.cs" />
-    <Compile Include="QuestObjects\Item\Forms\ItemControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Item\Forms\ItemControl.Designer.cs">
-      <DependentUpon>ItemControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Item\Item.cs" />
-    <Compile Include="QuestObjects\Item\ItemsMetadata.cs" />
-    <Compile Include="QuestObjects\Item\ItemsVisualizer.cs" />
-    <Compile Include="QuestObjects\Model\Classes\ModelAssets.cs" />
-    <Compile Include="QuestObjects\Model\Classes\ModelFox2.cs" />
-    <Compile Include="QuestObjects\Model\Forms\ModelBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Model\Forms\ModelBox.Designer.cs">
-      <DependentUpon>ModelBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Model\Forms\ModelControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Model\Forms\ModelControl.Designer.cs">
-      <DependentUpon>ModelControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Model\Model.cs" />
-    <Compile Include="QuestObjects\Model\ModelsMetadata.cs" />
-    <Compile Include="QuestObjects\Model\ModelsVisualizer.cs" />
-    <Compile Include="QuestObjects\UAV\Classes\UAVAssets.cs" />
-    <Compile Include="QuestObjects\UAV\Classes\UAVFox2.cs" />
-    <Compile Include="QuestObjects\UAV\Classes\UAVLua.cs" />
-    <Compile Include="QuestObjects\UAV\Forms\UAVBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\UAV\Forms\UAVBox.Designer.cs">
-      <DependentUpon>UAVBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\UAV\Forms\UAVControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\UAV\Forms\UAVControl.Designer.cs">
-      <DependentUpon>UAVControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\UAV\UAV.cs" />
-    <Compile Include="QuestObjects\UAV\UAVsDetail.cs" />
-    <Compile Include="QuestObjects\UAV\UAVsMetadata.cs" />
-    <Compile Include="QuestObjects\UAV\UAVsVisualizer.cs" />
-    <Compile Include="QuestObjects\Vehicle\Classes\VehicleAssets.cs" />
-    <Compile Include="QuestObjects\Vehicle\Classes\VehicleFox2.cs" />
-    <Compile Include="QuestObjects\Vehicle\Classes\VehicleLua.cs" />
-    <Compile Include="QuestObjects\Vehicle\Forms\VehicleBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Vehicle\Forms\VehicleBox.Designer.cs">
-      <DependentUpon>VehicleBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Item\Forms\ItemBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Item\Forms\ItemBox.Designer.cs">
-      <DependentUpon>ItemBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Vehicle\Vehicle.cs" />
-    <Compile Include="QuestObjects\Vehicle\VehiclesMetadata.cs" />
-    <Compile Include="QuestObjects\Vehicle\VehiclesVisualizer.cs" />
-    <Compile Include="QuestObjects\Vehicle\Classes\VehicleInfo.cs" />
-    <Compile Include="QuestObjects\Vehicle\Forms\VehicleControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\Vehicle\Forms\VehicleControl.Designer.cs">
-      <DependentUpon>VehicleControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="QuestObjects\Vehicle\VehiclesDetail.cs" />
-    <Compile Include="QuestObjects\WalkerGear\Classes\WalkerFox2.cs" />
-    <Compile Include="QuestObjects\WalkerGear\Classes\WalkerLua.cs" />
-    <Compile Include="QuestObjects\WalkerGear\Forms\WalkerBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="QuestObjects\WalkerGear\Forms\WalkerBox.Designer.cs">
-      <DependentUpon>WalkerBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\SetupControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\SetupControl.Designer.cs">
-      <DependentUpon>SetupControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\WaitingControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Core\Forms\Pages\WaitingControl.Designer.cs">
-      <DependentUpon>WaitingControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="QuestObjects\Animal\Classes\AnimalInfo.cs" />
-    <Compile Include="QuestObjects\Enemy\Classes\EnemyInfo.cs" />
-    <Compile Include="Core\Classes\Fox2\Fox2Info.cs" />
-    <Compile Include="Core\Classes\Common\NPCBodyInfo.cs" />
-    <Compile Include="QuestObjects\ActiveItem\ActiveItemsDetail.cs" />
-    <Compile Include="QuestObjects\Animal\AnimalsDetail.cs" />
-    <Compile Include="QuestObjects\Enemy\EnemiesDetail.cs" />
-    <Compile Include="QuestObjects\Helicopter\HelicoptersDetail.cs" />
-    <Compile Include="QuestObjects\Hostage\Classes\HostageFox2.cs" />
-    <Compile Include="QuestObjects\Hostage\Classes\HostageLua.cs" />
-    <Compile Include="QuestObjects\Item\ItemsDetail.cs" />
-    <Compile Include="QuestObjects\Model\ModelsDetail.cs" />
-    <Compile Include="QuestObjects\WalkerGear\WalkerGear.cs" />
-    <Compile Include="QuestObjects\WalkerGear\WalkerGearsDetail.cs" />
-    <Compile Include="QuestObjects\WalkerGear\Forms\WalkerControl.cs">
+    <Compile Update="QuestObjects\ActiveItem\Forms\ActiveItemBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="QuestObjects\WalkerGear\Forms\WalkerControl.Designer.cs">
-      <DependentUpon>WalkerControl.cs</DependentUpon>
+    <Compile Update="QuestObjects\Animal\Forms\AnimalBox.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="QuestObjects\WalkerGear\WalkerGearsMetadata.cs" />
-    <Compile Include="QuestObjects\WalkerGear\WalkerGearsVisualizer.cs" />
-    <EmbeddedResource Include="Core\Forms\FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\formCustomProgressLang.resx">
-      <DependentUpon>formCustomProgressLang.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\DetailsControl.resx">
-      <DependentUpon>DetailsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptControl.resx">
-      <DependentUpon>EmbeddedScriptControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptalControl.resx">
-      <DependentUpon>EmbeddedScriptalControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\EmbeddedScriptSetControl.resx">
-      <DependentUpon>EmbeddedScriptSetControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\LocationalDataStub.resx">
-      <DependentUpon>LocationalDataStub.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\ScriptControl.resx">
-      <DependentUpon>ScriptControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\SetupControl.resx">
-      <DependentUpon>SetupControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Core\Forms\Pages\WaitingControl.resx">
-      <DependentUpon>WaitingControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\ActiveItem\Forms\ActiveItemBox.resx">
-      <DependentUpon>ActiveItemBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\ActiveItem\Forms\ActiveItemControl.resx">
-      <DependentUpon>ActiveItemControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Animal\Forms\AnimalBox.resx">
-      <DependentUpon>AnimalBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Animal\Forms\AnimalControl.resx">
-      <DependentUpon>AnimalControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Camera\Forms\CameraBox.resx">
-      <DependentUpon>CameraBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Camera\Forms\CameraControl.resx">
-      <DependentUpon>CameraControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Enemy\Forms\EnemyBox.resx">
-      <DependentUpon>EnemyBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Enemy\Forms\EnemyControl.resx">
-      <DependentUpon>EnemyControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\GeoTrap\Forms\GeoTrapBox.resx">
-      <DependentUpon>GeoTrapBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\GeoTrap\Forms\GeoTrapControl.resx">
-      <DependentUpon>GeoTrapControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Helicopter\Forms\HelicopterBox.resx">
-      <DependentUpon>HelicopterBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Helicopter\Forms\HelicopterControl.resx">
-      <DependentUpon>HelicopterControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Hostage\Forms\HostageBox.resx">
-      <DependentUpon>HostageBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Hostage\Forms\HostageControl.resx">
-      <DependentUpon>HostageControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Item\Forms\ItemBox.resx">
-      <DependentUpon>ItemBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Item\Forms\ItemControl.resx">
-      <DependentUpon>ItemControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Model\Forms\ModelBox.resx">
-      <DependentUpon>ModelBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Model\Forms\ModelControl.resx">
-      <DependentUpon>ModelControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\UAV\Forms\UAVBox.resx">
-      <DependentUpon>UAVBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\UAV\Forms\UAVControl.resx">
-      <DependentUpon>UAVControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Vehicle\Forms\VehicleBox.resx">
-      <DependentUpon>VehicleBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\Vehicle\Forms\VehicleControl.resx">
-      <DependentUpon>VehicleControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\WalkerGear\Forms\WalkerBox.resx">
-      <DependentUpon>WalkerBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="QuestObjects\WalkerGear\Forms\WalkerControl.resx">
-      <DependentUpon>WalkerControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="Properties\app.manifest">
+    <Compile Update="QuestObjects\Camera\Forms\CameraBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Camera\Forms\CameraControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Enemy\Forms\EnemyBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\GeoTrap\Forms\GeoTrapBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\GeoTrap\Forms\GeoTrapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Helicopter\Forms\HelicopterBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Hostage\Forms\HostageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Core\Forms\Pages\DetailsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Core\Forms\Pages\LocationalDataStub.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\ActiveItem\Forms\ActiveItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Animal\Forms\AnimalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Enemy\Forms\EnemyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Helicopter\Forms\HelicopterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Hostage\Forms\HostageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Item\Forms\ItemControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Model\Forms\ModelBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Model\Forms\ModelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\UAV\Forms\UAVBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\UAV\Forms\UAVControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Vehicle\Forms\VehicleBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Item\Forms\ItemBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\Vehicle\Forms\VehicleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\WalkerGear\Forms\WalkerBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Core\Forms\Pages\SetupControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Core\Forms\Pages\WaitingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="QuestObjects\WalkerGear\Forms\WalkerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <None Update="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\Settings.settings">
+    <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <None Include="SOC_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -624,13 +165,12 @@
   <ItemGroup>
     <Content Include="untitled_1_yT3_icon.ico" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <Reference Include="CityHash">
+      <HintPath>..\lib\CityHash.dll</HintPath>
+    </Reference>
+    <Reference Include="FoxLib">
+      <HintPath>..\lib\FoxLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
