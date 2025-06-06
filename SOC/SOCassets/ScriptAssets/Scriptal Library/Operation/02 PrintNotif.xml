@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Print Notification</Name>
+  <Description>Prints up to 5 strings and or numbers as an in-game notification.</Description>
+  <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. |[2|STRING,NUMBER]| .. |[3|STRING,NUMBER]| .. |[4|STRING,NUMBER]| .. |[5|STRING,NUMBER]|)</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Example Strings">
+	  <Value xsi:type="LuaString" Value="Foo" />
+	  <Value xsi:type="LuaString" Value="Bar" />
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Value 1</Name>
+	  <Description>1st Text that will print to notifications</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Example Strings</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="Notification Example [" />
+	</Choice>
+	<Choice>
+	  <Name>Value 2</Name>
+	  <Description>2nd Text that will print to notifications</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Example Strings</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="0" />
+	</Choice>
+	<Choice>
+	  <Name>Value 3</Name>
+	  <Description>3rd Text that will print to notifications</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Example Strings</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="/" />
+	</Choice>
+	<Choice>
+	  <Name>Value 4</Name>
+	  <Description>4th Text that will print to notifications</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Example Strings</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="10" />
+	</Choice>
+	<Choice>
+	  <Name>Value 5</Name>
+	  <Description>5th Text that will print to notifications</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Example Strings</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="]" />
+	</Choice>
+  </Choices>
+</Scriptal>

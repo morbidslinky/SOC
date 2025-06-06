@@ -18,7 +18,7 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Boolean Literal</Key>
-	  <Value xsi:type="LuaBoolean" BooleanValue="true" />
+	  <Value xsi:type="LuaBoolean" Value="true" />
 	</Choice>
   </Choices>
 </Scriptal>

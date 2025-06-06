@@ -10,19 +10,19 @@ namespace SOC.Classes.Lua
 {
     public class LuaTableIdentifier : LuaValue
     {
-        [XmlAttribute] public string IdentifierVariableName {  get; set; }
+        [XmlAttribute] public string TableVariable {  get; set; }
 
         [XmlArray("TableKeyPath")]
         [XmlArrayItem("Key")] 
         public LuaValue[] IdentifierKeys { get; set; }
 
         public TemplateRestrictionType EvaluatesTo { get; set; }
-        public override string Value => GetIdentifier();
+        public override string TokenValue => GetIdentifier();
 
         public LuaTableIdentifier() : base(TemplateRestrictionType.TABLE_IDENTIFIER) { }
-        public LuaTableIdentifier(string identifierVariableName, TemplateRestrictionType evaluatesToType = TemplateRestrictionType.NIL, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
+        public LuaTableIdentifier(string tableVariable, TemplateRestrictionType evaluatesToType = TemplateRestrictionType.NIL, params LuaValue[] identifierPath) : base(TemplateRestrictionType.TABLE_IDENTIFIER)
         {
-            IdentifierVariableName = identifierVariableName;
+            TableVariable = tableVariable;
             EvaluatesTo = evaluatesToType;
             IdentifierKeys = identifierPath;
         }
@@ -30,11 +30,11 @@ namespace SOC.Classes.Lua
         public string GetIdentifier()
         {
             StringBuilder luaBuilder = new StringBuilder();
-            luaBuilder.Append(IdentifierVariableName);
+            luaBuilder.Append(TableVariable);
             foreach (var key in IdentifierKeys)
             {
                 if (key is LuaString luaString)
-                    luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
+                    luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Value) ? $".{luaString.Value}" : $"[{luaString.TokenValue}]");
                 else
                     luaBuilder.Append($"[{key}]");
             }
@@ -43,7 +43,7 @@ namespace SOC.Classes.Lua
 
         public string GetAssignmentLua(LuaVariable identifierVariable)
         {
-            if (identifierVariable != null && identifierVariable.GetVarName() == IdentifierVariableName)
+            if (identifierVariable != null && identifierVariable.GetVarName() == TableVariable)
             {
                 if (TryGetAssignedValue(identifierVariable, out LuaValue luaValue, out bool isMarkedForExtrusion))
                 {
@@ -54,7 +54,7 @@ namespace SOC.Classes.Lua
                         foreach (var key in IdentifierKeys)
                         {
                             if (key is LuaString luaString)
-                                luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Text) ? $".{luaString.Text}" : $"[{luaString.Value}]");
+                                luaBuilder.Append(LuaTable.IsValidLuaIdentifier(luaString.Value) ? $".{luaString.Value}" : $"[{luaString.TokenValue}]");
                             else
                                 luaBuilder.Append($"[{key}]");
                         }

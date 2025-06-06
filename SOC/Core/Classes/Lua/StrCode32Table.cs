@@ -24,7 +24,7 @@ namespace SOC.Classes.Lua
         {
             if (TryGetScript(subscript.CodeEvent, out Script eventScript))
             {
-                if (!eventScript.Subscripts.Any(es => es.Identifier.Text == subscript.Identifier.Text))
+                if (!eventScript.Subscripts.Any(es => es.Identifier.Value == subscript.Identifier.Value))
                     eventScript.AddSubscripts(subscript);
             }
             else
@@ -72,7 +72,7 @@ namespace SOC.Classes.Lua
                 funcBuilder.AppendParameter(StrCode32.DefaultParameters);
                 foreach (Script subscript in root.Subscripts)
                 {
-                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Text}"));
+                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Value}"));
                     funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, StrCode32.GetDefaultParametersAsVariables()));
                 }
 
@@ -116,7 +116,7 @@ namespace SOC.Classes.Lua
                         );
                     }
 
-                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Text}"));
+                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Value}"));
                     functionDefinitionsTable.Add(
                         Lua.TableEntry(
                             subscriptCallableIdentifier,
@@ -316,10 +316,10 @@ namespace SOC.Classes.Lua
         public override string ToString()
         {
             if (SenderValue is LuaNil)
-                return string.Join("_", CodeKey, Message.Value.Replace("\"", ""));
+                return string.Join("_", CodeKey, Message.TokenValue.Replace("\"", ""));
 
 
-            return string.Join("_", CodeKey, Message.Value.Replace("\"",""), $"{SenderValue.Value.Replace("\"", "")}");
+            return string.Join("_", CodeKey, Message.TokenValue.Replace("\"",""), $"{SenderValue.TokenValue.Replace("\"", "")}");
         }
 
         public LuaString ToLuaString() => Lua.String(ToString());

@@ -16,6 +16,8 @@ You can catch that event By creating a new script with a &quot;Timer&quot; StrCo
 	  <AllowUIEdit>true</AllowUIEdit>
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="TimerSender" />
 	</Choice>
 	<Choice>
 	  <Name>Seconds</Name>
@@ -23,6 +25,8 @@ You can catch that event By creating a new script with a &quot;Timer&quot; StrCo
 	  <AllowUIEdit>true</AllowUIEdit>
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="5" />
 	</Choice>
   </Choices>
 </Scriptal>

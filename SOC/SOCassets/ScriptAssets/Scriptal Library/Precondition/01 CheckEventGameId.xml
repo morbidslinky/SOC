@@ -18,8 +18,8 @@ https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/m
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Event Default Arguments</Key>
-	  <Value xsi:type="LuaVariable" Name="arg1">
-	    <AssignedTo xsi:type="LuaNumber" Number="-1" />
+	  <Value xsi:type="LuaVariable" Value="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
 	  </Value>
 	</Choice>
 	<Choice>
@@ -53,7 +53,7 @@ https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/m
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Literal String</Key>
-	  <Value xsi:type="LuaString" Text=""/>
+	  <Value xsi:type="LuaString" Value=""/>
 	</Choice>
   </Choices>
 </Scriptal>

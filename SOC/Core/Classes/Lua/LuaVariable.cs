@@ -9,26 +9,26 @@ namespace SOC.Classes.Lua
 {
     public class LuaVariable : LuaValue
     {
-        [XmlAttribute] public string Name { get; set; }
+        [XmlAttribute] public string Value { get; set; }
         [XmlElement] public LuaValue AssignedTo { get; set; }
-        public override string Value => GetVarName();
+        public override string TokenValue => GetVarName();
 
         public LuaVariable() : base(TemplateRestrictionType.VARIABLE) { }
-        public LuaVariable(string name, LuaValue assignedTo = null): base(TemplateRestrictionType.VARIABLE)
+        public LuaVariable(string value, LuaValue assignedTo = null): base(TemplateRestrictionType.VARIABLE)
         {
-            Name = name;
+            Value = value;
             AssignedTo = assignedTo == null ? new LuaNil() : assignedTo;
         }
 
         public string GetVarName()
         {
-        return Name; 
+        return Value; 
         }
 
         public string GetAssignmentLua()
         {
             StringBuilder luaBuilder = new StringBuilder();
-            luaBuilder.AppendLine($"{Name} = {AssignedTo}\n");
+            luaBuilder.AppendLine($"{Value} = {AssignedTo}\n");
             AppendTableIdentifiersMarkedForExtrusion(luaBuilder);
 
             return luaBuilder.ToString();

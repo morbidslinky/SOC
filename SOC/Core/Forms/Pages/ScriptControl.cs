@@ -111,7 +111,7 @@ namespace SOC.UI
 
             foreach (var variable in variables)
             {
-                string name = variable.Key.Value.Trim('"');
+                string name = variable.Key.TokenValue.Trim('"');
                 if (VariableNameExists(name, treeViewVariables.Nodes))
                 {
                     name = GetUniqueVariableName(name);
@@ -171,7 +171,7 @@ namespace SOC.UI
                             }
                             else
                             {
-                                choiceIdentifier.IdentifierKeys[0] = Lua.String(choiceIdentifier.IdentifierKeys[0].Value.Trim('"') + $"_{choiceIdentifier.EvaluatesTo}");
+                                choiceIdentifier.IdentifierKeys[0] = Lua.String(choiceIdentifier.IdentifierKeys[0].TokenValue.Trim('"') + $"_{choiceIdentifier.EvaluatesTo}");
                                 break;
                             }
                         }

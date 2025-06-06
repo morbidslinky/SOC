@@ -11,34 +11,34 @@
   <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
   <EmbeddedChoosableValueSets>
 	<KeyValuesSet Key="Comparison Functions">
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="Equals" />
+		  <Key xsi:type="LuaString" Value="Equals" />
 		</TableKeyPath>
 	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="NotEquals" />
+		  <Key xsi:type="LuaString" Value="NotEquals" />
 		</TableKeyPath>
 	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="LessThan" />
+		  <Key xsi:type="LuaString" Value="LessThan" />
 		</TableKeyPath>
 	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="GreaterThan" />
+		  <Key xsi:type="LuaString" Value="GreaterThan" />
 		</TableKeyPath>
 	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="LessThanOrEqualTo" />
+		  <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
 		</TableKeyPath>
 	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="GreaterThanOrEqualTo" />
+		  <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
 		</TableKeyPath>
 	  </Value>
 	</KeyValuesSet>
@@ -52,7 +52,7 @@
 	    <Key>Comparison Functions</Key>
 	  </ChoosableValueSetsFilter>
 	  <Key>Comparison Functions</Key>
-	  <Value xsi:type="LuaString" Text="Equal" />
+	  <Value xsi:type="LuaString" Value="Equal" />
 	</Choice>
 	<Choice>
 	  <Name>Num1</Name>
@@ -64,7 +64,7 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
-	  <Value xsi:type="LuaNumber" Number="0" />
+	  <Value xsi:type="LuaNumber" Value="0" />
 	</Choice>
 	<Choice>
 	  <Name>Num2</Name>
@@ -76,66 +76,66 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
-	  <Value xsi:type="LuaNumber" Number="1" />
+	  <Value xsi:type="LuaNumber" Value="1" />
 	</Choice>
   </Choices>
   <EmbeddedCommonDefinitions>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="Equals" />
+	  <Key xsi:type="LuaString" Value="Equals" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue == thatValue</Template>
 	  </Value>
     </qvarsDefinition>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="NotEquals" />
+	  <Key xsi:type="LuaString" Value="NotEquals" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue ~= thatValue</Template>
 	  </Value>
     </qvarsDefinition>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="LessThan" />
+	  <Key xsi:type="LuaString" Value="LessThan" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue &lt; thatValue</Template>
 	  </Value>
     </qvarsDefinition>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="GreaterThan" />
+	  <Key xsi:type="LuaString" Value="GreaterThan" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue &gt; thatValue</Template>
 	  </Value>
     </qvarsDefinition>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="LessThanOrEqualTo" />
+	  <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue &lt;= thatValue</Template>
 	  </Value>
     </qvarsDefinition>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="GreaterThanOrEqualTo" />
+	  <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue &gt;= thatValue</Template>
 	  </Value>

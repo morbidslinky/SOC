@@ -7,14 +7,14 @@ Use 'qvars.NotEquals' to return true when Str1 and Str2 are not the same value.<
   <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|STRING]|, |[3|STRING]|)</EventFunctionTemplate>
   <EmbeddedChoosableValueSets>
 	<KeyValuesSet Key="Comparison Functions">
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="Equals" />
+		  <Key xsi:type="LuaString" Value="Equals" />
 		</TableKeyPath>
 	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" IdentifierVariableName="qvars">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
 	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Text="NotEquals" />
+		  <Key xsi:type="LuaString" Value="NotEquals" />
 		</TableKeyPath>
 	  </Value>
 	</KeyValuesSet>
@@ -28,7 +28,7 @@ Use 'qvars.NotEquals' to return true when Str1 and Str2 are not the same value.<
 	    <Key>Comparison Functions</Key>
 	  </ChoosableValueSetsFilter>
 	  <Key>Comparison Functions</Key>
-	  <Value xsi:type="LuaString" Text="Equal" />
+	  <Value xsi:type="LuaString" Value="Equal" />
 	</Choice>
 	<Choice>
 	  <Name>Str1</Name>
@@ -37,7 +37,7 @@ Use 'qvars.NotEquals' to return true when Str1 and Str2 are not the same value.<
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>String Literal</Key>
-	  <Value xsi:type="LuaString" Text="Foo" />
+	  <Value xsi:type="LuaString" Value="Foo" />
 	</Choice>
 	<Choice>
 	  <Name>Str2</Name>
@@ -46,26 +46,26 @@ Use 'qvars.NotEquals' to return true when Str1 and Str2 are not the same value.<
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>String Literal</Key>
-	  <Value xsi:type="LuaString" Text="Bar" />
+	  <Value xsi:type="LuaString" Value="Bar" />
 	</Choice>
   </Choices>
   <EmbeddedCommonDefinitions>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="Equals" />
+	  <Key xsi:type="LuaString" Value="Equals" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue == thatValue</Template>
 	  </Value>
     </qvarsDefinition>
     <qvarsDefinition>
-	  <Key xsi:type="LuaString" Text="NotEquals" />
+	  <Key xsi:type="LuaString" Value="NotEquals" />
 	  <Value xsi:type="LuaFunction">
 	    <Parameters>
-		  <Parameter xsi:type="LuaVariable" Name="thisValue"/>
-		  <Parameter xsi:type="LuaVariable" Name="thatValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thisValue"/>
+		  <Parameter xsi:type="LuaVariable" Value="thatValue"/>
 	    </Parameters>
 	    <Template>  return thisValue ~= thatValue</Template>
 	  </Value>

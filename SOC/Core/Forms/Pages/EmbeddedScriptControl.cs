@@ -31,7 +31,7 @@ namespace SOC.UI
             ClearScriptNodePassthroughs();
 
             ScriptNode = scriptNode;
-            ParentControl.SetMenuText(ScriptNode.ToString(), ScriptNode.Identifier.Text);
+            ParentControl.SetMenuText(ScriptNode.ToString(), ScriptNode.Identifier.Value);
 
             UpdateMenu();
 
@@ -116,7 +116,7 @@ namespace SOC.UI
             if (selectedCode == "Mission")
             {
                 showCorrespondingMessageControl(textBoxMessage);
-                if (msgSenderNode.Message is LuaString text) textBoxMessage.Text = text.Text;
+                if (msgSenderNode.Message is LuaString text) textBoxMessage.Text = text.Value;
                 comboBoxSenderOptions.SelectedItem = StrCode32.NIL_LITERAL_KEY; comboBoxSenderOptions.Enabled = false;
                 MoveSelectedScript();
             } 
@@ -171,13 +171,13 @@ namespace SOC.UI
             {
                 case ScriptControl.NUMBER_LITERAL_SET:
                     showCorrespondingSenderControl(numericUpDownSenders);
-                    if (msgSenderNode.Sender is LuaNumber number) numericUpDownSenders.Value = (decimal)number.Number;
+                    if (msgSenderNode.Sender is LuaNumber number) numericUpDownSenders.Value = (decimal)number.Value;
                     MoveSelectedScript(Lua.Number((double)numericUpDownSenders.Value));
                     break;
 
                 case ScriptControl.STRING_LITERAL_SET:
                     showCorrespondingSenderControl(textBoxSenders);
-                    if (msgSenderNode.Sender is LuaString text) textBoxSenders.Text = text.Text;
+                    if (msgSenderNode.Sender is LuaString text) textBoxSenders.Text = text.Value;
                     MoveSelectedScript(Lua.String(textBoxSenders.Text));
                     break;
 

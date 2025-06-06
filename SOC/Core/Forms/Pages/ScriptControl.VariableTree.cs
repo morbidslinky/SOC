@@ -42,23 +42,21 @@ namespace SOC.UI
 
             if (selectedNode.Entry.Key is LuaNumber n)
             {
-                int i = (int)n.Number + 1;
+                var i = n.Value;
                 for (int j = 0; j < siblings.Count; j++)
                 {
-                    VariableNode next = siblings.OfType<VariableNode>().FirstOrDefault(node => node.Entry.Key is LuaNumber m && (int)m.Number == i);
+                    VariableNode next = siblings.OfType<VariableNode>().FirstOrDefault(node => node.Entry.Key is LuaNumber m && m.Value == i + 1);
                     if (next == null)
                     {
                         break;
                     }
-                    next.Entry.Key = Lua.Number(i - 1);
-                    next.Name = next.Entry.Key.Value;
+                    next.Entry.Key = Lua.Number(i);
+                    next.Name = next.Entry.Key.TokenValue;
                     next.UpdateText();
-                    if (next.IsSelected)
-                        UpdateVariableControlsToSelectedNode();
                     i++;
                 }
             }
-
+            UpdateVariableControlsToSelectedNode();
 
             if (treeViewVariables.SelectedNode == null)
             {
@@ -110,15 +108,15 @@ namespace SOC.UI
             switch (node.Entry.Value.Type)
             {
                 case TemplateRestrictionType.STRING:
-                    textBoxVarStringValue.Text = node.Entry.Value.Value.Trim('"');
+                    textBoxVarStringValue.Text = node.Entry.Value.TokenValue.Trim('"');
                     comboBoxVarType.Text = "STRING";
                     break;
                 case TemplateRestrictionType.NUMBER:
-                    numericUpDownVarNumberValue.Value = decimal.Parse(node.Entry.Value.Value);
+                    numericUpDownVarNumberValue.Value = decimal.Parse(node.Entry.Value.TokenValue);
                     comboBoxVarType.Text = "NUMBER";
                     break;
                 case TemplateRestrictionType.BOOLEAN:
-                    radioButtonTrue.Checked = node.Entry.Value.Value == "true";
+                    radioButtonTrue.Checked = node.Entry.Value.TokenValue == "true";
                     comboBoxVarType.Text = "BOOLEAN";
                     break;
                 case TemplateRestrictionType.TABLE:
@@ -187,7 +185,7 @@ namespace SOC.UI
             bool found = VariableNameExists(userInputText, siblings, selectedNode);
 
             selectedNode.Entry.Key = Lua.GetEntryValueType(userInputText);
-            selectedNode.Name = selectedNode.Entry.Key.Value;
+            selectedNode.Name = selectedNode.Entry.Key.TokenValue;
             selectedNode.UpdateText();
 
             if (found)
@@ -230,7 +228,7 @@ namespace SOC.UI
                 {
                     continue;
                 }
-                if (node.Entry.Key.Value.Trim('"') == baseName)
+                if (node.Entry.Key.TokenValue.Trim('"') == baseName)
                 {
                     return true;
                 }
@@ -309,7 +307,7 @@ namespace SOC.UI
         public VariableNode(LuaTableEntry entry)
         {
             Entry = entry;
-            Name = Entry.Key.Value;
+            Name = Entry.Key.TokenValue;
             if (entry.Value is LuaTable table)
             {
                 foreach (var nestedEntry in table.KeyValuePairs)
@@ -370,7 +368,7 @@ namespace SOC.UI
             return new LuaTableIdentifier("qvars", entry.Value.Type, entry.Key);
         }
 
-        public override string ToString() => Entry.Key.Value;
+        public override string ToString() => Entry.Key.TokenValue;
 
 
         public void UpdateText()

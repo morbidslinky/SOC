@@ -179,6 +179,7 @@
             // buttonRemoveVariableIdentifier
             // 
             buttonRemoveVariableIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            buttonRemoveVariableIdentifier.Enabled = false;
             buttonRemoveVariableIdentifier.Location = new System.Drawing.Point(4, 486);
             buttonRemoveVariableIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             buttonRemoveVariableIdentifier.Name = "buttonRemoveVariableIdentifier";

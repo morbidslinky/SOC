@@ -30,7 +30,7 @@ namespace SOC.UI
         internal UserControl Menu(ScriptalNode scriptalNode)
         {
             ScriptalNode = scriptalNode;
-            ParentControl.SetMenuText(ToString(), ScriptalNode.GetUnEventedScriptNode().Identifier.Text);
+            ParentControl.SetMenuText(ToString(), ScriptalNode.GetUnEventedScriptNode().Identifier.Value);
             UpdateMenu();
             return this;
         }
@@ -172,7 +172,7 @@ namespace SOC.UI
             StrCode32 scriptalEvent = scriptalNode.GetEvent();
 
             string scriptsRootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets");
-            string[] scriptalSubDirs = { "Scriptal Library", str(scriptalNode.ScriptalType), scriptalEvent.CodeKey, scriptalEvent.Message.Value.Trim('"') };
+            string[] scriptalSubDirs = { "Scriptal Library", str(scriptalNode.ScriptalType), scriptalEvent.CodeKey, scriptalEvent.Message.TokenValue.Trim('"') };
 
             Exception lastExeption = null; int exceptionCount = 0;
             for (int i = 0; i < scriptalSubDirs.Length; i++)
@@ -290,21 +290,21 @@ string.Format(@"
                 case ScriptControl.NUMBER_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(numericUpDownVarNumberValue, selectedChoice.AllowUIEdit);
-                    if (selectedChoice.Value is LuaNumber number) numericUpDownVarNumberValue.Value = (decimal)number.Number;
+                    if (selectedChoice.Value is LuaNumber number) numericUpDownVarNumberValue.Value = (decimal)number.Value;
                     UpdateChoiceLiteralValue();
                     break;
 
                 case ScriptControl.STRING_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(textBoxVarStringValue, selectedChoice.AllowUIEdit);
-                    if (selectedChoice.Value is LuaString text) textBoxVarStringValue.Text = text.Text;
+                    if (selectedChoice.Value is LuaString text) textBoxVarStringValue.Text = text.Value;
                     UpdateChoiceLiteralValue();
                     break;
 
                 case ScriptControl.BOOLEAN_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(panelBoolean, selectedChoice.AllowUIEdit);
-                    if (selectedChoice.Value is LuaBoolean boolean) radioButtonTrue.Checked = boolean.BooleanValue;
+                    if (selectedChoice.Value is LuaBoolean boolean) radioButtonTrue.Checked = boolean.Value;
                     UpdateChoiceLiteralValue();
                     break;
 

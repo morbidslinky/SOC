@@ -60,7 +60,7 @@ namespace SOC.Classes.Lua
 
             quest_step.Add(
                 QStep_Start.Get(),
-                QStep_Main.Get(QStep_Main_MessagesDefVariable.Name)
+                QStep_Main.Get(QStep_Main_MessagesDefVariable.Value)
             );
 
             @this.Add(
@@ -73,7 +73,7 @@ namespace SOC.Classes.Lua
                 OnTerminate.Get()
             );
 
-            QStep_Main_MessagesDefVariable.AssignedTo = QStep_Main.StrCode32Table.GetStrCode32DefinitionsTable(QStep_Main_MessagesDefVariable.Name);
+            QStep_Main_MessagesDefVariable.AssignedTo = QStep_Main.StrCode32Table.GetStrCode32DefinitionsTable(QStep_Main_MessagesDefVariable.Value);
             Quest_MessagesDefVariable.AssignedTo = Messages.GetMessagesDefs();
             CommonDefinitionsVariable.AssignedTo = QStep_Main.StrCode32Table.GetCommonDefinitionsTable();
         }

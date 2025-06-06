@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Fade Out To Black</Name>
+  <Description>The screen fades to black, as though a cutscene or a loading screen begins.</Description>
+  <EventFunctionTemplate>local tempExceptGameStatus = {
+  exceptGameStatus = {
+    AnnounceLog=false --[[allows for remaining notifs to display during fade-out]]
+  }
+}
+TppUI.FadeOut(|[2|NUMBER]|, |[1|STRING]|, nil, tempExceptGameStatus)</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Sender</Name>
+	  <Description>When the fade out is completed, a &quot;EndFadeOut&quot; message is sent. This value will be the name of the sender.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="FadeSender" />
+	</Choice>
+	<Choice>
+	  <Name>Fade-Out Time (Seconds)</Name>
+	  <Description>The amount of time in seconds before the screen is completely faded out.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <AllowLiteral>true</AllowLiteral>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="1.5" />
+	</Choice>
+  </Choices>
+</Scriptal>

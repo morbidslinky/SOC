@@ -30,7 +30,7 @@ namespace SOC.Classes.Lua
         [XmlArrayItem("Value")]
         public LuaValue[] PopulationValues { get; set; } = new LuaValue[0];
 
-        public override string Value => GetLuaFunctionValue();
+        public override string TokenValue => GetLuaFunctionValue();
 
         public LuaFunction() : base(TemplateRestrictionType.FUNCTION) { }
 
@@ -43,7 +43,7 @@ namespace SOC.Classes.Lua
 
         public string GetLuaFunctionValue()
         {
-            return $"function({string.Join(", ", Parameters.Select(p => p.Name))})\n{Body.Populate(PopulationValues)}\nend";
+            return $"function({string.Join(", ", Parameters.Select(p => p.Value))})\n{Body.Populate(PopulationValues)}\nend";
         }
 
         public void WriteToLua(string filename)

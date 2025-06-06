@@ -17,13 +17,13 @@ namespace SOC.Classes.Lua
     public abstract class LuaValue
     {
         [XmlIgnore] public TemplateRestrictionType Type { get; set; }
-        [XmlIgnore] public abstract string Value { get; }
+        [XmlIgnore] public abstract string TokenValue { get; }
 
         protected LuaValue() { }
         protected LuaValue(TemplateRestrictionType type) { Type = type; }
 
-        public override string ToString() => Value;
-        public bool Matches(object v) => (v != null && v is LuaValue luaV && luaV.Type == Type && luaV.Value == Value);
+        public override string ToString() => TokenValue;
+        public bool Matches(object v) => (v != null && v is LuaValue luaV && luaV.Type == Type && luaV.TokenValue == TokenValue);
 
         public enum TemplateRestrictionType
         {

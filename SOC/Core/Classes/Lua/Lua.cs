@@ -81,8 +81,8 @@ namespace SOC.Classes.Lua
             var identifier = new LuaTableIdentifier();
             switch (tableVar)
             {
-                case string s: identifier.IdentifierVariableName = s; break;
-                case LuaVariable v: identifier.IdentifierVariableName = v.GetVarName(); break;
+                case string s: identifier.TableVariable = s; break;
+                case LuaVariable v: identifier.TableVariable = v.GetVarName(); break;
                 default: return new LuaTableIdentifier();
             }
 
@@ -149,7 +149,7 @@ namespace SOC.Classes.Lua
                 case LuaVariable v: call.FunctionVariableName = v.GetVarName(); break;
                 case LuaTableIdentifier i: call.FunctionVariableName = i.GetIdentifier(); break;
                 case LuaFunction f: call.FunctionVariableName = $"({f.GetLuaFunctionValue()})"; break;
-                case LuaString t: call.FunctionVariableName = t.Text; break;
+                case LuaString t: call.FunctionVariableName = t.Value; break;
                 default: call.FunctionVariableName = "Unsupported Function Name Value"; break;
             }
 

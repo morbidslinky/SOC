@@ -10,7 +10,7 @@ namespace SOC.Classes.Lua
         [XmlArray("FunctionArguments")]
         [XmlArrayItem("Argument")]
         public LuaValue[] Arguments { get; set; }
-        public override string Value => GetFunctionCall();
+        public override string TokenValue => GetFunctionCall();
 
         public TemplateRestrictionType EvaluatesTo { get; set; }
 

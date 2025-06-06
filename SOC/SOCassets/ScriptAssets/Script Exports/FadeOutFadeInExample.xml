@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <QStep_Main>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>GameObject</CodeKey>
+        <Message xsi:type="LuaString" Text="Dead" />
+        <SenderKey>ANY / ALL</SenderKey>
+        <SenderValue xsi:type="LuaNil" />
+      </CodeEvent>
+      <Identifier Text="FadeOutOnDead" />
+      <Description />
+      <Preconditions>
+        <Precondition>
+          <Name>Always True</Name>
+          <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+          <EventFunctionTemplate>return true</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices />
+          <EmbeddedCommonDefinitions />
+        </Precondition>
+      </Preconditions>
+      <Operations>
+        <Operation>
+          <Name>Fade Out To Black</Name>
+          <Description>The screen fades to black, as though a cutscene or a loading screen begins.</Description>
+          <EventFunctionTemplate>TppUI.FadeOut(|[1|NUMBER]|,|[2|STRING]|,nil)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Fade-Out Time (Seconds)</Name>
+              <Description>The amount of time in seconds before the screen is completely faded out.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Number Literal</Key>
+              <Value xsi:type="LuaNumber" Number="1.5" />
+            </Choice>
+            <Choice>
+              <Name>Fade Sender</Name>
+              <Description>When the fade out is completed, a "EndFadeOut" message is sent. This value will be the name of the sender.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Text="FadeSender" />
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>UI</CodeKey>
+        <Message xsi:type="LuaString" Text="EndFadeIn" />
+        <SenderKey>String Literal</SenderKey>
+        <SenderValue xsi:type="LuaString" Text="FadeSender" />
+      </CodeEvent>
+      <Identifier Text="PrintTextAfterFadeIn" />
+      <Description />
+      <Preconditions>
+        <Precondition>
+          <Name>Always True</Name>
+          <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+          <EventFunctionTemplate>return true</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices />
+          <EmbeddedCommonDefinitions />
+        </Precondition>
+      </Preconditions>
+      <Operations>
+        <Operation>
+          <Name>Print Notification</Name>
+          <Description>Prints up to 5 strings and or numbers as an in-game notification.</Description>
+          <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. |[2|STRING,NUMBER]| .. |[3|STRING,NUMBER]| .. |[4|STRING,NUMBER]| .. |[5|STRING,NUMBER]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets>
+            <KeyValuesSet Key="Example Strings">
+              <Value xsi:type="LuaString" Text="Foo" />
+              <Value xsi:type="LuaString" Text="Bar" />
+            </KeyValuesSet>
+          </EmbeddedChoosableValueSets>
+          <Choices>
+            <Choice>
+              <Name>Value 1</Name>
+              <Description>1st Text that will print to notifications</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Example Strings</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Text="Notification Example [" />
+            </Choice>
+            <Choice>
+              <Name>Value 2</Name>
+              <Description>2nd Text that will print to notifications</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Example Strings</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Number Literal</Key>
+              <Value xsi:type="LuaNumber" Number="0" />
+            </Choice>
+            <Choice>
+              <Name>Value 3</Name>
+              <Description>3rd Text that will print to notifications</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Example Strings</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Text="/" />
+            </Choice>
+            <Choice>
+              <Name>Value 4</Name>
+              <Description>4th Text that will print to notifications</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Example Strings</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Number Literal</Key>
+              <Value xsi:type="LuaNumber" Number="5" />
+            </Choice>
+            <Choice>
+              <Name>Value 5</Name>
+              <Description>5th Text that will print to notifications</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Example Strings</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Text="]" />
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>UI</CodeKey>
+        <Message xsi:type="LuaString" Text="EndFadeOut" />
+        <SenderKey>String Literal</SenderKey>
+        <SenderValue xsi:type="LuaString" Text="FadeSender" />
+      </CodeEvent>
+      <Identifier Text="WaitSecondsAfterFadeOut" />
+      <Description />
+      <Preconditions>
+        <Precondition>
+          <Name>Always True</Name>
+          <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+          <EventFunctionTemplate>return true</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices />
+          <EmbeddedCommonDefinitions />
+        </Precondition>
+      </Preconditions>
+      <Operations>
+        <Operation>
+          <Name>Start Hidden Timer</Name>
+          <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+The name of the timer is the sender of the event.</Description>
+          <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Sender</Name>
+              <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Text="TimerSender" />
+            </Choice>
+            <Choice>
+              <Name>Seconds</Name>
+              <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Number Literal</Key>
+              <Value xsi:type="LuaNumber" Number="5" />
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>Timer</CodeKey>
+        <Message xsi:type="LuaString" Text="Finish" />
+        <SenderKey>String Literal</SenderKey>
+        <SenderValue xsi:type="LuaString" Text="TimerSender" />
+      </CodeEvent>
+      <Identifier Text="FadeInAfterWait" />
+      <Description />
+      <Preconditions>
+        <Precondition>
+          <Name>Always True</Name>
+          <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+          <EventFunctionTemplate>return true</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices />
+          <EmbeddedCommonDefinitions />
+        </Precondition>
+      </Preconditions>
+      <Operations>
+        <Operation>
+          <Name>Fade In From Black</Name>
+          <Description>The screen fades back in, as though a cutscene or a loading screen ended.</Description>
+          <EventFunctionTemplate>TppUI.FadeIn(|[1|NUMBER]|,|[2|STRING]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Fade-In Time (Seconds)</Name>
+              <Description>The amount of time in seconds before the screen is completely faded back in.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Number Literal</Key>
+              <Value xsi:type="LuaNumber" Number="1.5" />
+            </Choice>
+            <Choice>
+              <Name>Fade</Name>
+              <Description>When the fade in is completed, a "EndFadeIn" message is sent. This value will be the name of the sender.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Text="FadeSender" />
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+  </QStep_Main>
+  <Variables />
+</ScriptDetails>

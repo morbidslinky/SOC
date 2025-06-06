@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Warp</Name>
+  <Description>Immediately and unceremoniously teleports the target to a new position. 
+Compatible with the player character, prisoners and vehicles.
+Note: For most events, 'arg1' represents the GameObjectId that sent the event.
+Note: The embedded Warp function was yoinked from Infinite Heaven</Description>
+  <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+qvars.Warp(tempGameObjectIdVal, |[2|TABLE]|)</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Game Object</Name>
+	  <Description>The character or vehicle to be warped.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	    <Key>Prisoner Names (Targets)</Key>
+	    <Key>Prisoner Names</Key>
+	    <Key>Walker Gear Names (Targets)</Key>
+	    <Key>Walker Gear Names</Key>
+	    <Key>Heavy Vehicle Names (Targets)</Key>
+	    <Key>Heavy Vehicle Names</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>true</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="Player" />
+	</Choice>
+	<Choice>
+	  <Name>X, Y, Z, rotY Table</Name>
+	  <Description>A table that contains 3 numbers for X, Y, Z coordinates, and an optional 4th number for degree rotation.</Description>
+	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>false</AllowLiteral>
+	  <AllowUserVariable>true</AllowUserVariable>
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="Warp" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Value="gameId"/>
+		  <Parameter xsi:type="LuaVariable" Value="pos"/>
+		  <Parameter xsi:type="LuaVariable" Value="rotY"/>
+	    </Parameters>
+	    <Template>rotY=rotY or pos[4] or 0
+  local typeIndex=GameObject.GetTypeIndex(gameId)   
+  if typeIndex==TppGameObject.GAME_OBJECT_TYPE_PLAYER2 then
+    rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(rotY))
+    local command={id=&quot;WarpAndWaitBlock&quot;,pos=pos,rotY=rotY}
+    GameObject.SendCommand(gameId,command)
+  elseif typeIndex==TppGameObject.GAME_OBJECT_TYPE_VEHICLE then
+    pos=Vector3(pos[1],pos[2],pos[3])
+    rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(rotY))
+    GameObject.SendCommand(gameId,{id=&quot;SetPosition&quot;,position=pos,rotY=rotY})
+  elseif typeIndex==TppGameObject.GAME_OBJECT_TYPE_WALKERGEAR2 or typeIndex==TppGameObject.GAME_OBJECT_TYPE_COMMON_WALKERGEAR2 then
+    rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(rotY))
+    GameObject.SendCommand(gameId,{id=&quot;SetPosition&quot;,pos=pos,rotY=rotY})
+  elseif TppDefine.HOSTAGE_GM_TYPE[typeIndex] then
+    pos=Vector3(pos[1],pos[2],pos[3])
+    GameObject.SendCommand(gameId,{id=&quot;Warp&quot;,degRotationY=rotY,position=pos})
+  end</Template>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

@@ -4,13 +4,13 @@ namespace SOC.Classes.Lua
 {
     public class LuaBoolean : LuaValue
     {
-        [XmlAttribute] public bool BooleanValue { get; set; }
-        public override string Value => BooleanValue ? "true" : "false";
+        [XmlAttribute] public bool Value { get; set; }
+        public override string TokenValue => Value ? "true" : "false";
 
         public LuaBoolean() : base(TemplateRestrictionType.BOOLEAN) { }
         public LuaBoolean(bool value) : base(TemplateRestrictionType.BOOLEAN)
         {
-            BooleanValue = value;
+            Value = value;
         }
     }
 }

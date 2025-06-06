@@ -37,7 +37,7 @@ namespace SOC.Classes.Lua
                 {
                     if (entry.Key is LuaNumber num)
                     {
-                        entry.Key = new LuaNumber(num.Number + 1);
+                        entry.Key = new LuaNumber(num.Value + 1);
                     }
                 }
                 newEntry.Key = new LuaNumber(1);
@@ -214,7 +214,7 @@ namespace SOC.Classes.Lua
 
         private bool TryGetKeyValuePair(LuaValue key, out LuaTableEntry pair)
         {
-            pair = KeyValuePairs.FirstOrDefault(e => e.Key.Value.Equals(key.Value));
+            pair = KeyValuePairs.FirstOrDefault(e => e.Key.TokenValue.Equals(key.TokenValue));
             return pair != null;
         }
 
@@ -271,7 +271,7 @@ namespace SOC.Classes.Lua
             }
         }
 
-        public override string Value => GetFormattedLuaTable();
+        public override string TokenValue => GetFormattedLuaTable();
 
         private string GetFormattedLuaTable()
         {
@@ -305,8 +305,8 @@ namespace SOC.Classes.Lua
         {
             if (key is LuaString luaString)
             {
-                string keyStr = luaString.Text;
-                return IsValidLuaIdentifier(keyStr) ? keyStr : $"[{luaString.Value}]";
+                string keyStr = luaString.Value;
+                return IsValidLuaIdentifier(keyStr) ? keyStr : $"[{luaString.TokenValue}]";
             }
             return $"[{key}]";
         }

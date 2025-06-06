@@ -9,13 +9,13 @@ namespace SOC.Classes.Lua
 {
     public class LuaNumber : LuaValue
     {
-        [XmlAttribute] public double Number { get; set; }
-        public override string Value => Number.ToString();
+        [XmlAttribute] public double Value { get; set; }
+        public override string TokenValue => Value.ToString();
 
         public LuaNumber() : base(TemplateRestrictionType.NUMBER) { }
         public LuaNumber(double number) : base(TemplateRestrictionType.NUMBER)
         {
-            Number = number;
+            Value = number;
         }
     }
 }

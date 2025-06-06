@@ -11,6 +11,8 @@ This can be useful for daisy-chaining events together.</Description>
 	  <AllowUIEdit>true</AllowUIEdit>
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="TriggerMessage" />
 	</Choice>
   </Choices>
 </Scriptal>

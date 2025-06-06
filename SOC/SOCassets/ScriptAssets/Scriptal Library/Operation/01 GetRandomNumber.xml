@@ -18,7 +18,7 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
-	  <Value xsi:type="LuaNumber" Number="-100" />
+	  <Value xsi:type="LuaNumber" Value="-100" />
 	</Choice>
 	<Choice>
 	  <Name>To</Name>
@@ -27,7 +27,7 @@
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
-	  <Value xsi:type="LuaNumber" Number="100" />
+	  <Value xsi:type="LuaNumber" Value="100" />
 	</Choice>
   </Choices>
 </Scriptal>

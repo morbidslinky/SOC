@@ -274,7 +274,7 @@ namespace SOC.UI
 
         public ScriptNode Add(Script script)
         {
-            script.Identifier = Lua.String(GetUniqueScriptName(script.Identifier.Text));
+            script.Identifier = Lua.String(GetUniqueScriptName(script.Identifier.Value));
 
             CodeNode nodeFamily = ConvertToNodeFamily(script);
             Add(nodeFamily);
@@ -474,9 +474,9 @@ namespace SOC.UI
             if (identifier != null)
             {
                 Identifier = identifier;
-                Name = identifier.Text;
+                Name = identifier.Value;
             }
-            Text = $"{Identifier.Text}   ({PreconditionsParent.Nodes.Count}|{OperationsParent.Nodes.Count})";
+            Text = $"{Identifier.Value}   ({PreconditionsParent.Nodes.Count}|{OperationsParent.Nodes.Count})";
         }
 
         public void UpdateDescription(string description)

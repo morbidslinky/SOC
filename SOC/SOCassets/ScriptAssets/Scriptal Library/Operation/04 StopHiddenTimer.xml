@@ -13,6 +13,8 @@ end</EventFunctionTemplate>
 	  <AllowUIEdit>true</AllowUIEdit>
 	  <AllowLiteral>true</AllowLiteral>
 	  <AllowUserVariable>true</AllowUserVariable>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="TimerSender" />
 	</Choice>
   </Choices>
 </Scriptal>
