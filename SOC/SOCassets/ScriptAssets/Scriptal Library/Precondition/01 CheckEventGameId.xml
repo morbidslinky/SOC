@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Compare GameObjectId To Number</Name>
+  <Name>Check GameObjectId</Name>
   <Description>Checks to see if a number matches a GameObjectId. 
 Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
 Note: For most events, 'arg1' represents the GameObjectId that sent the event.

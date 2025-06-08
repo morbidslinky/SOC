@@ -83,6 +83,13 @@ namespace SOC.UI
 
         private void buttonApplyTemplate_Click(object sender, EventArgs e)
         {
+            if ((Scriptal)comboBoxScriptal.SelectedItem == ScriptalNode.Scriptal) return;
+
+            foreach (Choice choice in listBoxChoices.Items.OfType<Choice>().ToArray())
+            {
+                choice.ClearVarNodeDependency(false);
+            }
+            ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
             ScriptalNode.Set((Scriptal)comboBoxScriptal.SelectedItem);
             SetChoiceMenu(ScriptalNode.Scriptal);
         }

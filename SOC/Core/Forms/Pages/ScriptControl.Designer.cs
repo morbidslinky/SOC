@@ -80,16 +80,16 @@
             // groupBoxVariables
             // 
             groupBoxVariables.BackColor = System.Drawing.Color.Transparent;
-            groupBoxVariables.Controls.Add(panelNewIdentifier);
             groupBoxVariables.Controls.Add(comboBoxVarType);
             groupBoxVariables.Controls.Add(textBoxVarName);
             groupBoxVariables.Controls.Add(buttonNewVariable);
             groupBoxVariables.Controls.Add(buttonRemoveVariableIdentifier);
             groupBoxVariables.Controls.Add(treeViewVariables);
-            groupBoxVariables.Controls.Add(panelBoolean);
             groupBoxVariables.Controls.Add(numericUpDownVarNumberValue);
             groupBoxVariables.Controls.Add(textBoxVarStringValue);
             groupBoxVariables.Controls.Add(panelPlaceholder);
+            groupBoxVariables.Controls.Add(panelNewIdentifier);
+            groupBoxVariables.Controls.Add(panelBoolean);
             groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBoxVariables.Location = new System.Drawing.Point(0, 0);
             groupBoxVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -248,6 +248,7 @@
             // numericUpDownVarNumberValue
             // 
             numericUpDownVarNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            numericUpDownVarNumberValue.DecimalPlaces = 3;
             numericUpDownVarNumberValue.Location = new System.Drawing.Point(4, 456);
             numericUpDownVarNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDownVarNumberValue.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });

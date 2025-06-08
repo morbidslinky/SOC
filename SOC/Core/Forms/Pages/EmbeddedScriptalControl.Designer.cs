@@ -221,7 +221,6 @@
             // 
             groupBoxChoice.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxChoice.BackColor = System.Drawing.Color.Silver;
-            groupBoxChoice.Controls.Add(panelBoolean);
             groupBoxChoice.Controls.Add(numericUpDownVarNumberValue);
             groupBoxChoice.Controls.Add(textBoxVarStringValue);
             groupBoxChoice.Controls.Add(textBoxChoiceDescription);
@@ -230,11 +229,12 @@
             groupBoxChoice.Controls.Add(comboBoxChoiceSet);
             groupBoxChoice.Controls.Add(comboBoxPresetChoosables);
             groupBoxChoice.Controls.Add(comboBoxUserVarNodes);
+            groupBoxChoice.Controls.Add(panelBoolean);
             groupBoxChoice.Location = new System.Drawing.Point(0, 0);
             groupBoxChoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxChoice.Name = "groupBoxChoice";
             groupBoxChoice.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxChoice.Size = new System.Drawing.Size(333, 282);
+            groupBoxChoice.Size = new System.Drawing.Size(333, 281);
             groupBoxChoice.TabIndex = 4;
             groupBoxChoice.TabStop = false;
             // 
@@ -245,7 +245,7 @@
             panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panelBoolean.Controls.Add(radioButtonFalse);
             panelBoolean.Controls.Add(radioButtonTrue);
-            panelBoolean.Location = new System.Drawing.Point(79, 246);
+            panelBoolean.Location = new System.Drawing.Point(79, 245);
             panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panelBoolean.Name = "panelBoolean";
             panelBoolean.Size = new System.Drawing.Size(249, 23);
@@ -282,7 +282,8 @@
             // numericUpDownVarNumberValue
             // 
             numericUpDownVarNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            numericUpDownVarNumberValue.Location = new System.Drawing.Point(79, 245);
+            numericUpDownVarNumberValue.DecimalPlaces = 3;
+            numericUpDownVarNumberValue.Location = new System.Drawing.Point(79, 244);
             numericUpDownVarNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             numericUpDownVarNumberValue.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
             numericUpDownVarNumberValue.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
@@ -297,7 +298,7 @@
             // 
             textBoxVarStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxVarStringValue.BackColor = System.Drawing.Color.LightGray;
-            textBoxVarStringValue.Location = new System.Drawing.Point(79, 245);
+            textBoxVarStringValue.Location = new System.Drawing.Point(79, 244);
             textBoxVarStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxVarStringValue.Name = "textBoxVarStringValue";
             textBoxVarStringValue.Size = new System.Drawing.Size(250, 23);
@@ -319,14 +320,14 @@
             textBoxChoiceDescription.Name = "textBoxChoiceDescription";
             textBoxChoiceDescription.ReadOnly = true;
             textBoxChoiceDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 188);
+            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 187);
             textBoxChoiceDescription.TabIndex = 6;
             // 
             // labelChoice
             // 
             labelChoice.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoice.AutoSize = true;
-            labelChoice.Location = new System.Drawing.Point(29, 249);
+            labelChoice.Location = new System.Drawing.Point(29, 248);
             labelChoice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoice.Name = "labelChoice";
             labelChoice.Size = new System.Drawing.Size(38, 15);
@@ -337,7 +338,7 @@
             // 
             labelChoiceSet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoiceSet.AutoSize = true;
-            labelChoiceSet.Location = new System.Drawing.Point(7, 217);
+            labelChoiceSet.Location = new System.Drawing.Point(7, 216);
             labelChoiceSet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoiceSet.Name = "labelChoiceSet";
             labelChoiceSet.Size = new System.Drawing.Size(57, 15);
@@ -349,7 +350,7 @@
             comboBoxChoiceSet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxChoiceSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxChoiceSet.FormattingEnabled = true;
-            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 214);
+            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 213);
             comboBoxChoiceSet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxChoiceSet.Name = "comboBoxChoiceSet";
             comboBoxChoiceSet.Size = new System.Drawing.Size(250, 23);
@@ -361,7 +362,7 @@
             comboBoxPresetChoosables.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxPresetChoosables.FormattingEnabled = true;
-            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 245);
+            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 244);
             comboBoxPresetChoosables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
             comboBoxPresetChoosables.Size = new System.Drawing.Size(250, 23);
@@ -373,7 +374,7 @@
             comboBoxUserVarNodes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxUserVarNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxUserVarNodes.FormattingEnabled = true;
-            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 245);
+            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 244);
             comboBoxUserVarNodes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxUserVarNodes.Name = "comboBoxUserVarNodes";
             comboBoxUserVarNodes.Size = new System.Drawing.Size(250, 23);

@@ -105,7 +105,11 @@ https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/m
 	    <Key>Type Check Functions</Key>
 	  </ChoosableValueSetsFilter>
 	  <Key>Type Check Functions</Key>
-	  <Value xsi:type="LuaString" Value="IsSoldier" />
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="IsSoldier" />
+		</TableKeyPath>
+	  </Value>
 	</Choice>
 	<Choice>
 	  <Name>Value</Name>
