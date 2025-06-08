@@ -61,26 +61,26 @@ namespace SOC.Classes.Lua
 
             foreach (Script root in CompiledScripts)
             {
-                var eventTable = Lua.Table(Lua.TableEntry("msg", root.CodeEvent.Message));
+                var eventTable = Create.Table(Create.TableEntry("msg", root.CodeEvent.Message));
 
                 if (!(root.CodeEvent.SenderValue is LuaNil))
                 {
-                    eventTable.Add(Lua.TableEntry("sender", root.CodeEvent.SenderValue));
+                    eventTable.Add(Create.TableEntry("sender", root.CodeEvent.SenderValue));
                 }
 
                 LuaFunctionBuilder funcBuilder = new LuaFunctionBuilder();
                 funcBuilder.AppendParameter(StrCode32.DefaultParameters);
                 foreach (Script subscript in root.Subscripts)
                 {
-                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Value}"));
-                    funcBuilder.AppendLuaValue(Lua.FunctionCall(subscriptCallableIdentifier, StrCode32.GetDefaultParametersAsVariables()));
+                    var subscriptCallableIdentifier = Create.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Create.String($"func_{subscript.Identifier.Value}"));
+                    funcBuilder.AppendLuaValue(Create.FunctionCall(subscriptCallableIdentifier, StrCode32.GetDefaultParametersAsVariables()));
                 }
 
-                eventTable.Add(Lua.TableEntry("func", funcBuilder.ToFunction()));
+                eventTable.Add(Create.TableEntry("func", funcBuilder.ToFunction()));
 
 
                 strCode32Table.Add(
-                    Lua.TableEntry(Lua.String(root.CodeEvent.CodeKey), Lua.Table(Lua.TableEntry(eventTable)))
+                    Create.TableEntry(Create.String(root.CodeEvent.CodeKey), Create.Table(Create.TableEntry(eventTable)))
                 );
             }
 
@@ -98,8 +98,8 @@ namespace SOC.Classes.Lua
                     foreach (Scriptal precondition in subscript.Preconditions)
                     {
                         functionDefinitionsTable.Add(
-                            Lua.TableEntry(
-                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{precondition.ScriptPrefixID}{precondition.Name}")),
+                            Create.TableEntry(
+                                Create.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Create.String($"{precondition.ScriptPrefixID}{precondition.Name}")),
                                 precondition.Populate(),
                                 false
                             )
@@ -108,17 +108,17 @@ namespace SOC.Classes.Lua
                     foreach (Scriptal operation in subscript.Operations)
                     {
                         functionDefinitionsTable.Add(
-                            Lua.TableEntry(
-                                Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"{operation.ScriptPrefixID}{operation.Name}")),
+                            Create.TableEntry(
+                                Create.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Create.String($"{operation.ScriptPrefixID}{operation.Name}")),
                                 operation.Populate(),
                                 false
                             )
                         );
                     }
 
-                    var subscriptCallableIdentifier = Lua.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Lua.String($"func_{subscript.Identifier.Value}"));
+                    var subscriptCallableIdentifier = Create.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Create.String($"func_{subscript.Identifier.Value}"));
                     functionDefinitionsTable.Add(
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             subscriptCallableIdentifier,
                             subscript.ToFunction(definitionTableVariableName),
                             true
@@ -182,7 +182,7 @@ namespace SOC.Classes.Lua
         public Script(StrCode32 codeMsgSender, string identifier)
         {
             CodeEvent = codeMsgSender;
-            Identifier = Lua.String(identifier);
+            Identifier = Create.String(identifier);
         }
 
         public Script(StrCode32 codeMsgSender, LuaTableEntry legacyFormat)
@@ -228,14 +228,14 @@ namespace SOC.Classes.Lua
 
             foreach (Scriptal precondition in Preconditions)
             {
-                var preconditionIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{precondition.ScriptPrefixID}{precondition.Name}"));
-                functionBuilder.AppendPlainText($"if not {Lua.FunctionCall(preconditionIdentifier, StrCode32.GetDefaultParametersAsVariables())} then return end\n");
+                var preconditionIdentifier = Create.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Create.String($"{precondition.ScriptPrefixID}{precondition.Name}"));
+                functionBuilder.AppendPlainText($"if not {Create.FunctionCall(preconditionIdentifier, StrCode32.GetDefaultParametersAsVariables())} then return end\n");
             }
 
             foreach (Scriptal operation in Operations)
             {
-                var operationIdentifier = Lua.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Lua.String($"{operation.ScriptPrefixID}{operation.Name}"));
-                functionBuilder.AppendLuaValue(Lua.FunctionCall(operationIdentifier, StrCode32.GetDefaultParametersAsVariables()));
+                var operationIdentifier = Create.TableIdentifier(definitionTableVariableName, CodeEvent.ToLuaString(), Identifier, Create.String($"{operation.ScriptPrefixID}{operation.Name}"));
+                functionBuilder.AppendLuaValue(Create.FunctionCall(operationIdentifier, StrCode32.GetDefaultParametersAsVariables()));
             }
 
             return functionBuilder.ToFunction();
@@ -284,7 +284,7 @@ namespace SOC.Classes.Lua
             CodeKey = code;
             Message = message;
             SenderKey = NIL_LITERAL_KEY;
-            SenderValue = Lua.Nil();
+            SenderValue = Create.Nil();
         }
 
         public StrCode32(string code, LuaValue message, string senderKey, LuaValue sender)
@@ -297,7 +297,7 @@ namespace SOC.Classes.Lua
 
         public static LuaVariable[] GetDefaultParametersAsVariables()
         {
-            return DefaultParameters.Select(parameter => new LuaVariable(parameter, Lua.Number(-1))).ToArray();
+            return DefaultParameters.Select(parameter => new LuaVariable(parameter, Create.Number(-1))).ToArray();
         }
 
         public override bool Equals(object obj)
@@ -322,7 +322,7 @@ namespace SOC.Classes.Lua
             return string.Join("_", CodeKey, Message.TokenValue.Replace("\"",""), $"{SenderValue.TokenValue.Replace("\"", "")}");
         }
 
-        public LuaString ToLuaString() => Lua.String(ToString());
+        public LuaString ToLuaString() => Create.String(ToString());
     }
 
     public class Scriptal

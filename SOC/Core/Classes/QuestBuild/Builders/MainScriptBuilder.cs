@@ -32,25 +32,25 @@ namespace SOC.Classes.Lua
             QStep_Main.StrCode32Table.Add(Quest.ScriptDetails.QStep_Main);
 
             QStep_Main.StrCode32Table.AddCommonDefinitions(
-                Lua.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(Quest.SetupDetails.CPName, Quest.SetupDetails.locationID)),
-                Lua.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}")
+                Create.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(Quest.SetupDetails.CPName, Quest.SetupDetails.locationID)),
+                Create.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}")
             );
 
             if (Quest.SetupDetails.CPName == "NONE")
             {
-                QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", 
-                    Lua.FunctionCall(
-                        Lua.TableIdentifier("InfMain", "GetClosestCp"),
-                        Lua.Table(Quest.SetupDetails.coords.xCoord, Quest.SetupDetails.coords.yCoord, Quest.SetupDetails.coords.zCoord))));
+                QStep_Main.StrCode32Table.AddCommonDefinitions(Create.TableEntry("CPNAME", 
+                    Create.FunctionCall(
+                        Create.TableIdentifier("InfMain", "GetClosestCp"),
+                        Create.Table(Quest.SetupDetails.coords.xCoord, Quest.SetupDetails.coords.yCoord, Quest.SetupDetails.coords.zCoord))));
             }
             else
             {
-                QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("CPNAME", Quest.SetupDetails.CPName));
+                QStep_Main.StrCode32Table.AddCommonDefinitions(Create.TableEntry("CPNAME", Quest.SetupDetails.CPName));
             }
 
 
             QUEST_TABLE.Add(
-                Lua.TableEntry("questType", Lua.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
+                Create.TableEntry("questType", Create.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
             );
 
             foreach (ObjectsDetail detail in Quest.ObjectsDetails.Details)
@@ -64,8 +64,8 @@ namespace SOC.Classes.Lua
             );
 
             @this.Add(
-                Lua.TableEntry("QUEST_TABLE", QUEST_TABLE, true),
-                Lua.TableEntry("quest_step", quest_step, true),
+                Create.TableEntry("QUEST_TABLE", QUEST_TABLE, true),
+                Create.TableEntry("quest_step", quest_step, true),
                 OnAllocate.Get(),
                 Messages.Get(),
                 OnInitialize.Get(),
@@ -80,7 +80,7 @@ namespace SOC.Classes.Lua
 
         public void Build(string mainLuaFilePath)
         {
-            var mainScript = Lua.Function(
+            var mainScript = Create.Function(
                 "local StrCode32 = Fox.StrCode32 \n" +
                 "local StrCode32Table = Tpp.StrCode32Table \n" +
                 "local GetGameObjectId = GameObject.GetGameObjectId \n\n" +
@@ -92,7 +92,7 @@ namespace SOC.Classes.Lua
                     CommonDefinitionsVariable,
                     Quest_MessagesDefVariable,
                     QStep_Main_MessagesDefVariable,
-                    Lua.Variable("this", @this)
+                    Create.Variable("this", @this)
                 );
 
             mainScript.WriteToLua(mainLuaFilePath);

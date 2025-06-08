@@ -17,22 +17,22 @@ namespace SOC.QuestObjects.Animal
                 mainLua.QUEST_TABLE.Add(BuildAnimalList(detail.animals));
                 if (detail.animals.Any(animal => animal.isTarget))
                 {
-                    var methodPair = Lua.TableEntry("methodPair",
-                        Lua.Table(
+                    var methodPair = Create.TableEntry("methodPair",
+                        Create.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForAnimal,
                             StaticObjectiveFunctions.TallyAnimalTargets
                         ), true
                     );
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             "ObjectiveTypeList",
-                            Lua.Table(Lua.TableEntry("animalObjective", detail.animalMetadata.objectiveType))
+                            Create.Table(Create.TableEntry("animalObjective", detail.animalMetadata.objectiveType))
                         ),
                         methodPair,
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForAnimal"), Lua.Variable("qvars.methodPair.TallyAnimalTargets"))),
+                            Create.Table(Create.TableEntry(Create.Variable("qvars.methodPair.IsTargetSetMessageIdForAnimal"), Create.Variable("qvars.methodPair.TallyAnimalTargets"))),
                             true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
@@ -53,7 +53,7 @@ namespace SOC.QuestObjects.Animal
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.String(gameObjectName));
+                    targetSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -65,7 +65,7 @@ namespace SOC.QuestObjects.Animal
 
                 foreach (string gameObjectName in detail.animals.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.String(gameObjectName));
+                    allSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);
@@ -79,16 +79,16 @@ namespace SOC.QuestObjects.Animal
             foreach (Animal animal in animals)
             {
                 animalList.Add(
-                    Lua.TableEntry(
-                        Lua.Table(
-                            Lua.TableEntry("animalName", animal.GetObjectName()), 
-                            Lua.TableEntry("animalType", animal.typeID)
+                    Create.TableEntry(
+                        Create.Table(
+                            Create.TableEntry("animalName", animal.GetObjectName()), 
+                            Create.TableEntry("animalType", animal.typeID)
                         )
                     )
                 );
             }
 
-            return Lua.TableEntry("animalList", animalList);
+            return Create.TableEntry("animalList", animalList);
         }
 
         private static LuaTableEntry BuildAnimalTargetList(List<Animal> animals)
@@ -100,16 +100,16 @@ namespace SOC.QuestObjects.Animal
             {
                 if (animal.isTarget)
                 {
-                    nameList.Add(Lua.TableEntry(animal.GetObjectName()));
+                    nameList.Add(Create.TableEntry(animal.GetObjectName()));
                 }
             }
 
             targetAnimalList.Add(
-                Lua.TableEntry("markerList", Lua.Table(nameList.ToArray())), 
-                Lua.TableEntry("nameList", Lua.Table(nameList.ToArray()))
+                Create.TableEntry("markerList", Create.Table(nameList.ToArray())), 
+                Create.TableEntry("nameList", Create.Table(nameList.ToArray()))
             );
 
-            return Lua.TableEntry("targetAnimalList", targetAnimalList);
+            return Create.TableEntry("targetAnimalList", targetAnimalList);
         }
     }
 }

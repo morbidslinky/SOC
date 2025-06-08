@@ -39,7 +39,7 @@ namespace SOC.Classes.Lua
             if (AssignedTo is LuaTable table)
                 foreach (var path in table.GetTablePaths(true))
                 {
-                    var varIdentifier = Lua.TableIdentifier(this, path.ToArray());
+                    var varIdentifier = Create.TableIdentifier(this, path.ToArray());
                     luaBuilder.Append(varIdentifier.GetAssignmentLua(this));
                 }
         }

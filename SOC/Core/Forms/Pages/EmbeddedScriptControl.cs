@@ -172,18 +172,18 @@ namespace SOC.UI
                 case ScriptControl.NUMBER_LITERAL_SET:
                     showCorrespondingSenderControl(numericUpDownSenders);
                     if (msgSenderNode.Sender is LuaNumber number) numericUpDownSenders.Value = (decimal)number.Value;
-                    MoveSelectedScript(Lua.Number((double)numericUpDownSenders.Value));
+                    MoveSelectedScript(Create.Number((double)numericUpDownSenders.Value));
                     break;
 
                 case ScriptControl.STRING_LITERAL_SET:
                     showCorrespondingSenderControl(textBoxSenders);
                     if (msgSenderNode.Sender is LuaString text) textBoxSenders.Text = text.Value;
-                    MoveSelectedScript(Lua.String(textBoxSenders.Text));
+                    MoveSelectedScript(Create.String(textBoxSenders.Text));
                     break;
 
                 case StrCode32.NIL_LITERAL_KEY:
                     showCorrespondingSenderControl(null);
-                    MoveSelectedScript(Lua.Nil());
+                    MoveSelectedScript(Create.Nil());
                     break;
 
                 default:
@@ -221,7 +221,7 @@ namespace SOC.UI
             LuaValue selectedMsg;
             if (selectedCode == "Mission")
             {
-                selectedMsg = Lua.String(textBoxMessage.Text);
+                selectedMsg = Create.String(textBoxMessage.Text);
             } 
             else
             {
@@ -234,15 +234,15 @@ namespace SOC.UI
                 switch (selectedSenderChoosableSet.Key)
                 {
                     case ScriptControl.NUMBER_LITERAL_SET:
-                        Sender = Lua.Number((double)numericUpDownSenders.Value);
+                        Sender = Create.Number((double)numericUpDownSenders.Value);
                         break;
 
                     case ScriptControl.STRING_LITERAL_SET:
-                        Sender = Lua.String(textBoxSenders.Text);
+                        Sender = Create.String(textBoxSenders.Text);
                         break;
 
                     case StrCode32.NIL_LITERAL_KEY:
-                        Sender = Lua.Nil();
+                        Sender = Create.Nil();
                         break;
 
                     default:

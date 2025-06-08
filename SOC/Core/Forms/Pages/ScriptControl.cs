@@ -117,7 +117,7 @@ namespace SOC.UI
                     name = GetUniqueVariableName(name);
                 }
 
-                var variableNode = new VariableNode(Lua.TableEntry(name, variable.Value));
+                var variableNode = new VariableNode(Create.TableEntry(name, variable.Value));
 
                 foreach (var choice in choices)
                 {
@@ -171,7 +171,7 @@ namespace SOC.UI
                             }
                             else
                             {
-                                choiceIdentifier.IdentifierKeys[0] = Lua.String(choiceIdentifier.IdentifierKeys[0].TokenValue.Trim('"') + $"_{choiceIdentifier.EvaluatesTo}");
+                                choiceIdentifier.IdentifierKeys[0] = Create.String(choiceIdentifier.IdentifierKeys[0].TokenValue.Trim('"') + $"_{choiceIdentifier.EvaluatesTo}");
                                 break;
                             }
                         }

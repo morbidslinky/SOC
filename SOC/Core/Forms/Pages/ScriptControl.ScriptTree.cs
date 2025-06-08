@@ -50,7 +50,7 @@ namespace SOC.UI
                 }
             }
 
-            return new StrCode32("", Lua.String(""));
+            return new StrCode32("", Create.String(""));
         }
 
         private void textBoxScriptName_TextChanged(object sender, EventArgs e)
@@ -67,7 +67,7 @@ namespace SOC.UI
             {
                 string baseName = textBoxScriptName.Text;
                 string uniqueName = ScriptTablesRootNode.QStep_Main.GetUniqueScriptName(baseName, selectedScriptNode);
-                selectedScriptNode.UpdateNodeText(Lua.String(uniqueName));
+                selectedScriptNode.UpdateNodeText(Create.String(uniqueName));
 
                 if (baseName != uniqueName)
                 {
@@ -274,7 +274,7 @@ namespace SOC.UI
 
         public ScriptNode Add(Script script)
         {
-            script.Identifier = Lua.String(GetUniqueScriptName(script.Identifier.Value));
+            script.Identifier = Create.String(GetUniqueScriptName(script.Identifier.Value));
 
             CodeNode nodeFamily = ConvertToNodeFamily(script);
             Add(nodeFamily);

@@ -459,13 +459,13 @@ string.Format(@"
             switch (currentChoice.Key)
             {
                 case ScriptControl.STRING_LITERAL_SET:
-                    currentChoice.Value = Lua.String(textBoxVarStringValue.Text);
+                    currentChoice.Value = Create.String(textBoxVarStringValue.Text);
                     break;
                 case ScriptControl.NUMBER_LITERAL_SET:
-                    currentChoice.Value = Lua.Number((double)numericUpDownVarNumberValue.Value);
+                    currentChoice.Value = Create.Number((double)numericUpDownVarNumberValue.Value);
                     break;
                 case ScriptControl.BOOLEAN_LITERAL_SET:
-                    currentChoice.Value = Lua.Boolean(radioButtonTrue.Checked);
+                    currentChoice.Value = Create.Boolean(radioButtonTrue.Checked);
                     break;
             }
             RefreshListBoxDisplay(listBoxChoices.SelectedIndex);

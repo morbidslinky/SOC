@@ -119,28 +119,28 @@ namespace SOC.QuestObjects.Enemy
                     if (enemy.isTarget)
                     {
                         hasTarget = true;
-                        mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(enemy.GetObjectName()))));
+                        mainLua.QUEST_TABLE.Add(Create.TableEntry(Create.TableIdentifier("QUEST_TABLE", "targetList"), Create.Table(Create.TableEntry(enemy.GetObjectName()))));
                     }
                 }
             }
 
             if (hasSpawn)
             {
-                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("SUBTYPE", meta.subtype));
+                mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Create.TableEntry("SUBTYPE", meta.subtype));
 
                 mainLua.QUEST_TABLE.Add(
-                    Lua.TableEntry("soldierSubType", Lua.TableIdentifier("qvars", "SUBTYPE")),
+                    Create.TableEntry("soldierSubType", Create.TableIdentifier("qvars", "SUBTYPE")),
                     BuildCPList(enemies),
-                    Lua.TableEntry("isQuestArmor", HasArmors(enemies), false),
-                    Lua.TableEntry("isQuestZombie", HasZombie(enemies), false),
-                    Lua.TableEntry("isQuestBalaclava", HasBalaclavas(enemies), false),
+                    Create.TableEntry("isQuestArmor", HasArmors(enemies), false),
+                    Create.TableEntry("isQuestZombie", HasZombie(enemies), false),
+                    Create.TableEntry("isQuestBalaclava", HasBalaclavas(enemies), false),
                     BuildEnemyList(enemies)
                 );
 
                 if (hasTarget)
                 {
-                    var methodPair = Lua.TableEntry("methodPair",
-                        Lua.Table(
+                    var methodPair = Create.TableEntry("methodPair",
+                        Create.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
                         ), true
@@ -149,14 +149,14 @@ namespace SOC.QuestObjects.Enemy
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
-                        Lua.TableEntry(
-                            Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
-                            Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsSoldier(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))
+                        Create.TableEntry(
+                            Create.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
+                            Create.Table(Create.TableEntry(Create.Table(Create.TableEntry("Check", Create.Function("return Tpp.IsSoldier(gameId)", "gameId")), Create.TableEntry("Type", meta.objectiveType))))
                         ),
                         methodPair,
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            Create.Table(Create.TableEntry(Create.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Create.Variable("qvars.methodPair.TallyGenericTargets"))),
                             true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
@@ -174,58 +174,58 @@ namespace SOC.QuestObjects.Enemy
                 if (!enemy.spawn)
                     continue;
 
-                LuaTable enemyTable = Lua.Table(
-                    Lua.TableEntry("enemyName", enemy.name),
-                    Lua.TableEntry("cpName", Lua.TableIdentifier("qvars", "CPNAME")),
-                    Lua.TableEntry("soldierSubType", Lua.TableIdentifier("qvars", "SUBTYPE")),
-                    Lua.TableEntry("isBalaclava", enemy.balaclava, false),
-                    Lua.TableEntry("isZombie", enemy.zombie, false)
+                LuaTable enemyTable = Create.Table(
+                    Create.TableEntry("enemyName", enemy.name),
+                    Create.TableEntry("cpName", Create.TableIdentifier("qvars", "CPNAME")),
+                    Create.TableEntry("soldierSubType", Create.TableIdentifier("qvars", "SUBTYPE")),
+                    Create.TableEntry("isBalaclava", enemy.balaclava, false),
+                    Create.TableEntry("isZombie", enemy.zombie, false)
                 );
 
                 if (enemy.dRoute != "DEFAULT")
                 {
-                    enemyTable.Add(Lua.TableEntry("route_d", enemy.dRoute));
+                    enemyTable.Add(Create.TableEntry("route_d", enemy.dRoute));
                 }
 
                 if (enemy.cRoute != "DEFAULT")
                 {
-                    enemyTable.Add(Lua.TableEntry("route_c", enemy.cRoute));
+                    enemyTable.Add(Create.TableEntry("route_c", enemy.cRoute));
                 }
 
                 if (enemy.powers.Length > 0)
                 {
-                    enemyTable.Add(Lua.TableEntry("powerSetting", Lua.Table(enemy.powers.Select(power => Lua.TableEntry(power)).ToArray())));
+                    enemyTable.Add(Create.TableEntry("powerSetting", Create.Table(enemy.powers.Select(power => Create.TableEntry(power)).ToArray())));
                 }
 
                 if (enemy.skill != "NONE")
                 {
-                    enemyTable.Add(Lua.TableEntry("skill", enemy.skill));
+                    enemyTable.Add(Create.TableEntry("skill", enemy.skill));
                 }
 
                 if (enemy.staffType != "NONE")
                 {
-                    enemyTable.Add(Lua.TableEntry("staffTypeId", Lua.TableIdentifier("TppDefine", "STAFF_TYPE_ID", enemy.staffType)));
+                    enemyTable.Add(Create.TableEntry("staffTypeId", Create.TableIdentifier("TppDefine", "STAFF_TYPE_ID", enemy.staffType)));
                 }
 
                 if (enemy.body != "DEFAULT" && !enemy.armored)
                 {
-                    enemyTable.Add(Lua.TableEntry("bodyId", Lua.TableIdentifier("TppEnemyBodyId", enemy.body)));
+                    enemyTable.Add(Create.TableEntry("bodyId", Create.TableIdentifier("TppEnemyBodyId", enemy.body)));
                 }
 
                 if (enemy.zombie)
                 {
-                    enemyTable.Add(Lua.TableEntry("isZombieUseRoute", true, false));
+                    enemyTable.Add(Create.TableEntry("isZombieUseRoute", true, false));
                 }
 
-                enemyList.Add(Lua.TableEntry(enemyTable));
+                enemyList.Add(Create.TableEntry(enemyTable));
             }
 
-            return Lua.TableEntry("enemyList", enemyList);
+            return Create.TableEntry("enemyList", enemyList);
         }
 
         private static LuaTableEntry BuildCPList(List<Enemy> enemies)
         {
-            return Lua.TableEntry("cpList", Lua.Table(Lua.Nil()));
+            return Create.TableEntry("cpList", Create.Table(Create.Nil()));
         }
 
         internal static void GetScriptChoosableValueSets(EnemiesDetail detail, ChoiceKeyValuesList questKeyValues)
@@ -238,7 +238,7 @@ namespace SOC.QuestObjects.Enemy
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.String(gameObjectName));
+                    targetSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -252,7 +252,7 @@ namespace SOC.QuestObjects.Enemy
                     .Where(o => o.spawn)
                     .Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.String(gameObjectName));
+                    allSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);
@@ -266,7 +266,7 @@ namespace SOC.QuestObjects.Enemy
                     .Where(o => o.spawn || !o.name.Contains("quest"))
                     .Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.String(gameObjectName));
+                    allSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);

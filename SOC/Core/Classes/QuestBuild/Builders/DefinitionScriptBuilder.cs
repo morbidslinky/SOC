@@ -25,28 +25,28 @@ namespace SOC.Classes.Lua
             SetupDetails setupDetails = quest.SetupDetails;
             ObjectsDetails objectsDetails = quest.ObjectsDetails;
 
-            questPackList = Lua.Table(
-                Lua.TableEntry("randomFaceListIH", randomFaceListIH),
-                Lua.TableEntry("faceIdList", faceIdList),
-                Lua.TableEntry("bodyIdList", bodyIdList));
+            questPackList = Create.Table(
+                Create.TableEntry("randomFaceListIH", randomFaceListIH),
+                Create.TableEntry("faceIdList", faceIdList),
+                Create.TableEntry("bodyIdList", bodyIdList));
 
-            definitionTable = Lua.Table(
-                Lua.TableEntry("questPackList", questPackList),
-                Lua.TableEntry("disableLzs", disableLzs),
-                Lua.TableEntry("requestEquipIds", requestEquipIds),
-                Lua.TableEntry("locationId", setupDetails.locationID),
-                Lua.TableEntry("areaName", setupDetails.loadArea),
-                Lua.TableEntry("iconPos", Lua.FunctionCall("Vector3", setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord)),
-                Lua.TableEntry("radius", Lua.Number(setupDetails.radius)),
-                Lua.TableEntry("category", Lua.TableIdentifier("TppQuest", "QUEST_CATEGORIES_ENUM", setupDetails.category)),
-                Lua.TableEntry("questCompleteLangId", setupDetails.progressLangID),
-                Lua.TableEntry("canOpenQuest", Lua.Function("return true")),
-                Lua.TableEntry("canActiveQuest", Lua.Function("return true")),
-                Lua.TableEntry("questRank", Lua.TableIdentifier("TppDefine", "QUEST_RANK", setupDetails.reward)));
+            definitionTable = Create.Table(
+                Create.TableEntry("questPackList", questPackList),
+                Create.TableEntry("disableLzs", disableLzs),
+                Create.TableEntry("requestEquipIds", requestEquipIds),
+                Create.TableEntry("locationId", setupDetails.locationID),
+                Create.TableEntry("areaName", setupDetails.loadArea),
+                Create.TableEntry("iconPos", Create.FunctionCall("Vector3", setupDetails.coords.xCoord, setupDetails.coords.yCoord, setupDetails.coords.zCoord)),
+                Create.TableEntry("radius", Create.Number(setupDetails.radius)),
+                Create.TableEntry("category", Create.TableIdentifier("TppQuest", "QUEST_CATEGORIES_ENUM", setupDetails.category)),
+                Create.TableEntry("questCompleteLangId", setupDetails.progressLangID),
+                Create.TableEntry("canOpenQuest", Create.Function("return true")),
+                Create.TableEntry("canActiveQuest", Create.Function("return true")),
+                Create.TableEntry("questRank", Create.TableIdentifier("TppDefine", "QUEST_RANK", setupDetails.reward)));
             
             if (LoadAreas.isMtbs(setupDetails.locationID))
             {
-                definitionTable.Add(Lua.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
+                definitionTable.Add(Create.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
             }
 
             foreach (ObjectsDetail detail in objectsDetails.Details)
@@ -54,19 +54,19 @@ namespace SOC.Classes.Lua
                 detail.AddToDefinitionLua(this);
             }
 
-            questPackList.Add(Lua.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
+            questPackList.Add(Create.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
         }
 
         public void AddFpkPathToQuestPackList(string packPath)
         {
-            questPackList.Add(Lua.TableEntry(packPath));
+            questPackList.Add(Create.TableEntry(packPath));
         }
 
         public void AddToFaceIdList(params LuaValue[] faceIds)
         {
             foreach (var id in faceIds)
             {
-                faceIdList.Add(Lua.TableEntry(id));
+                faceIdList.Add(Create.TableEntry(id));
             }
         }
 
@@ -74,31 +74,31 @@ namespace SOC.Classes.Lua
         {
             foreach (var id in bodyIds)
             {
-                bodyIdList.Add(Lua.TableEntry(id));
+                bodyIdList.Add(Create.TableEntry(id));
             }
         }
 
         public void SetRandomFaceListIH(string gender, int count)
         {
-            randomFaceListIH.Add(Lua.TableEntry("gender", gender), Lua.TableEntry("count", count));
+            randomFaceListIH.Add(Create.TableEntry("gender", gender), Create.TableEntry("count", count));
         }
 
         public void SetHasEnemyHeli(bool hasEnemyHeli)
         {
-            definitionTable.Add(Lua.TableEntry("hasEnemyHeli", hasEnemyHeli, false));
+            definitionTable.Add(Create.TableEntry("hasEnemyHeli", hasEnemyHeli, false));
         }
 
         public void AddToRequestEquipIds(List<string> ids)
         {
             foreach (var id in ids)
             {
-                requestEquipIds.Add(Lua.TableEntry(id));
+                requestEquipIds.Add(Create.TableEntry(id));
             }
         }
 
         public void Build(string definitionLuaFilePath)
         {
-            var definitionScript = Lua.Function("local |[1|ASSIGN_VARIABLE]| return |[1|VARIABLE]|", Lua.Variable("this", definitionTable));
+            var definitionScript = Create.Function("local |[1|ASSIGN_VARIABLE]| return |[1|VARIABLE]|", Create.Variable("this", definitionTable));
             definitionScript.WriteToLua(definitionLuaFilePath);
         }
     }

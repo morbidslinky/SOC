@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.UAV
 {
     class UAVLua
     {
-        static readonly LuaFunction setupUAV = Lua.Function("for index, uavInfo in pairs(this.QUEST_TABLE.UAVList) do local gameObjectId = GameObject.GetGameObjectId(uavInfo.name); if gameObjectId ~= GameObject.NULL_ID then GameObject.SendCommand(gameObjectId, {id = \"SetEnabled\", enabled = true} ); GameObject.SendCommand(gameObjectId, {id = \"SetDevelopLevel\", developLevel = uavInfo.weapon, empLevel = 0} ); if uavInfo.dRoute then GameObject.SendCommand(gameObjectId, {id = \"SetPatrolRoute\", route = uavInfo.dRoute} ); end; if uavInfo.aRoute then GameObject.SendCommand(gameObjectId, {id = \"SetCombatRoute\", route = uavInfo.aRoute} ); end; if uavInfo.defenseGrade then GameObject.SendCommand(gameObjectId, {id = \"SetCombatGrade\", defenseGrade = uavInfo.defenseGrade} ); end; if uavInfo.docile == true then GameObject.SendCommand(gameObjectId, {id = \"SetFriendly\"}); GameObject.SendCommand(gameObjectId, {id = \"SetCommandPost\", cp = qvars.DISTANTCP } ); else GameObject.SendCommand(gameObjectId, {id = \"SetCommandPost\", cp = qvars.CPNAME } ); end; end; end; ");
+        static readonly LuaFunction setupUAV = Create.Function("for index, uavInfo in pairs(this.QUEST_TABLE.UAVList) do local gameObjectId = GameObject.GetGameObjectId(uavInfo.name); if gameObjectId ~= GameObject.NULL_ID then GameObject.SendCommand(gameObjectId, {id = \"SetEnabled\", enabled = true} ); GameObject.SendCommand(gameObjectId, {id = \"SetDevelopLevel\", developLevel = uavInfo.weapon, empLevel = 0} ); if uavInfo.dRoute then GameObject.SendCommand(gameObjectId, {id = \"SetPatrolRoute\", route = uavInfo.dRoute} ); end; if uavInfo.aRoute then GameObject.SendCommand(gameObjectId, {id = \"SetCombatRoute\", route = uavInfo.aRoute} ); end; if uavInfo.defenseGrade then GameObject.SendCommand(gameObjectId, {id = \"SetCombatGrade\", defenseGrade = uavInfo.defenseGrade} ); end; if uavInfo.docile == true then GameObject.SendCommand(gameObjectId, {id = \"SetFriendly\"}); GameObject.SendCommand(gameObjectId, {id = \"SetCommandPost\", cp = qvars.DISTANTCP } ); else GameObject.SendCommand(gameObjectId, {id = \"SetCommandPost\", cp = qvars.CPNAME } ); end; end; end; ");
         
         internal static void GetMain(UAVsDetail detail, MainScriptBuilder mainLua)
         {
@@ -20,15 +20,15 @@ namespace SOC.QuestObjects.UAV
                 mainLua.QUEST_TABLE.Add(BuildUAVList(detail.UAVs));
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
-                    Lua.FunctionCall(
-                        Lua.TableIdentifier("InfCore", "PCall"), setupUAV
+                    Create.FunctionCall(
+                        Create.TableIdentifier("InfCore", "PCall"), setupUAV
                     )
                 );
 
                 if (detail.UAVs.Any(uav => uav.isTarget))
                 {
-                    var methodPair = Lua.TableEntry("methodPair",
-                        Lua.Table(
+                    var methodPair = Create.TableEntry("methodPair",
+                        Create.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
                         ), true
@@ -38,9 +38,9 @@ namespace SOC.QuestObjects.UAV
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            Create.Table(Create.TableEntry(Create.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Create.Variable("qvars.methodPair.TallyGenericTargets"))),
                             true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
@@ -48,7 +48,7 @@ namespace SOC.QuestObjects.UAV
                     foreach (UAV drone in detail.UAVs)
                     {
                         if (drone.isTarget)
-                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(drone.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Create.TableEntry(Create.TableIdentifier("QUEST_TABLE", "targetList"), Create.Table(Create.TableEntry(drone.GetObjectName()))));
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace SOC.QuestObjects.UAV
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.String(gameObjectName));
+                    targetSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -76,7 +76,7 @@ namespace SOC.QuestObjects.UAV
 
                 foreach (string gameObjectName in detail.UAVs.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.String(gameObjectName));
+                    allSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);
@@ -89,33 +89,33 @@ namespace SOC.QuestObjects.UAV
 
             foreach (UAV drone in UAVs)
             {
-                LuaTable UAVTable = Lua.Table(
-                    Lua.TableEntry("name", drone.GetObjectName()),
-                    Lua.TableEntry("weapon", Lua.TableIdentifier("TppUav", drone.weapon)),
-                    Lua.TableEntry("docile", drone.docile, false)
+                LuaTable UAVTable = Create.Table(
+                    Create.TableEntry("name", drone.GetObjectName()),
+                    Create.TableEntry("weapon", Create.TableIdentifier("TppUav", drone.weapon)),
+                    Create.TableEntry("docile", drone.docile, false)
                 );
 
 
                 if (drone.dRoute != "NONE")
                 {
-                    UAVTable.Add(Lua.TableEntry("dRoute", drone.dRoute));
+                    UAVTable.Add(Create.TableEntry("dRoute", drone.dRoute));
                 }
 
                 if (drone.aRoute != "NONE")
                 {
-                    UAVTable.Add(Lua.TableEntry("aRoute", drone.aRoute));
+                    UAVTable.Add(Create.TableEntry("aRoute", drone.aRoute));
                 }
 
                 if (drone.defenseGrade != "DEFAULT")
                 {
-                    UAVTable.Add(Lua.TableEntry("defenseGrade", drone.defenseGrade));
+                    UAVTable.Add(Create.TableEntry("defenseGrade", drone.defenseGrade));
                 }
 
 
-                UAVList.Add(Lua.TableEntry(UAVTable));
+                UAVList.Add(Create.TableEntry(UAVTable));
             }
 
-            return Lua.TableEntry("UAVList", UAVList);
+            return Create.TableEntry("UAVList", UAVList);
         }
     }
 }

@@ -6,7 +6,7 @@
 
         public OnUpdate()
         {
-            Function.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "QuestBlockOnUpdate"), Lua.Variable("this")));
+            Function.AppendLuaValue(Create.FunctionCall(Create.TableIdentifier("TppQuest", "QuestBlockOnUpdate"), Create.Variable("this")));
         }
 
         public LuaTableEntry Get()

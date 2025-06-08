@@ -13,11 +13,11 @@ namespace SOC.QuestObjects.Hostage
 {
     static class HostageLua
     {
-        static readonly LuaTableEntry SwitchEnableQuestHighIntTable = LuaFunction.ToTableEntry("SwitchEnableQuestHighIntTable",
+        static readonly LuaTableEntry SwitchEnableQuestHighIntTable = Create.FunctionAsTableEntry("SwitchEnableQuestHighIntTable",
             new string[] { "flag", "commandPostName", "questCpInterrogation" },
             " local commandPostId = GetGameObjectId(\"TppCommandPost2\", commandPostName)\nif flag then TppInterrogation.SetQuestHighIntTable(commandPostId, questCpInterrogation)\n else TppInterrogation.RemoveQuestHighIntTable(commandPostId, questCpInterrogation)\n end");
 
-        static readonly LuaFunction SetHostageAttributes = Lua.Function("for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nlocal gameObjectId= GetGameObjectId(hostageInfo.hostageName)\nif gameObjectId~=GameObject.NULL_ID then if hostageInfo.commands then for j,hostageCommand in ipairs(hostageInfo.commands) do \n GameObject.SendCommand(gameObjectId, hostageCommand)\nend\nend\nend\nend");
+        static readonly LuaFunction SetHostageAttributes = Create.Function("for i,hostageInfo in ipairs(this.QUEST_TABLE.hostageList) do \nlocal gameObjectId= GetGameObjectId(hostageInfo.hostageName)\nif gameObjectId~=GameObject.NULL_ID then if hostageInfo.commands then for j,hostageCommand in ipairs(hostageInfo.commands) do \n GameObject.SendCommand(gameObjectId, hostageCommand)\nend\nend\nend\nend");
 
         public static void GetDefinition(HostagesDetail hostageDetail, DefinitionScriptBuilder definitionLua)
         {
@@ -45,42 +45,42 @@ namespace SOC.QuestObjects.Hostage
                 if (meta.canInterrogate)
                 {
                     var cpInt = new LuaTable(
-                        Lua.TableEntry("name", "enqt1000_271b10"),
-                        Lua.TableEntry("func", BuildInterrogationFunction(hostages))
+                        Create.TableEntry("name", "enqt1000_271b10"),
+                        Create.TableEntry("func", BuildInterrogationFunction(hostages))
                     );
-                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Lua.TableEntry("questCpInterrogation", Lua.Table(Lua.TableEntry(cpInt))));
+                    mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(Create.TableEntry("questCpInterrogation", Create.Table(Create.TableEntry(cpInt))));
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(SwitchEnableQuestHighIntTable);
 
                     mainLua.QStep_Start.OnEnter.AppendLuaValue(
-                        Lua.FunctionCall(
-                            Lua.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
-                            Lua.Boolean(true),
-                            Lua.TableIdentifier("qvars", "CPNAME"),
-                            Lua.TableIdentifier("qvars", "questCpInterrogation")
+                        Create.FunctionCall(
+                            Create.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
+                            Create.Boolean(true),
+                            Create.TableIdentifier("qvars", "CPNAME"),
+                            Create.TableIdentifier("qvars", "questCpInterrogation")
                         )
                     );
 
                     mainLua.OnAllocate.OnTerminate.AppendLuaValue(
-                        Lua.FunctionCall(
-                            Lua.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
-                            Lua.Boolean(false),
-                            Lua.TableIdentifier("qvars", "CPNAME"),
-                            Lua.TableIdentifier("qvars", "questCpInterrogation")
+                        Create.FunctionCall(
+                            Create.TableIdentifier("qvars", "SwitchEnableQuestHighIntTable"),
+                            Create.Boolean(false),
+                            Create.TableIdentifier("qvars", "CPNAME"),
+                            Create.TableIdentifier("qvars", "questCpInterrogation")
                         )
                     );
                 }
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
-                    Lua.FunctionCall(
-                        Lua.TableIdentifier("InfCore", "PCall"), SetHostageAttributes
+                    Create.FunctionCall(
+                        Create.TableIdentifier("InfCore", "PCall"), SetHostageAttributes
                     )
                 );
 
                 if (hostages.Any(hostage => hostage.isTarget))
                 {
-                    var methodPair = Lua.TableEntry("methodPair",
-                        Lua.Table(
+                    var methodPair = Create.TableEntry("methodPair",
+                        Create.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
                         ), true
@@ -89,15 +89,15 @@ namespace SOC.QuestObjects.Hostage
                     mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.genericTargetMessages);
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
-                        Lua.TableEntry(
-                            Lua.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
-                            Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return Tpp.IsHostage(gameId)", "gameId")), Lua.TableEntry("Type", meta.objectiveType))))       
+                        Create.TableEntry(
+                            Create.TableIdentifier("qvars", "ObjectiveTypeList", "genericTargets"),
+                            Create.Table(Create.TableEntry(Create.Table(Create.TableEntry("Check", Create.Function("return Tpp.IsHostage(gameId)", "gameId")), Create.TableEntry("Type", meta.objectiveType))))       
                         ),
                         methodPair,
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(
-                                Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            Create.Table(
+                                Create.TableEntry(Create.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Create.Variable("qvars.methodPair.TallyGenericTargets"))),
                             true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
@@ -105,7 +105,7 @@ namespace SOC.QuestObjects.Hostage
                     foreach (Hostage hostage in hostages)
                     {
                         if (hostage.isTarget)
-                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(hostage.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Create.TableEntry(Create.TableIdentifier("QUEST_TABLE", "targetList"), Create.Table(Create.TableEntry(hostage.GetObjectName()))));
                     }
                 }
             }
@@ -117,56 +117,56 @@ namespace SOC.QuestObjects.Hostage
 
             foreach (Hostage hostage in hostages)
             {
-                LuaTable hostageTable = Lua.Table(
-                    Lua.TableEntry("hostageName", hostage.GetObjectName()),
-                    Lua.TableEntry("isFaceRandom", true, false),
-                    Lua.TableEntry("isTarget", hostage.isTarget, false),
-                    Lua.TableEntry("voiceType", GetVoiceTable(hostage)),
-                    Lua.TableEntry("commands", GetCommandTable(hostage)),
-                    Lua.TableEntry("position",
-                        Lua.Table(
-                            Lua.TableEntry("pos",
-                                Lua.Table(
-                                    Lua.TableEntry(hostage.position.coords.xCoord),
-                                    Lua.TableEntry(hostage.position.coords.yCoord),
-                                    Lua.TableEntry(hostage.position.coords.zCoord)
+                LuaTable hostageTable = Create.Table(
+                    Create.TableEntry("hostageName", hostage.GetObjectName()),
+                    Create.TableEntry("isFaceRandom", true, false),
+                    Create.TableEntry("isTarget", hostage.isTarget, false),
+                    Create.TableEntry("voiceType", GetVoiceTable(hostage)),
+                    Create.TableEntry("commands", GetCommandTable(hostage)),
+                    Create.TableEntry("position",
+                        Create.Table(
+                            Create.TableEntry("pos",
+                                Create.Table(
+                                    Create.TableEntry(hostage.position.coords.xCoord),
+                                    Create.TableEntry(hostage.position.coords.yCoord),
+                                    Create.TableEntry(hostage.position.coords.zCoord)
                                 )
                             ),
-                            Lua.TableEntry("rotY", hostage.position.rotation.GetRadianRotY())
+                            Create.TableEntry("rotY", hostage.position.rotation.GetRadianRotY())
                         )
                     ),
-                    Lua.TableEntry("langType", hostage.language),
-                    Lua.TableEntry("bodyId", NPCBodyInfo.GetBodyInfo(meta.hostageBodyName).gameId)
+                    Create.TableEntry("langType", hostage.language),
+                    Create.TableEntry("bodyId", NPCBodyInfo.GetBodyInfo(meta.hostageBodyName).gameId)
                 );
 
                 if (hostage.skill != "NONE")
                 {
-                    hostageTable.Add(Lua.TableEntry("skill", hostage.skill));
+                    hostageTable.Add(Create.TableEntry("skill", hostage.skill));
                 }
 
                 if (hostage.staffType != "NONE")
                 {
-                    hostageTable.Add(Lua.TableEntry("staffTypeId", Lua.TableIdentifier("TppDefine", "STAFF_TYPE_ID", hostage.staffType)));
+                    hostageTable.Add(Create.TableEntry("staffTypeId", Create.TableIdentifier("TppDefine", "STAFF_TYPE_ID", hostage.staffType)));
                 }
 
-                hostageList.Add(Lua.TableEntry(hostageTable));
+                hostageList.Add(Create.TableEntry(hostageTable));
             }
 
-            return Lua.TableEntry("hostageList", hostageList);
+            return Create.TableEntry("hostageList", hostageList);
         }
 
         private static LuaTable GetVoiceTable(Hostage hostage)
         {
-            LuaTable voiceTable = Lua.Table(
-                    Lua.TableEntry("hostage_a"),
-                    Lua.TableEntry("hostage_b")
+            LuaTable voiceTable = Create.Table(
+                    Create.TableEntry("hostage_a"),
+                    Create.TableEntry("hostage_b")
                 );
 
             if (hostage.language.Equals("english"))
             {
                 voiceTable.Add(
-                    Lua.TableEntry("hostage_c"),
-                    Lua.TableEntry("hostage_d")
+                    Create.TableEntry("hostage_c"),
+                    Create.TableEntry("hostage_d")
                 );
             }
 
@@ -179,21 +179,21 @@ namespace SOC.QuestObjects.Hostage
 
             if (hostage.scared == "ALWAYS") {
                 commandTable.Add(
-                    Lua.TableEntry(
-                        Lua.Table(
-                            Lua.TableEntry("id", "SetForceScared"),
-                            Lua.TableEntry("scared", true, false),
-                            Lua.TableEntry("ever", true, false)
+                    Create.TableEntry(
+                        Create.Table(
+                            Create.TableEntry("id", "SetForceScared"),
+                            Create.TableEntry("scared", true, false),
+                            Create.TableEntry("ever", true, false)
                         )
                     )
                 );
             } else if (hostage.scared == "NEVER") {
                 commandTable.Add(
-                    Lua.TableEntry(
-                        Lua.Table(
-                            Lua.TableEntry("id", "SetHostage2Flag"),
-                            Lua.TableEntry("flag", "disableScared"),
-                            Lua.TableEntry("on", true, false)
+                    Create.TableEntry(
+                        Create.Table(
+                            Create.TableEntry("id", "SetHostage2Flag"),
+                            Create.TableEntry("flag", "disableScared"),
+                            Create.TableEntry("on", true, false)
                         )
                     )
                 );
@@ -202,11 +202,11 @@ namespace SOC.QuestObjects.Hostage
             if (hostage.isInjured)
             {
                 commandTable.Add(
-                    Lua.TableEntry(
-                        Lua.Table(
-                            Lua.TableEntry("id", "SetHostage2Flag"),
-                            Lua.TableEntry("flag", "disableFulton"),
-                            Lua.TableEntry("on", true, false)
+                    Create.TableEntry(
+                        Create.Table(
+                            Create.TableEntry("id", "SetHostage2Flag"),
+                            Create.TableEntry("flag", "disableFulton"),
+                            Create.TableEntry("on", true, false)
                         )
                     )
                 );
@@ -215,11 +215,11 @@ namespace SOC.QuestObjects.Hostage
             if (hostage.isUntied)
             {
                 commandTable.Add(
-                    Lua.TableEntry(
-                        Lua.Table(
-                            Lua.TableEntry("id", "SetHostage2Flag"),
-                            Lua.TableEntry("flag", "unlocked"),
-                            Lua.TableEntry("on", true, false)
+                    Create.TableEntry(
+                        Create.Table(
+                            Create.TableEntry("id", "SetHostage2Flag"),
+                            Create.TableEntry("flag", "unlocked"),
+                            Create.TableEntry("on", true, false)
                         )
                     )
                 );
@@ -234,20 +234,20 @@ namespace SOC.QuestObjects.Hostage
             foreach (Hostage hostage in hostages) {
                 if (hostage.isTarget)
                 {
-                    interrogationBuilder.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppMarker", "EnableQuestTargetMarker"), hostage.GetObjectName()));
+                    interrogationBuilder.AppendLuaValue(Create.FunctionCall(Create.TableIdentifier("TppMarker", "EnableQuestTargetMarker"), hostage.GetObjectName()));
                 }
                 else
                 {
                     interrogationBuilder.AppendLuaValue(
-                        Lua.FunctionCall(
-                            Lua.TableIdentifier("TppMarker", "Enable"), 
-                            Lua.String(hostage.GetObjectName()), 
-                            Lua.Number(0), 
-                            Lua.String("defend"), 
-                            Lua.String("map_and_world_only_icon"), 
-                            Lua.Number(0), 
-                            Lua.Boolean(false), 
-                            Lua.Boolean(true)
+                        Create.FunctionCall(
+                            Create.TableIdentifier("TppMarker", "Enable"), 
+                            Create.String(hostage.GetObjectName()), 
+                            Create.Number(0), 
+                            Create.String("defend"), 
+                            Create.String("map_and_world_only_icon"), 
+                            Create.Number(0), 
+                            Create.Boolean(false), 
+                            Create.Boolean(true)
                         )
                     );
                 }
@@ -266,7 +266,7 @@ namespace SOC.QuestObjects.Hostage
                     .Where(hostage => hostage.isTarget)
                     .Select(hostage => hostage.GetObjectName()))
                 {
-                    hostageTargetSenders.Add(Lua.String(hostageName));
+                    hostageTargetSenders.Add(Create.String(hostageName));
                 }
 
                 questKeyValues.Add(hostageTargetSenders);
@@ -278,7 +278,7 @@ namespace SOC.QuestObjects.Hostage
 
                 foreach (string hostageName in hostagesDetail.hostages.Select(hostage => hostage.GetObjectName()))
                 {
-                    hostageSenders.Add(Lua.String(hostageName));
+                    hostageSenders.Add(Create.String(hostageName));
                 }
 
                 questKeyValues.Add(hostageSenders);

@@ -137,7 +137,7 @@ namespace SOC.Classes.Lua
                     if (entry.Value is LuaTable entryTable)
                         return table.TryMerge(entryTable);
                     else 
-                        return table.TryAdd(Lua.TableEntry(entry.Value, entry.ExtrudeForAssignmentVariable));
+                        return table.TryAdd(Create.TableEntry(entry.Value, entry.ExtrudeForAssignmentVariable));
                 }
                 return false;
             }
@@ -165,7 +165,7 @@ namespace SOC.Classes.Lua
         {
             if (depth == nestedTableKeys.Length - 1)
             {
-                var nestedTableEntry = Lua.TableEntry(nestedTableKeys[depth], value, extrude);
+                var nestedTableEntry = Create.TableEntry(nestedTableKeys[depth], value, extrude);
                 return TryAdd(nestedTableEntry);
             }
 
@@ -178,7 +178,7 @@ namespace SOC.Classes.Lua
             if (!TryGet(key, out LuaValue value, out bool _) || !(value is LuaTable table))
             {
                 table = new LuaTable();
-                var nestedTable = Lua.TableEntry(key, table, extrude);
+                var nestedTable = Create.TableEntry(key, table, extrude);
                 TryAdd(nestedTable);
             }
             return table;

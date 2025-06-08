@@ -23,7 +23,7 @@ namespace SOC.UI
             {
                 i++;
             }
-            VariableNode node = new VariableNode(Lua.TableEntry($"UserVariable_{i}", Lua.String("Add Text Here")));
+            VariableNode node = new VariableNode(Create.TableEntry($"UserVariable_{i}", Create.String("Add Text Here")));
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
 
@@ -50,7 +50,7 @@ namespace SOC.UI
                     {
                         break;
                     }
-                    next.Entry.Key = Lua.Number(i);
+                    next.Entry.Key = Create.Number(i);
                     next.Name = next.Entry.Key.TokenValue;
                     next.UpdateText();
                     i++;
@@ -84,7 +84,7 @@ namespace SOC.UI
                     i++;
                 }
 
-                VariableNode node = new VariableNode(Lua.TableEntry(i, value));
+                VariableNode node = new VariableNode(Create.TableEntry(i, value));
                 parentNode.Nodes.Add(node);
             }
             parentNode.Expand();
@@ -184,7 +184,7 @@ namespace SOC.UI
 
             bool found = VariableNameExists(userInputText, siblings, selectedNode);
 
-            selectedNode.Entry.Key = Lua.GetEntryValueType(userInputText);
+            selectedNode.Entry.Key = Create.GetEntryValueType(userInputText);
             selectedNode.Name = selectedNode.Entry.Key.TokenValue;
             selectedNode.UpdateText();
 
@@ -259,17 +259,17 @@ namespace SOC.UI
                 case "STRING":
                     ShowVarTypeValueControl(textBoxVarStringValue);
                     currentNode.Nodes.Clear();
-                    currentNode.Entry.Value = Lua.String(textBoxVarStringValue.Text);
+                    currentNode.Entry.Value = Create.String(textBoxVarStringValue.Text);
                     break;
                 case "NUMBER":
                     ShowVarTypeValueControl(numericUpDownVarNumberValue);
                     currentNode.Nodes.Clear();
-                    currentNode.Entry.Value = Lua.Number((double)numericUpDownVarNumberValue.Value);
+                    currentNode.Entry.Value = Create.Number((double)numericUpDownVarNumberValue.Value);
                     break;
                 case "BOOLEAN":
                     ShowVarTypeValueControl(panelBoolean);
                     currentNode.Nodes.Clear();
-                    currentNode.Entry.Value = Lua.Boolean(radioButtonTrue.Checked);
+                    currentNode.Entry.Value = Create.Boolean(radioButtonTrue.Checked);
                     break;
                 case "TABLE":
                     ShowVarTypeValueControl(panelNewIdentifier);
@@ -324,13 +324,13 @@ namespace SOC.UI
             switch(identifier.EvaluatesTo)
             {
                 case TemplateRestrictionType.STRING:
-                    return new VariableNode(Lua.TableEntry(key, ""));
+                    return new VariableNode(Create.TableEntry(key, ""));
                 case TemplateRestrictionType.BOOLEAN:
-                    return new VariableNode(Lua.TableEntry(key, false));
+                    return new VariableNode(Create.TableEntry(key, false));
                 case TemplateRestrictionType.NUMBER:
-                    return new VariableNode(Lua.TableEntry(key, 0));
+                    return new VariableNode(Create.TableEntry(key, 0));
                 case TemplateRestrictionType.TABLE:
-                    return new VariableNode(Lua.TableEntry(key, new LuaTable()));
+                    return new VariableNode(Create.TableEntry(key, new LuaTable()));
             }
 
             return null;
@@ -340,7 +340,7 @@ namespace SOC.UI
         {
             if (Entry.Value is LuaTable)
             {
-                LuaTableEntry flattenedTable = Lua.TableEntry(Entry.Key, BuildTableFromChildNodes(Nodes));
+                LuaTableEntry flattenedTable = Create.TableEntry(Entry.Key, BuildTableFromChildNodes(Nodes));
                 return flattenedTable;
             }
 
@@ -353,7 +353,7 @@ namespace SOC.UI
             foreach (VariableNode childNode in nodes)
             {
                 if (childNode.Entry.Value is LuaTable)
-                    table.TryAdd(Lua.TableEntry(childNode.Entry.Key, BuildTableFromChildNodes(childNode.Nodes)));
+                    table.TryAdd(Create.TableEntry(childNode.Entry.Key, BuildTableFromChildNodes(childNode.Nodes)));
                 else
                     table.TryAdd(childNode.Entry);
             }

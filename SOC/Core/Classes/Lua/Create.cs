@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace SOC.Classes.Lua
 {
-    internal static class Lua
+    internal static class Create
     {
         public static LuaBoolean Boolean<Value>(Value boolean) {
             switch (boolean)
@@ -137,6 +137,12 @@ namespace SOC.Classes.Lua
         public static LuaFunction Function(string template)
         {
             return new LuaFunction(new LuaTemplate(template), new LuaValue[0], new LuaVariable[0]);
+        }
+
+        public static LuaTableEntry FunctionAsTableEntry(string functionName, string[] functionParameters, string functionBody, bool extrude = false)
+        {
+            LuaTableEntry entry = new LuaTableEntry();
+            return TableEntry(functionName, Function(functionBody, functionParameters), extrude);
         }
 
         public static LuaFunctionCall FunctionCall<NameValue, ArgValue>(NameValue name, params ArgValue[] args)

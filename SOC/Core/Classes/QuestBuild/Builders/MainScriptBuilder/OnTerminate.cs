@@ -6,7 +6,7 @@
 
         public OnTerminate()
         {
-            Function.AppendLuaValue(Lua.FunctionCall(Lua.TableIdentifier("TppQuest", "QuestBlockOnTerminate"), Lua.Variable("this")));
+            Function.AppendLuaValue(Create.FunctionCall(Create.TableIdentifier("TppQuest", "QuestBlockOnTerminate"), Create.Variable("this")));
         }
 
         public LuaTableEntry Get()

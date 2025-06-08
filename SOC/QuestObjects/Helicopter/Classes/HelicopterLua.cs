@@ -11,7 +11,7 @@ namespace SOC.QuestObjects.Helicopter
 {
     static class HelicopterLua
     {
-        static readonly LuaFunction setHelicopterAttributes = Lua.Function("for i,heliInfo in ipairs(this.QUEST_TABLE.heliList) do \nlocal gameObjectId = GetGameObjectId(heliInfo.heliName); if gameObjectId~=GameObject.NULL_ID then if heliInfo.commands then for j,heliCommand in ipairs(heliInfo.commands) do \nGameObject.SendCommand(gameObjectId, heliCommand); end; end; end; end; ");
+        static readonly LuaFunction setHelicopterAttributes = Create.Function("for i,heliInfo in ipairs(this.QUEST_TABLE.heliList) do \nlocal gameObjectId = GetGameObjectId(heliInfo.heliName); if gameObjectId~=GameObject.NULL_ID then if heliInfo.commands then for j,heliCommand in ipairs(heliInfo.commands) do \nGameObject.SendCommand(gameObjectId, heliCommand); end; end; end; end; ");
         
         internal static void GetDefinition(HelicoptersDetail questDetail, DefinitionScriptBuilder definitionLua)
         {
@@ -25,15 +25,15 @@ namespace SOC.QuestObjects.Helicopter
                 mainLua.QUEST_TABLE.Add(BuildHeliList(questDetail));
 
                 mainLua.QStep_Start.OnEnter.AppendLuaValue(
-                    Lua.FunctionCall(
-                        Lua.TableIdentifier("InfCore", "PCall"), setHelicopterAttributes
+                    Create.FunctionCall(
+                        Create.TableIdentifier("InfCore", "PCall"), setHelicopterAttributes
                     )
                 );
 
                 if (questDetail.helicopters.Any(helicopter => helicopter.isTarget))
                 {
-                    var methodPair = Lua.TableEntry("methodPair",
-                        Lua.Table(
+                    var methodPair = Create.TableEntry("methodPair",
+                        Create.Table(
                             StaticObjectiveFunctions.IsTargetSetMessageIdForGenericEnemy,
                             StaticObjectiveFunctions.TallyGenericTargets
                         ), true
@@ -43,16 +43,16 @@ namespace SOC.QuestObjects.Helicopter
 
                     mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
                         methodPair,
-                        Lua.TableEntry(
+                        Create.TableEntry(
                             "CheckQuestMethodPairs",
-                            Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Lua.Variable("qvars.methodPair.TallyGenericTargets"))),
+                            Create.Table(Create.TableEntry(Create.Variable("qvars.methodPair.IsTargetSetMessageIdForGenericEnemy"), Create.Variable("qvars.methodPair.TallyGenericTargets"))),
                             true
                         ),
                         StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
                     );
                     foreach (Helicopter heli in questDetail.helicopters)
                         if (heli.isTarget)
-                            mainLua.QUEST_TABLE.Add(Lua.TableEntry(Lua.TableIdentifier("QUEST_TABLE", "targetList"), Lua.Table(Lua.TableEntry(heli.GetObjectName()))));
+                            mainLua.QUEST_TABLE.Add(Create.TableEntry(Create.TableIdentifier("QUEST_TABLE", "targetList"), Create.Table(Create.TableEntry(heli.GetObjectName()))));
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace SOC.QuestObjects.Helicopter
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.String(gameObjectName));
+                    targetSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -79,7 +79,7 @@ namespace SOC.QuestObjects.Helicopter
 
                 foreach (string gameObjectName in detail.helicopters.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.String(gameObjectName));
+                    allSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);
@@ -94,21 +94,21 @@ namespace SOC.QuestObjects.Helicopter
                 if (!heli.isSpawn)
                     continue;
 
-                LuaTable heliTable = Lua.Table(
-                    Lua.TableEntry("heliName", heli.GetObjectName()),
-                    Lua.TableEntry("routeName", heli.dRoute),
-                    Lua.TableEntry("commands",
-                        Lua.Table(
-                            Lua.TableEntry(
-                                Lua.Table(
-                                    Lua.TableEntry("id", "SetSneakRoute"),
-                                    Lua.TableEntry("route", heli.dRoute)
+                LuaTable heliTable = Create.Table(
+                    Create.TableEntry("heliName", heli.GetObjectName()),
+                    Create.TableEntry("routeName", heli.dRoute),
+                    Create.TableEntry("commands",
+                        Create.Table(
+                            Create.TableEntry(
+                                Create.Table(
+                                    Create.TableEntry("id", "SetSneakRoute"),
+                                    Create.TableEntry("route", heli.dRoute)
                                 )
                             ),
-                            Lua.TableEntry(
-                                Lua.Table(
-                                    Lua.TableEntry("id", "SetCautionRoute"),
-                                    Lua.TableEntry("route", heli.cRoute)
+                            Create.TableEntry(
+                                Create.Table(
+                                    Create.TableEntry("id", "SetCautionRoute"),
+                                    Create.TableEntry("route", heli.cRoute)
                                 )
                             )
                         )
@@ -117,13 +117,13 @@ namespace SOC.QuestObjects.Helicopter
 
                 if (heli.heliClass != "DEFAULT")
                 {
-                    heliTable.Add(Lua.TableEntry("coloringType", Lua.TableIdentifier("TppDefine", "ENEMY_HELI_COLORING_TYPE", heli.heliClass)));
+                    heliTable.Add(Create.TableEntry("coloringType", Create.TableIdentifier("TppDefine", "ENEMY_HELI_COLORING_TYPE", heli.heliClass)));
                 }
 
-                heliList.Add(Lua.TableEntry(heliTable));
+                heliList.Add(Create.TableEntry(heliTable));
             }
 
-            return Lua.TableEntry("heliList", heliList);
+            return Create.TableEntry("heliList", heliList);
 
         }
     }

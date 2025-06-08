@@ -136,7 +136,9 @@ namespace SOC.Classes.Common
             {
                 ChoiceKeyValues routeKeyValues = new ChoiceKeyValues("Route Names");
 
-                routeKeyValues.Values.AddRange(routeStrings.Select(routeString => Lua.Lua.GetEntryValueType(routeString)));
+                routeKeyValues.Values.AddRange(routeStrings.Select(routeString => Lua.Create.GetEntryValueType(routeString)));
+
+                routeKeyValues.Values.Add(Lua.Create.String(""));
 
                 questKeyValues.Add(routeKeyValues);
             }

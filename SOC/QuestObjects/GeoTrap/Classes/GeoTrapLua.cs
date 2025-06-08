@@ -18,7 +18,7 @@ namespace SOC.QuestObjects.GeoTrap
 
                 foreach (string geoTrapName in geoTrapsDetail.trapShapes.Select(shape => shape.geoTrap).Distinct())
                 {
-                    geoTrapSenders.Add(Lua.String(geoTrapName));
+                    geoTrapSenders.Add(Create.String(geoTrapName));
                 }
 
                 questKeyValues.Add(geoTrapSenders);

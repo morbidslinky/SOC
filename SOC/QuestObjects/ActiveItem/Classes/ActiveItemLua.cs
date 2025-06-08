@@ -14,8 +14,8 @@ namespace SOC.QuestObjects.ActiveItem
         {
             if (questDetail.activeItems.Any(activeItem => activeItem.isTarget))
             {
-                var methodPair = Lua.TableEntry("methodPair",
-                    Lua.Table(
+                var methodPair = Create.TableEntry("methodPair",
+                    Create.Table(
                         StaticObjectiveFunctions.IsTargetSetMessageIdForItem,
                         StaticObjectiveFunctions.TallyItemTargets
                     ), true
@@ -24,16 +24,16 @@ namespace SOC.QuestObjects.ActiveItem
                 mainLua.QStep_Main.StrCode32Table.Add(QStep_Main_TargetMessages.activeItemTargetMessages);
 
                 mainLua.QStep_Main.StrCode32Table.AddCommonDefinitions(
-                    Lua.TableEntry(
-                        Lua.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
-                        Lua.Table(Lua.TableEntry(Lua.Table(Lua.TableEntry("Check", Lua.Function("return (targetItemInfo.active == true)", "targetItemInfo")), Lua.TableEntry("Type", questDetail.activeItemMetadata.objectiveType))))
+                    Create.TableEntry(
+                        Create.TableIdentifier("qvars", "ObjectiveTypeList", "itemTargets"),
+                        Create.Table(Create.TableEntry(Create.Table(Create.TableEntry("Check", Create.Function("return (targetItemInfo.active == true)", "targetItemInfo")), Create.TableEntry("Type", questDetail.activeItemMetadata.objectiveType))))
                     ),
                     BuildTargetItemList(questDetail),
 
                     methodPair,
-                    Lua.TableEntry(
+                    Create.TableEntry(
                         "CheckQuestMethodPairs",
-                        Lua.Table(Lua.TableEntry(Lua.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Lua.Variable("qvars.methodPair.TallyItemTargets"))),
+                        Create.Table(Create.TableEntry(Create.Variable("qvars.methodPair.IsTargetSetMessageIdForItem"), Create.Variable("qvars.methodPair.TallyItemTargets"))),
                         true
                     ),
                     StaticObjectiveFunctions.CheckQuestAllTargetDynamicFunction
@@ -51,7 +51,7 @@ namespace SOC.QuestObjects.ActiveItem
                     .Where(o => o.isTarget)
                     .Select(o => o.GetObjectName()))
                 {
-                    targetSenders.Add(Lua.String(gameObjectName));
+                    targetSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(targetSenders);
@@ -63,7 +63,7 @@ namespace SOC.QuestObjects.ActiveItem
 
                 foreach (string gameObjectName in detail.activeItems.Select(o => o.GetObjectName()))
                 {
-                    allSenders.Add(Lua.String(gameObjectName));
+                    allSenders.Add(Create.String(gameObjectName));
                 }
 
                 questKeyValues.Add(allSenders);
@@ -78,18 +78,18 @@ namespace SOC.QuestObjects.ActiveItem
                 if (activeItem.isTarget)
                 {
                     targetItemList.Add(
-                        Lua.TableEntry(
-                            Lua.Table(
-                                Lua.TableEntry("equipId", Lua.TableIdentifier("TppEquip", activeItem.activeItem)),
-                                Lua.TableEntry("messageId", "None"),
-                                Lua.TableEntry("active", true, false)
+                        Create.TableEntry(
+                            Create.Table(
+                                Create.TableEntry("equipId", Create.TableIdentifier("TppEquip", activeItem.activeItem)),
+                                Create.TableEntry("messageId", "None"),
+                                Create.TableEntry("active", true, false)
                             )
                         )    
                     );
                 }
             }
             
-            return Lua.TableEntry(Lua.TableIdentifier("qvars", "ObjectiveTypeList", "targetItemList"), targetItemList);
+            return Create.TableEntry(Create.TableIdentifier("qvars", "ObjectiveTypeList", "targetItemList"), targetItemList);
         }
     }
 }
