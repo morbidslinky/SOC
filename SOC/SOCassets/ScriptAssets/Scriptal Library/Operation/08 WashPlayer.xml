@@ -6,5 +6,5 @@ Logic pulled from my Provisional Showers mod.</Description>
   <EventFunctionTemplate>Player.SetWetEffect()
 Player.ResetDirtyEffect()
 vars.passageSecondsSinceOutMB = 259200
-TppUiCommand.AnnounceLogView(&quot;Partially Physically and Mentally Refreshed&quot;)</EventFunctionTemplate>
+TppUiCommand.AnnounceLogView("Partially Physically and Mentally Refreshed")</EventFunctionTemplate>
 </Scriptal>

@@ -168,6 +168,7 @@ namespace SOC.UI
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             OpenFileDialog loadFile = new OpenFileDialog();
+            loadFile.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
 
             DialogResult result = loadFile.ShowDialog();
@@ -219,6 +220,7 @@ namespace SOC.UI
 
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
+            saveFile.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             saveFile.FileName = Quest.SetupDetails.FpkName;
             DialogResult saveResult = saveFile.ShowDialog();
             if (saveResult != DialogResult.OK) return true;
@@ -282,6 +284,7 @@ namespace SOC.UI
         {
             OpenFileDialog loadFile = new OpenFileDialog();
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
+            loadFile.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             loadFile.Multiselect = true;
 
             DialogResult result = loadFile.ShowDialog();

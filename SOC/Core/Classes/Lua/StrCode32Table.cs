@@ -463,17 +463,6 @@ namespace SOC.Classes.Lua
             }
         }
 
-        public static void SaveScript(ChoiceKeyValuesList choiceKeyValuesList)
-        {
-            SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.Filter = "Xml File|*.xml";
-            DialogResult saveResult = saveFile.ShowDialog();
-
-            if (saveResult == DialogResult.OK)
-            {
-                choiceKeyValuesList.WriteToXml(saveFile.FileName);
-            }
-        }
         public void WriteToXml(string filePath)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(ChoiceKeyValuesList));
@@ -520,10 +509,10 @@ namespace SOC.Classes.Lua
         public bool AllowUIEdit = true;
 
         [XmlElement]
-        public bool AllowLiteral = false;
+        public bool AllowLiteral = true;
 
         [XmlElement]
-        public bool AllowUserVariable = false;
+        public bool AllowUserVariable = true;
 
         [XmlElement]
         public string Key = "";

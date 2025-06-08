@@ -398,11 +398,11 @@ namespace SOC.UI
         {
             foreach (ScriptalNode scriptalNode in Dependents.Select(dependent => dependent.ParentScriptalNode))
             {
-                
+                if (scriptalNode.Parent == null) continue;
+
                 scriptalNode.NodeFont = ScriptControl.UNDERLINE;
                 scriptalNode.Parent.NodeFont = ScriptControl.UNDERLINE;
                 scriptalNode.Parent.Parent.NodeFont = ScriptControl.UNDERLINE_BOLD;
-
             }
             
         }

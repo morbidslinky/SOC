@@ -7,8 +7,6 @@
 	<Choice>
 	  <Name>User Variable</Name>
 	  <Description>The custom variable that the value will be set to.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <AllowLiteral>false</AllowLiteral>
 	</Choice>
 	<Choice>
@@ -17,9 +15,6 @@
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>false</AllowUserVariable>
 	  <Key>Number Literal</Key>
 	  <Value xsi:type="LuaNumber" Value="1" />
 	</Choice>

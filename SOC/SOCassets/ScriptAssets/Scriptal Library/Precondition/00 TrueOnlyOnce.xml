@@ -12,8 +12,6 @@ return false</EventFunctionTemplate>
 	<Choice>
 	  <Name>Boolean Variable</Name>
 	  <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <AllowLiteral>false</AllowLiteral>
 	</Choice>
   </Choices>

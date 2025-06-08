@@ -13,7 +13,7 @@ namespace SOC.UI
     public partial class EmbeddedScriptSetControl : UserControl
     {
         ScriptControl ParentControl;
-        readonly string ScriptExportDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Exports");
+        readonly string ScriptExportDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "ScriptAssets", "Script Library");
 
         public EmbeddedScriptSetControl(ScriptControl parentControl)
         {

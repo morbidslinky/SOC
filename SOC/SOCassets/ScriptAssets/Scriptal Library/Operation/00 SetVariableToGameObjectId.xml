@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Set String Variable</Name>
-  <Description>Stores a string to a user variable.</Description>
-  <EventFunctionTemplate>|[1|STRING]| = |[2|STRING]|</EventFunctionTemplate>
+  <Name>Set Variable To GameObjectId</Name>
+  <Description>Stores a GameObjectId to a user variable.</Description>
+  <EventFunctionTemplate>|[1|NUMBER]| = GetGameObjectId(|[2|STRING]|)</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>User Variable</Name>
@@ -10,8 +10,8 @@
 	  <AllowLiteral>false</AllowLiteral>
 	</Choice>
 	<Choice>
-	  <Name>String Value</Name>
-	  <Description>The value to set to the User Variable.</Description>
+	  <Name>Game Object</Name>
+	  <Description>The GameObject whose ID will be set to the User Variable.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Active Item Names (Targets)</Key>
 	    <Key>Active Item Names</Key>
@@ -35,10 +35,7 @@
 	    <Key>Heavy Vehicle Names</Key>
 	    <Key>Walker Gear Names (Targets)</Key>
 	    <Key>Walker Gear Names</Key>
-	    <Key>Route Names</Key>
 	  </ChoosableValueSetsFilter>
-	  <Key>String Literal</Key>
-	  <Value xsi:type="LuaNumber" Value="1" />
 	</Choice>
   </Choices>
 </Scriptal>

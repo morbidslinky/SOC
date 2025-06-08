@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Custom Event Trigger</Name>
-  <Description>Immediately triggers a custom 'Mission' StrCode32 event.
-This can be used for daisy-chaining events together, or creating an event loop.</Description>
-  <EventFunctionTemplate>Mission.SendMessage("Mission", |[1|STRING]|, |[2|NUMBER]|, |[3|NUMBER]|, |[4|NUMBER]|, |[5|NUMBER]|)</EventFunctionTemplate>
+  <Name>Print Event Args (DEBUG)</Name>
+  <Description>Prints arguments from the event, for debugging purposes.</Description>
+  <EventFunctionTemplate>InfCore.DebugPrint("args Debug Info:")
+InfCore.DebugPrint("|[1|NUMBER]|: ".. tostring(|[1|NUMBER]|) .. " (" .. type(|[1|NUMBER]|) .. ")")
+InfCore.DebugPrint("|[2|NUMBER]|: ".. tostring(|[2|NUMBER]|) .. " (" .. type(|[2|NUMBER]|) .. ")")
+InfCore.DebugPrint("|[3|NUMBER]|: ".. tostring(|[3|NUMBER]|) .. " (" .. type(|[3|NUMBER]|) .. ")")
+InfCore.DebugPrint("|[4|NUMBER]|: ".. tostring(|[4|NUMBER]|) .. " (" .. type(|[4|NUMBER]|) .. ")")</EventFunctionTemplate>
   <Choices>
 	<Choice>
-	  <Name>Message</Name>
-	  <Description>The name of the event Message. This operation triggers an event to occur. You can catch that event By creating a new script with a "Mission" StrCode, and this value as the message.</Description>
-	  <Key>String Literal</Key>
-	  <Value xsi:type="LuaString" Value="TriggerMessage" />
-	</Choice>
-	<Choice>
 	  <Name>Argument 1</Name>
-	  <Description>The first arg sent from the trigger. This can carry over the original event arg1 or a custom value.</Description>
+	  <Description>The first arg sent from the StrCode32 message.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>false</AllowUIEdit>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg1">
 	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
@@ -24,10 +22,11 @@ This can be used for daisy-chaining events together, or creating an event loop.<
 	</Choice>
 	<Choice>
 	  <Name>Argument 2</Name>
-	  <Description>The first arg sent from the trigger. This can carry over the original event arg2 or a custom value.</Description>
+	  <Description>The second arg sent from the StrCode32 message.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>false</AllowUIEdit>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg2">
 	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
@@ -35,10 +34,11 @@ This can be used for daisy-chaining events together, or creating an event loop.<
 	</Choice>
 	<Choice>
 	  <Name>Argument 3</Name>
-	  <Description>The first arg sent from the trigger. This can carry over the original event arg3 or a custom value.</Description>
+	  <Description>The third arg sent from the StrCode32 message.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>false</AllowUIEdit>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg3">
 	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
@@ -46,10 +46,11 @@ This can be used for daisy-chaining events together, or creating an event loop.<
 	</Choice>
 	<Choice>
 	  <Name>Argument 4</Name>
-	  <Description>The first arg sent from the trigger. This can carry over the original event arg4 or a custom value.</Description>
+	  <Description>The fourth arg sent from the StrCode32 message.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
+	  <AllowUIEdit>false</AllowUIEdit>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg4">
 	    <AssignedTo xsi:type="LuaNumber" Value="-1" />

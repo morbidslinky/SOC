@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Switch Enemy Route</Name>
-  <Description>Immediately sets the patrol route of a specific enemy.
-Compatible with Soldiers, Helicopters and UAVs.
-Soldiers will transition back to their defined sneak/caution route when prompted by their command post.
-Helicopters and UAVs will retain this route across both sneak and caution phases.
+  <Name>Set Caution Route</Name>
+  <Description>Updates the route that the NPC patrols while in the caution phase.
+Compatible with soldiers and helicopters.
 Note: For most events, 'arg1' represents the GameObjectId that sent the event.</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
 end
 local tempGameObjectCommand = {
-  id = "SwitchRoute", route = |[2|STRING]|
+  id = "SetCautionRoute", route = |[2|STRING]|
 }
-if Tpp.IsEnemyHelicopter(tempGameObjectIdVal) then
-  tempGameObjectCommand = {
-    id = "SetForceRoute", route = |[2|STRING]|
-  }
-end
-if Tpp.IsUAV(tempGameObjectIdVal) then
-  tempGameObjectCommand = {
-    id = "SetPatrolRoute", route = |[2|STRING]|
-  }
-end
 GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Enemy Game Object</Name>
-	  <Description>The soldier/helicopter/UAV (their name or GameObjectId) to be re-routed</Description>
+	  <Description>The soldier/helicopter (their name or GameObjectId) to be updated</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	    <Key>Enemy Names (Targets)</Key>
@@ -35,8 +23,8 @@ GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctio
 	    <Key>Enemy Names</Key>
 	    <Key>Helicopter Names (Targets)</Key>
 	    <Key>Helicopter Names</Key>
-	    <Key>UAV Names (Targets)</Key>
-	    <Key>UAV Names</Key>
+	    <Key>Prisoner Names (Targets)</Key>
+	    <Key>Prisoner Names</Key>
 	  </ChoosableValueSetsFilter>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg1">
@@ -44,8 +32,8 @@ GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctio
 	  </Value>
 	</Choice>
 	<Choice>
-	  <Name>New Route</Name>
-	  <Description>The name of the route that the enemy will begin to patrol.</Description>
+	  <Name>Caution Route</Name>
+	  <Description>The name of the route that the NPC will patrol during the caution phase.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Route Names</Key>
 	  </ChoosableValueSetsFilter>

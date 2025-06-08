@@ -7,16 +7,10 @@
 	<Choice>
 	  <Name>Bool1</Name>
 	  <Description>The boolean on the left-hand side of the comparison.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
 	<Choice>
 	  <Name>Bool2</Name>
 	  <Description>The boolean on the right-hand side of the comparison.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Boolean Literal</Key>
 	  <Value xsi:type="LuaBoolean" Value="true" />
 	</Choice>

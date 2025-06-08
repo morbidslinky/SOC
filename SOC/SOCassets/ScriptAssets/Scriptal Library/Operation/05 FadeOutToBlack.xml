@@ -11,19 +11,13 @@ TppUI.FadeOut(|[2|NUMBER]|, |[1|STRING]|, nil, tempExceptGameStatus)</EventFunct
   <Choices>
 	<Choice>
 	  <Name>Sender</Name>
-	  <Description>When the fade out is completed, a &quot;EndFadeOut&quot; message is sent. This value will be the name of the sender.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
+	  <Description>When the fade out is completed, a "EndFadeOut" message is sent. This value will be the name of the sender.</Description>
 	  <Key>String Literal</Key>
 	  <Value xsi:type="LuaString" Value="FadeSender" />
 	</Choice>
 	<Choice>
 	  <Name>Fade-Out Time (Seconds)</Name>
 	  <Description>The amount of time in seconds before the screen is completely faded out.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowUserVariable>true</AllowUserVariable>
-	  <AllowLiteral>true</AllowLiteral>
 	  <Key>Number Literal</Key>
 	  <Value xsi:type="LuaNumber" Value="1.5" />
 	</Choice>

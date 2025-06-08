@@ -7,16 +7,11 @@
 	<Choice>
 	  <Name>User Variable</Name>
 	  <Description>The custom variable that the value will be set to.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <AllowLiteral>false</AllowLiteral>
 	</Choice>
 	<Choice>
 	  <Name>Boolean Value</Name>
 	  <Description>The value to set to the User Variable.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>false</AllowUserVariable>
 	  <Key>Boolean Literal</Key>
 	  <Value xsi:type="LuaBoolean" Value="1" />
 	</Choice>

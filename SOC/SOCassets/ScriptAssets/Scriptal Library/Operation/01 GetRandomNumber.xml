@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Set Variable To Random Number</Name>
-  <Description></Description>
+  <Description>Updates a custom number-variable to a random number within a defined range.</Description>
   <EventFunctionTemplate>|[1|NUMBER]| = math.random(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
   <Choices>
 	<Choice>
-	  <Name>Number-Variable</Name>
+	  <Name>Variable</Name>
 	  <Description>The custom variable that the random value will be set to.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
 	  <AllowLiteral>false</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
 	<Choice>
 	  <Name>From</Name>
 	  <Description>The lowest value that the random number can return.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
 	  <Value xsi:type="LuaNumber" Value="-100" />
 	</Choice>
 	<Choice>
 	  <Name>To</Name>
 	  <Description>The highest value that the random number can return.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
 	  <Value xsi:type="LuaNumber" Value="100" />
 	</Choice>

@@ -7,18 +7,12 @@
 	<Choice>
 	  <Name>Sender</Name>
 	  <Description>The name of the timer.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>String Literal</Key>
 	  <Value xsi:type="LuaString" Value="TimerSender" />
 	</Choice>
 	<Choice>
 	  <Name>Is Active</Name>
 	  <Description>Set to true to check if the timer is running. Set to false to check if the timer is not running.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
   </Choices>
 </Scriptal>

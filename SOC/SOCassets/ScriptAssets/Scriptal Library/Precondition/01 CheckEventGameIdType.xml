@@ -99,7 +99,8 @@ https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/m
 	<Choice>
 	  <Name>Type Check</Name>
 	  <Description>The function that checks the GameObject type.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
+	  <AllowLiteral>false</AllowLiteral>
+	  <AllowUserVariable>false</AllowUserVariable>
 	  <ChoosableValueSetsFilter>
 	    <Key>Type Check Functions</Key>
 	  </ChoosableValueSetsFilter>
@@ -112,9 +113,6 @@ https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/m
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg1">
 	    <AssignedTo xsi:type="LuaNumber" Value="-1" />

@@ -10,7 +10,7 @@ if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
 end
 TppMarker.EnableQuestTargetMarker(tempGameObjectIdVal)
-TppSoundDaemon.PostEvent&quot;sfx_s_enemytag_quest_tgt&quot;</EventFunctionTemplate>
+TppSoundDaemon.PostEvent"sfx_s_enemytag_quest_tgt"</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Game Object</Name>
@@ -18,9 +18,6 @@ TppSoundDaemon.PostEvent&quot;sfx_s_enemytag_quest_tgt&quot;</EventFunctionTempl
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Event Default Arguments</Key>
 	  <Value xsi:type="LuaVariable" Value="arg1">
 	    <AssignedTo xsi:type="LuaNumber" Value="-1" />

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Send Command</Name>
+  <Description>Sends any GameObject Command to any GameObject.
+See https://mgsvmoddingwiki.github.io/Commands/ for notes on various commmands.
+Also refer to _sequence.lua files from the base game's mission packs, where most of the mission-specific logic is scripted.
+Note: For most events, 'arg1' represents the GameObjectId that sent the event.
+  </Description>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Nil Value">
+	  <Value xsi:type="LuaNil"/>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+if |[3|STRING,NUMBER,BOOLEAN,TABLE,NIL]| == nil then
+  GameObject.SendCommand(tempGameObjectIdVal, |[2|TABLE]|)
+else
+  |[3|STRING,NUMBER,BOOLEAN,TABLE,NIL]| = GameObject.SendCommand(tempGameObjectIdVal, |[2|TABLE]|)
+end</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Game Object</Name>
+	  <Description>The Game Object (their name or GameObjectId) to receive the commmand.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	    <Key>Active Item Names (Targets)</Key>
+	    <Key>Active Item Names</Key>
+	    <Key>Animal Cluster Names (Targets)</Key>
+	    <Key>Animal Cluster Names</Key>
+	    <Key>Camera Names (Targets)</Key>
+	    <Key>Camera Names</Key>
+	    <Key>Enemy Names (Targets)</Key>
+	    <Key>Enemy Names (Enabled/Customized)</Key>
+	    <Key>Enemy Names</Key>
+	    <Key>GeoTrap Names</Key>
+	    <Key>Helicopter Names (Target)</Key>
+	    <Key>Helicopter Names</Key>
+	    <Key>Prisoner Names (Targets)</Key>
+	    <Key>Prisoner Names</Key>
+	    <Key>Dormant Item Names (Targets)</Key>
+	    <Key>Dormant Item Names</Key>
+	    <Key>UAV Names (Targets)</Key>
+	    <Key>UAV Names</Key>
+	    <Key>Heavy Vehicle Names (Targets)</Key>
+	    <Key>Heavy Vehicle Names</Key>
+	    <Key>Walker Gear Names (Targets)</Key>
+	    <Key>Walker Gear Names</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Value="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
+	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Command</Name>
+	  <Description>A command to the GameObject, in the form of a table. Consists of an "id" string and typically various arguments (enabled = true, route = "routeName", etc.)</Description>
+	</Choice>
+	<Choice>
+	  <Name>(Optional) Result Storage Variable</Name>
+	  <Description>Some commands return values (GetPosition, GetCurrentLife, etc.) which can be optionally stored to this variable.
+Note: Set to "nil" to disregard the return value.
+
+Warning: due to the ambiguous value type of the response, any variable type is accepted for this choice. 
+However, this may cause type inconsistencies if the command returns a mismatching value type.
+It is recommended to know exactly what type of value will be returned from the command, so that the variable type can match.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	  <ChoosableValueSetsFilter>
+	    <Key>Nil Value</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Nil Value</Key>
+	  <Value xsi:type="LuaNil"/>
+	</Choice>
+  </Choices>
+</Scriptal>

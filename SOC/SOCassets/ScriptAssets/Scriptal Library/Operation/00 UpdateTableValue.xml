@@ -7,22 +7,14 @@
 	<Choice>
 	  <Name>Table</Name>
 	  <Description>The table to be modified.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
 	<Choice>
 	  <Name>Key</Name>
 	  <Description>The key (or index) of the value to be modified.)</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
 	<Choice>
 	  <Name>Value</Name>
 	  <Description>The new value for the key.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
   </Choices>
 </Scriptal>

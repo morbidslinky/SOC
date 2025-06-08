@@ -15,10 +15,8 @@
 	  <Description>1st Text that will print to notifications</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Example Strings</Key>
+	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>String Literal</Key>
 	  <Value xsi:type="LuaString" Value="Notification Example [" />
 	</Choice>
@@ -27,10 +25,8 @@
 	  <Description>2nd Text that will print to notifications</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Example Strings</Key>
+	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
 	  <Value xsi:type="LuaNumber" Value="0" />
 	</Choice>
@@ -39,10 +35,8 @@
 	  <Description>3rd Text that will print to notifications</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Example Strings</Key>
+	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>String Literal</Key>
 	  <Value xsi:type="LuaString" Value="/" />
 	</Choice>
@@ -51,10 +45,8 @@
 	  <Description>4th Text that will print to notifications</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Example Strings</Key>
+	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>Number Literal</Key>
 	  <Value xsi:type="LuaNumber" Value="10" />
 	</Choice>
@@ -63,10 +55,8 @@
 	  <Description>5th Text that will print to notifications</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Example Strings</Key>
+	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowLiteral>true</AllowLiteral>
-	  <AllowUserVariable>true</AllowUserVariable>
 	  <Key>String Literal</Key>
 	  <Value xsi:type="LuaString" Value="]" />
 	</Choice>

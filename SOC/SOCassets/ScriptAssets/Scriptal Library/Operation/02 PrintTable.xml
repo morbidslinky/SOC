@@ -11,8 +11,6 @@ InfCore.DebugPrint(table.concat(tempStringTable))</EventFunctionTemplate>
 	<Choice>
 	  <Name>Table</Name>
 	  <Description>The index-based table that will be concatenated into a notification.</Description>
-	  <AllowUIEdit>true</AllowUIEdit>
-	  <AllowUserVariable>true</AllowUserVariable>
 	</Choice>
   </Choices>
 </Scriptal>
