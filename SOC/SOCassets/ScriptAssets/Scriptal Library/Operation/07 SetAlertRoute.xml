@@ -3,7 +3,8 @@
   <Name>Set Alert Route</Name>
   <Description>Updates the route that the NPC patrols while in the alert (combat) phase.
 Compatible with soldiers, helicopters and UAVs.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.</Description>
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)

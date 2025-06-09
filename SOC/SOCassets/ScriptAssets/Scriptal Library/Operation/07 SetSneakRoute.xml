@@ -4,8 +4,9 @@
   <Description>Updates the route that the NPC patrols while out of the caution phase.
 Compatible with soldiers, helicopters and prisoners.
 Prisoners will retain this route across both sneak and caution phases.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.
-Note: This operation does not reset prisoners to a walkable state (not force-scared, force-downed, or unlocked). Using the "Set Route" operation instead is recommended for prisoners.</Description>
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation does not reset prisoners to a walkable state (not force-scared, force-downed, or unlocked). Using the "Set Route" operation instead is recommended for prisoners.</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)

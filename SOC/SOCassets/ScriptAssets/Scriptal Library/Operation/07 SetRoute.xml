@@ -5,8 +5,9 @@
 Compatible with Soldiers, Helicopters, UAVs and Prisoners.
 Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
 UAVs and Prisoners will retain this route across both sneak and caution phases.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.
-Note: This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)

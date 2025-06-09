@@ -3,8 +3,9 @@
   <Name>Mark As Target</Name>
   <Description>Displays a Quest Target marker on the Game Object. 
 Accepts both GameObjectIds and GameObject Names.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.
-Note: This operation is purely visual and does not handle actual target logic.</Description>
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation is purely visual and does not handle actual target logic.</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)

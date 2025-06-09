@@ -3,8 +3,9 @@
   <Name>Warp</Name>
   <Description>Immediately and unceremoniously teleports the target to a new position. 
 Compatible with the player character, prisoners and vehicles.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.
-Note: The embedded Warp function was yoinked from Infinite Heaven</Description>
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- The embedded Warp function was yoinked from Infinite Heaven</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)

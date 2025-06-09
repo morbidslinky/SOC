@@ -4,7 +4,8 @@
   <Description>Sends any GameObject Command to any GameObject.
 See https://mgsvmoddingwiki.github.io/Commands/ for notes on various commmands.
 Also refer to _sequence.lua files from the base game's mission packs, where most of the mission-specific logic is scripted.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event.
   </Description>
   <EmbeddedChoosableValueSets>
 	<KeyValuesSet Key="Nil Value">
@@ -61,7 +62,8 @@ end</EventFunctionTemplate>
 	<Choice>
 	  <Name>(Optional) Result Storage Variable</Name>
 	  <Description>Some commands return values (GetPosition, GetCurrentLife, etc.) which can be optionally stored to this variable.
-Note: Set to "nil" to disregard the return value.
+
+- Set to "nil" to disregard the return value.
 
 Warning: due to the ambiguous value type of the response, any variable type is accepted for this choice. 
 However, this may cause type inconsistencies if the command returns a mismatching value type.

@@ -3,8 +3,9 @@
   <Name>Check GameObjectId</Name>
   <Description>Checks to see if a number matches a GameObjectId. 
 Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
-Note: For most events, 'arg1' represents the GameObjectId that sent the event.
-Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
 https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
