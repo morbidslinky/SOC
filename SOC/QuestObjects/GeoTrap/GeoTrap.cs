@@ -29,6 +29,8 @@ namespace SOC.QuestObjects.GeoTrap
             zScale = box.textBox_zscale.Text;
             yScale = box.textBox_yscale.Text;
 
+            isPlayerOnlyTrigger = box.checkBoxPlayerOnlyTrigger.Checked;
+
             position = new Position(new Coordinates(box.textBox_xcoord.Text, box.textBox_ycoord.Text, box.textBox_zcoord.Text), new Rotation(box.textBox_rot.Text));
         }
 
@@ -62,6 +64,9 @@ namespace SOC.QuestObjects.GeoTrap
 
         [XmlElement]
         public string geoTrap { get; set; } = "GeoTrap_0";
+
+        [XmlElement]
+        public bool isPlayerOnlyTrigger { get; set; } = false;
 
         [XmlElement]
         public string type { get; set; } = "box";

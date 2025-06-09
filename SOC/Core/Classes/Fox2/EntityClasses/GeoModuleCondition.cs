@@ -9,11 +9,12 @@ namespace SOC.Classes.Fox2
     class GeoModuleCondition : Fox2EntityClass
     {
         private string name;
+        private bool isPlayerTriggerOnly;
         private Fox2EntityClass dataSet, transform, checkCallback, parent;
 
-        public GeoModuleCondition(string _name, Fox2EntityClass _dataSet, Fox2EntityClass _parent)
+        public GeoModuleCondition(string _name, bool _isPlayerTriggerOnly, Fox2EntityClass _dataSet, Fox2EntityClass _parent)
         {
-            name = _name; dataSet = _dataSet; parent = _parent;
+            name = _name; dataSet = _dataSet; parent = _parent; isPlayerTriggerOnly = _isPlayerTriggerOnly;
         }
 
         public void SetTransform(Fox2EntityClass t)
@@ -69,7 +70,7 @@ namespace SOC.Classes.Fox2
               <value>true</value>
             </property>
             <property name=""checkFuncNames"" type=""String"" container=""DynamicArray"" arraySize=""1"">
-              <value>IsPlayer</value>
+              <value>{(isPlayerTriggerOnly ? "IsPlayer" : "")}</value>
             </property>
             <property name=""execFuncNames"" type=""String"" container=""DynamicArray"" />
             <property name=""checkCallbackDataElements"" type=""EntityPtr"" container=""DynamicArray"" arraySize=""1"">

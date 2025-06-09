@@ -20,10 +20,11 @@ namespace SOC.QuestObjects.GeoTrap
                 var uniqueGeoTraps = shapes.Select(shape => shape.geoTrap).Distinct();
                 foreach (string geoTrapName in uniqueGeoTraps)
                 {
+                    var isPlayerOnly = (shapes.Any(shape => shape.geoTrap == geoTrapName && shape.isPlayerOnlyTrigger));
                     Classes.Fox2.GeoTrap geoTrap = new Classes.Fox2.GeoTrap(geoTrapName, dataSet);
                     Transform geoTrapTransform = new Transform(geoTrap, new Position(new Coordinates("0", "0", "0"), new Rotation("0")));
 
-                    GeoModuleCondition moduleCondition = new GeoModuleCondition(geoTrapName + "_Condition", dataSet, geoTrap);
+                    GeoModuleCondition moduleCondition = new GeoModuleCondition(geoTrapName + "_Condition", isPlayerOnly, dataSet, geoTrap);
                     Transform moduleConditionTransform = new Transform(moduleCondition, new Position(new Coordinates("0", "0", "0"), new Rotation("0")));
                     TppTrapCheckIsPlayerCallbackDataElement checkCallback = new TppTrapCheckIsPlayerCallbackDataElement(moduleCondition);
                     moduleCondition.SetTransform(moduleConditionTransform);

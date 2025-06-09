@@ -14,10 +14,12 @@ namespace SOC.QuestObjects.GeoTrap
 {
     public partial class GeoTrapBox : QuestObjectBox
     {
-        public int ID;
+        public int ID; GeoTrapsControlPanel ParentPanel;
+        public bool _controlUpdate = false;
 
-        public GeoTrapBox(GeoTrap qObject)
+        public GeoTrapBox(GeoTrap qObject, GeoTrapsControlPanel parentPanel)
         {
+            ParentPanel = parentPanel;
             InitializeComponent();
             ID = qObject.ID;
             groupBox_main.Text = qObject.GetObjectName();
@@ -32,15 +34,34 @@ namespace SOC.QuestObjects.GeoTrap
             else
                 radioButton_sphere.Checked = true;
 
-            comboBox_geotrap.Items.AddRange(new string[]
+            for (int i = 0; i < 100; i++)
             {
-                "GeoTrap_0", "GeoTrap_1", "GeoTrap_2", "GeoTrap_3", "GeoTrap_4", "GeoTrap_5", "GeoTrap_6", "GeoTrap_7", "GeoTrap_8", "GeoTrap_9",
-            });
+                comboBox_geotrap.Items.Add($"GeoTrap_{i}");
+            }
+
             comboBox_geotrap.Text = qObject.geoTrap;
+
+            checkBoxPlayerOnlyTrigger.Checked = qObject.isPlayerOnlyTrigger;
 
             textBox_xscale.Text = qObject.xScale;
             textBox_yscale.Text = qObject.yScale;
             textBox_zscale.Text = qObject.zScale;
+        }
+
+        private void checkBoxPlayerOnlyTrigger_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_controlUpdate) return;
+
+            _controlUpdate = true;
+            ParentPanel.SetPlayerOnlyTriggerForGeoTrap((string)comboBox_geotrap.SelectedItem, checkBoxPlayerOnlyTrigger.Checked);
+            _controlUpdate = false;
+        }
+
+        private void comboBox_geotrap_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _controlUpdate = true;
+            checkBoxPlayerOnlyTrigger.Checked = ParentPanel.GetPlayerOnlyTrigger((string)comboBox_geotrap.SelectedItem, this);
+            _controlUpdate = false;
         }
 
         public override QuestObject getQuestObject()
