@@ -5,7 +5,7 @@
 See https://mgsvmoddingwiki.github.io/Commands/ for notes on various commmands.
 Also refer to _sequence.lua files from the base game's mission packs, where most of the mission-specific logic is scripted.
 
-- For most events, 'arg1' represents the GameObjectId that sent the event.
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
   </Description>
   <EmbeddedChoosableValueSets>
 	<KeyValuesSet Key="Nil Value">

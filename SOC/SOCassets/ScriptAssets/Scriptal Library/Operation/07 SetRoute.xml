@@ -8,31 +8,7 @@ UAVs and Prisoners will retain this route across both sneak and caution phases.
 
 - For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
 - This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
-  <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
-if type(tempGameObjectIdVal) == "string" then
-  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
-end
-local tempGameObjectCommand = {
-  id = "SwitchRoute", route = |[2|STRING]|
-}
-if Tpp.IsEnemyHelicopter(tempGameObjectIdVal) then
-  tempGameObjectCommand = {
-    id = "RequestRoute", route = |[2|STRING]|
-  }
-elseif Tpp.IsUAV(tempGameObjectIdVal) then
-  tempGameObjectCommand = {
-    id = "SetPatrolRoute", route = |[2|STRING]|
-  }
-elseif Tpp.IsHostage(tempGameObjectIdVal) then
-  tempGameObjectCommand = {
-    id = "SetSneakRoute", route = |[2|STRING]|
-  }
-  GameObject.SendCommand(tempGameObjectIdVal, { id = "SetForceScared", scared = false })
-  GameObject.SendCommand(tempGameObjectIdVal, { id = "SetEverDown", enabled = false })
-  GameObject.SendCommand(tempGameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
-end
-
-GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctionTemplate>
+  <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Game Object</Name>
@@ -63,4 +39,39 @@ GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctio
 	  <Key>Route Names</Key>
 	</Choice>
   </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Value="gameObjectIdVal"/>
+		  <Parameter xsi:type="LuaVariable" Value="routeName"/>
+	    </Parameters>
+	    <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
 </Scriptal>

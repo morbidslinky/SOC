@@ -116,12 +116,6 @@
 	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
 	    <TableKeyPath>
 		  <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-		  <Key xsi:type="LuaString" Value="RESULT_RANK_S" />
-		</TableKeyPath>
-	  </Value>
-	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-	    <TableKeyPath>
-		  <Key xsi:type="LuaString" Value="COMMON_RADIO" />
 		  <Key xsi:type="LuaString" Value="RESULT_RANK_A" />
 		</TableKeyPath>
 	  </Value>

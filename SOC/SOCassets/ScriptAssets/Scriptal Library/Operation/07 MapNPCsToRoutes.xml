@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Map NPC Table to Route Table</Name>
+  <Description>Sets NPCs from an index-based table to routes from another index-based table.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners, depending on the Route Type Choice.
+  
+- If the NPC Table contains more names than the Route Table contains routes, the remaining NPCs will be mapped to random routes (NPCs can share routes).
+- If more routes exist than NPCs, all NPCs will be uniquely mapped to random routes (no sharing).
+- Routes can be applied as Sneak, Caution, Alert, Immediate, Sneak+Caution or All route types.</Description>
+  <EventFunctionTemplate>qvars.MapSoldierTableToRouteTable(|[1|TABLE]|, |[2|TABLE]|, |[3|STRING]|)</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+    <KeyValuesSet Key="Route Type Options">
+      <Value xsi:type="LuaString" Value="Sneak"/>
+      <Value xsi:type="LuaString" Value="Caution"/>
+      <Value xsi:type="LuaString" Value="Alert"/>
+      <Value xsi:type="LuaString" Value="Immediate"/>
+      <Value xsi:type="LuaString" Value="Sneak+Caution"/>
+      <Value xsi:type="LuaString" Value="All"/>
+    </KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+    <Choice>
+      <Name>NPC Table</Name>
+      <Description>An index-based table containing NPCs (Names or GameObjectIds) to be mapped to routes.</Description>
+      <AllowLiteral>false</AllowLiteral>
+    </Choice>
+    <Choice>
+      <Name>Route Names Table</Name>
+      <Description>An index-based table containing route names to assign to the NPCs.</Description>
+      <AllowLiteral>false</AllowLiteral>
+    </Choice>
+    <Choice>
+      <Name>Route Type</Name>
+      <Description>The type of route mapping to apply:
+- Sneak: Update 'Sneak' routes. Compatible with All NPCs (unless prisoners are in an unwalkable state. Use 'Immediate' to force walking).
+- Caution: Update 'Caution' routes. Prisoners and UAVs are not influenced by this command.
+- Alert: Update 'Alert' routes. Prisoners are not influenced by this command.
+- Immediate: Immediately switch NPCs to temporary routes. Compatible with All NPCs.
+- Sneak+Caution: Update 'Sneak' and 'Caution' routes. NPCs will retain their respective route across both sneak and caution phases.
+- All: Apply routes to all phases. NPCs will retain their respective route across all phases.</Description>
+      <ChoosableValueSetsFilter>
+        <Key>Route Type Options</Key>
+      </ChoosableValueSetsFilter>
+      <AllowLiteral>false</AllowLiteral>
+      <AllowUserVariable>false</AllowUserVariable>
+      <Key>Route Type Options</Key>
+      <Value xsi:type="LuaString" Value="Sneak"/>
+    </Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+	<qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Value="gameObjectIdVal"/>
+		  <Parameter xsi:type="LuaVariable" Value="routeName"/>
+	    </Parameters>
+	    <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+	  </Value>
+    </qvarsDefinition>
+	<qvarsDefinition Extrude="true">
+	  <Key xsi:type="LuaString" Value="MapSoldierTableToRouteTable" />
+	  <Value xsi:type="LuaFunction">
+	    <Parameters>
+		  <Parameter xsi:type="LuaVariable" Value="npcTable"/>
+		  <Parameter xsi:type="LuaVariable" Value="routeTable"/>
+		  <Parameter xsi:type="LuaVariable" Value="routeType"/>
+	    </Parameters>
+	    <Template>local npcCount = #npcTable
+local routeCount = #routeTable
+
+local availableRoutes = {}
+for i = 1, routeCount do
+  availableRoutes[i] = i
+end
+
+local function shuffleArray(arr)
+  for i = #arr, 2, -1 do
+    local j = math.random(i)
+    arr[i], arr[j] = arr[j], arr[i]
+  end
+end
+
+for i = 1, npcCount do
+  local npcName = npcTable[i]
+  local routeName
+  
+  if i &lt;= routeCount then
+    routeName = routeTable[i]
+  else
+    local randomIndex = math.random(1, routeCount)
+    routeName = routeTable[randomIndex]
+  end
+  
+  if npcCount &lt; routeCount and i &lt;= npcCount then
+    if #availableRoutes == 0 then
+      routeName = routeTable[math.random(1, routeCount)]
+    else
+      if i == 1 then
+        shuffleArray(availableRoutes)
+      end
+      local routeIndex = availableRoutes[i]
+      routeName = routeTable[routeIndex]
+    end
+  end
+  
+  local gameObjectIdVal = npcName
+  if type(gameObjectIdVal) == "string" then
+    gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+  end
+  
+  if routeType == "Sneak" or routeType == "Sneak+Caution" or routeType == "All" then
+    if Tpp.IsUAV(gameObjectIdVal) then
+      GameObject.SendCommand(gameObjectIdVal, { id = "SetPatrolRoute", route = routeName })
+	else
+      GameObject.SendCommand(gameObjectIdVal, { id = "SetSneakRoute", route = routeName })
+	end
+  end
+  if routeType == "Caution" or routeType == "Sneak+Caution" or routeType == "All" then
+    GameObject.SendCommand(gameObjectIdVal, { id = "SetCautionRoute", route = routeName })
+  end
+  if routeType == "Alert" or routeType == "All" then
+    if Tpp.IsUAV(gameObjectIdVal) then
+      GameObject.SendCommand(gameObjectIdVal, { id = "SetCombatRoute", route = routeName })
+    else
+      GameObject.SendCommand(gameObjectIdVal, { id = "SetAlertRoute", route = routeName })
+	end
+  end
+  if routeType == "Immediate" then
+    qvars.SetImmediateRoute(gameObjectIdVal, routeName)
+  end
+end</Template>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>
