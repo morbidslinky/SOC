@@ -82,9 +82,10 @@
             // 
             checkBoxPlayerOnlyTrigger.AutoSize = true;
             checkBoxPlayerOnlyTrigger.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            checkBoxPlayerOnlyTrigger.Font = new System.Drawing.Font("Consolas", 9F);
             checkBoxPlayerOnlyTrigger.Location = new System.Drawing.Point(99, 180);
             checkBoxPlayerOnlyTrigger.Name = "checkBoxPlayerOnlyTrigger";
-            checkBoxPlayerOnlyTrigger.Size = new System.Drawing.Size(152, 19);
+            checkBoxPlayerOnlyTrigger.Size = new System.Drawing.Size(194, 18);
             checkBoxPlayerOnlyTrigger.TabIndex = 29;
             checkBoxPlayerOnlyTrigger.Text = "Only Player Can Trigger:";
             checkBoxPlayerOnlyTrigger.UseVisualStyleBackColor = true;
@@ -93,28 +94,31 @@
             // textBox_zscale
             // 
             textBox_zscale.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            textBox_zscale.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_zscale.Location = new System.Drawing.Point(239, 149);
             textBox_zscale.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_zscale.Name = "textBox_zscale";
-            textBox_zscale.Size = new System.Drawing.Size(62, 23);
+            textBox_zscale.Size = new System.Drawing.Size(62, 22);
             textBox_zscale.TabIndex = 10;
             // 
             // textBox_yscale
             // 
             textBox_yscale.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            textBox_yscale.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_yscale.Location = new System.Drawing.Point(169, 149);
             textBox_yscale.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_yscale.Name = "textBox_yscale";
-            textBox_yscale.Size = new System.Drawing.Size(62, 23);
+            textBox_yscale.Size = new System.Drawing.Size(62, 22);
             textBox_yscale.TabIndex = 9;
             // 
             // textBox_xscale
             // 
             textBox_xscale.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            textBox_xscale.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_xscale.Location = new System.Drawing.Point(99, 149);
             textBox_xscale.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_xscale.Name = "textBox_xscale";
-            textBox_xscale.Size = new System.Drawing.Size(62, 23);
+            textBox_xscale.Size = new System.Drawing.Size(62, 22);
             textBox_xscale.TabIndex = 8;
             // 
             // label5
@@ -130,10 +134,11 @@
             // radioButton_sphere
             // 
             radioButton_sphere.AutoSize = true;
+            radioButton_sphere.Font = new System.Drawing.Font("Consolas", 9F);
             radioButton_sphere.Location = new System.Drawing.Point(200, 87);
             radioButton_sphere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButton_sphere.Name = "radioButton_sphere";
-            radioButton_sphere.Size = new System.Drawing.Size(61, 19);
+            radioButton_sphere.Size = new System.Drawing.Size(67, 18);
             radioButton_sphere.TabIndex = 6;
             radioButton_sphere.TabStop = true;
             radioButton_sphere.Text = "Sphere";
@@ -142,10 +147,11 @@
             // radioButton_box
             // 
             radioButton_box.AutoSize = true;
+            radioButton_box.Font = new System.Drawing.Font("Consolas", 9F);
             radioButton_box.Location = new System.Drawing.Point(99, 87);
             radioButton_box.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButton_box.Name = "radioButton_box";
-            radioButton_box.Size = new System.Drawing.Size(45, 19);
+            radioButton_box.Size = new System.Drawing.Size(46, 18);
             radioButton_box.TabIndex = 5;
             radioButton_box.TabStop = true;
             radioButton_box.Text = "Box";
@@ -185,21 +191,23 @@
             // 
             comboBox_geotrap.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBox_geotrap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_geotrap.Font = new System.Drawing.Font("Consolas", 9F);
             comboBox_geotrap.FormattingEnabled = true;
             comboBox_geotrap.Location = new System.Drawing.Point(99, 118);
             comboBox_geotrap.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBox_geotrap.Name = "comboBox_geotrap";
-            comboBox_geotrap.Size = new System.Drawing.Size(202, 23);
+            comboBox_geotrap.Size = new System.Drawing.Size(202, 22);
             comboBox_geotrap.TabIndex = 7;
             comboBox_geotrap.SelectedIndexChanged += comboBox_geotrap_SelectedIndexChanged;
             // 
             // textBox_rot
             // 
             textBox_rot.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBox_rot.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_rot.Location = new System.Drawing.Point(99, 52);
             textBox_rot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_rot.Name = "textBox_rot";
-            textBox_rot.Size = new System.Drawing.Size(202, 23);
+            textBox_rot.Size = new System.Drawing.Size(202, 22);
             textBox_rot.TabIndex = 4;
             // 
             // label1
@@ -215,28 +223,31 @@
             // textBox_zcoord
             // 
             textBox_zcoord.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            textBox_zcoord.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_zcoord.Location = new System.Drawing.Point(239, 22);
             textBox_zcoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_zcoord.Name = "textBox_zcoord";
-            textBox_zcoord.Size = new System.Drawing.Size(62, 23);
+            textBox_zcoord.Size = new System.Drawing.Size(62, 22);
             textBox_zcoord.TabIndex = 3;
             // 
             // textBox_ycoord
             // 
             textBox_ycoord.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            textBox_ycoord.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_ycoord.Location = new System.Drawing.Point(169, 22);
             textBox_ycoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_ycoord.Name = "textBox_ycoord";
-            textBox_ycoord.Size = new System.Drawing.Size(62, 23);
+            textBox_ycoord.Size = new System.Drawing.Size(62, 22);
             textBox_ycoord.TabIndex = 2;
             // 
             // textBox_xcoord
             // 
             textBox_xcoord.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            textBox_xcoord.Font = new System.Drawing.Font("Consolas", 9F);
             textBox_xcoord.Location = new System.Drawing.Point(99, 22);
             textBox_xcoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox_xcoord.Name = "textBox_xcoord";
-            textBox_xcoord.Size = new System.Drawing.Size(62, 23);
+            textBox_xcoord.Size = new System.Drawing.Size(62, 22);
             textBox_xcoord.TabIndex = 1;
             // 
             // GeoTrapBox

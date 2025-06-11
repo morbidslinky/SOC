@@ -28,308 +28,339 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkBox_balaclava = new System.Windows.Forms.CheckBox();
-            this.checkBox_zombie = new System.Windows.Forms.CheckBox();
-            this.groupBox_main = new System.Windows.Forms.GroupBox();
-            this.comboBox_power = new System.Windows.Forms.ComboBox();
-            this.button_removepower = new System.Windows.Forms.Button();
-            this.label_power = new System.Windows.Forms.Label();
-            this.comboBox_skill = new System.Windows.Forms.ComboBox();
-            this.listBox_power = new System.Windows.Forms.ListBox();
-            this.label_skill = new System.Windows.Forms.Label();
-            this.comboBox_staff = new System.Windows.Forms.ComboBox();
-            this.label_staff = new System.Windows.Forms.Label();
-            this.comboBox_body = new System.Windows.Forms.ComboBox();
-            this.comboBox_cautionroute = new System.Windows.Forms.ComboBox();
-            this.label_cautionroute = new System.Windows.Forms.Label();
-            this.comboBox_sneakroute = new System.Windows.Forms.ComboBox();
-            this.label_sneakroute = new System.Windows.Forms.Label();
-            this.label_body = new System.Windows.Forms.Label();
-            this.checkBox_target = new System.Windows.Forms.CheckBox();
-            this.checkBox_armor = new System.Windows.Forms.CheckBox();
-            this.checkBox_spawn = new System.Windows.Forms.CheckBox();
-            this.button_SneakToCaution = new System.Windows.Forms.Button();
-            this.button_CautionToSneak = new System.Windows.Forms.Button();
-            this.button_SwapRoutes = new System.Windows.Forms.Button();
-            this.groupBox_main.SuspendLayout();
-            this.SuspendLayout();
+            checkBox_balaclava = new System.Windows.Forms.CheckBox();
+            checkBox_zombie = new System.Windows.Forms.CheckBox();
+            groupBox_main = new System.Windows.Forms.GroupBox();
+            comboBox_power = new System.Windows.Forms.ComboBox();
+            button_removepower = new System.Windows.Forms.Button();
+            label_power = new System.Windows.Forms.Label();
+            comboBox_skill = new System.Windows.Forms.ComboBox();
+            listBox_power = new System.Windows.Forms.ListBox();
+            label_skill = new System.Windows.Forms.Label();
+            comboBox_staff = new System.Windows.Forms.ComboBox();
+            label_staff = new System.Windows.Forms.Label();
+            comboBox_body = new System.Windows.Forms.ComboBox();
+            comboBox_cautionroute = new System.Windows.Forms.ComboBox();
+            label_cautionroute = new System.Windows.Forms.Label();
+            comboBox_sneakroute = new System.Windows.Forms.ComboBox();
+            label_sneakroute = new System.Windows.Forms.Label();
+            label_body = new System.Windows.Forms.Label();
+            checkBox_target = new System.Windows.Forms.CheckBox();
+            checkBox_armor = new System.Windows.Forms.CheckBox();
+            checkBox_spawn = new System.Windows.Forms.CheckBox();
+            button_SneakToCaution = new System.Windows.Forms.Button();
+            button_CautionToSneak = new System.Windows.Forms.Button();
+            button_SwapRoutes = new System.Windows.Forms.Button();
+            groupBox_main.SuspendLayout();
+            SuspendLayout();
             // 
             // checkBox_balaclava
             // 
-            this.checkBox_balaclava.AutoSize = true;
-            this.checkBox_balaclava.Location = new System.Drawing.Point(171, 40);
-            this.checkBox_balaclava.Name = "checkBox_balaclava";
-            this.checkBox_balaclava.Size = new System.Drawing.Size(73, 17);
-            this.checkBox_balaclava.TabIndex = 0;
-            this.checkBox_balaclava.TabStop = false;
-            this.checkBox_balaclava.Text = "Balaclava";
-            this.checkBox_balaclava.UseVisualStyleBackColor = true;
-            this.checkBox_balaclava.Click += new System.EventHandler(this.checkBox_balaclava_Click);
+            checkBox_balaclava.AutoSize = true;
+            checkBox_balaclava.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_balaclava.Location = new System.Drawing.Point(200, 46);
+            checkBox_balaclava.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_balaclava.Name = "checkBox_balaclava";
+            checkBox_balaclava.Size = new System.Drawing.Size(89, 18);
+            checkBox_balaclava.TabIndex = 0;
+            checkBox_balaclava.TabStop = false;
+            checkBox_balaclava.Text = "Balaclava";
+            checkBox_balaclava.UseVisualStyleBackColor = true;
+            checkBox_balaclava.Click += checkBox_balaclava_Click;
             // 
             // checkBox_zombie
             // 
-            this.checkBox_zombie.AutoSize = true;
-            this.checkBox_zombie.Location = new System.Drawing.Point(85, 41);
-            this.checkBox_zombie.Name = "checkBox_zombie";
-            this.checkBox_zombie.Size = new System.Drawing.Size(61, 17);
-            this.checkBox_zombie.TabIndex = 0;
-            this.checkBox_zombie.TabStop = false;
-            this.checkBox_zombie.Text = "Zombie";
-            this.checkBox_zombie.UseVisualStyleBackColor = true;
+            checkBox_zombie.AutoSize = true;
+            checkBox_zombie.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_zombie.Location = new System.Drawing.Point(99, 47);
+            checkBox_zombie.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_zombie.Name = "checkBox_zombie";
+            checkBox_zombie.Size = new System.Drawing.Size(68, 18);
+            checkBox_zombie.TabIndex = 0;
+            checkBox_zombie.TabStop = false;
+            checkBox_zombie.Text = "Zombie";
+            checkBox_zombie.UseVisualStyleBackColor = true;
             // 
             // groupBox_main
             // 
-            this.groupBox_main.BackColor = System.Drawing.Color.DarkGray;
-            this.groupBox_main.Controls.Add(this.comboBox_power);
-            this.groupBox_main.Controls.Add(this.button_removepower);
-            this.groupBox_main.Controls.Add(this.label_power);
-            this.groupBox_main.Controls.Add(this.comboBox_skill);
-            this.groupBox_main.Controls.Add(this.listBox_power);
-            this.groupBox_main.Controls.Add(this.label_skill);
-            this.groupBox_main.Controls.Add(this.comboBox_staff);
-            this.groupBox_main.Controls.Add(this.label_staff);
-            this.groupBox_main.Controls.Add(this.comboBox_body);
-            this.groupBox_main.Controls.Add(this.comboBox_cautionroute);
-            this.groupBox_main.Controls.Add(this.label_cautionroute);
-            this.groupBox_main.Controls.Add(this.comboBox_sneakroute);
-            this.groupBox_main.Controls.Add(this.label_sneakroute);
-            this.groupBox_main.Controls.Add(this.label_body);
-            this.groupBox_main.Controls.Add(this.checkBox_target);
-            this.groupBox_main.Controls.Add(this.checkBox_armor);
-            this.groupBox_main.Controls.Add(this.checkBox_spawn);
-            this.groupBox_main.Controls.Add(this.checkBox_zombie);
-            this.groupBox_main.Controls.Add(this.checkBox_balaclava);
-            this.groupBox_main.Controls.Add(this.button_SneakToCaution);
-            this.groupBox_main.Controls.Add(this.button_CautionToSneak);
-            this.groupBox_main.Controls.Add(this.button_SwapRoutes);
-            this.groupBox_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox_main.Location = new System.Drawing.Point(0, 0);
-            this.groupBox_main.Name = "groupBox_main";
-            this.groupBox_main.Size = new System.Drawing.Size(268, 319);
-            this.groupBox_main.TabIndex = 0;
-            this.groupBox_main.TabStop = false;
-            this.groupBox_main.Text = "EnemyBox";
+            groupBox_main.BackColor = System.Drawing.Color.DarkGray;
+            groupBox_main.Controls.Add(comboBox_power);
+            groupBox_main.Controls.Add(button_removepower);
+            groupBox_main.Controls.Add(label_power);
+            groupBox_main.Controls.Add(comboBox_skill);
+            groupBox_main.Controls.Add(listBox_power);
+            groupBox_main.Controls.Add(label_skill);
+            groupBox_main.Controls.Add(comboBox_staff);
+            groupBox_main.Controls.Add(label_staff);
+            groupBox_main.Controls.Add(comboBox_body);
+            groupBox_main.Controls.Add(comboBox_cautionroute);
+            groupBox_main.Controls.Add(label_cautionroute);
+            groupBox_main.Controls.Add(comboBox_sneakroute);
+            groupBox_main.Controls.Add(label_sneakroute);
+            groupBox_main.Controls.Add(label_body);
+            groupBox_main.Controls.Add(checkBox_target);
+            groupBox_main.Controls.Add(checkBox_armor);
+            groupBox_main.Controls.Add(checkBox_spawn);
+            groupBox_main.Controls.Add(checkBox_zombie);
+            groupBox_main.Controls.Add(checkBox_balaclava);
+            groupBox_main.Controls.Add(button_SneakToCaution);
+            groupBox_main.Controls.Add(button_CautionToSneak);
+            groupBox_main.Controls.Add(button_SwapRoutes);
+            groupBox_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBox_main.Location = new System.Drawing.Point(0, 0);
+            groupBox_main.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_main.Name = "groupBox_main";
+            groupBox_main.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_main.Size = new System.Drawing.Size(313, 368);
+            groupBox_main.TabIndex = 0;
+            groupBox_main.TabStop = false;
+            groupBox_main.Text = "EnemyBox";
             // 
             // comboBox_power
             // 
-            this.comboBox_power.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_power.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_power.FormattingEnabled = true;
-            this.comboBox_power.Location = new System.Drawing.Point(85, 127);
-            this.comboBox_power.Name = "comboBox_power";
-            this.comboBox_power.Size = new System.Drawing.Size(174, 21);
-            this.comboBox_power.TabIndex = 7;
-            this.comboBox_power.SelectedIndexChanged += new System.EventHandler(this.comboBox_power_selectedIndexChanged);
+            comboBox_power.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_power.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_power.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_power.FormattingEnabled = true;
+            comboBox_power.Location = new System.Drawing.Point(99, 147);
+            comboBox_power.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_power.Name = "comboBox_power";
+            comboBox_power.Size = new System.Drawing.Size(202, 22);
+            comboBox_power.TabIndex = 7;
+            comboBox_power.SelectedIndexChanged += comboBox_power_selectedIndexChanged;
             // 
             // button_removepower
             // 
-            this.button_removepower.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_removepower.Location = new System.Drawing.Point(204, 212);
-            this.button_removepower.Name = "button_removepower";
-            this.button_removepower.Size = new System.Drawing.Size(55, 23);
-            this.button_removepower.TabIndex = 10;
-            this.button_removepower.Text = "Remove";
-            this.button_removepower.UseVisualStyleBackColor = true;
-            this.button_removepower.Click += new System.EventHandler(this.button_removepower_Click);
+            button_removepower.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            button_removepower.Location = new System.Drawing.Point(238, 245);
+            button_removepower.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_removepower.Name = "button_removepower";
+            button_removepower.Size = new System.Drawing.Size(64, 27);
+            button_removepower.TabIndex = 10;
+            button_removepower.Text = "Remove";
+            button_removepower.UseVisualStyleBackColor = true;
+            button_removepower.Click += button_removepower_Click;
             // 
             // label_power
             // 
-            this.label_power.Location = new System.Drawing.Point(3, 131);
-            this.label_power.Name = "label_power";
-            this.label_power.Size = new System.Drawing.Size(76, 13);
-            this.label_power.TabIndex = 19;
-            this.label_power.Text = "Gear | Tactics:";
-            this.label_power.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label_power.Location = new System.Drawing.Point(4, 151);
+            label_power.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_power.Name = "label_power";
+            label_power.Size = new System.Drawing.Size(89, 15);
+            label_power.TabIndex = 19;
+            label_power.Text = "Gear | Tactics:";
+            label_power.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_skill
             // 
-            this.comboBox_skill.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_skill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_skill.FormattingEnabled = true;
-            this.comboBox_skill.Location = new System.Drawing.Point(85, 292);
-            this.comboBox_skill.Name = "comboBox_skill";
-            this.comboBox_skill.Size = new System.Drawing.Size(174, 21);
-            this.comboBox_skill.TabIndex = 13;
+            comboBox_skill.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_skill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_skill.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_skill.FormattingEnabled = true;
+            comboBox_skill.Location = new System.Drawing.Point(99, 337);
+            comboBox_skill.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_skill.Name = "comboBox_skill";
+            comboBox_skill.Size = new System.Drawing.Size(202, 22);
+            comboBox_skill.TabIndex = 13;
             // 
             // listBox_power
             // 
-            this.listBox_power.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox_power.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox_power.FormattingEnabled = true;
-            this.listBox_power.Location = new System.Drawing.Point(85, 152);
-            this.listBox_power.Name = "listBox_power";
-            this.listBox_power.Size = new System.Drawing.Size(174, 54);
-            this.listBox_power.TabIndex = 8;
-            this.listBox_power.SelectedIndexChanged += new System.EventHandler(this.listBox_power_selectedIndexChanged);
+            listBox_power.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            listBox_power.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            listBox_power.Font = new System.Drawing.Font("Consolas", 9F);
+            listBox_power.FormattingEnabled = true;
+            listBox_power.ItemHeight = 14;
+            listBox_power.Location = new System.Drawing.Point(99, 175);
+            listBox_power.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            listBox_power.Name = "listBox_power";
+            listBox_power.Size = new System.Drawing.Size(203, 58);
+            listBox_power.TabIndex = 8;
+            listBox_power.SelectedIndexChanged += listBox_power_selectedIndexChanged;
             // 
             // label_skill
             // 
-            this.label_skill.Location = new System.Drawing.Point(3, 295);
-            this.label_skill.Name = "label_skill";
-            this.label_skill.Size = new System.Drawing.Size(76, 13);
-            this.label_skill.TabIndex = 16;
-            this.label_skill.Text = "Skill:";
-            this.label_skill.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label_skill.Location = new System.Drawing.Point(4, 340);
+            label_skill.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_skill.Name = "label_skill";
+            label_skill.Size = new System.Drawing.Size(89, 15);
+            label_skill.TabIndex = 16;
+            label_skill.Text = "Skill:";
+            label_skill.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_staff
             // 
-            this.comboBox_staff.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_staff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_staff.FormattingEnabled = true;
-            this.comboBox_staff.Location = new System.Drawing.Point(85, 267);
-            this.comboBox_staff.Name = "comboBox_staff";
-            this.comboBox_staff.Size = new System.Drawing.Size(174, 21);
-            this.comboBox_staff.TabIndex = 12;
+            comboBox_staff.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_staff.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_staff.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_staff.FormattingEnabled = true;
+            comboBox_staff.Location = new System.Drawing.Point(99, 308);
+            comboBox_staff.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_staff.Name = "comboBox_staff";
+            comboBox_staff.Size = new System.Drawing.Size(202, 22);
+            comboBox_staff.TabIndex = 12;
             // 
             // label_staff
             // 
-            this.label_staff.Location = new System.Drawing.Point(3, 270);
-            this.label_staff.Name = "label_staff";
-            this.label_staff.Size = new System.Drawing.Size(76, 13);
-            this.label_staff.TabIndex = 14;
-            this.label_staff.Text = "Staff Type:";
-            this.label_staff.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label_staff.Location = new System.Drawing.Point(4, 312);
+            label_staff.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_staff.Name = "label_staff";
+            label_staff.Size = new System.Drawing.Size(89, 15);
+            label_staff.TabIndex = 14;
+            label_staff.Text = "Staff Type:";
+            label_staff.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_body
             // 
-            this.comboBox_body.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_body.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_body.FormattingEnabled = true;
-            this.comboBox_body.Location = new System.Drawing.Point(85, 242);
-            this.comboBox_body.Name = "comboBox_body";
-            this.comboBox_body.Size = new System.Drawing.Size(174, 21);
-            this.comboBox_body.TabIndex = 11;
+            comboBox_body.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_body.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_body.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_body.FormattingEnabled = true;
+            comboBox_body.Location = new System.Drawing.Point(99, 279);
+            comboBox_body.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_body.Name = "comboBox_body";
+            comboBox_body.Size = new System.Drawing.Size(202, 22);
+            comboBox_body.TabIndex = 11;
             // 
             // comboBox_cautionroute
             // 
-            this.comboBox_cautionroute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_cautionroute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_cautionroute.FormattingEnabled = true;
-            this.comboBox_cautionroute.Location = new System.Drawing.Point(102, 91);
-            this.comboBox_cautionroute.Name = "comboBox_cautionroute";
-            this.comboBox_cautionroute.Size = new System.Drawing.Size(140, 21);
-            this.comboBox_cautionroute.TabIndex = 4;
+            comboBox_cautionroute.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_cautionroute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_cautionroute.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_cautionroute.FormattingEnabled = true;
+            comboBox_cautionroute.Location = new System.Drawing.Point(119, 105);
+            comboBox_cautionroute.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_cautionroute.Name = "comboBox_cautionroute";
+            comboBox_cautionroute.Size = new System.Drawing.Size(163, 22);
+            comboBox_cautionroute.TabIndex = 4;
             // 
             // label_cautionroute
             // 
-            this.label_cautionroute.Location = new System.Drawing.Point(3, 94);
-            this.label_cautionroute.Name = "label_cautionroute";
-            this.label_cautionroute.Size = new System.Drawing.Size(78, 13);
-            this.label_cautionroute.TabIndex = 11;
-            this.label_cautionroute.Text = "Caution Route:";
-            this.label_cautionroute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label_cautionroute.Location = new System.Drawing.Point(4, 108);
+            label_cautionroute.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_cautionroute.Name = "label_cautionroute";
+            label_cautionroute.Size = new System.Drawing.Size(91, 15);
+            label_cautionroute.TabIndex = 11;
+            label_cautionroute.Text = "Caution Route:";
+            label_cautionroute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_sneakroute
             // 
-            this.comboBox_sneakroute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_sneakroute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_sneakroute.FormattingEnabled = true;
-            this.comboBox_sneakroute.Location = new System.Drawing.Point(102, 65);
-            this.comboBox_sneakroute.Name = "comboBox_sneakroute";
-            this.comboBox_sneakroute.Size = new System.Drawing.Size(140, 21);
-            this.comboBox_sneakroute.TabIndex = 3;
+            comboBox_sneakroute.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_sneakroute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_sneakroute.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_sneakroute.FormattingEnabled = true;
+            comboBox_sneakroute.Location = new System.Drawing.Point(119, 75);
+            comboBox_sneakroute.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_sneakroute.Name = "comboBox_sneakroute";
+            comboBox_sneakroute.Size = new System.Drawing.Size(163, 22);
+            comboBox_sneakroute.TabIndex = 3;
             // 
             // label_sneakroute
             // 
-            this.label_sneakroute.Location = new System.Drawing.Point(3, 70);
-            this.label_sneakroute.Name = "label_sneakroute";
-            this.label_sneakroute.Size = new System.Drawing.Size(78, 13);
-            this.label_sneakroute.TabIndex = 9;
-            this.label_sneakroute.Text = "Sneak Route:";
-            this.label_sneakroute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label_sneakroute.Location = new System.Drawing.Point(4, 81);
+            label_sneakroute.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_sneakroute.Name = "label_sneakroute";
+            label_sneakroute.Size = new System.Drawing.Size(91, 15);
+            label_sneakroute.TabIndex = 9;
+            label_sneakroute.Text = "Sneak Route:";
+            label_sneakroute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label_body
             // 
-            this.label_body.Location = new System.Drawing.Point(3, 245);
-            this.label_body.Name = "label_body";
-            this.label_body.Size = new System.Drawing.Size(76, 13);
-            this.label_body.TabIndex = 8;
-            this.label_body.Text = "Body:";
-            this.label_body.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label_body.Location = new System.Drawing.Point(4, 283);
+            label_body.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_body.Name = "label_body";
+            label_body.Size = new System.Drawing.Size(89, 15);
+            label_body.TabIndex = 8;
+            label_body.Text = "Body:";
+            label_body.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox_target
             // 
-            this.checkBox_target.AutoSize = true;
-            this.checkBox_target.Location = new System.Drawing.Point(171, 21);
-            this.checkBox_target.Name = "checkBox_target";
-            this.checkBox_target.Size = new System.Drawing.Size(68, 17);
-            this.checkBox_target.TabIndex = 0;
-            this.checkBox_target.TabStop = false;
-            this.checkBox_target.Text = "Is Target";
-            this.checkBox_target.UseVisualStyleBackColor = true;
+            checkBox_target.AutoSize = true;
+            checkBox_target.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_target.Location = new System.Drawing.Point(200, 24);
+            checkBox_target.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_target.Name = "checkBox_target";
+            checkBox_target.Size = new System.Drawing.Size(89, 18);
+            checkBox_target.TabIndex = 0;
+            checkBox_target.TabStop = false;
+            checkBox_target.Text = "Is Target";
+            checkBox_target.UseVisualStyleBackColor = true;
             // 
             // checkBox_armor
             // 
-            this.checkBox_armor.AutoSize = true;
-            this.checkBox_armor.Location = new System.Drawing.Point(85, 216);
-            this.checkBox_armor.Name = "checkBox_armor";
-            this.checkBox_armor.Size = new System.Drawing.Size(87, 17);
-            this.checkBox_armor.TabIndex = 9;
-            this.checkBox_armor.Text = "Heavy Armor";
-            this.checkBox_armor.UseVisualStyleBackColor = true;
-            this.checkBox_armor.Click += new System.EventHandler(this.checkBox_armor_Click);
+            checkBox_armor.AutoSize = true;
+            checkBox_armor.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_armor.Location = new System.Drawing.Point(99, 249);
+            checkBox_armor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_armor.Name = "checkBox_armor";
+            checkBox_armor.Size = new System.Drawing.Size(103, 18);
+            checkBox_armor.TabIndex = 9;
+            checkBox_armor.Text = "Heavy Armor";
+            checkBox_armor.UseVisualStyleBackColor = true;
+            checkBox_armor.Click += checkBox_armor_Click;
             // 
             // checkBox_spawn
             // 
-            this.checkBox_spawn.AutoSize = true;
-            this.checkBox_spawn.Location = new System.Drawing.Point(85, 21);
-            this.checkBox_spawn.Name = "checkBox_spawn";
-            this.checkBox_spawn.Size = new System.Drawing.Size(59, 17);
-            this.checkBox_spawn.TabIndex = 1;
-            this.checkBox_spawn.Text = "Spawn";
-            this.checkBox_spawn.UseVisualStyleBackColor = true;
-            this.checkBox_spawn.CheckedChanged += new System.EventHandler(this.checkBox_spawn_CheckedChanged);
+            checkBox_spawn.AutoSize = true;
+            checkBox_spawn.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_spawn.Location = new System.Drawing.Point(99, 24);
+            checkBox_spawn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_spawn.Name = "checkBox_spawn";
+            checkBox_spawn.Size = new System.Drawing.Size(61, 18);
+            checkBox_spawn.TabIndex = 1;
+            checkBox_spawn.Text = "Spawn";
+            checkBox_spawn.UseVisualStyleBackColor = true;
+            checkBox_spawn.CheckedChanged += checkBox_spawn_CheckedChanged;
             // 
             // button_SneakToCaution
             // 
-            this.button_SneakToCaution.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_SneakToCaution.Location = new System.Drawing.Point(245, 65);
-            this.button_SneakToCaution.Name = "button_SneakToCaution";
-            this.button_SneakToCaution.Size = new System.Drawing.Size(14, 23);
-            this.button_SneakToCaution.TabIndex = 5;
-            this.button_SneakToCaution.Text = "↓";
-            this.button_SneakToCaution.UseVisualStyleBackColor = true;
-            this.button_SneakToCaution.Click += new System.EventHandler(this.SneakToCaution_Button_Clicked);
+            button_SneakToCaution.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            button_SneakToCaution.Location = new System.Drawing.Point(286, 75);
+            button_SneakToCaution.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_SneakToCaution.Name = "button_SneakToCaution";
+            button_SneakToCaution.Size = new System.Drawing.Size(16, 27);
+            button_SneakToCaution.TabIndex = 5;
+            button_SneakToCaution.Text = "↓";
+            button_SneakToCaution.UseVisualStyleBackColor = true;
+            button_SneakToCaution.Click += SneakToCaution_Button_Clicked;
             // 
             // button_CautionToSneak
             // 
-            this.button_CautionToSneak.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_CautionToSneak.Location = new System.Drawing.Point(245, 90);
-            this.button_CautionToSneak.Name = "button_CautionToSneak";
-            this.button_CautionToSneak.Size = new System.Drawing.Size(14, 23);
-            this.button_CautionToSneak.TabIndex = 6;
-            this.button_CautionToSneak.Text = "↑";
-            this.button_CautionToSneak.UseVisualStyleBackColor = true;
-            this.button_CautionToSneak.Click += new System.EventHandler(this.CautionToSneak_Button_Clicked);
+            button_CautionToSneak.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            button_CautionToSneak.Location = new System.Drawing.Point(286, 104);
+            button_CautionToSneak.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_CautionToSneak.Name = "button_CautionToSneak";
+            button_CautionToSneak.Size = new System.Drawing.Size(16, 27);
+            button_CautionToSneak.TabIndex = 6;
+            button_CautionToSneak.Text = "↑";
+            button_CautionToSneak.UseVisualStyleBackColor = true;
+            button_CautionToSneak.Click += CautionToSneak_Button_Clicked;
             // 
             // button_SwapRoutes
             // 
-            this.button_SwapRoutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_SwapRoutes.Location = new System.Drawing.Point(85, 65);
-            this.button_SwapRoutes.Name = "button_SwapRoutes";
-            this.button_SwapRoutes.Size = new System.Drawing.Size(14, 48);
-            this.button_SwapRoutes.TabIndex = 2;
-            this.button_SwapRoutes.Text = "↕";
-            this.button_SwapRoutes.UseVisualStyleBackColor = true;
-            this.button_SwapRoutes.Click += new System.EventHandler(this.SwapRoute_Button_Clicked);
+            button_SwapRoutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            button_SwapRoutes.Location = new System.Drawing.Point(99, 75);
+            button_SwapRoutes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button_SwapRoutes.Name = "button_SwapRoutes";
+            button_SwapRoutes.Size = new System.Drawing.Size(16, 55);
+            button_SwapRoutes.TabIndex = 2;
+            button_SwapRoutes.Text = "↕";
+            button_SwapRoutes.UseVisualStyleBackColor = true;
+            button_SwapRoutes.Click += SwapRoute_Button_Clicked;
             // 
             // EnemyBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox_main);
-            this.Name = "EnemyBox";
-            this.Size = new System.Drawing.Size(268, 319);
-            this.groupBox_main.ResumeLayout(false);
-            this.groupBox_main.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(groupBox_main);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "EnemyBox";
+            Size = new System.Drawing.Size(313, 368);
+            groupBox_main.ResumeLayout(false);
+            groupBox_main.PerformLayout();
+            ResumeLayout(false);
 
         }
 

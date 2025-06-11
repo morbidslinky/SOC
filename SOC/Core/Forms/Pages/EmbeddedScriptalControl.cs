@@ -296,15 +296,15 @@ string.Format(@"
 
                 case ScriptControl.NUMBER_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
-                    showCorrespondingChoiceControl(numericUpDownVarNumberValue, selectedChoice.AllowUIEdit);
-                    if (selectedChoice.Value is LuaNumber number) numericUpDownVarNumberValue.Value = (decimal)number.Value;
+                    showCorrespondingChoiceControl(textBoxLiteralNumberValue, selectedChoice.AllowUIEdit);
+                    if (selectedChoice.Value is LuaNumber number) textBoxLiteralNumberValue.Text = number.TokenValue;
                     UpdateChoiceLiteralValue();
                     break;
 
                 case ScriptControl.STRING_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
-                    showCorrespondingChoiceControl(textBoxVarStringValue, selectedChoice.AllowUIEdit);
-                    if (selectedChoice.Value is LuaString text) textBoxVarStringValue.Text = text.Value;
+                    showCorrespondingChoiceControl(textBoxLiteralStringValue, selectedChoice.AllowUIEdit);
+                    if (selectedChoice.Value is LuaString text) textBoxLiteralStringValue.Text = text.Value;
                     UpdateChoiceLiteralValue();
                     break;
 
@@ -331,7 +331,7 @@ string.Format(@"
 
         private void showCorrespondingChoiceControl(Control choiceControl, bool enable = true)
         {
-            Control[] controlSet = { comboBoxPresetChoosables, comboBoxUserVarNodes, numericUpDownVarNumberValue, textBoxVarStringValue, panelBoolean };
+            Control[] controlSet = { comboBoxPresetChoosables, comboBoxUserVarNodes, textBoxLiteralNumberValue, textBoxLiteralStringValue, panelBoolean };
 
             foreach (var control in controlSet)
             {
@@ -448,9 +448,24 @@ string.Format(@"
             UpdateChoiceLiteralValue();
         }
 
-        private void numericUpDownVarNumberValue_ValueChanged(object sender, EventArgs e)
+        private void textBoxVarNumberValue_TextChanged(object sender, EventArgs e)
         {
             UpdateChoiceLiteralValue();
+        }
+
+        private void textBoxVarNumberValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!char.IsControl(ch) && !char.IsDigit(ch) && ch != '.')
+            {
+                e.Handled = true;
+            }
+
+            if (ch == '.' && (sender as TextBox).Text.Contains('.'))
+            {
+                e.Handled = true;
+            }
         }
 
         private void UpdateChoiceLiteralValue()
@@ -459,10 +474,15 @@ string.Format(@"
             switch (currentChoice.Key)
             {
                 case ScriptControl.STRING_LITERAL_SET:
-                    currentChoice.Value = Create.String(textBoxVarStringValue.Text);
+                    currentChoice.Value = Create.String(textBoxLiteralStringValue.Text);
                     break;
                 case ScriptControl.NUMBER_LITERAL_SET:
-                    currentChoice.Value = Create.Number((double)numericUpDownVarNumberValue.Value);
+                    if (string.IsNullOrEmpty(textBoxLiteralNumberValue.Text))
+                    {
+                        textBoxLiteralNumberValue.Text = "0";
+                        textBoxLiteralNumberValue.SelectAll();
+                    }
+                    currentChoice.Value = Create.Number(textBoxLiteralNumberValue.Text);
                     break;
                 case ScriptControl.BOOLEAN_LITERAL_SET:
                     currentChoice.Value = Create.Boolean(radioButtonTrue.Checked);

@@ -28,102 +28,102 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupboxDetail = new System.Windows.Forms.GroupBox();
-            this.panelQuestBoxes = new System.Windows.Forms.FlowLayoutPanel();
-            this.label_ObjType = new System.Windows.Forms.Label();
-            this.comboBox_ObjType = new System.Windows.Forms.ComboBox();
-            this.label_Subtype = new System.Windows.Forms.Label();
-            this.comboBox_Subtype = new System.Windows.Forms.ComboBox();
-            this.groupboxDetail.SuspendLayout();
-            this.SuspendLayout();
+            groupboxDetail = new System.Windows.Forms.GroupBox();
+            panelQuestBoxes = new System.Windows.Forms.FlowLayoutPanel();
+            label_ObjType = new System.Windows.Forms.Label();
+            comboBox_ObjType = new System.Windows.Forms.ComboBox();
+            label_Subtype = new System.Windows.Forms.Label();
+            comboBox_Subtype = new System.Windows.Forms.ComboBox();
+            groupboxDetail.SuspendLayout();
+            SuspendLayout();
             // 
             // groupboxDetail
             // 
-            this.groupboxDetail.Controls.Add(this.panelQuestBoxes);
-            this.groupboxDetail.Controls.Add(this.label_ObjType);
-            this.groupboxDetail.Controls.Add(this.comboBox_ObjType);
-            this.groupboxDetail.Controls.Add(this.label_Subtype);
-            this.groupboxDetail.Controls.Add(this.comboBox_Subtype);
-            this.groupboxDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupboxDetail.Location = new System.Drawing.Point(0, 0);
-            this.groupboxDetail.Name = "groupboxDetail";
-            this.groupboxDetail.Size = new System.Drawing.Size(300, 449);
-            this.groupboxDetail.TabIndex = 34;
-            this.groupboxDetail.TabStop = false;
-            this.groupboxDetail.Text = "Enemies";
+            groupboxDetail.Controls.Add(panelQuestBoxes);
+            groupboxDetail.Controls.Add(label_ObjType);
+            groupboxDetail.Controls.Add(comboBox_ObjType);
+            groupboxDetail.Controls.Add(label_Subtype);
+            groupboxDetail.Controls.Add(comboBox_Subtype);
+            groupboxDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupboxDetail.Location = new System.Drawing.Point(0, 0);
+            groupboxDetail.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupboxDetail.Name = "groupboxDetail";
+            groupboxDetail.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupboxDetail.Size = new System.Drawing.Size(350, 518);
+            groupboxDetail.TabIndex = 34;
+            groupboxDetail.TabStop = false;
+            groupboxDetail.Text = "Enemies";
             // 
             // panelQuestBoxes
             // 
-            this.panelQuestBoxes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelQuestBoxes.AutoScroll = true;
-            this.panelQuestBoxes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.panelQuestBoxes.Location = new System.Drawing.Point(3, 96);
-            this.panelQuestBoxes.Margin = new System.Windows.Forms.Padding(0);
-            this.panelQuestBoxes.Name = "panelQuestBoxes";
-            this.panelQuestBoxes.Size = new System.Drawing.Size(294, 350);
-            this.panelQuestBoxes.TabIndex = 3;
-            this.panelQuestBoxes.WrapContents = false;
+            panelQuestBoxes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelQuestBoxes.AutoScroll = true;
+            panelQuestBoxes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            panelQuestBoxes.Location = new System.Drawing.Point(4, 111);
+            panelQuestBoxes.Margin = new System.Windows.Forms.Padding(0);
+            panelQuestBoxes.Name = "panelQuestBoxes";
+            panelQuestBoxes.Size = new System.Drawing.Size(343, 404);
+            panelQuestBoxes.TabIndex = 3;
+            panelQuestBoxes.WrapContents = false;
             // 
             // label_ObjType
             // 
-            this.label_ObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_ObjType.AutoSize = true;
-            this.label_ObjType.Location = new System.Drawing.Point(6, 16);
-            this.label_ObjType.Name = "label_ObjType";
-            this.label_ObjType.Size = new System.Drawing.Size(113, 13);
-            this.label_ObjType.TabIndex = 0;
-            this.label_ObjType.Text = "Target Objective Type";
+            label_ObjType.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label_ObjType.AutoSize = true;
+            label_ObjType.Location = new System.Drawing.Point(7, 18);
+            label_ObjType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_ObjType.Name = "label_ObjType";
+            label_ObjType.Size = new System.Drawing.Size(119, 15);
+            label_ObjType.TabIndex = 0;
+            label_ObjType.Text = "Target Objective Type";
             // 
             // comboBox_ObjType
             // 
-            this.comboBox_ObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_ObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_ObjType.FormattingEnabled = true;
-            this.comboBox_ObjType.Items.AddRange(new object[] {
-            "ELIMINATE",
-            "RECOVERED",
-            "KILLREQUIRED"});
-            this.comboBox_ObjType.Location = new System.Drawing.Point(6, 32);
-            this.comboBox_ObjType.Name = "comboBox_ObjType";
-            this.comboBox_ObjType.Size = new System.Drawing.Size(288, 21);
-            this.comboBox_ObjType.TabIndex = 1;
+            comboBox_ObjType.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_ObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_ObjType.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_ObjType.FormattingEnabled = true;
+            comboBox_ObjType.Items.AddRange(new object[] { "ELIMINATE", "RECOVERED", "KILLREQUIRED" });
+            comboBox_ObjType.Location = new System.Drawing.Point(7, 37);
+            comboBox_ObjType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_ObjType.Name = "comboBox_ObjType";
+            comboBox_ObjType.Size = new System.Drawing.Size(335, 22);
+            comboBox_ObjType.TabIndex = 1;
             // 
             // label_Subtype
             // 
-            this.label_Subtype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_Subtype.AutoSize = true;
-            this.label_Subtype.Location = new System.Drawing.Point(6, 56);
-            this.label_Subtype.Name = "label_Subtype";
-            this.label_Subtype.Size = new System.Drawing.Size(53, 13);
-            this.label_Subtype.TabIndex = 0;
-            this.label_Subtype.Text = "Sub Type";
+            label_Subtype.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label_Subtype.AutoSize = true;
+            label_Subtype.Location = new System.Drawing.Point(7, 65);
+            label_Subtype.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_Subtype.Name = "label_Subtype";
+            label_Subtype.Size = new System.Drawing.Size(54, 15);
+            label_Subtype.TabIndex = 0;
+            label_Subtype.Text = "Sub Type";
             // 
             // comboBox_Subtype
             // 
-            this.comboBox_Subtype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_Subtype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_Subtype.FormattingEnabled = true;
-            this.comboBox_Subtype.Location = new System.Drawing.Point(6, 72);
-            this.comboBox_Subtype.Name = "comboBox_Subtype";
-            this.comboBox_Subtype.Size = new System.Drawing.Size(288, 21);
-            this.comboBox_Subtype.TabIndex = 2;
+            comboBox_Subtype.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_Subtype.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_Subtype.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_Subtype.FormattingEnabled = true;
+            comboBox_Subtype.Location = new System.Drawing.Point(7, 83);
+            comboBox_Subtype.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_Subtype.Name = "comboBox_Subtype";
+            comboBox_Subtype.Size = new System.Drawing.Size(335, 22);
+            comboBox_Subtype.TabIndex = 2;
             // 
             // EnemyControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupboxDetail);
-            this.Name = "EnemyControl";
-            this.Size = new System.Drawing.Size(300, 449);
-            this.groupboxDetail.ResumeLayout(false);
-            this.groupboxDetail.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(groupboxDetail);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "EnemyControl";
+            Size = new System.Drawing.Size(350, 518);
+            groupboxDetail.ResumeLayout(false);
+            groupboxDetail.PerformLayout();
+            ResumeLayout(false);
 
         }
 

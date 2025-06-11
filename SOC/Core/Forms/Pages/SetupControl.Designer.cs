@@ -28,522 +28,537 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelSetup = new System.Windows.Forms.Panel();
-            this.groupBoxSetup = new System.Windows.Forms.GroupBox();
-            this.comboBoxRoute = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.comboBoxCP = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.comboBoxCategory = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBoxFPKName = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBoxZCoord = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBoxYCoord = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBoxXCoord = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBoxRegion = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxQuestNum = new System.Windows.Forms.TextBox();
-            this.comboBoxRadius = new System.Windows.Forms.ComboBox();
-            this.comboBoxReward = new System.Windows.Forms.ComboBox();
-            this.comboBoxLoadArea = new System.Windows.Forms.ComboBox();
-            this.groupBoxLocations = new System.Windows.Forms.GroupBox();
-            this.flowPanelLocationalStubs = new System.Windows.Forms.FlowLayoutPanel();
-            this.labelFlowWidth = new System.Windows.Forms.Label();
-            this.groupBoxFlavor = new System.Windows.Forms.GroupBox();
-            this.buttonAddNotif = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.comboBoxProgressNotifs = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBoxQuestDesc = new System.Windows.Forms.TextBox();
-            this.textBoxQuestTitle = new System.Windows.Forms.TextBox();
-            this.panelSetup.SuspendLayout();
-            this.groupBoxSetup.SuspendLayout();
-            this.groupBoxLocations.SuspendLayout();
-            this.flowPanelLocationalStubs.SuspendLayout();
-            this.groupBoxFlavor.SuspendLayout();
-            this.SuspendLayout();
+            panelSetup = new System.Windows.Forms.Panel();
+            groupBoxSetup = new System.Windows.Forms.GroupBox();
+            comboBoxRoute = new System.Windows.Forms.ComboBox();
+            label15 = new System.Windows.Forms.Label();
+            comboBoxCP = new System.Windows.Forms.ComboBox();
+            label20 = new System.Windows.Forms.Label();
+            label14 = new System.Windows.Forms.Label();
+            comboBoxCategory = new System.Windows.Forms.ComboBox();
+            label11 = new System.Windows.Forms.Label();
+            textBoxFPKName = new System.Windows.Forms.TextBox();
+            label12 = new System.Windows.Forms.Label();
+            textBoxZCoord = new System.Windows.Forms.TextBox();
+            label10 = new System.Windows.Forms.Label();
+            textBoxYCoord = new System.Windows.Forms.TextBox();
+            label9 = new System.Windows.Forms.Label();
+            textBoxXCoord = new System.Windows.Forms.TextBox();
+            label6 = new System.Windows.Forms.Label();
+            comboBoxRegion = new System.Windows.Forms.ComboBox();
+            label5 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            textBoxQuestNum = new System.Windows.Forms.TextBox();
+            comboBoxRadius = new System.Windows.Forms.ComboBox();
+            comboBoxReward = new System.Windows.Forms.ComboBox();
+            comboBoxLoadArea = new System.Windows.Forms.ComboBox();
+            groupBoxLocations = new System.Windows.Forms.GroupBox();
+            flowPanelLocationalStubs = new System.Windows.Forms.FlowLayoutPanel();
+            labelFlowWidth = new System.Windows.Forms.Label();
+            groupBoxFlavor = new System.Windows.Forms.GroupBox();
+            buttonAddNotif = new System.Windows.Forms.Button();
+            label13 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            comboBoxProgressNotifs = new System.Windows.Forms.ComboBox();
+            label7 = new System.Windows.Forms.Label();
+            textBoxQuestDesc = new System.Windows.Forms.TextBox();
+            textBoxQuestTitle = new System.Windows.Forms.TextBox();
+            panelSetup.SuspendLayout();
+            groupBoxSetup.SuspendLayout();
+            groupBoxLocations.SuspendLayout();
+            flowPanelLocationalStubs.SuspendLayout();
+            groupBoxFlavor.SuspendLayout();
+            SuspendLayout();
             // 
             // panelSetup
             // 
-            this.panelSetup.Controls.Add(this.groupBoxSetup);
-            this.panelSetup.Controls.Add(this.groupBoxLocations);
-            this.panelSetup.Controls.Add(this.groupBoxFlavor);
-            this.panelSetup.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSetup.Location = new System.Drawing.Point(0, 0);
-            this.panelSetup.Name = "panelSetup";
-            this.panelSetup.Size = new System.Drawing.Size(1080, 450);
-            this.panelSetup.TabIndex = 11;
+            panelSetup.Controls.Add(groupBoxSetup);
+            panelSetup.Controls.Add(groupBoxLocations);
+            panelSetup.Controls.Add(groupBoxFlavor);
+            panelSetup.Dock = System.Windows.Forms.DockStyle.Fill;
+            panelSetup.Location = new System.Drawing.Point(0, 0);
+            panelSetup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelSetup.Name = "panelSetup";
+            panelSetup.Size = new System.Drawing.Size(1260, 519);
+            panelSetup.TabIndex = 11;
             // 
             // groupBoxSetup
             // 
-            this.groupBoxSetup.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxSetup.Controls.Add(this.comboBoxRoute);
-            this.groupBoxSetup.Controls.Add(this.label15);
-            this.groupBoxSetup.Controls.Add(this.comboBoxCP);
-            this.groupBoxSetup.Controls.Add(this.label20);
-            this.groupBoxSetup.Controls.Add(this.label14);
-            this.groupBoxSetup.Controls.Add(this.comboBoxCategory);
-            this.groupBoxSetup.Controls.Add(this.label11);
-            this.groupBoxSetup.Controls.Add(this.textBoxFPKName);
-            this.groupBoxSetup.Controls.Add(this.label12);
-            this.groupBoxSetup.Controls.Add(this.textBoxZCoord);
-            this.groupBoxSetup.Controls.Add(this.label10);
-            this.groupBoxSetup.Controls.Add(this.textBoxYCoord);
-            this.groupBoxSetup.Controls.Add(this.label9);
-            this.groupBoxSetup.Controls.Add(this.textBoxXCoord);
-            this.groupBoxSetup.Controls.Add(this.label6);
-            this.groupBoxSetup.Controls.Add(this.comboBoxRegion);
-            this.groupBoxSetup.Controls.Add(this.label5);
-            this.groupBoxSetup.Controls.Add(this.label4);
-            this.groupBoxSetup.Controls.Add(this.label3);
-            this.groupBoxSetup.Controls.Add(this.label2);
-            this.groupBoxSetup.Controls.Add(this.label1);
-            this.groupBoxSetup.Controls.Add(this.textBoxQuestNum);
-            this.groupBoxSetup.Controls.Add(this.comboBoxRadius);
-            this.groupBoxSetup.Controls.Add(this.comboBoxReward);
-            this.groupBoxSetup.Controls.Add(this.comboBoxLoadArea);
-            this.groupBoxSetup.Location = new System.Drawing.Point(1, 3);
-            this.groupBoxSetup.Name = "groupBoxSetup";
-            this.groupBoxSetup.Size = new System.Drawing.Size(514, 197);
-            this.groupBoxSetup.TabIndex = 0;
-            this.groupBoxSetup.TabStop = false;
-            this.groupBoxSetup.Text = "Sideop Setup";
+            groupBoxSetup.BackColor = System.Drawing.Color.Transparent;
+            groupBoxSetup.Controls.Add(comboBoxRoute);
+            groupBoxSetup.Controls.Add(label15);
+            groupBoxSetup.Controls.Add(comboBoxCP);
+            groupBoxSetup.Controls.Add(label20);
+            groupBoxSetup.Controls.Add(label14);
+            groupBoxSetup.Controls.Add(comboBoxCategory);
+            groupBoxSetup.Controls.Add(label11);
+            groupBoxSetup.Controls.Add(textBoxFPKName);
+            groupBoxSetup.Controls.Add(label12);
+            groupBoxSetup.Controls.Add(textBoxZCoord);
+            groupBoxSetup.Controls.Add(label10);
+            groupBoxSetup.Controls.Add(textBoxYCoord);
+            groupBoxSetup.Controls.Add(label9);
+            groupBoxSetup.Controls.Add(textBoxXCoord);
+            groupBoxSetup.Controls.Add(label6);
+            groupBoxSetup.Controls.Add(comboBoxRegion);
+            groupBoxSetup.Controls.Add(label5);
+            groupBoxSetup.Controls.Add(label4);
+            groupBoxSetup.Controls.Add(label3);
+            groupBoxSetup.Controls.Add(label2);
+            groupBoxSetup.Controls.Add(label1);
+            groupBoxSetup.Controls.Add(textBoxQuestNum);
+            groupBoxSetup.Controls.Add(comboBoxRadius);
+            groupBoxSetup.Controls.Add(comboBoxReward);
+            groupBoxSetup.Controls.Add(comboBoxLoadArea);
+            groupBoxSetup.Location = new System.Drawing.Point(1, 3);
+            groupBoxSetup.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxSetup.Name = "groupBoxSetup";
+            groupBoxSetup.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxSetup.Size = new System.Drawing.Size(600, 227);
+            groupBoxSetup.TabIndex = 0;
+            groupBoxSetup.TabStop = false;
+            groupBoxSetup.Text = "Sideop Setup";
             // 
             // comboBoxRoute
             // 
-            this.comboBoxRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRoute.FormattingEnabled = true;
-            this.comboBoxRoute.Location = new System.Drawing.Point(363, 116);
-            this.comboBoxRoute.Name = "comboBoxRoute";
-            this.comboBoxRoute.Size = new System.Drawing.Size(134, 21);
-            this.comboBoxRoute.TabIndex = 10;
-            this.comboBoxRoute.DropDown += new System.EventHandler(this.comboBoxRoute_DropDown);
+            comboBoxRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxRoute.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxRoute.FormattingEnabled = true;
+            comboBoxRoute.Location = new System.Drawing.Point(424, 134);
+            comboBoxRoute.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxRoute.Name = "comboBoxRoute";
+            comboBoxRoute.Size = new System.Drawing.Size(156, 22);
+            comboBoxRoute.TabIndex = 10;
+            comboBoxRoute.DropDown += comboBoxRoute_DropDown;
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(294, 118);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(58, 13);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Route File:";
+            label15.AutoSize = true;
+            label15.Location = new System.Drawing.Point(343, 136);
+            label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(62, 15);
+            label15.TabIndex = 0;
+            label15.Text = "Route File:";
             // 
             // comboBoxCP
             // 
-            this.comboBoxCP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCP.Enabled = false;
-            this.comboBoxCP.FormattingEnabled = true;
-            this.comboBoxCP.Location = new System.Drawing.Point(363, 89);
-            this.comboBoxCP.Name = "comboBoxCP";
-            this.comboBoxCP.Size = new System.Drawing.Size(134, 21);
-            this.comboBoxCP.TabIndex = 8;
+            comboBoxCP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxCP.Enabled = false;
+            comboBoxCP.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxCP.FormattingEnabled = true;
+            comboBoxCP.Location = new System.Drawing.Point(424, 103);
+            comboBoxCP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxCP.Name = "comboBoxCP";
+            comboBoxCP.Size = new System.Drawing.Size(156, 22);
+            comboBoxCP.TabIndex = 8;
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(297, 92);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(55, 13);
-            this.label20.TabIndex = 0;
-            this.label20.Text = "Quest CP:";
+            label20.AutoSize = true;
+            label20.Location = new System.Drawing.Point(346, 106);
+            label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(59, 15);
+            label20.TabIndex = 0;
+            label20.Text = "Quest CP:";
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(11, 161);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(83, 13);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Quest Category:";
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(13, 186);
+            label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(92, 15);
+            label14.TabIndex = 0;
+            label14.Text = "Quest Category:";
             // 
             // comboBoxCategory
             // 
-            this.comboBoxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCategory.FormattingEnabled = true;
-            this.comboBoxCategory.Items.AddRange(new object[] {
-            "STORY",
-            "EXTRACT_INTERPRETER",
-            "BLUEPRINT",
-            "EXTRACT_HIGHLY_SKILLED",
-            "PRISONER",
-            "CAPTURE_ANIMAL",
-            "WANDERING_SOLDIER",
-            "DDOG_PRISONER",
-            "ELIMINATE_HEAVY_INFANTRY",
-            "MINE_CLEARING",
-            "ELIMINATE_ARMOR_VEHICLE",
-            "EXTRACT_GUNSMITH",
-            "EXTRACT_CONTAINERS",
-            "INTEL_AGENT_EXTRACTION",
-            "ELIMINATE_TANK_UNIT",
-            "ELIMINATE_PUPPETS",
-            "TARGET_PRACTICE"});
-            this.comboBoxCategory.Location = new System.Drawing.Point(105, 158);
-            this.comboBoxCategory.Name = "comboBoxCategory";
-            this.comboBoxCategory.Size = new System.Drawing.Size(153, 21);
-            this.comboBoxCategory.TabIndex = 11;
+            comboBoxCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxCategory.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxCategory.FormattingEnabled = true;
+            comboBoxCategory.Items.AddRange(new object[] { "STORY", "EXTRACT_INTERPRETER", "BLUEPRINT", "EXTRACT_HIGHLY_SKILLED", "PRISONER", "CAPTURE_ANIMAL", "WANDERING_SOLDIER", "DDOG_PRISONER", "ELIMINATE_HEAVY_INFANTRY", "MINE_CLEARING", "ELIMINATE_ARMOR_VEHICLE", "EXTRACT_GUNSMITH", "EXTRACT_CONTAINERS", "INTEL_AGENT_EXTRACTION", "ELIMINATE_TANK_UNIT", "ELIMINATE_PUPPETS", "TARGET_PRACTICE" });
+            comboBoxCategory.Location = new System.Drawing.Point(122, 182);
+            comboBoxCategory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxCategory.Name = "comboBoxCategory";
+            comboBoxCategory.Size = new System.Drawing.Size(178, 22);
+            comboBoxCategory.TabIndex = 11;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(16, 22);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(78, 13);
-            this.label11.TabIndex = 0;
-            this.label11.Text = ".FPK Filename:";
+            label11.AutoSize = true;
+            label11.Location = new System.Drawing.Point(19, 25);
+            label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(84, 15);
+            label11.TabIndex = 0;
+            label11.Text = ".FPK Filename:";
             // 
             // textBoxFPKName
             // 
-            this.textBoxFPKName.BackColor = System.Drawing.Color.Silver;
-            this.textBoxFPKName.Location = new System.Drawing.Point(105, 19);
-            this.textBoxFPKName.Name = "textBoxFPKName";
-            this.textBoxFPKName.Size = new System.Drawing.Size(153, 20);
-            this.textBoxFPKName.TabIndex = 1;
-            this.textBoxFPKName.Leave += new System.EventHandler(this.textBoxFPKName_Leave);
+            textBoxFPKName.BackColor = System.Drawing.Color.Silver;
+            textBoxFPKName.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxFPKName.Location = new System.Drawing.Point(122, 22);
+            textBoxFPKName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxFPKName.Name = "textBoxFPKName";
+            textBoxFPKName.Size = new System.Drawing.Size(178, 22);
+            textBoxFPKName.TabIndex = 1;
+            textBoxFPKName.Leave += textBoxFPKName_Leave;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.Location = new System.Drawing.Point(208, 93);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(14, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Z";
+            label12.AutoSize = true;
+            label12.BackColor = System.Drawing.Color.Transparent;
+            label12.Location = new System.Drawing.Point(243, 107);
+            label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            label12.Size = new System.Drawing.Size(17, 15);
+            label12.TabIndex = 0;
+            label12.Text = "Z:";
             // 
             // textBoxZCoord
             // 
-            this.textBoxZCoord.BackColor = System.Drawing.Color.Silver;
-            this.textBoxZCoord.Enabled = false;
-            this.textBoxZCoord.Location = new System.Drawing.Point(225, 90);
-            this.textBoxZCoord.Name = "textBoxZCoord";
-            this.textBoxZCoord.Size = new System.Drawing.Size(33, 20);
-            this.textBoxZCoord.TabIndex = 7;
-            this.textBoxZCoord.Text = "0";
+            textBoxZCoord.BackColor = System.Drawing.Color.Silver;
+            textBoxZCoord.Enabled = false;
+            textBoxZCoord.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxZCoord.Location = new System.Drawing.Point(262, 104);
+            textBoxZCoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxZCoord.Name = "textBoxZCoord";
+            textBoxZCoord.Size = new System.Drawing.Size(38, 22);
+            textBoxZCoord.TabIndex = 7;
+            textBoxZCoord.Text = "0";
+            textBoxZCoord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Location = new System.Drawing.Point(155, 93);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(14, 13);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "Y";
+            label10.AutoSize = true;
+            label10.BackColor = System.Drawing.Color.Transparent;
+            label10.Location = new System.Drawing.Point(181, 107);
+            label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            label10.Size = new System.Drawing.Size(17, 15);
+            label10.TabIndex = 0;
+            label10.Text = "Y:";
             // 
             // textBoxYCoord
             // 
-            this.textBoxYCoord.BackColor = System.Drawing.Color.Silver;
-            this.textBoxYCoord.Enabled = false;
-            this.textBoxYCoord.Location = new System.Drawing.Point(172, 90);
-            this.textBoxYCoord.Name = "textBoxYCoord";
-            this.textBoxYCoord.Size = new System.Drawing.Size(33, 20);
-            this.textBoxYCoord.TabIndex = 6;
-            this.textBoxYCoord.Text = "0";
+            textBoxYCoord.BackColor = System.Drawing.Color.Silver;
+            textBoxYCoord.Enabled = false;
+            textBoxYCoord.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxYCoord.Location = new System.Drawing.Point(201, 104);
+            textBoxYCoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxYCoord.Name = "textBoxYCoord";
+            textBoxYCoord.Size = new System.Drawing.Size(38, 22);
+            textBoxYCoord.TabIndex = 6;
+            textBoxYCoord.Text = "0";
+            textBoxYCoord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Location = new System.Drawing.Point(102, 93);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(14, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "X";
+            label9.AutoSize = true;
+            label9.BackColor = System.Drawing.Color.Transparent;
+            label9.Location = new System.Drawing.Point(119, 107);
+            label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            label9.Size = new System.Drawing.Size(17, 15);
+            label9.TabIndex = 0;
+            label9.Text = "X:";
             // 
             // textBoxXCoord
             // 
-            this.textBoxXCoord.BackColor = System.Drawing.Color.Silver;
-            this.textBoxXCoord.Enabled = false;
-            this.textBoxXCoord.Location = new System.Drawing.Point(119, 90);
-            this.textBoxXCoord.Name = "textBoxXCoord";
-            this.textBoxXCoord.Size = new System.Drawing.Size(35, 20);
-            this.textBoxXCoord.TabIndex = 5;
-            this.textBoxXCoord.Text = "0";
+            textBoxXCoord.BackColor = System.Drawing.Color.Silver;
+            textBoxXCoord.Enabled = false;
+            textBoxXCoord.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxXCoord.Location = new System.Drawing.Point(139, 104);
+            textBoxXCoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxXCoord.Name = "textBoxXCoord";
+            textBoxXCoord.Size = new System.Drawing.Size(40, 22);
+            textBoxXCoord.TabIndex = 5;
+            textBoxXCoord.Text = "0";
+            textBoxXCoord.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(32, 65);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(62, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Quest Map:";
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(37, 75);
+            label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(68, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Quest Map:";
             // 
             // comboBoxRegion
             // 
-            this.comboBoxRegion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRegion.FormattingEnabled = true;
-            this.comboBoxRegion.Items.AddRange(new object[] {
-            "Afghanistan",
-            "Central Africa",
-            "Mother Base"});
-            this.comboBoxRegion.Location = new System.Drawing.Point(105, 62);
-            this.comboBoxRegion.Name = "comboBoxRegion";
-            this.comboBoxRegion.Size = new System.Drawing.Size(153, 21);
-            this.comboBoxRegion.TabIndex = 3;
-            this.comboBoxRegion.SelectedIndexChanged += new System.EventHandler(this.comboBoxRegion_SelectedIndexChanged);
+            comboBoxRegion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxRegion.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxRegion.FormattingEnabled = true;
+            comboBoxRegion.Items.AddRange(new object[] { "Afghanistan", "Central Africa", "Mother Base" });
+            comboBoxRegion.Location = new System.Drawing.Point(122, 72);
+            comboBoxRegion.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxRegion.Name = "comboBoxRegion";
+            comboBoxRegion.Size = new System.Drawing.Size(178, 22);
+            comboBoxRegion.TabIndex = 3;
+            comboBoxRegion.SelectedIndexChanged += comboBoxRegion_SelectedIndexChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(285, 161);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Quest Rank:";
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(332, 186);
+            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(70, 15);
+            label5.TabIndex = 0;
+            label5.Text = "Quest Rank:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(289, 65);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Quest Area:";
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(337, 75);
+            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(68, 15);
+            label4.TabIndex = 0;
+            label4.Text = "Quest Area:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(51, 118);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Radius:";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(59, 136);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(45, 15);
+            label3.TabIndex = 0;
+            label3.Text = "Radius:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 93);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Map Coordinates:";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(5, 107);
+            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(101, 15);
+            label2.TabIndex = 0;
+            label2.Text = "Map Coordinates:";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(274, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Quest Number:";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(320, 25);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(88, 15);
+            label1.TabIndex = 0;
+            label1.Text = "Quest Number:";
             // 
             // textBoxQuestNum
             // 
-            this.textBoxQuestNum.BackColor = System.Drawing.Color.Silver;
-            this.textBoxQuestNum.Location = new System.Drawing.Point(363, 19);
-            this.textBoxQuestNum.Name = "textBoxQuestNum";
-            this.textBoxQuestNum.Size = new System.Drawing.Size(134, 20);
-            this.textBoxQuestNum.TabIndex = 2;
-            this.textBoxQuestNum.Leave += new System.EventHandler(this.textBoxQuestNum_Leave);
+            textBoxQuestNum.BackColor = System.Drawing.Color.Silver;
+            textBoxQuestNum.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxQuestNum.Location = new System.Drawing.Point(424, 22);
+            textBoxQuestNum.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxQuestNum.Name = "textBoxQuestNum";
+            textBoxQuestNum.Size = new System.Drawing.Size(156, 22);
+            textBoxQuestNum.TabIndex = 2;
+            textBoxQuestNum.Leave += textBoxQuestNum_Leave;
             // 
             // comboBoxRadius
             // 
-            this.comboBoxRadius.BackColor = System.Drawing.Color.Silver;
-            this.comboBoxRadius.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRadius.Enabled = false;
-            this.comboBoxRadius.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.comboBoxRadius.FormattingEnabled = true;
-            this.comboBoxRadius.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"});
-            this.comboBoxRadius.Location = new System.Drawing.Point(105, 116);
-            this.comboBoxRadius.Name = "comboBoxRadius";
-            this.comboBoxRadius.Size = new System.Drawing.Size(153, 21);
-            this.comboBoxRadius.TabIndex = 9;
+            comboBoxRadius.BackColor = System.Drawing.Color.Silver;
+            comboBoxRadius.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxRadius.Enabled = false;
+            comboBoxRadius.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            comboBoxRadius.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxRadius.FormattingEnabled = true;
+            comboBoxRadius.Items.AddRange(new object[] { "1    (30 Meters)", "2    (40 Meters)", "3    (62.5 Meters)", "4    (125 Meters)", "5    (200 Meters)", "6    (325 Meters)", "7    (450 Meters)", "8    (600 Meters)", "9    (1,200 Meters)" });
+            comboBoxRadius.Location = new System.Drawing.Point(122, 134);
+            comboBoxRadius.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxRadius.Name = "comboBoxRadius";
+            comboBoxRadius.Size = new System.Drawing.Size(178, 22);
+            comboBoxRadius.TabIndex = 9;
             // 
             // comboBoxReward
             // 
-            this.comboBoxReward.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxReward.FormattingEnabled = true;
-            this.comboBoxReward.Items.AddRange(new object[] {
-            "S",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F",
-            "G",
-            "H",
-            "I"});
-            this.comboBoxReward.Location = new System.Drawing.Point(363, 158);
-            this.comboBoxReward.Name = "comboBoxReward";
-            this.comboBoxReward.Size = new System.Drawing.Size(134, 21);
-            this.comboBoxReward.TabIndex = 12;
+            comboBoxReward.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxReward.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxReward.FormattingEnabled = true;
+            comboBoxReward.Items.AddRange(new object[] { "S    (300,000 GMP)", "A    (200,000 GMP)", "B    (180,000 GMP)", "C    (140,000 GMP)", "D    (120,000 GMP)", "E    (100,000 GMP)", "F    (90,000 GMP)", "G    (80,000 GMP)", "H    (60,000 GMP)", "I    (30,000 GMP)" });
+            comboBoxReward.Location = new System.Drawing.Point(424, 182);
+            comboBoxReward.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxReward.Name = "comboBoxReward";
+            comboBoxReward.Size = new System.Drawing.Size(156, 22);
+            comboBoxReward.TabIndex = 12;
             // 
             // comboBoxLoadArea
             // 
-            this.comboBoxLoadArea.BackColor = System.Drawing.SystemColors.Window;
-            this.comboBoxLoadArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxLoadArea.Enabled = false;
-            this.comboBoxLoadArea.FormattingEnabled = true;
-            this.comboBoxLoadArea.Location = new System.Drawing.Point(363, 62);
-            this.comboBoxLoadArea.Name = "comboBoxLoadArea";
-            this.comboBoxLoadArea.Size = new System.Drawing.Size(134, 21);
-            this.comboBoxLoadArea.TabIndex = 4;
+            comboBoxLoadArea.BackColor = System.Drawing.SystemColors.Window;
+            comboBoxLoadArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxLoadArea.Enabled = false;
+            comboBoxLoadArea.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxLoadArea.FormattingEnabled = true;
+            comboBoxLoadArea.Location = new System.Drawing.Point(424, 72);
+            comboBoxLoadArea.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxLoadArea.Name = "comboBoxLoadArea";
+            comboBoxLoadArea.Size = new System.Drawing.Size(156, 22);
+            comboBoxLoadArea.TabIndex = 4;
             // 
             // groupBoxLocations
             // 
-            this.groupBoxLocations.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBoxLocations.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxLocations.Controls.Add(this.flowPanelLocationalStubs);
-            this.groupBoxLocations.Location = new System.Drawing.Point(521, 3);
-            this.groupBoxLocations.Name = "groupBoxLocations";
-            this.groupBoxLocations.Size = new System.Drawing.Size(558, 444);
-            this.groupBoxLocations.TabIndex = 17;
-            this.groupBoxLocations.TabStop = false;
-            this.groupBoxLocations.Text = "Locational Data";
+            groupBoxLocations.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            groupBoxLocations.BackColor = System.Drawing.Color.Transparent;
+            groupBoxLocations.Controls.Add(flowPanelLocationalStubs);
+            groupBoxLocations.Location = new System.Drawing.Point(608, 3);
+            groupBoxLocations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxLocations.Name = "groupBoxLocations";
+            groupBoxLocations.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxLocations.Size = new System.Drawing.Size(651, 512);
+            groupBoxLocations.TabIndex = 17;
+            groupBoxLocations.TabStop = false;
+            groupBoxLocations.Text = "Locational Data";
             // 
             // flowPanelLocationalStubs
             // 
-            this.flowPanelLocationalStubs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.flowPanelLocationalStubs.AutoScroll = true;
-            this.flowPanelLocationalStubs.Controls.Add(this.labelFlowWidth);
-            this.flowPanelLocationalStubs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanelLocationalStubs.Location = new System.Drawing.Point(6, 16);
-            this.flowPanelLocationalStubs.Name = "flowPanelLocationalStubs";
-            this.flowPanelLocationalStubs.Size = new System.Drawing.Size(549, 425);
-            this.flowPanelLocationalStubs.TabIndex = 16;
-            this.flowPanelLocationalStubs.WrapContents = false;
-            this.flowPanelLocationalStubs.Layout += new System.Windows.Forms.LayoutEventHandler(this.flowPanelLocationalStubs_Layout);
+            flowPanelLocationalStubs.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            flowPanelLocationalStubs.AutoScroll = true;
+            flowPanelLocationalStubs.Controls.Add(labelFlowWidth);
+            flowPanelLocationalStubs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            flowPanelLocationalStubs.Location = new System.Drawing.Point(7, 18);
+            flowPanelLocationalStubs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            flowPanelLocationalStubs.Name = "flowPanelLocationalStubs";
+            flowPanelLocationalStubs.Size = new System.Drawing.Size(640, 490);
+            flowPanelLocationalStubs.TabIndex = 16;
+            flowPanelLocationalStubs.WrapContents = false;
+            flowPanelLocationalStubs.Layout += flowPanelLocationalStubs_Layout;
             // 
             // labelFlowWidth
             // 
-            this.labelFlowWidth.Location = new System.Drawing.Point(0, 0);
-            this.labelFlowWidth.Margin = new System.Windows.Forms.Padding(0);
-            this.labelFlowWidth.Name = "labelFlowWidth";
-            this.labelFlowWidth.Size = new System.Drawing.Size(548, 0);
-            this.labelFlowWidth.TabIndex = 0;
+            labelFlowWidth.Location = new System.Drawing.Point(0, 0);
+            labelFlowWidth.Margin = new System.Windows.Forms.Padding(0);
+            labelFlowWidth.Name = "labelFlowWidth";
+            labelFlowWidth.Size = new System.Drawing.Size(639, 0);
+            labelFlowWidth.TabIndex = 0;
             // 
             // groupBoxFlavor
             // 
-            this.groupBoxFlavor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxFlavor.BackColor = System.Drawing.Color.Transparent;
-            this.groupBoxFlavor.Controls.Add(this.buttonAddNotif);
-            this.groupBoxFlavor.Controls.Add(this.label13);
-            this.groupBoxFlavor.Controls.Add(this.label8);
-            this.groupBoxFlavor.Controls.Add(this.comboBoxProgressNotifs);
-            this.groupBoxFlavor.Controls.Add(this.label7);
-            this.groupBoxFlavor.Controls.Add(this.textBoxQuestDesc);
-            this.groupBoxFlavor.Controls.Add(this.textBoxQuestTitle);
-            this.groupBoxFlavor.Location = new System.Drawing.Point(1, 206);
-            this.groupBoxFlavor.Name = "groupBoxFlavor";
-            this.groupBoxFlavor.Size = new System.Drawing.Size(514, 241);
-            this.groupBoxFlavor.TabIndex = 0;
-            this.groupBoxFlavor.TabStop = false;
-            this.groupBoxFlavor.Text = "Sideop Flavor Text";
+            groupBoxFlavor.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            groupBoxFlavor.BackColor = System.Drawing.Color.Transparent;
+            groupBoxFlavor.Controls.Add(buttonAddNotif);
+            groupBoxFlavor.Controls.Add(label13);
+            groupBoxFlavor.Controls.Add(label8);
+            groupBoxFlavor.Controls.Add(comboBoxProgressNotifs);
+            groupBoxFlavor.Controls.Add(label7);
+            groupBoxFlavor.Controls.Add(textBoxQuestDesc);
+            groupBoxFlavor.Controls.Add(textBoxQuestTitle);
+            groupBoxFlavor.Location = new System.Drawing.Point(1, 238);
+            groupBoxFlavor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxFlavor.Name = "groupBoxFlavor";
+            groupBoxFlavor.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBoxFlavor.Size = new System.Drawing.Size(600, 278);
+            groupBoxFlavor.TabIndex = 0;
+            groupBoxFlavor.TabStop = false;
+            groupBoxFlavor.Text = "Sideop Flavor Text";
             // 
             // buttonAddNotif
             // 
-            this.buttonAddNotif.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonAddNotif.Location = new System.Drawing.Point(419, 206);
-            this.buttonAddNotif.Name = "buttonAddNotif";
-            this.buttonAddNotif.Size = new System.Drawing.Size(65, 21);
-            this.buttonAddNotif.TabIndex = 16;
-            this.buttonAddNotif.Text = "Custom...";
-            this.buttonAddNotif.UseVisualStyleBackColor = true;
-            this.buttonAddNotif.Click += new System.EventHandler(this.buttonAddNotif_Click);
+            buttonAddNotif.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonAddNotif.Location = new System.Drawing.Point(489, 238);
+            buttonAddNotif.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonAddNotif.Name = "buttonAddNotif";
+            buttonAddNotif.Size = new System.Drawing.Size(76, 24);
+            buttonAddNotif.TabIndex = 16;
+            buttonAddNotif.Text = "Custom...";
+            buttonAddNotif.UseVisualStyleBackColor = true;
+            buttonAddNotif.Click += buttonAddNotif_Click;
             // 
             // label13
             // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 190);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(107, 13);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "Progress Notification:";
+            label13.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(7, 219);
+            label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(121, 15);
+            label13.TabIndex = 0;
+            label13.Text = "Progress Notification:";
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 68);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(94, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Quest Description:";
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(7, 78);
+            label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(104, 15);
+            label8.TabIndex = 0;
+            label8.Text = "Quest Description:";
             // 
             // comboBoxProgressNotifs
             // 
-            this.comboBoxProgressNotifs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.comboBoxProgressNotifs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProgressNotifs.FormattingEnabled = true;
-            this.comboBoxProgressNotifs.Location = new System.Drawing.Point(6, 206);
-            this.comboBoxProgressNotifs.Name = "comboBoxProgressNotifs";
-            this.comboBoxProgressNotifs.Size = new System.Drawing.Size(407, 21);
-            this.comboBoxProgressNotifs.TabIndex = 15;
+            comboBoxProgressNotifs.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            comboBoxProgressNotifs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxProgressNotifs.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxProgressNotifs.FormattingEnabled = true;
+            comboBoxProgressNotifs.Location = new System.Drawing.Point(7, 239);
+            comboBoxProgressNotifs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxProgressNotifs.Name = "comboBoxProgressNotifs";
+            comboBoxProgressNotifs.Size = new System.Drawing.Size(474, 22);
+            comboBoxProgressNotifs.TabIndex = 15;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 20);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(61, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Quest Title:";
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(7, 23);
+            label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(66, 15);
+            label7.TabIndex = 0;
+            label7.Text = "Quest Title:";
             // 
             // textBoxQuestDesc
             // 
-            this.textBoxQuestDesc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxQuestDesc.BackColor = System.Drawing.Color.Silver;
-            this.textBoxQuestDesc.Location = new System.Drawing.Point(6, 84);
-            this.textBoxQuestDesc.Multiline = true;
-            this.textBoxQuestDesc.Name = "textBoxQuestDesc";
-            this.textBoxQuestDesc.Size = new System.Drawing.Size(502, 94);
-            this.textBoxQuestDesc.TabIndex = 14;
+            textBoxQuestDesc.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxQuestDesc.BackColor = System.Drawing.Color.Silver;
+            textBoxQuestDesc.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxQuestDesc.Location = new System.Drawing.Point(7, 97);
+            textBoxQuestDesc.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxQuestDesc.Multiline = true;
+            textBoxQuestDesc.Name = "textBoxQuestDesc";
+            textBoxQuestDesc.Size = new System.Drawing.Size(585, 108);
+            textBoxQuestDesc.TabIndex = 14;
             // 
             // textBoxQuestTitle
             // 
-            this.textBoxQuestTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxQuestTitle.BackColor = System.Drawing.Color.Silver;
-            this.textBoxQuestTitle.Location = new System.Drawing.Point(6, 36);
-            this.textBoxQuestTitle.Name = "textBoxQuestTitle";
-            this.textBoxQuestTitle.Size = new System.Drawing.Size(502, 20);
-            this.textBoxQuestTitle.TabIndex = 13;
+            textBoxQuestTitle.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxQuestTitle.BackColor = System.Drawing.Color.Silver;
+            textBoxQuestTitle.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxQuestTitle.Location = new System.Drawing.Point(7, 42);
+            textBoxQuestTitle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxQuestTitle.Name = "textBoxQuestTitle";
+            textBoxQuestTitle.Size = new System.Drawing.Size(585, 22);
+            textBoxQuestTitle.TabIndex = 13;
             // 
             // SetupControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.Controls.Add(this.panelSetup);
-            this.Name = "SetupControl";
-            this.Size = new System.Drawing.Size(1080, 450);
-            this.panelSetup.ResumeLayout(false);
-            this.groupBoxSetup.ResumeLayout(false);
-            this.groupBoxSetup.PerformLayout();
-            this.groupBoxLocations.ResumeLayout(false);
-            this.flowPanelLocationalStubs.ResumeLayout(false);
-            this.groupBoxFlavor.ResumeLayout(false);
-            this.groupBoxFlavor.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            Controls.Add(panelSetup);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "SetupControl";
+            Size = new System.Drawing.Size(1260, 519);
+            panelSetup.ResumeLayout(false);
+            groupBoxSetup.ResumeLayout(false);
+            groupBoxSetup.PerformLayout();
+            groupBoxLocations.ResumeLayout(false);
+            flowPanelLocationalStubs.ResumeLayout(false);
+            groupBoxFlavor.ResumeLayout(false);
+            groupBoxFlavor.PerformLayout();
+            ResumeLayout(false);
 
         }
 

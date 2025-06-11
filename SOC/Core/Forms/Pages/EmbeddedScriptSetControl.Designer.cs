@@ -128,10 +128,11 @@
             checkBoxDependencies.Checked = true;
             checkBoxDependencies.CheckState = System.Windows.Forms.CheckState.Checked;
             checkBoxDependencies.Dock = System.Windows.Forms.DockStyle.Right;
-            checkBoxDependencies.Location = new System.Drawing.Point(478, 0);
+            checkBoxDependencies.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBoxDependencies.Location = new System.Drawing.Point(441, 0);
             checkBoxDependencies.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             checkBoxDependencies.Name = "checkBoxDependencies";
-            checkBoxDependencies.Size = new System.Drawing.Size(190, 21);
+            checkBoxDependencies.Size = new System.Drawing.Size(227, 21);
             checkBoxDependencies.TabIndex = 2;
             checkBoxDependencies.Text = "Auto-☑ Variable Dependencies";
             checkBoxDependencies.UseVisualStyleBackColor = false;

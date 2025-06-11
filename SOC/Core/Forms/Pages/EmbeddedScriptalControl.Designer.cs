@@ -39,15 +39,15 @@
             groupBoxChoicesList = new System.Windows.Forms.GroupBox();
             listBoxChoices = new System.Windows.Forms.ListBox();
             groupBoxChoice = new System.Windows.Forms.GroupBox();
-            panelBoolean = new System.Windows.Forms.Panel();
-            radioButtonFalse = new System.Windows.Forms.RadioButton();
-            radioButtonTrue = new System.Windows.Forms.RadioButton();
-            numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
-            textBoxVarStringValue = new System.Windows.Forms.TextBox();
             textBoxChoiceDescription = new System.Windows.Forms.TextBox();
             labelChoice = new System.Windows.Forms.Label();
             labelChoiceSet = new System.Windows.Forms.Label();
             comboBoxChoiceSet = new System.Windows.Forms.ComboBox();
+            panelBoolean = new System.Windows.Forms.Panel();
+            radioButtonFalse = new System.Windows.Forms.RadioButton();
+            radioButtonTrue = new System.Windows.Forms.RadioButton();
+            textBoxLiteralNumberValue = new System.Windows.Forms.TextBox();
+            textBoxLiteralStringValue = new System.Windows.Forms.TextBox();
             comboBoxPresetChoosables = new System.Windows.Forms.ComboBox();
             comboBoxUserVarNodes = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)splitContainerScriptal).BeginInit();
@@ -63,7 +63,6 @@
             groupBoxChoicesList.SuspendLayout();
             groupBoxChoice.SuspendLayout();
             panelBoolean.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownVarNumberValue).BeginInit();
             SuspendLayout();
             // 
             // splitContainerScriptal
@@ -158,11 +157,12 @@
             // 
             comboBoxScriptal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxScriptal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxScriptal.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxScriptal.FormattingEnabled = true;
             comboBoxScriptal.Location = new System.Drawing.Point(7, 46);
             comboBoxScriptal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxScriptal.Name = "comboBoxScriptal";
-            comboBoxScriptal.Size = new System.Drawing.Size(230, 23);
+            comboBoxScriptal.Size = new System.Drawing.Size(230, 22);
             comboBoxScriptal.TabIndex = 0;
             comboBoxScriptal.SelectedIndexChanged += comboBoxScriptal_SelectedIndexChanged;
             // 
@@ -221,90 +221,22 @@
             // 
             groupBoxChoice.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxChoice.BackColor = System.Drawing.Color.Silver;
-            groupBoxChoice.Controls.Add(numericUpDownVarNumberValue);
-            groupBoxChoice.Controls.Add(textBoxVarStringValue);
             groupBoxChoice.Controls.Add(textBoxChoiceDescription);
             groupBoxChoice.Controls.Add(labelChoice);
             groupBoxChoice.Controls.Add(labelChoiceSet);
             groupBoxChoice.Controls.Add(comboBoxChoiceSet);
+            groupBoxChoice.Controls.Add(panelBoolean);
+            groupBoxChoice.Controls.Add(textBoxLiteralNumberValue);
+            groupBoxChoice.Controls.Add(textBoxLiteralStringValue);
             groupBoxChoice.Controls.Add(comboBoxPresetChoosables);
             groupBoxChoice.Controls.Add(comboBoxUserVarNodes);
-            groupBoxChoice.Controls.Add(panelBoolean);
             groupBoxChoice.Location = new System.Drawing.Point(0, 0);
             groupBoxChoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxChoice.Name = "groupBoxChoice";
             groupBoxChoice.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxChoice.Size = new System.Drawing.Size(333, 281);
+            groupBoxChoice.Size = new System.Drawing.Size(333, 284);
             groupBoxChoice.TabIndex = 4;
             groupBoxChoice.TabStop = false;
-            // 
-            // panelBoolean
-            // 
-            panelBoolean.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            panelBoolean.BackColor = System.Drawing.Color.LightGray;
-            panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panelBoolean.Controls.Add(radioButtonFalse);
-            panelBoolean.Controls.Add(radioButtonTrue);
-            panelBoolean.Location = new System.Drawing.Point(79, 245);
-            panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            panelBoolean.Name = "panelBoolean";
-            panelBoolean.Size = new System.Drawing.Size(249, 23);
-            panelBoolean.TabIndex = 6;
-            panelBoolean.Visible = false;
-            // 
-            // radioButtonFalse
-            // 
-            radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            radioButtonFalse.AutoSize = true;
-            radioButtonFalse.Checked = true;
-            radioButtonFalse.Location = new System.Drawing.Point(62, 0);
-            radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            radioButtonFalse.Name = "radioButtonFalse";
-            radioButtonFalse.Size = new System.Drawing.Size(51, 19);
-            radioButtonFalse.TabIndex = 6;
-            radioButtonFalse.TabStop = true;
-            radioButtonFalse.Text = "False";
-            radioButtonFalse.UseVisualStyleBackColor = true;
-            radioButtonFalse.CheckedChanged += radioButtonFalse_CheckedChanged;
-            // 
-            // radioButtonTrue
-            // 
-            radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            radioButtonTrue.AutoSize = true;
-            radioButtonTrue.Location = new System.Drawing.Point(131, 0);
-            radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            radioButtonTrue.Name = "radioButtonTrue";
-            radioButtonTrue.Size = new System.Drawing.Size(47, 19);
-            radioButtonTrue.TabIndex = 7;
-            radioButtonTrue.Text = "True";
-            radioButtonTrue.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownVarNumberValue
-            // 
-            numericUpDownVarNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            numericUpDownVarNumberValue.DecimalPlaces = 3;
-            numericUpDownVarNumberValue.Location = new System.Drawing.Point(79, 244);
-            numericUpDownVarNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            numericUpDownVarNumberValue.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
-            numericUpDownVarNumberValue.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
-            numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
-            numericUpDownVarNumberValue.Size = new System.Drawing.Size(251, 23);
-            numericUpDownVarNumberValue.TabIndex = 8;
-            numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            numericUpDownVarNumberValue.Visible = false;
-            numericUpDownVarNumberValue.ValueChanged += numericUpDownVarNumberValue_ValueChanged;
-            // 
-            // textBoxVarStringValue
-            // 
-            textBoxVarStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            textBoxVarStringValue.BackColor = System.Drawing.Color.LightGray;
-            textBoxVarStringValue.Location = new System.Drawing.Point(79, 244);
-            textBoxVarStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            textBoxVarStringValue.Name = "textBoxVarStringValue";
-            textBoxVarStringValue.Size = new System.Drawing.Size(250, 23);
-            textBoxVarStringValue.TabIndex = 6;
-            textBoxVarStringValue.Visible = false;
-            textBoxVarStringValue.TextChanged += textBoxVarStringValue_TextChanged;
             // 
             // textBoxChoiceDescription
             // 
@@ -320,14 +252,14 @@
             textBoxChoiceDescription.Name = "textBoxChoiceDescription";
             textBoxChoiceDescription.ReadOnly = true;
             textBoxChoiceDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 187);
+            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 190);
             textBoxChoiceDescription.TabIndex = 6;
             // 
             // labelChoice
             // 
             labelChoice.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoice.AutoSize = true;
-            labelChoice.Location = new System.Drawing.Point(29, 248);
+            labelChoice.Location = new System.Drawing.Point(29, 251);
             labelChoice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoice.Name = "labelChoice";
             labelChoice.Size = new System.Drawing.Size(38, 15);
@@ -338,7 +270,7 @@
             // 
             labelChoiceSet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoiceSet.AutoSize = true;
-            labelChoiceSet.Location = new System.Drawing.Point(7, 216);
+            labelChoiceSet.Location = new System.Drawing.Point(7, 219);
             labelChoiceSet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoiceSet.Name = "labelChoiceSet";
             labelChoiceSet.Size = new System.Drawing.Size(57, 15);
@@ -349,23 +281,95 @@
             // 
             comboBoxChoiceSet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxChoiceSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxChoiceSet.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxChoiceSet.FormattingEnabled = true;
-            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 213);
+            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 216);
             comboBoxChoiceSet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxChoiceSet.Name = "comboBoxChoiceSet";
-            comboBoxChoiceSet.Size = new System.Drawing.Size(250, 23);
+            comboBoxChoiceSet.Size = new System.Drawing.Size(250, 22);
             comboBoxChoiceSet.TabIndex = 5;
             comboBoxChoiceSet.SelectedIndexChanged += comboBoxChoiceSet_SelectedIndexChanged;
+            // 
+            // panelBoolean
+            // 
+            panelBoolean.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelBoolean.BackColor = System.Drawing.Color.LightGray;
+            panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panelBoolean.Controls.Add(radioButtonFalse);
+            panelBoolean.Controls.Add(radioButtonTrue);
+            panelBoolean.Font = new System.Drawing.Font("Consolas", 9F);
+            panelBoolean.Location = new System.Drawing.Point(79, 248);
+            panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelBoolean.Name = "panelBoolean";
+            panelBoolean.Size = new System.Drawing.Size(249, 23);
+            panelBoolean.TabIndex = 6;
+            panelBoolean.Visible = false;
+            // 
+            // radioButtonFalse
+            // 
+            radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            radioButtonFalse.AutoSize = true;
+            radioButtonFalse.Checked = true;
+            radioButtonFalse.Location = new System.Drawing.Point(62, 3);
+            radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButtonFalse.Name = "radioButtonFalse";
+            radioButtonFalse.Size = new System.Drawing.Size(60, 18);
+            radioButtonFalse.TabIndex = 6;
+            radioButtonFalse.TabStop = true;
+            radioButtonFalse.Text = "False";
+            radioButtonFalse.UseVisualStyleBackColor = true;
+            radioButtonFalse.CheckedChanged += radioButtonFalse_CheckedChanged;
+            // 
+            // radioButtonTrue
+            // 
+            radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            radioButtonTrue.AutoSize = true;
+            radioButtonTrue.Location = new System.Drawing.Point(131, 3);
+            radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButtonTrue.Name = "radioButtonTrue";
+            radioButtonTrue.Size = new System.Drawing.Size(53, 18);
+            radioButtonTrue.TabIndex = 7;
+            radioButtonTrue.Text = "True";
+            radioButtonTrue.UseVisualStyleBackColor = true;
+            // 
+            // textBoxLiteralNumberValue
+            // 
+            textBoxLiteralNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxLiteralNumberValue.BackColor = System.Drawing.Color.LightGray;
+            textBoxLiteralNumberValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxLiteralNumberValue.Location = new System.Drawing.Point(79, 248);
+            textBoxLiteralNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxLiteralNumberValue.Name = "textBoxLiteralNumberValue";
+            textBoxLiteralNumberValue.Size = new System.Drawing.Size(250, 22);
+            textBoxLiteralNumberValue.TabIndex = 8;
+            textBoxLiteralNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            textBoxLiteralNumberValue.Visible = false;
+            textBoxLiteralNumberValue.TextChanged += textBoxVarNumberValue_TextChanged;
+            textBoxLiteralNumberValue.KeyPress += textBoxVarNumberValue_KeyPress;
+            // 
+            // textBoxLiteralStringValue
+            // 
+            textBoxLiteralStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxLiteralStringValue.BackColor = System.Drawing.Color.LightGray;
+            textBoxLiteralStringValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxLiteralStringValue.Location = new System.Drawing.Point(79, 247);
+            textBoxLiteralStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxLiteralStringValue.Name = "textBoxLiteralStringValue";
+            textBoxLiteralStringValue.Size = new System.Drawing.Size(250, 22);
+            textBoxLiteralStringValue.TabIndex = 6;
+            textBoxLiteralStringValue.Visible = false;
+            textBoxLiteralStringValue.TextChanged += textBoxVarStringValue_TextChanged;
             // 
             // comboBoxPresetChoosables
             // 
             comboBoxPresetChoosables.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxPresetChoosables.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxPresetChoosables.FormattingEnabled = true;
-            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 244);
+            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 247);
             comboBoxPresetChoosables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
-            comboBoxPresetChoosables.Size = new System.Drawing.Size(250, 23);
+            comboBoxPresetChoosables.Size = new System.Drawing.Size(250, 22);
             comboBoxPresetChoosables.TabIndex = 6;
             comboBoxPresetChoosables.SelectedIndexChanged += comboBoxPresetChoosables_SelectedIndexChanged;
             // 
@@ -373,11 +377,12 @@
             // 
             comboBoxUserVarNodes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxUserVarNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxUserVarNodes.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxUserVarNodes.FormattingEnabled = true;
-            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 244);
+            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 247);
             comboBoxUserVarNodes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxUserVarNodes.Name = "comboBoxUserVarNodes";
-            comboBoxUserVarNodes.Size = new System.Drawing.Size(250, 23);
+            comboBoxUserVarNodes.Size = new System.Drawing.Size(250, 22);
             comboBoxUserVarNodes.TabIndex = 8;
             comboBoxUserVarNodes.SelectedIndexChanged += comboBoxUserVarNodes_SelectedIndexChanged;
             // 
@@ -406,7 +411,6 @@
             groupBoxChoice.PerformLayout();
             panelBoolean.ResumeLayout(false);
             panelBoolean.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownVarNumberValue).EndInit();
             ResumeLayout(false);
 
         }
@@ -433,7 +437,7 @@
         internal System.Windows.Forms.Panel panelBoolean;
         internal System.Windows.Forms.RadioButton radioButtonFalse;
         internal System.Windows.Forms.RadioButton radioButtonTrue;
-        internal System.Windows.Forms.NumericUpDown numericUpDownVarNumberValue;
-        internal System.Windows.Forms.TextBox textBoxVarStringValue;
+        internal System.Windows.Forms.TextBox textBoxLiteralNumberValue;
+        internal System.Windows.Forms.TextBox textBoxLiteralStringValue;
     }
 }

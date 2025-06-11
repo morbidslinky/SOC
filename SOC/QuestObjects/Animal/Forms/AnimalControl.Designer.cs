@@ -28,75 +28,75 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupboxDetail = new System.Windows.Forms.GroupBox();
-            this.label_ObjType = new System.Windows.Forms.Label();
-            this.panelQuestBoxes = new System.Windows.Forms.FlowLayoutPanel();
-            this.comboBox_ObjType = new System.Windows.Forms.ComboBox();
-            this.groupboxDetail.SuspendLayout();
-            this.SuspendLayout();
+            groupboxDetail = new System.Windows.Forms.GroupBox();
+            label_ObjType = new System.Windows.Forms.Label();
+            panelQuestBoxes = new System.Windows.Forms.FlowLayoutPanel();
+            comboBox_ObjType = new System.Windows.Forms.ComboBox();
+            groupboxDetail.SuspendLayout();
+            SuspendLayout();
             // 
             // groupboxDetail
             // 
-            this.groupboxDetail.Controls.Add(this.label_ObjType);
-            this.groupboxDetail.Controls.Add(this.panelQuestBoxes);
-            this.groupboxDetail.Controls.Add(this.comboBox_ObjType);
-            this.groupboxDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupboxDetail.Location = new System.Drawing.Point(0, 0);
-            this.groupboxDetail.Name = "groupboxDetail";
-            this.groupboxDetail.Size = new System.Drawing.Size(300, 449);
-            this.groupboxDetail.TabIndex = 21;
-            this.groupboxDetail.TabStop = false;
-            this.groupboxDetail.Text = "Animals";
+            groupboxDetail.Controls.Add(label_ObjType);
+            groupboxDetail.Controls.Add(panelQuestBoxes);
+            groupboxDetail.Controls.Add(comboBox_ObjType);
+            groupboxDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupboxDetail.Location = new System.Drawing.Point(0, 0);
+            groupboxDetail.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupboxDetail.Name = "groupboxDetail";
+            groupboxDetail.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupboxDetail.Size = new System.Drawing.Size(350, 518);
+            groupboxDetail.TabIndex = 21;
+            groupboxDetail.TabStop = false;
+            groupboxDetail.Text = "Animals";
             // 
             // label_ObjType
             // 
-            this.label_ObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_ObjType.AutoSize = true;
-            this.label_ObjType.Location = new System.Drawing.Point(6, 16);
-            this.label_ObjType.Name = "label_ObjType";
-            this.label_ObjType.Size = new System.Drawing.Size(116, 13);
-            this.label_ObjType.TabIndex = 38;
-            this.label_ObjType.Text = "Target Objective Type:";
+            label_ObjType.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label_ObjType.AutoSize = true;
+            label_ObjType.Location = new System.Drawing.Point(7, 18);
+            label_ObjType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label_ObjType.Name = "label_ObjType";
+            label_ObjType.Size = new System.Drawing.Size(122, 15);
+            label_ObjType.TabIndex = 38;
+            label_ObjType.Text = "Target Objective Type:";
             // 
             // panelQuestBoxes
             // 
-            this.panelQuestBoxes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelQuestBoxes.AutoScroll = true;
-            this.panelQuestBoxes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.panelQuestBoxes.Location = new System.Drawing.Point(3, 59);
-            this.panelQuestBoxes.Name = "panelQuestBoxes";
-            this.panelQuestBoxes.Size = new System.Drawing.Size(294, 387);
-            this.panelQuestBoxes.TabIndex = 2;
-            this.panelQuestBoxes.WrapContents = false;
+            panelQuestBoxes.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelQuestBoxes.AutoScroll = true;
+            panelQuestBoxes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            panelQuestBoxes.Location = new System.Drawing.Point(4, 68);
+            panelQuestBoxes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelQuestBoxes.Name = "panelQuestBoxes";
+            panelQuestBoxes.Size = new System.Drawing.Size(343, 447);
+            panelQuestBoxes.TabIndex = 2;
+            panelQuestBoxes.WrapContents = false;
             // 
             // comboBox_ObjType
             // 
-            this.comboBox_ObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_ObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_ObjType.FormattingEnabled = true;
-            this.comboBox_ObjType.Items.AddRange(new object[] {
-            "ELIMINATE",
-            "RECOVERED",
-            "KILLREQUIRED"});
-            this.comboBox_ObjType.Location = new System.Drawing.Point(6, 32);
-            this.comboBox_ObjType.Name = "comboBox_ObjType";
-            this.comboBox_ObjType.Size = new System.Drawing.Size(288, 21);
-            this.comboBox_ObjType.TabIndex = 1;
+            comboBox_ObjType.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_ObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_ObjType.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_ObjType.FormattingEnabled = true;
+            comboBox_ObjType.Items.AddRange(new object[] { "ELIMINATE", "RECOVERED", "KILLREQUIRED" });
+            comboBox_ObjType.Location = new System.Drawing.Point(7, 37);
+            comboBox_ObjType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_ObjType.Name = "comboBox_ObjType";
+            comboBox_ObjType.Size = new System.Drawing.Size(335, 22);
+            comboBox_ObjType.TabIndex = 1;
             // 
             // AnimalControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupboxDetail);
-            this.Name = "AnimalControl";
-            this.Size = new System.Drawing.Size(300, 449);
-            this.groupboxDetail.ResumeLayout(false);
-            this.groupboxDetail.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(groupboxDetail);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "AnimalControl";
+            Size = new System.Drawing.Size(350, 518);
+            groupboxDetail.ResumeLayout(false);
+            groupboxDetail.PerformLayout();
+            ResumeLayout(false);
 
         }
 

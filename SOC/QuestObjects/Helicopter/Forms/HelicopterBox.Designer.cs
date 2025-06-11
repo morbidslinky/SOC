@@ -28,135 +28,145 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox_main = new System.Windows.Forms.GroupBox();
-            this.checkBox_spawn = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBox_cRoute = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox_dRoute = new System.Windows.Forms.ComboBox();
-            this.comboBox_class = new System.Windows.Forms.ComboBox();
-            this.checkBox_target = new System.Windows.Forms.CheckBox();
-            this.groupBox_main.SuspendLayout();
-            this.SuspendLayout();
+            groupBox_main = new System.Windows.Forms.GroupBox();
+            checkBox_spawn = new System.Windows.Forms.CheckBox();
+            label1 = new System.Windows.Forms.Label();
+            comboBox_cRoute = new System.Windows.Forms.ComboBox();
+            label4 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            comboBox_dRoute = new System.Windows.Forms.ComboBox();
+            comboBox_class = new System.Windows.Forms.ComboBox();
+            checkBox_target = new System.Windows.Forms.CheckBox();
+            groupBox_main.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBox_main
             // 
-            this.groupBox_main.BackColor = System.Drawing.Color.DarkGray;
-            this.groupBox_main.Controls.Add(this.checkBox_spawn);
-            this.groupBox_main.Controls.Add(this.label1);
-            this.groupBox_main.Controls.Add(this.comboBox_cRoute);
-            this.groupBox_main.Controls.Add(this.label4);
-            this.groupBox_main.Controls.Add(this.label3);
-            this.groupBox_main.Controls.Add(this.comboBox_dRoute);
-            this.groupBox_main.Controls.Add(this.comboBox_class);
-            this.groupBox_main.Controls.Add(this.checkBox_target);
-            this.groupBox_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox_main.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox_main.Location = new System.Drawing.Point(0, 0);
-            this.groupBox_main.Name = "groupBox_main";
-            this.groupBox_main.Size = new System.Drawing.Size(268, 168);
-            this.groupBox_main.TabIndex = 2;
-            this.groupBox_main.TabStop = false;
-            this.groupBox_main.Text = "HelicopterBox";
+            groupBox_main.BackColor = System.Drawing.Color.DarkGray;
+            groupBox_main.Controls.Add(checkBox_spawn);
+            groupBox_main.Controls.Add(label1);
+            groupBox_main.Controls.Add(comboBox_cRoute);
+            groupBox_main.Controls.Add(label4);
+            groupBox_main.Controls.Add(label3);
+            groupBox_main.Controls.Add(comboBox_dRoute);
+            groupBox_main.Controls.Add(comboBox_class);
+            groupBox_main.Controls.Add(checkBox_target);
+            groupBox_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBox_main.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            groupBox_main.Location = new System.Drawing.Point(0, 0);
+            groupBox_main.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_main.Name = "groupBox_main";
+            groupBox_main.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_main.Size = new System.Drawing.Size(313, 194);
+            groupBox_main.TabIndex = 2;
+            groupBox_main.TabStop = false;
+            groupBox_main.Text = "HelicopterBox";
             // 
             // checkBox_spawn
             // 
-            this.checkBox_spawn.AutoSize = true;
-            this.checkBox_spawn.Location = new System.Drawing.Point(94, 18);
-            this.checkBox_spawn.Name = "checkBox_spawn";
-            this.checkBox_spawn.Size = new System.Drawing.Size(59, 17);
-            this.checkBox_spawn.TabIndex = 23;
-            this.checkBox_spawn.TabStop = false;
-            this.checkBox_spawn.Text = "Spawn";
-            this.checkBox_spawn.UseVisualStyleBackColor = true;
-            this.checkBox_spawn.CheckedChanged += new System.EventHandler(this.checkBox_spawn_CheckedChanged);
+            checkBox_spawn.AutoSize = true;
+            checkBox_spawn.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_spawn.Location = new System.Drawing.Point(110, 21);
+            checkBox_spawn.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_spawn.Name = "checkBox_spawn";
+            checkBox_spawn.Size = new System.Drawing.Size(61, 18);
+            checkBox_spawn.TabIndex = 23;
+            checkBox_spawn.TabStop = false;
+            checkBox_spawn.Text = "Spawn";
+            checkBox_spawn.UseVisualStyleBackColor = true;
+            checkBox_spawn.CheckedChanged += checkBox_spawn_CheckedChanged;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(9, 119);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 21);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "Caution Route:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label1.Location = new System.Drawing.Point(10, 137);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(92, 24);
+            label1.TabIndex = 22;
+            label1.Text = "Caution Route:";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_cRoute
             // 
-            this.comboBox_cRoute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_cRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_cRoute.FormattingEnabled = true;
-            this.comboBox_cRoute.Location = new System.Drawing.Point(9, 141);
-            this.comboBox_cRoute.Name = "comboBox_cRoute";
-            this.comboBox_cRoute.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_cRoute.TabIndex = 21;
+            comboBox_cRoute.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_cRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_cRoute.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_cRoute.FormattingEnabled = true;
+            comboBox_cRoute.Location = new System.Drawing.Point(10, 163);
+            comboBox_cRoute.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_cRoute.Name = "comboBox_cRoute";
+            comboBox_cRoute.Size = new System.Drawing.Size(291, 22);
+            comboBox_cRoute.TabIndex = 21;
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(9, 73);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(79, 21);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "Sneak Route:";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label4.Location = new System.Drawing.Point(10, 84);
+            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(92, 24);
+            label4.TabIndex = 20;
+            label4.Text = "Sneak Route:";
+            label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(9, 43);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 21);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Class:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label3.Location = new System.Drawing.Point(10, 50);
+            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(92, 24);
+            label3.TabIndex = 19;
+            label3.Text = "Class:";
+            label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_dRoute
             // 
-            this.comboBox_dRoute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_dRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_dRoute.FormattingEnabled = true;
-            this.comboBox_dRoute.Location = new System.Drawing.Point(9, 95);
-            this.comboBox_dRoute.Name = "comboBox_dRoute";
-            this.comboBox_dRoute.Size = new System.Drawing.Size(250, 21);
-            this.comboBox_dRoute.TabIndex = 6;
+            comboBox_dRoute.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_dRoute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_dRoute.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_dRoute.FormattingEnabled = true;
+            comboBox_dRoute.Location = new System.Drawing.Point(10, 110);
+            comboBox_dRoute.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_dRoute.Name = "comboBox_dRoute";
+            comboBox_dRoute.Size = new System.Drawing.Size(291, 22);
+            comboBox_dRoute.TabIndex = 6;
             // 
             // comboBox_class
             // 
-            this.comboBox_class.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_class.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_class.FormattingEnabled = true;
-            this.comboBox_class.Items.AddRange(new object[] {
-            "DEFAULT",
-            "BLACK",
-            "RED"});
-            this.comboBox_class.Location = new System.Drawing.Point(94, 43);
-            this.comboBox_class.Name = "comboBox_class";
-            this.comboBox_class.Size = new System.Drawing.Size(165, 21);
-            this.comboBox_class.TabIndex = 5;
+            comboBox_class.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_class.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_class.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_class.FormattingEnabled = true;
+            comboBox_class.Items.AddRange(new object[] { "DEFAULT", "BLACK", "RED" });
+            comboBox_class.Location = new System.Drawing.Point(110, 50);
+            comboBox_class.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_class.Name = "comboBox_class";
+            comboBox_class.Size = new System.Drawing.Size(192, 22);
+            comboBox_class.TabIndex = 5;
             // 
             // checkBox_target
             // 
-            this.checkBox_target.AutoSize = true;
-            this.checkBox_target.Location = new System.Drawing.Point(180, 18);
-            this.checkBox_target.Name = "checkBox_target";
-            this.checkBox_target.Size = new System.Drawing.Size(68, 17);
-            this.checkBox_target.TabIndex = 0;
-            this.checkBox_target.TabStop = false;
-            this.checkBox_target.Text = "Is Target";
-            this.checkBox_target.UseVisualStyleBackColor = true;
+            checkBox_target.AutoSize = true;
+            checkBox_target.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_target.Location = new System.Drawing.Point(210, 21);
+            checkBox_target.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_target.Name = "checkBox_target";
+            checkBox_target.Size = new System.Drawing.Size(89, 18);
+            checkBox_target.TabIndex = 0;
+            checkBox_target.TabStop = false;
+            checkBox_target.Text = "Is Target";
+            checkBox_target.UseVisualStyleBackColor = true;
             // 
             // HelicopterBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox_main);
-            this.Name = "HelicopterBox";
-            this.Size = new System.Drawing.Size(268, 168);
-            this.groupBox_main.ResumeLayout(false);
-            this.groupBox_main.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(groupBox_main);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "HelicopterBox";
+            Size = new System.Drawing.Size(313, 194);
+            groupBox_main.ResumeLayout(false);
+            groupBox_main.PerformLayout();
+            ResumeLayout(false);
 
         }
 

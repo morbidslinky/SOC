@@ -112,7 +112,7 @@ namespace SOC.UI
                     comboBoxVarType.Text = "STRING";
                     break;
                 case TemplateRestrictionType.NUMBER:
-                    numericUpDownVarNumberValue.Value = decimal.Parse(node.Entry.Value.TokenValue);
+                    textBoxVarNumberValue.Text = node.Entry.Value.TokenValue;
                     comboBoxVarType.Text = "NUMBER";
                     break;
                 case TemplateRestrictionType.BOOLEAN:
@@ -153,7 +153,7 @@ namespace SOC.UI
 
         private void ShowVarTypeValueControl(Control control)
         {
-            Control[] valueControls = { textBoxVarStringValue, numericUpDownVarNumberValue, panelBoolean, panelNewIdentifier, panelPlaceholder };
+            Control[] valueControls = { textBoxVarStringValue, textBoxVarNumberValue, panelBoolean, panelNewIdentifier, panelPlaceholder };
 
             foreach (Control valueControl in valueControls)
             {
@@ -241,14 +241,29 @@ namespace SOC.UI
             UpdateNode();
         }
 
-        private void numericUpDownVarNumberValue_ValueChanged(object sender, EventArgs e)
+        private void radioButtonFalse_CheckedChanged(object sender, EventArgs e)
         {
             UpdateNode();
         }
 
-        private void radioButtonFalse_CheckedChanged(object sender, EventArgs e)
+        private void textBoxVarNumberValue_TextChanged(object sender, EventArgs e)
         {
             UpdateNode();
+        }
+
+        private void textBoxVarNumberValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!char.IsControl(ch) && !char.IsDigit(ch) && ch != '.')
+            {
+                e.Handled = true;
+            }
+
+            if (ch == '.' && (sender as TextBox).Text.Contains('.'))
+            {
+                e.Handled = true;
+            }
         }
 
         private void UpdateNode()
@@ -262,9 +277,14 @@ namespace SOC.UI
                     currentNode.Entry.Value = Create.String(textBoxVarStringValue.Text);
                     break;
                 case "NUMBER":
-                    ShowVarTypeValueControl(numericUpDownVarNumberValue);
+                    ShowVarTypeValueControl(textBoxVarNumberValue);
                     currentNode.Nodes.Clear();
-                    currentNode.Entry.Value = Create.Number((double)numericUpDownVarNumberValue.Value);
+                    if (string.IsNullOrEmpty(textBoxVarNumberValue.Text))
+                    {
+                        textBoxVarNumberValue.Text = "0";
+                        textBoxVarNumberValue.SelectAll();
+                    }
+                    currentNode.Entry.Value = Create.Number(textBoxVarNumberValue.Text);
                     break;
                 case "BOOLEAN":
                     ShowVarTypeValueControl(panelBoolean);

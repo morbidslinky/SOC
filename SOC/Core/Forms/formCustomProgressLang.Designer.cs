@@ -28,78 +28,86 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxLangId = new System.Windows.Forms.TextBox();
-            this.textBoxLangValue = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.buttonCreateEntry = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            textBoxLangId = new System.Windows.Forms.TextBox();
+            textBoxLangValue = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            buttonCreateEntry = new System.Windows.Forms.Button();
+            SuspendLayout();
             // 
             // textBoxLangId
             // 
-            this.textBoxLangId.BackColor = System.Drawing.Color.LightGray;
-            this.textBoxLangId.Location = new System.Drawing.Point(12, 25);
-            this.textBoxLangId.Name = "textBoxLangId";
-            this.textBoxLangId.Size = new System.Drawing.Size(312, 20);
-            this.textBoxLangId.TabIndex = 0;
-            this.textBoxLangId.Leave += new System.EventHandler(this.textBoxLangId_Leave);
+            textBoxLangId.BackColor = System.Drawing.Color.LightGray;
+            textBoxLangId.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxLangId.Location = new System.Drawing.Point(14, 29);
+            textBoxLangId.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxLangId.Name = "textBoxLangId";
+            textBoxLangId.Size = new System.Drawing.Size(363, 22);
+            textBoxLangId.TabIndex = 0;
+            textBoxLangId.Leave += textBoxLangId_Leave;
             // 
             // textBoxLangValue
             // 
-            this.textBoxLangValue.BackColor = System.Drawing.Color.LightGray;
-            this.textBoxLangValue.Location = new System.Drawing.Point(12, 68);
-            this.textBoxLangValue.Name = "textBoxLangValue";
-            this.textBoxLangValue.Size = new System.Drawing.Size(312, 20);
-            this.textBoxLangValue.TabIndex = 1;
+            textBoxLangValue.BackColor = System.Drawing.Color.LightGray;
+            textBoxLangValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxLangValue.Location = new System.Drawing.Point(14, 78);
+            textBoxLangValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxLangValue.Name = "textBoxLangValue";
+            textBoxLangValue.Size = new System.Drawing.Size(363, 22);
+            textBoxLangValue.TabIndex = 1;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Unique LangId:";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(10, 10);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(87, 15);
+            label1.TabIndex = 2;
+            label1.Text = "Unique LangId:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 52);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "In-game Notification:";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(10, 60);
+            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(121, 15);
+            label2.TabIndex = 3;
+            label2.Text = "In-game Notification:";
             // 
             // buttonCreateEntry
             // 
-            this.buttonCreateEntry.Location = new System.Drawing.Point(243, 95);
-            this.buttonCreateEntry.Name = "buttonCreateEntry";
-            this.buttonCreateEntry.Size = new System.Drawing.Size(81, 23);
-            this.buttonCreateEntry.TabIndex = 4;
-            this.buttonCreateEntry.Text = "Create Entry";
-            this.buttonCreateEntry.UseVisualStyleBackColor = true;
-            this.buttonCreateEntry.Click += new System.EventHandler(this.buttonCreateEntry_Click);
+            buttonCreateEntry.Location = new System.Drawing.Point(284, 110);
+            buttonCreateEntry.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonCreateEntry.Name = "buttonCreateEntry";
+            buttonCreateEntry.Size = new System.Drawing.Size(94, 27);
+            buttonCreateEntry.TabIndex = 4;
+            buttonCreateEntry.Text = "Create Entry";
+            buttonCreateEntry.UseVisualStyleBackColor = true;
+            buttonCreateEntry.Click += buttonCreateEntry_Click;
             // 
             // formCustomProgressLang
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(336, 128);
-            this.Controls.Add(this.buttonCreateEntry);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxLangValue);
-            this.Controls.Add(this.textBoxLangId);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "formCustomProgressLang";
-            this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Custom Progress Notification";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.DarkGray;
+            ClientSize = new System.Drawing.Size(392, 148);
+            Controls.Add(buttonCreateEntry);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(textBoxLangValue);
+            Controls.Add(textBoxLangId);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "formCustomProgressLang";
+            ShowIcon = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            Text = "Custom Progress Notification";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 

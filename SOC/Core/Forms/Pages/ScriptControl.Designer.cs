@@ -29,20 +29,20 @@
         internal void InitializeComponent()
         {
             groupBoxVariables = new System.Windows.Forms.GroupBox();
-            panelNewIdentifier = new System.Windows.Forms.Panel();
-            comboBoxTableAddOptions = new System.Windows.Forms.ComboBox();
-            buttonNewIdentifier = new System.Windows.Forms.Button();
             comboBoxVarType = new System.Windows.Forms.ComboBox();
             textBoxVarName = new System.Windows.Forms.TextBox();
             buttonNewVariable = new System.Windows.Forms.Button();
             buttonRemoveVariableIdentifier = new System.Windows.Forms.Button();
             treeViewVariables = new System.Windows.Forms.TreeView();
+            textBoxVarNumberValue = new System.Windows.Forms.TextBox();
+            textBoxVarStringValue = new System.Windows.Forms.TextBox();
+            panelPlaceholder = new System.Windows.Forms.Panel();
+            panelNewIdentifier = new System.Windows.Forms.Panel();
+            comboBoxTableAddOptions = new System.Windows.Forms.ComboBox();
+            buttonNewIdentifier = new System.Windows.Forms.Button();
             panelBoolean = new System.Windows.Forms.Panel();
             radioButtonFalse = new System.Windows.Forms.RadioButton();
             radioButtonTrue = new System.Windows.Forms.RadioButton();
-            numericUpDownVarNumberValue = new System.Windows.Forms.NumericUpDown();
-            textBoxVarStringValue = new System.Windows.Forms.TextBox();
-            panelPlaceholder = new System.Windows.Forms.Panel();
             groupBoxScripts = new System.Windows.Forms.GroupBox();
             splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             buttonNewPrecondition = new System.Windows.Forms.Button();
@@ -59,7 +59,6 @@
             groupBoxVariables.SuspendLayout();
             panelNewIdentifier.SuspendLayout();
             panelBoolean.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownVarNumberValue).BeginInit();
             groupBoxScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerPreconditionOperation).BeginInit();
             splitContainerPreconditionOperation.Panel1.SuspendLayout();
@@ -85,11 +84,11 @@
             groupBoxVariables.Controls.Add(buttonNewVariable);
             groupBoxVariables.Controls.Add(buttonRemoveVariableIdentifier);
             groupBoxVariables.Controls.Add(treeViewVariables);
-            groupBoxVariables.Controls.Add(numericUpDownVarNumberValue);
+            groupBoxVariables.Controls.Add(panelBoolean);
+            groupBoxVariables.Controls.Add(textBoxVarNumberValue);
             groupBoxVariables.Controls.Add(textBoxVarStringValue);
             groupBoxVariables.Controls.Add(panelPlaceholder);
             groupBoxVariables.Controls.Add(panelNewIdentifier);
-            groupBoxVariables.Controls.Add(panelBoolean);
             groupBoxVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             groupBoxVariables.Location = new System.Drawing.Point(0, 0);
             groupBoxVariables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -98,56 +97,20 @@
             groupBoxVariables.Size = new System.Drawing.Size(302, 519);
             groupBoxVariables.TabIndex = 0;
             groupBoxVariables.TabStop = false;
-            groupBoxVariables.Text = "Custom Variables :: Type :: Initial Value";
-            // 
-            // panelNewIdentifier
-            // 
-            panelNewIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            panelNewIdentifier.Controls.Add(comboBoxTableAddOptions);
-            panelNewIdentifier.Controls.Add(buttonNewIdentifier);
-            panelNewIdentifier.Location = new System.Drawing.Point(4, 456);
-            panelNewIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            panelNewIdentifier.Name = "panelNewIdentifier";
-            panelNewIdentifier.Size = new System.Drawing.Size(295, 24);
-            panelNewIdentifier.TabIndex = 11;
-            panelNewIdentifier.Visible = false;
-            panelNewIdentifier.VisibleChanged += panelNewIdentifier_VisibleChanged;
-            // 
-            // comboBoxTableAddOptions
-            // 
-            comboBoxTableAddOptions.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            comboBoxTableAddOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboBoxTableAddOptions.FormattingEnabled = true;
-            comboBoxTableAddOptions.Items.AddRange(new object[] { "STRING", "NUMBER", "BOOLEAN", "TABLE" });
-            comboBoxTableAddOptions.Location = new System.Drawing.Point(1, 0);
-            comboBoxTableAddOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            comboBoxTableAddOptions.Name = "comboBoxTableAddOptions";
-            comboBoxTableAddOptions.Size = new System.Drawing.Size(210, 23);
-            comboBoxTableAddOptions.TabIndex = 10;
-            // 
-            // buttonNewIdentifier
-            // 
-            buttonNewIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-            buttonNewIdentifier.Location = new System.Drawing.Point(219, 0);
-            buttonNewIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonNewIdentifier.Name = "buttonNewIdentifier";
-            buttonNewIdentifier.Size = new System.Drawing.Size(76, 24);
-            buttonNewIdentifier.TabIndex = 4;
-            buttonNewIdentifier.Text = "Add >>";
-            buttonNewIdentifier.UseVisualStyleBackColor = true;
-            buttonNewIdentifier.Click += buttonNewIdentifier_Click;
+            groupBoxVariables.Text = "Custom Variables";
             // 
             // comboBoxVarType
             // 
             comboBoxVarType.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             comboBoxVarType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxVarType.Enabled = false;
+            comboBoxVarType.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxVarType.FormattingEnabled = true;
             comboBoxVarType.Items.AddRange(new object[] { "STRING", "NUMBER", "BOOLEAN", "TABLE" });
             comboBoxVarType.Location = new System.Drawing.Point(158, 426);
             comboBoxVarType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxVarType.Name = "comboBoxVarType";
-            comboBoxVarType.Size = new System.Drawing.Size(140, 23);
+            comboBoxVarType.Size = new System.Drawing.Size(140, 22);
             comboBoxVarType.TabIndex = 3;
             comboBoxVarType.SelectedIndexChanged += comboBoxVarType_SelectedIndexChanged;
             // 
@@ -156,10 +119,11 @@
             textBoxVarName.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxVarName.BackColor = System.Drawing.Color.Silver;
             textBoxVarName.Enabled = false;
+            textBoxVarName.Font = new System.Drawing.Font("Consolas", 9F);
             textBoxVarName.Location = new System.Drawing.Point(4, 426);
             textBoxVarName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxVarName.Name = "textBoxVarName";
-            textBoxVarName.Size = new System.Drawing.Size(147, 23);
+            textBoxVarName.Size = new System.Drawing.Size(147, 22);
             textBoxVarName.TabIndex = 2;
             textBoxVarName.TextChanged += textBoxVarName_TextChanged;
             textBoxVarName.KeyDown += textBoxName_KeyDown;
@@ -204,6 +168,85 @@
             treeViewVariables.TabIndex = 0;
             treeViewVariables.AfterSelect += treeViewVariables_AfterSelect;
             // 
+            // textBoxVarNumberValue
+            // 
+            textBoxVarNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxVarNumberValue.BackColor = System.Drawing.Color.LightGray;
+            textBoxVarNumberValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxVarNumberValue.Location = new System.Drawing.Point(4, 456);
+            textBoxVarNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxVarNumberValue.Name = "textBoxVarNumberValue";
+            textBoxVarNumberValue.Size = new System.Drawing.Size(295, 22);
+            textBoxVarNumberValue.TabIndex = 4;
+            textBoxVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            textBoxVarNumberValue.Visible = false;
+            textBoxVarNumberValue.TextChanged += textBoxVarNumberValue_TextChanged;
+            textBoxVarNumberValue.KeyPress += textBoxVarNumberValue_KeyPress;
+            // 
+            // textBoxVarStringValue
+            // 
+            textBoxVarStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxVarStringValue.BackColor = System.Drawing.Color.Silver;
+            textBoxVarStringValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxVarStringValue.Location = new System.Drawing.Point(4, 456);
+            textBoxVarStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxVarStringValue.Name = "textBoxVarStringValue";
+            textBoxVarStringValue.Size = new System.Drawing.Size(295, 22);
+            textBoxVarStringValue.TabIndex = 4;
+            textBoxVarStringValue.Visible = false;
+            textBoxVarStringValue.TextChanged += textBoxTextVarValue_TextChanged;
+            // 
+            // panelPlaceholder
+            // 
+            panelPlaceholder.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelPlaceholder.BackColor = System.Drawing.Color.Silver;
+            panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panelPlaceholder.Font = new System.Drawing.Font("Consolas", 9F);
+            panelPlaceholder.Location = new System.Drawing.Point(4, 456);
+            panelPlaceholder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelPlaceholder.Name = "panelPlaceholder";
+            panelPlaceholder.Size = new System.Drawing.Size(295, 23);
+            panelPlaceholder.TabIndex = 9;
+            // 
+            // panelNewIdentifier
+            // 
+            panelNewIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelNewIdentifier.Controls.Add(comboBoxTableAddOptions);
+            panelNewIdentifier.Controls.Add(buttonNewIdentifier);
+            panelNewIdentifier.Font = new System.Drawing.Font("Consolas", 9F);
+            panelNewIdentifier.Location = new System.Drawing.Point(4, 456);
+            panelNewIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelNewIdentifier.Name = "panelNewIdentifier";
+            panelNewIdentifier.Size = new System.Drawing.Size(295, 24);
+            panelNewIdentifier.TabIndex = 11;
+            panelNewIdentifier.Visible = false;
+            panelNewIdentifier.VisibleChanged += panelNewIdentifier_VisibleChanged;
+            // 
+            // comboBoxTableAddOptions
+            // 
+            comboBoxTableAddOptions.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxTableAddOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxTableAddOptions.FormattingEnabled = true;
+            comboBoxTableAddOptions.Items.AddRange(new object[] { "STRING", "NUMBER", "BOOLEAN", "TABLE" });
+            comboBoxTableAddOptions.Location = new System.Drawing.Point(1, 0);
+            comboBoxTableAddOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxTableAddOptions.Name = "comboBoxTableAddOptions";
+            comboBoxTableAddOptions.Size = new System.Drawing.Size(210, 22);
+            comboBoxTableAddOptions.TabIndex = 10;
+            // 
+            // buttonNewIdentifier
+            // 
+            buttonNewIdentifier.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            buttonNewIdentifier.Font = new System.Drawing.Font("Segoe UI", 9F);
+            buttonNewIdentifier.Location = new System.Drawing.Point(219, 0);
+            buttonNewIdentifier.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNewIdentifier.Name = "buttonNewIdentifier";
+            buttonNewIdentifier.Size = new System.Drawing.Size(76, 24);
+            buttonNewIdentifier.TabIndex = 4;
+            buttonNewIdentifier.Text = "Add >>";
+            buttonNewIdentifier.UseVisualStyleBackColor = true;
+            buttonNewIdentifier.Click += buttonNewIdentifier_Click;
+            // 
             // panelBoolean
             // 
             panelBoolean.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -211,6 +254,7 @@
             panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             panelBoolean.Controls.Add(radioButtonFalse);
             panelBoolean.Controls.Add(radioButtonTrue);
+            panelBoolean.Font = new System.Drawing.Font("Consolas", 9F);
             panelBoolean.Location = new System.Drawing.Point(4, 456);
             panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panelBoolean.Name = "panelBoolean";
@@ -223,10 +267,10 @@
             radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             radioButtonFalse.AutoSize = true;
             radioButtonFalse.Checked = true;
-            radioButtonFalse.Location = new System.Drawing.Point(88, 2);
+            radioButtonFalse.Location = new System.Drawing.Point(88, 3);
             radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButtonFalse.Name = "radioButtonFalse";
-            radioButtonFalse.Size = new System.Drawing.Size(51, 19);
+            radioButtonFalse.Size = new System.Drawing.Size(60, 18);
             radioButtonFalse.TabIndex = 6;
             radioButtonFalse.TabStop = true;
             radioButtonFalse.Text = "False";
@@ -237,51 +281,13 @@
             // 
             radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             radioButtonTrue.AutoSize = true;
-            radioButtonTrue.Location = new System.Drawing.Point(156, 2);
+            radioButtonTrue.Location = new System.Drawing.Point(156, 3);
             radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButtonTrue.Name = "radioButtonTrue";
-            radioButtonTrue.Size = new System.Drawing.Size(47, 19);
+            radioButtonTrue.Size = new System.Drawing.Size(53, 18);
             radioButtonTrue.TabIndex = 7;
             radioButtonTrue.Text = "True";
             radioButtonTrue.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownVarNumberValue
-            // 
-            numericUpDownVarNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            numericUpDownVarNumberValue.DecimalPlaces = 3;
-            numericUpDownVarNumberValue.Location = new System.Drawing.Point(4, 456);
-            numericUpDownVarNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            numericUpDownVarNumberValue.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
-            numericUpDownVarNumberValue.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
-            numericUpDownVarNumberValue.Name = "numericUpDownVarNumberValue";
-            numericUpDownVarNumberValue.Size = new System.Drawing.Size(295, 23);
-            numericUpDownVarNumberValue.TabIndex = 4;
-            numericUpDownVarNumberValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            numericUpDownVarNumberValue.Visible = false;
-            numericUpDownVarNumberValue.ValueChanged += numericUpDownVarNumberValue_ValueChanged;
-            // 
-            // textBoxVarStringValue
-            // 
-            textBoxVarStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            textBoxVarStringValue.BackColor = System.Drawing.Color.Silver;
-            textBoxVarStringValue.Location = new System.Drawing.Point(4, 456);
-            textBoxVarStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            textBoxVarStringValue.Name = "textBoxVarStringValue";
-            textBoxVarStringValue.Size = new System.Drawing.Size(295, 23);
-            textBoxVarStringValue.TabIndex = 4;
-            textBoxVarStringValue.Visible = false;
-            textBoxVarStringValue.TextChanged += textBoxTextVarValue_TextChanged;
-            // 
-            // panelPlaceholder
-            // 
-            panelPlaceholder.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            panelPlaceholder.BackColor = System.Drawing.Color.Silver;
-            panelPlaceholder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panelPlaceholder.Location = new System.Drawing.Point(4, 456);
-            panelPlaceholder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            panelPlaceholder.Name = "panelPlaceholder";
-            panelPlaceholder.Size = new System.Drawing.Size(295, 23);
-            panelPlaceholder.TabIndex = 9;
             // 
             // groupBoxScripts
             // 
@@ -350,10 +356,11 @@
             textBoxScriptName.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxScriptName.BackColor = System.Drawing.Color.Silver;
             textBoxScriptName.Enabled = false;
+            textBoxScriptName.Font = new System.Drawing.Font("Consolas", 9F);
             textBoxScriptName.Location = new System.Drawing.Point(4, 426);
             textBoxScriptName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxScriptName.Name = "textBoxScriptName";
-            textBoxScriptName.Size = new System.Drawing.Size(355, 23);
+            textBoxScriptName.Size = new System.Drawing.Size(355, 22);
             textBoxScriptName.TabIndex = 2;
             textBoxScriptName.TextChanged += textBoxScriptName_TextChanged;
             textBoxScriptName.KeyDown += textBoxScriptName_KeyDown;
@@ -488,7 +495,6 @@
             panelNewIdentifier.ResumeLayout(false);
             panelBoolean.ResumeLayout(false);
             panelBoolean.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownVarNumberValue).EndInit();
             groupBoxScripts.ResumeLayout(false);
             groupBoxScripts.PerformLayout();
             splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
@@ -521,7 +527,7 @@
         internal System.Windows.Forms.Button buttonNewVariable;
         internal System.Windows.Forms.Button buttonRemoveVariableIdentifier;
         internal System.Windows.Forms.Button buttonNewIdentifier;
-        internal System.Windows.Forms.NumericUpDown numericUpDownVarNumberValue;
+        internal System.Windows.Forms.TextBox textBoxVarNumberValue;
         internal System.Windows.Forms.Panel panelScripting;
         internal System.Windows.Forms.GroupBox groupBoxScriptDetails;
         internal System.Windows.Forms.TreeView treeViewScripts;

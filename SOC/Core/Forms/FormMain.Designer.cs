@@ -28,126 +28,133 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonNext = new System.Windows.Forms.Button();
-            this.buttonBack = new System.Windows.Forms.Button();
-            this.panelMain = new System.Windows.Forms.Panel();
-            this.buttonLoad = new System.Windows.Forms.Button();
-            this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonBatchBuild = new System.Windows.Forms.Button();
-            this.buttonOpenFolder = new System.Windows.Forms.Button();
-            this.buttonOpenScriptTemplates = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            buttonNext = new System.Windows.Forms.Button();
+            buttonBack = new System.Windows.Forms.Button();
+            panelMain = new System.Windows.Forms.Panel();
+            buttonLoad = new System.Windows.Forms.Button();
+            buttonSave = new System.Windows.Forms.Button();
+            buttonBatchBuild = new System.Windows.Forms.Button();
+            buttonOpenFolder = new System.Windows.Forms.Button();
+            buttonOpenScriptTemplates = new System.Windows.Forms.Button();
+            SuspendLayout();
             // 
             // buttonNext
             // 
-            this.buttonNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonNext.Location = new System.Drawing.Point(1037, 468);
-            this.buttonNext.Name = "buttonNext";
-            this.buttonNext.Size = new System.Drawing.Size(109, 38);
-            this.buttonNext.TabIndex = 8;
-            this.buttonNext.Text = "Next >>";
-            this.buttonNext.UseVisualStyleBackColor = true;
-            this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
+            buttonNext.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            buttonNext.Location = new System.Drawing.Point(1210, 540);
+            buttonNext.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonNext.Name = "buttonNext";
+            buttonNext.Size = new System.Drawing.Size(127, 44);
+            buttonNext.TabIndex = 8;
+            buttonNext.Text = "Next >>";
+            buttonNext.UseVisualStyleBackColor = true;
+            buttonNext.Click += buttonNext_Click;
             // 
             // buttonBack
             // 
-            this.buttonBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonBack.Location = new System.Drawing.Point(922, 468);
-            this.buttonBack.Name = "buttonBack";
-            this.buttonBack.Size = new System.Drawing.Size(109, 38);
-            this.buttonBack.TabIndex = 7;
-            this.buttonBack.Text = "<< Back";
-            this.buttonBack.UseVisualStyleBackColor = true;
-            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            buttonBack.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+            buttonBack.Location = new System.Drawing.Point(1076, 540);
+            buttonBack.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonBack.Name = "buttonBack";
+            buttonBack.Size = new System.Drawing.Size(127, 44);
+            buttonBack.TabIndex = 7;
+            buttonBack.Text = "<< Back";
+            buttonBack.UseVisualStyleBackColor = true;
+            buttonBack.Click += buttonBack_Click;
             // 
             // panelMain
             // 
-            this.panelMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelMain.Location = new System.Drawing.Point(12, 12);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(1134, 450);
-            this.panelMain.TabIndex = 1;
+            panelMain.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelMain.Location = new System.Drawing.Point(14, 14);
+            panelMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelMain.Name = "panelMain";
+            panelMain.Size = new System.Drawing.Size(1323, 519);
+            panelMain.TabIndex = 1;
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonLoad.Location = new System.Drawing.Point(12, 468);
-            this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(109, 38);
-            this.buttonLoad.TabIndex = 2;
-            this.buttonLoad.Text = "Load From Xml...";
-            this.buttonLoad.UseVisualStyleBackColor = true;
-            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            buttonLoad.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonLoad.Location = new System.Drawing.Point(14, 540);
+            buttonLoad.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonLoad.Name = "buttonLoad";
+            buttonLoad.Size = new System.Drawing.Size(127, 44);
+            buttonLoad.TabIndex = 2;
+            buttonLoad.Text = "Load From Xml...";
+            buttonLoad.UseVisualStyleBackColor = true;
+            buttonLoad.Click += buttonLoad_Click;
             // 
             // buttonSave
             // 
-            this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSave.Location = new System.Drawing.Point(127, 468);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(109, 38);
-            this.buttonSave.TabIndex = 3;
-            this.buttonSave.Text = "Save To Xml...";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            buttonSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonSave.Location = new System.Drawing.Point(148, 540);
+            buttonSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new System.Drawing.Size(127, 44);
+            buttonSave.TabIndex = 3;
+            buttonSave.Text = "Save To Xml...";
+            buttonSave.UseVisualStyleBackColor = true;
+            buttonSave.Click += buttonSave_Click;
             // 
             // buttonBatchBuild
             // 
-            this.buttonBatchBuild.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonBatchBuild.Location = new System.Drawing.Point(242, 468);
-            this.buttonBatchBuild.Name = "buttonBatchBuild";
-            this.buttonBatchBuild.Size = new System.Drawing.Size(109, 38);
-            this.buttonBatchBuild.TabIndex = 4;
-            this.buttonBatchBuild.Text = "Batch Build Xml...";
-            this.buttonBatchBuild.UseVisualStyleBackColor = true;
-            this.buttonBatchBuild.Click += new System.EventHandler(this.buttonBatchBuild_Click);
+            buttonBatchBuild.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonBatchBuild.Location = new System.Drawing.Point(282, 540);
+            buttonBatchBuild.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonBatchBuild.Name = "buttonBatchBuild";
+            buttonBatchBuild.Size = new System.Drawing.Size(127, 44);
+            buttonBatchBuild.TabIndex = 4;
+            buttonBatchBuild.Text = "Batch Build Xml...";
+            buttonBatchBuild.UseVisualStyleBackColor = true;
+            buttonBatchBuild.Click += buttonBatchBuild_Click;
             // 
             // buttonOpenFolder
             // 
-            this.buttonOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOpenFolder.Location = new System.Drawing.Point(373, 468);
-            this.buttonOpenFolder.Name = "buttonOpenFolder";
-            this.buttonOpenFolder.Size = new System.Drawing.Size(129, 38);
-            this.buttonOpenFolder.TabIndex = 5;
-            this.buttonOpenFolder.Text = "Open SOC Folder";
-            this.buttonOpenFolder.UseVisualStyleBackColor = true;
-            this.buttonOpenFolder.Click += new System.EventHandler(this.buttonOpenFolder_Click);
+            buttonOpenFolder.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonOpenFolder.Location = new System.Drawing.Point(435, 540);
+            buttonOpenFolder.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonOpenFolder.Name = "buttonOpenFolder";
+            buttonOpenFolder.Size = new System.Drawing.Size(150, 44);
+            buttonOpenFolder.TabIndex = 5;
+            buttonOpenFolder.Text = "Open SOC Folder";
+            buttonOpenFolder.UseVisualStyleBackColor = true;
+            buttonOpenFolder.Click += buttonOpenFolder_Click;
             // 
             // buttonOpenScriptTemplates
             // 
-            this.buttonOpenScriptTemplates.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonOpenScriptTemplates.Location = new System.Drawing.Point(508, 468);
-            this.buttonOpenScriptTemplates.Name = "buttonOpenScriptTemplates";
-            this.buttonOpenScriptTemplates.Size = new System.Drawing.Size(155, 38);
-            this.buttonOpenScriptTemplates.TabIndex = 6;
-            this.buttonOpenScriptTemplates.Text = "Open ScriptAssets Folder";
-            this.buttonOpenScriptTemplates.UseVisualStyleBackColor = true;
-            this.buttonOpenScriptTemplates.Click += new System.EventHandler(this.buttonOpenScriptTemplates_Click);
+            buttonOpenScriptTemplates.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            buttonOpenScriptTemplates.Location = new System.Drawing.Point(593, 540);
+            buttonOpenScriptTemplates.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            buttonOpenScriptTemplates.Name = "buttonOpenScriptTemplates";
+            buttonOpenScriptTemplates.Size = new System.Drawing.Size(181, 44);
+            buttonOpenScriptTemplates.TabIndex = 6;
+            buttonOpenScriptTemplates.Text = "Open Script Assets Folder";
+            buttonOpenScriptTemplates.UseVisualStyleBackColor = true;
+            buttonOpenScriptTemplates.Click += buttonOpenScriptTemplates_Click;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(1158, 512);
-            this.Controls.Add(this.buttonOpenScriptTemplates);
-            this.Controls.Add(this.buttonBatchBuild);
-            this.Controls.Add(this.buttonOpenFolder);
-            this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.buttonLoad);
-            this.Controls.Add(this.buttonBack);
-            this.Controls.Add(this.buttonNext);
-            this.Controls.Add(this.panelMain);
-            this.MinimumSize = new System.Drawing.Size(1160, 550);
-            this.Name = "FormMain";
-            this.ShowIcon = false;
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Sideop Companion";
-            this.Activated += new System.EventHandler(this.FormMain_Activated);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.Gray;
+            ClientSize = new System.Drawing.Size(1351, 591);
+            Controls.Add(buttonOpenScriptTemplates);
+            Controls.Add(buttonBatchBuild);
+            Controls.Add(buttonOpenFolder);
+            Controls.Add(buttonSave);
+            Controls.Add(buttonLoad);
+            Controls.Add(buttonBack);
+            Controls.Add(buttonNext);
+            Controls.Add(panelMain);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MinimumSize = new System.Drawing.Size(1351, 629);
+            Name = "FormMain";
+            ShowIcon = false;
+            SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Sideop Companion";
+            Activated += FormMain_Activated;
+            FormClosing += FormMain_FormClosing;
+            ResumeLayout(false);
 
         }
 

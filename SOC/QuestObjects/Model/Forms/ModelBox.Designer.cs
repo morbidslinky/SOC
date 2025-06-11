@@ -28,163 +28,182 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox_main = new System.Windows.Forms.GroupBox();
-            this.checkBox_collision = new System.Windows.Forms.CheckBox();
-            this.textBox_wrot = new System.Windows.Forms.TextBox();
-            this.textBox_zrot = new System.Windows.Forms.TextBox();
-            this.textBox_yrot = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox_model = new System.Windows.Forms.ComboBox();
-            this.textBox_xrot = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox_zcoord = new System.Windows.Forms.TextBox();
-            this.textBox_ycoord = new System.Windows.Forms.TextBox();
-            this.textBox_xcoord = new System.Windows.Forms.TextBox();
-            this.groupBox_main.SuspendLayout();
-            this.SuspendLayout();
+            groupBox_main = new System.Windows.Forms.GroupBox();
+            checkBox_collision = new System.Windows.Forms.CheckBox();
+            textBox_wrot = new System.Windows.Forms.TextBox();
+            textBox_zrot = new System.Windows.Forms.TextBox();
+            textBox_yrot = new System.Windows.Forms.TextBox();
+            label5 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            comboBox_model = new System.Windows.Forms.ComboBox();
+            textBox_xrot = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
+            textBox_zcoord = new System.Windows.Forms.TextBox();
+            textBox_ycoord = new System.Windows.Forms.TextBox();
+            textBox_xcoord = new System.Windows.Forms.TextBox();
+            groupBox_main.SuspendLayout();
+            SuspendLayout();
             // 
             // groupBox_main
             // 
-            this.groupBox_main.BackColor = System.Drawing.Color.DarkGray;
-            this.groupBox_main.Controls.Add(this.checkBox_collision);
-            this.groupBox_main.Controls.Add(this.textBox_wrot);
-            this.groupBox_main.Controls.Add(this.textBox_zrot);
-            this.groupBox_main.Controls.Add(this.textBox_yrot);
-            this.groupBox_main.Controls.Add(this.label5);
-            this.groupBox_main.Controls.Add(this.label2);
-            this.groupBox_main.Controls.Add(this.comboBox_model);
-            this.groupBox_main.Controls.Add(this.textBox_xrot);
-            this.groupBox_main.Controls.Add(this.label1);
-            this.groupBox_main.Controls.Add(this.textBox_zcoord);
-            this.groupBox_main.Controls.Add(this.textBox_ycoord);
-            this.groupBox_main.Controls.Add(this.textBox_xcoord);
-            this.groupBox_main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox_main.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox_main.Location = new System.Drawing.Point(0, 0);
-            this.groupBox_main.Name = "groupBox_main";
-            this.groupBox_main.Size = new System.Drawing.Size(268, 125);
-            this.groupBox_main.TabIndex = 2;
-            this.groupBox_main.TabStop = false;
-            this.groupBox_main.Text = "ModelBox";
+            groupBox_main.BackColor = System.Drawing.Color.DarkGray;
+            groupBox_main.Controls.Add(checkBox_collision);
+            groupBox_main.Controls.Add(textBox_wrot);
+            groupBox_main.Controls.Add(textBox_zrot);
+            groupBox_main.Controls.Add(textBox_yrot);
+            groupBox_main.Controls.Add(label5);
+            groupBox_main.Controls.Add(label2);
+            groupBox_main.Controls.Add(comboBox_model);
+            groupBox_main.Controls.Add(textBox_xrot);
+            groupBox_main.Controls.Add(label1);
+            groupBox_main.Controls.Add(textBox_zcoord);
+            groupBox_main.Controls.Add(textBox_ycoord);
+            groupBox_main.Controls.Add(textBox_xcoord);
+            groupBox_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupBox_main.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            groupBox_main.Location = new System.Drawing.Point(0, 0);
+            groupBox_main.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_main.Name = "groupBox_main";
+            groupBox_main.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            groupBox_main.Size = new System.Drawing.Size(313, 144);
+            groupBox_main.TabIndex = 2;
+            groupBox_main.TabStop = false;
+            groupBox_main.Text = "ModelBox";
             // 
             // checkBox_collision
             // 
-            this.checkBox_collision.AutoSize = true;
-            this.checkBox_collision.Location = new System.Drawing.Point(85, 100);
-            this.checkBox_collision.Name = "checkBox_collision";
-            this.checkBox_collision.Size = new System.Drawing.Size(100, 17);
-            this.checkBox_collision.TabIndex = 0;
-            this.checkBox_collision.TabStop = false;
-            this.checkBox_collision.Text = "Enable Collision";
-            this.checkBox_collision.UseVisualStyleBackColor = true;
+            checkBox_collision.AutoSize = true;
+            checkBox_collision.Font = new System.Drawing.Font("Consolas", 9F);
+            checkBox_collision.Location = new System.Drawing.Point(99, 115);
+            checkBox_collision.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            checkBox_collision.Name = "checkBox_collision";
+            checkBox_collision.Size = new System.Drawing.Size(138, 18);
+            checkBox_collision.TabIndex = 0;
+            checkBox_collision.TabStop = false;
+            checkBox_collision.Text = "Enable Collision";
+            checkBox_collision.UseVisualStyleBackColor = true;
             // 
             // textBox_wrot
             // 
-            this.textBox_wrot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_wrot.Location = new System.Drawing.Point(220, 45);
-            this.textBox_wrot.Name = "textBox_wrot";
-            this.textBox_wrot.Size = new System.Drawing.Size(39, 20);
-            this.textBox_wrot.TabIndex = 7;
+            textBox_wrot.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBox_wrot.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_wrot.Location = new System.Drawing.Point(257, 52);
+            textBox_wrot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_wrot.Name = "textBox_wrot";
+            textBox_wrot.Size = new System.Drawing.Size(45, 22);
+            textBox_wrot.TabIndex = 7;
             // 
             // textBox_zrot
             // 
-            this.textBox_zrot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_zrot.Location = new System.Drawing.Point(175, 45);
-            this.textBox_zrot.Name = "textBox_zrot";
-            this.textBox_zrot.Size = new System.Drawing.Size(39, 20);
-            this.textBox_zrot.TabIndex = 6;
+            textBox_zrot.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBox_zrot.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_zrot.Location = new System.Drawing.Point(204, 52);
+            textBox_zrot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_zrot.Name = "textBox_zrot";
+            textBox_zrot.Size = new System.Drawing.Size(45, 22);
+            textBox_zrot.TabIndex = 6;
             // 
             // textBox_yrot
             // 
-            this.textBox_yrot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_yrot.Location = new System.Drawing.Point(130, 45);
-            this.textBox_yrot.Name = "textBox_yrot";
-            this.textBox_yrot.Size = new System.Drawing.Size(39, 20);
-            this.textBox_yrot.TabIndex = 5;
+            textBox_yrot.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBox_yrot.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_yrot.Location = new System.Drawing.Point(152, 52);
+            textBox_yrot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_yrot.Name = "textBox_yrot";
+            textBox_yrot.Size = new System.Drawing.Size(45, 22);
+            textBox_yrot.TabIndex = 5;
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(3, 71);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 21);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "Model:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label5.Location = new System.Drawing.Point(4, 82);
+            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(89, 24);
+            label5.TabIndex = 15;
+            label5.Text = "Model:";
+            label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(3, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 20);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Rotation:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label2.Location = new System.Drawing.Point(4, 52);
+            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(89, 23);
+            label2.TabIndex = 12;
+            label2.Text = "Rotation:";
+            label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // comboBox_model
             // 
-            this.comboBox_model.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_model.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_model.FormattingEnabled = true;
-            this.comboBox_model.Location = new System.Drawing.Point(85, 71);
-            this.comboBox_model.Name = "comboBox_model";
-            this.comboBox_model.Size = new System.Drawing.Size(174, 21);
-            this.comboBox_model.TabIndex = 8;
-            this.comboBox_model.SelectedIndexChanged += new System.EventHandler(this.m_comboBox_model_selectedIndexChanged);
+            comboBox_model.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBox_model.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBox_model.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBox_model.FormattingEnabled = true;
+            comboBox_model.Location = new System.Drawing.Point(99, 82);
+            comboBox_model.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBox_model.Name = "comboBox_model";
+            comboBox_model.Size = new System.Drawing.Size(202, 22);
+            comboBox_model.TabIndex = 8;
+            comboBox_model.SelectedIndexChanged += m_comboBox_model_selectedIndexChanged;
             // 
             // textBox_xrot
             // 
-            this.textBox_xrot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_xrot.Location = new System.Drawing.Point(85, 45);
-            this.textBox_xrot.Name = "textBox_xrot";
-            this.textBox_xrot.Size = new System.Drawing.Size(39, 20);
-            this.textBox_xrot.TabIndex = 4;
+            textBox_xrot.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBox_xrot.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_xrot.Location = new System.Drawing.Point(99, 52);
+            textBox_xrot.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_xrot.Name = "textBox_xrot";
+            textBox_xrot.Size = new System.Drawing.Size(45, 22);
+            textBox_xrot.TabIndex = 4;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(3, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 20);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Coordinates:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            label1.Location = new System.Drawing.Point(4, 22);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(89, 23);
+            label1.TabIndex = 3;
+            label1.Text = "Coordinates:";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // textBox_zcoord
             // 
-            this.textBox_zcoord.Location = new System.Drawing.Point(205, 19);
-            this.textBox_zcoord.Name = "textBox_zcoord";
-            this.textBox_zcoord.Size = new System.Drawing.Size(54, 20);
-            this.textBox_zcoord.TabIndex = 3;
+            textBox_zcoord.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_zcoord.Location = new System.Drawing.Point(239, 22);
+            textBox_zcoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_zcoord.Name = "textBox_zcoord";
+            textBox_zcoord.Size = new System.Drawing.Size(62, 22);
+            textBox_zcoord.TabIndex = 3;
             // 
             // textBox_ycoord
             // 
-            this.textBox_ycoord.Location = new System.Drawing.Point(145, 19);
-            this.textBox_ycoord.Name = "textBox_ycoord";
-            this.textBox_ycoord.Size = new System.Drawing.Size(54, 20);
-            this.textBox_ycoord.TabIndex = 2;
+            textBox_ycoord.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_ycoord.Location = new System.Drawing.Point(169, 22);
+            textBox_ycoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_ycoord.Name = "textBox_ycoord";
+            textBox_ycoord.Size = new System.Drawing.Size(62, 22);
+            textBox_ycoord.TabIndex = 2;
             // 
             // textBox_xcoord
             // 
-            this.textBox_xcoord.Location = new System.Drawing.Point(85, 19);
-            this.textBox_xcoord.Name = "textBox_xcoord";
-            this.textBox_xcoord.Size = new System.Drawing.Size(54, 20);
-            this.textBox_xcoord.TabIndex = 1;
+            textBox_xcoord.Font = new System.Drawing.Font("Consolas", 9F);
+            textBox_xcoord.Location = new System.Drawing.Point(99, 22);
+            textBox_xcoord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBox_xcoord.Name = "textBox_xcoord";
+            textBox_xcoord.Size = new System.Drawing.Size(62, 22);
+            textBox_xcoord.TabIndex = 1;
             // 
             // ModelBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox_main);
-            this.Name = "ModelBox";
-            this.Size = new System.Drawing.Size(268, 125);
-            this.groupBox_main.ResumeLayout(false);
-            this.groupBox_main.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(groupBox_main);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "ModelBox";
+            Size = new System.Drawing.Size(313, 144);
+            groupBox_main.ResumeLayout(false);
+            groupBox_main.PerformLayout();
+            ResumeLayout(false);
 
         }
 

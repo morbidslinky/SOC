@@ -57,9 +57,7 @@ namespace SOC.UI
             textBoxFPKName.Text = Quest.SetupDetails.FpkName;
             textBoxQuestNum.Text = Quest.SetupDetails.QuestNum;
 
-            locationID = Quest.SetupDetails.locationID;
-
-            switch(locationID)
+            switch(Quest.SetupDetails.locationID)
             {
                 case 10:
                     comboBoxRegion.Text = "Afghanistan";
@@ -78,10 +76,44 @@ namespace SOC.UI
             textBoxYCoord.Text = Quest.SetupDetails.coords.yCoord;
             textBoxZCoord.Text = Quest.SetupDetails.coords.zCoord;
 
-            comboBoxRadius.Text = Quest.SetupDetails.radius;
+            var radiusDict = new Dictionary<string, string>
+            {
+                { "1", "1    (30 Meters)" },
+                { "2", "2    (40 Meters)" },
+                { "3", "3    (62.5 Meters)" },
+                { "4", "4    (125 Meters)" },
+                { "5", "5    (200 Meters)" },
+                { "6", "6    (325 Meters)" },
+                { "7", "7    (450 Meters)" },
+                { "8", "8    (600 Meters)" },
+                { "9", "9    (1,200 Meters)" }
+            };
+
+            if (radiusDict.TryGetValue(Quest.SetupDetails.radius, out var radiusText))
+            {
+                comboBoxRadius.Text = radiusText;
+            }
+
+            var rewardDict = new Dictionary<string, string>
+            {
+                { "S", "S    (300,000 GMP)" },
+                { "A", "A    (200,000 GMP)" },
+                { "B", "B    (180,000 GMP)" },
+                { "C", "C    (140,000 GMP)" },
+                { "D", "D    (120,000 GMP)" },
+                { "E", "E    (100,000 GMP)" },
+                { "F", "F    (90,000 GMP)" },
+                { "G", "G    (80,000 GMP)" },
+                { "H", "H    (60,000 GMP)" },
+                { "I", "I    (30,000 GMP)" }
+            };
+
+            if (rewardDict.TryGetValue(Quest.SetupDetails.reward, out var rewardText))
+            {
+                comboBoxReward.Text = rewardText;
+            }
+
             comboBoxCategory.Text = Quest.SetupDetails.category;
-            comboBoxReward.Text = Quest.SetupDetails.reward;
-            
             comboBoxCP.Text = Quest.SetupDetails.CPName;
 
             refreshNotifsList();

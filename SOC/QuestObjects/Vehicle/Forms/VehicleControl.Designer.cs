@@ -63,6 +63,7 @@
             // 
             this.comboBox_ObjType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBox_ObjType.Font = new System.Drawing.Font("Consolas", 9F);
             this.comboBox_ObjType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_ObjType.FormattingEnabled = true;
             this.comboBox_ObjType.Items.AddRange(new object[] {

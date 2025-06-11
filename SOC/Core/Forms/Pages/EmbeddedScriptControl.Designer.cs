@@ -42,9 +42,9 @@
             labelmsg = new System.Windows.Forms.Label();
             comboBoxMessage = new System.Windows.Forms.ComboBox();
             labelSenderOptions = new System.Windows.Forms.Label();
+            numericUpDownSenders = new System.Windows.Forms.NumericUpDown();
             textBoxSenders = new System.Windows.Forms.TextBox();
             comboBoxSenders = new System.Windows.Forms.ComboBox();
-            numericUpDownSenders = new System.Windows.Forms.NumericUpDown();
             splitContainerInner = new System.Windows.Forms.SplitContainer();
             groupBoxPreconditions = new System.Windows.Forms.GroupBox();
             buttonUpPrecondition = new System.Windows.Forms.Button();
@@ -135,9 +135,9 @@
             groupBoxTrigger.Controls.Add(labelmsg);
             groupBoxTrigger.Controls.Add(comboBoxMessage);
             groupBoxTrigger.Controls.Add(labelSenderOptions);
+            groupBoxTrigger.Controls.Add(numericUpDownSenders);
             groupBoxTrigger.Controls.Add(textBoxSenders);
             groupBoxTrigger.Controls.Add(comboBoxSenders);
-            groupBoxTrigger.Controls.Add(numericUpDownSenders);
             groupBoxTrigger.Location = new System.Drawing.Point(0, 0);
             groupBoxTrigger.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxTrigger.Name = "groupBoxTrigger";
@@ -163,10 +163,11 @@
             // 
             textBoxMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxMessage.BackColor = System.Drawing.Color.LightGray;
+            textBoxMessage.Font = new System.Drawing.Font("Consolas", 9F);
             textBoxMessage.Location = new System.Drawing.Point(7, 92);
             textBoxMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxMessage.Name = "textBoxMessage";
-            textBoxMessage.Size = new System.Drawing.Size(230, 23);
+            textBoxMessage.Size = new System.Drawing.Size(230, 22);
             textBoxMessage.TabIndex = 17;
             textBoxMessage.Visible = false;
             // 
@@ -206,11 +207,12 @@
             // 
             comboBoxSenderOptions.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxSenderOptions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxSenderOptions.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxSenderOptions.FormattingEnabled = true;
             comboBoxSenderOptions.Location = new System.Drawing.Point(7, 138);
             comboBoxSenderOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxSenderOptions.Name = "comboBoxSenderOptions";
-            comboBoxSenderOptions.Size = new System.Drawing.Size(319, 23);
+            comboBoxSenderOptions.Size = new System.Drawing.Size(319, 22);
             comboBoxSenderOptions.TabIndex = 2;
             comboBoxSenderOptions.DropDown += comboBoxSenderOptions_DropDown;
             comboBoxSenderOptions.SelectedIndexChanged += comboBoxSendersOptions_SelectedIndexChanged;
@@ -219,11 +221,12 @@
             // 
             comboBoxCode.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxCode.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxCode.FormattingEnabled = true;
             comboBoxCode.Location = new System.Drawing.Point(7, 46);
             comboBoxCode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxCode.Name = "comboBoxCode";
-            comboBoxCode.Size = new System.Drawing.Size(319, 23);
+            comboBoxCode.Size = new System.Drawing.Size(319, 22);
             comboBoxCode.TabIndex = 0;
             comboBoxCode.SelectedIndexChanged += comboBoxCode_SelectedIndexChanged;
             // 
@@ -241,11 +244,12 @@
             // 
             comboBoxMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxMessage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxMessage.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxMessage.FormattingEnabled = true;
             comboBoxMessage.Location = new System.Drawing.Point(7, 92);
             comboBoxMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxMessage.Name = "comboBoxMessage";
-            comboBoxMessage.Size = new System.Drawing.Size(319, 23);
+            comboBoxMessage.Size = new System.Drawing.Size(319, 22);
             comboBoxMessage.TabIndex = 1;
             comboBoxMessage.SelectedIndexChanged += comboBoxMessage_SelectedIndexChanged;
             // 
@@ -259,14 +263,30 @@
             labelSenderOptions.TabIndex = 4;
             labelSenderOptions.Text = "Sender Options:";
             // 
+            // numericUpDownSenders
+            // 
+            numericUpDownSenders.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            numericUpDownSenders.Font = new System.Drawing.Font("Consolas", 9F);
+            numericUpDownSenders.Location = new System.Drawing.Point(65, 171);
+            numericUpDownSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            numericUpDownSenders.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
+            numericUpDownSenders.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
+            numericUpDownSenders.Name = "numericUpDownSenders";
+            numericUpDownSenders.Size = new System.Drawing.Size(173, 22);
+            numericUpDownSenders.TabIndex = 3;
+            numericUpDownSenders.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            numericUpDownSenders.Visible = false;
+            numericUpDownSenders.KeyDown += numericUpDownSenders_KeyDown;
+            // 
             // textBoxSenders
             // 
             textBoxSenders.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxSenders.BackColor = System.Drawing.Color.LightGray;
+            textBoxSenders.Font = new System.Drawing.Font("Consolas", 9F);
             textBoxSenders.Location = new System.Drawing.Point(65, 171);
             textBoxSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxSenders.Name = "textBoxSenders";
-            textBoxSenders.Size = new System.Drawing.Size(172, 23);
+            textBoxSenders.Size = new System.Drawing.Size(172, 22);
             textBoxSenders.TabIndex = 3;
             textBoxSenders.Visible = false;
             textBoxSenders.KeyDown += textBoxSenders_KeyDown;
@@ -275,28 +295,15 @@
             // 
             comboBoxSenders.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             comboBoxSenders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxSenders.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxSenders.FormattingEnabled = true;
             comboBoxSenders.Location = new System.Drawing.Point(65, 171);
             comboBoxSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxSenders.Name = "comboBoxSenders";
-            comboBoxSenders.Size = new System.Drawing.Size(258, 23);
+            comboBoxSenders.Size = new System.Drawing.Size(258, 22);
             comboBoxSenders.TabIndex = 3;
             comboBoxSenders.DropDown += comboBoxSenders_DropDown;
             comboBoxSenders.SelectedIndexChanged += comboBoxSenders_SelectedIndexChanged;
-            // 
-            // numericUpDownSenders
-            // 
-            numericUpDownSenders.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            numericUpDownSenders.Location = new System.Drawing.Point(65, 171);
-            numericUpDownSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            numericUpDownSenders.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
-            numericUpDownSenders.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
-            numericUpDownSenders.Name = "numericUpDownSenders";
-            numericUpDownSenders.Size = new System.Drawing.Size(173, 23);
-            numericUpDownSenders.TabIndex = 3;
-            numericUpDownSenders.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            numericUpDownSenders.Visible = false;
-            numericUpDownSenders.KeyDown += numericUpDownSenders_KeyDown;
             // 
             // splitContainerInner
             // 
@@ -370,7 +377,7 @@
             listBoxPreconditions.Location = new System.Drawing.Point(38, 18);
             listBoxPreconditions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxPreconditions.Name = "listBoxPreconditions";
-            listBoxPreconditions.Size = new System.Drawing.Size(291, 171);
+            listBoxPreconditions.Size = new System.Drawing.Size(291, 184);
             listBoxPreconditions.TabIndex = 9;
             listBoxPreconditions.SelectedIndexChanged += listBoxPreconditions_SelectedIndexChanged;
             listBoxPreconditions.DoubleClick += listBoxPreconditions_DoubleClick;
@@ -386,7 +393,7 @@
             groupBoxActions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxActions.Name = "groupBoxActions";
             groupBoxActions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxActions.Size = new System.Drawing.Size(333, 282);
+            groupBoxActions.Size = new System.Drawing.Size(333, 284);
             groupBoxActions.TabIndex = 10;
             groupBoxActions.TabStop = false;
             groupBoxActions.Text = "Operations :: \"Do\"";
@@ -424,7 +431,7 @@
             listBoxOperations.Location = new System.Drawing.Point(38, 18);
             listBoxOperations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxOperations.Name = "listBoxOperations";
-            listBoxOperations.Size = new System.Drawing.Size(291, 210);
+            listBoxOperations.Size = new System.Drawing.Size(291, 249);
             listBoxOperations.TabIndex = 13;
             listBoxOperations.SelectedIndexChanged += listBoxOperations_SelectedIndexChanged;
             listBoxOperations.DoubleClick += listBoxOperations_DoubleClick;
