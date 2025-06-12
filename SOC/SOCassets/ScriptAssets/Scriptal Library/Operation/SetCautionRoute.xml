@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Set Caution Route</Name>
+  <Category>ROUTES AND POSITIONS</Category>
+  <Description>Updates the route that the NPC patrols while in the caution phase.
+Compatible with soldiers and helicopters.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.</Description>
+  <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+local tempGameObjectCommand = {
+  id = "SetCautionRoute", route = |[2|STRING]|
+}
+GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Enemy Game Object</Name>
+	  <Description>The soldier/helicopter (their name or GameObjectId) to be updated</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	    <Key>Enemy Names (Targets)</Key>
+	    <Key>Enemy Names (Enabled/Customized)</Key>
+	    <Key>Enemy Names</Key>
+	    <Key>Helicopter Names (Targets)</Key>
+	    <Key>Helicopter Names</Key>
+	    <Key>Prisoner Names (Targets)</Key>
+	    <Key>Prisoner Names</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Value="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
+	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Caution Route</Name>
+	  <Description>The name of the route that the NPC will patrol during the caution phase.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Route Names</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Route Names</Key>
+	</Choice>
+  </Choices>
+</Scriptal>

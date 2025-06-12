@@ -17,6 +17,7 @@ namespace SOC.UI
 
         ScriptControl ParentControl;
         private ScriptalNode ScriptalNode;
+        private Scriptal[] ScriptalTemplates;
 
         public EmbeddedScriptalControl(ScriptControl parentControl)
         {
@@ -31,37 +32,65 @@ namespace SOC.UI
         {
             ScriptalNode = scriptalNode;
             ParentControl.SetMenuText(ToString(), ScriptalNode.GetUnEventedScriptNode().Identifier.Value);
-            UpdateMenu();
+            UpdateCategoryFilter();
+            SetChoiceMenu(ScriptalNode.Scriptal);
             return this;
         }
 
-        internal void UpdateMenu()
+        internal void UpdateCategoryFilter()
         {
             string scriptalType = str(ScriptalNode.ScriptalType);
 
             groupBoxScriptalSelect.Text = $"{scriptalType}";
 
-            Scriptal[] scriptalTemplates = GetTemplates(ScriptalNode);
+            ScriptalTemplates = GetTemplates(ScriptalNode);
 
-            comboBoxScriptal.Items.Clear();
-            comboBoxScriptal.Items.Add(ScriptalNode.ScriptalType == ScriptalType.Precondition ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
-            comboBoxScriptal.Items.AddRange(scriptalTemplates);
+            string[] categories = ScriptalTemplates.Select(x => x.Category).Distinct().ToArray();
 
-            Scriptal matchingTemplate = scriptalTemplates.FirstOrDefault(template => template.Name == ScriptalNode.Scriptal.Name && template.EventFunctionTemplate == ScriptalNode.Scriptal.EventFunctionTemplate);
-            if (matchingTemplate != null)
+            comboBoxTemplateCategory.Items.Clear();
+            comboBoxTemplateCategory.Items.AddRange(categories);
+            if (!comboBoxTemplateCategory.Items.Contains("ALL"))
             {
-                int matchingIndex = comboBoxScriptal.Items.IndexOf(matchingTemplate);
-                comboBoxScriptal.Items.RemoveAt(matchingIndex);
-                comboBoxScriptal.Items.Insert(matchingIndex, ScriptalNode.Scriptal);
-                comboBoxScriptal.SelectedItem = ScriptalNode.Scriptal;
+                comboBoxTemplateCategory.Items.Insert(0, "ALL");
+            }
+
+            int matchingIndex = comboBoxTemplateCategory.Items.IndexOf(ScriptalNode.Scriptal.Category);
+            if (matchingIndex == -1)
+            {
+                matchingIndex = 0;
+            }
+            comboBoxTemplateCategory.SelectedIndex = matchingIndex;
+        }
+
+        private void comboBoxTemplateCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxScriptalTemplate.Items.Clear();
+            string selectedCategory = (string)comboBoxTemplateCategory.SelectedItem;
+
+            if (selectedCategory == "ALL")
+            {
+                comboBoxScriptalTemplate.Items.Add(ScriptalNode.ScriptalType == ScriptalType.Precondition ? Scriptal.AlwaysTrue() : Scriptal.DoNothing());
+                comboBoxScriptalTemplate.Items.AddRange(ScriptalTemplates);
             }
             else
             {
-                comboBoxScriptal.SelectedIndex = 0;
+                comboBoxScriptalTemplate.Items.AddRange([.. ScriptalTemplates.Where(template => template.Category == selectedCategory)]);
             }
 
-            SetDescription(ScriptalNode.Scriptal);
-            SetChoiceMenu(ScriptalNode.Scriptal);
+            Scriptal matchingTemplate = comboBoxScriptalTemplate.Items.OfType<Scriptal>().FirstOrDefault(template => template.Name == ScriptalNode.Scriptal.Name && template.EventFunctionTemplate == ScriptalNode.Scriptal.EventFunctionTemplate);
+            if (matchingTemplate != null)
+            {
+                int matchingIndex = comboBoxScriptalTemplate.Items.IndexOf(matchingTemplate);
+                comboBoxScriptalTemplate.Items.RemoveAt(matchingIndex);
+                comboBoxScriptalTemplate.Items.Insert(matchingIndex, ScriptalNode.Scriptal);
+                comboBoxScriptalTemplate.SelectedItem = ScriptalNode.Scriptal;
+            }
+            else
+            {
+                comboBoxScriptalTemplate.SelectedIndex = 0;
+            }
+
+            SetDescription((Scriptal)comboBoxScriptalTemplate.SelectedItem);
         }
 
         internal void UpdateVarNodesUI()
@@ -78,19 +107,19 @@ namespace SOC.UI
 
         private void comboBoxScriptal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetDescription((Scriptal)comboBoxScriptal.SelectedItem);
+            SetDescription((Scriptal)comboBoxScriptalTemplate.SelectedItem);
         }
 
         private void buttonApplyTemplate_Click(object sender, EventArgs e)
         {
-            if ((Scriptal)comboBoxScriptal.SelectedItem == ScriptalNode.Scriptal) return;
+            if ((Scriptal)comboBoxScriptalTemplate.SelectedItem == ScriptalNode.Scriptal) return;
 
             foreach (Choice choice in listBoxChoices.Items.OfType<Choice>().ToArray())
             {
                 choice.ClearVarNodeDependency(false);
             }
             ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
-            ScriptalNode.Set((Scriptal)comboBoxScriptal.SelectedItem);
+            ScriptalNode.Set((Scriptal)comboBoxScriptalTemplate.SelectedItem);
             SetChoiceMenu(ScriptalNode.Scriptal);
         }
 
@@ -211,7 +240,7 @@ namespace SOC.UI
         {
             if (_isUpdatingControls) return;
 
-            Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
+            Scriptal selectedScriptal = (Scriptal)comboBoxScriptalTemplate.SelectedItem;
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
 
             groupBoxChoice.Text = $"Choice :: \"{selectedChoice.Name}\"";
@@ -389,7 +418,7 @@ string.Format(@"
 
                 if ((Choice)listBoxChoices.SelectedItem == choice)
                 {
-                    Scriptal selectedScriptal = (Scriptal)comboBoxScriptal.SelectedItem;
+                    Scriptal selectedScriptal = (Scriptal)comboBoxScriptalTemplate.SelectedItem;
                     RefreshChoiceSets(selectedScriptal, choice);
                 }
 

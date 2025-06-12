@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Compare Boolean Values</Name>
+  <Category>COMPARISONS</Category>
+  <Description>Compares two booleans.</Description>
+  <EventFunctionTemplate>return |[1|BOOLEAN]| == |[2|BOOLEAN]|</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Bool1</Name>
+	  <Description>The boolean on the left-hand side of the comparison.</Description>
+	</Choice>
+	<Choice>
+	  <Name>Bool2</Name>
+	  <Description>The boolean on the right-hand side of the comparison.</Description>
+	  <Key>Boolean Literal</Key>
+	  <Value xsi:type="LuaBoolean" Value="true" />
+	</Choice>
+  </Choices>
+</Scriptal>

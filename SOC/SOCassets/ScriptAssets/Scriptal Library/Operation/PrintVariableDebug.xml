@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Print Variable</Name>
+  <Category>DEBUG</Category>
+  <Description>Prints a variable and its contents, for debugging purposes.</Description>
+  <EventFunctionTemplate>InfCore.DebugPrint("Variable Debug Info:")
+InfCore.DebugPrint("|[1|STRING,NUMBER,TABLE,BOOLEAN]|: " .. tostring(|[1|STRING,NUMBER,TABLE,BOOLEAN]|) .. " (".. type(|[1|STRING,NUMBER,TABLE,BOOLEAN]|) ..")")
+if type(|[1|STRING,NUMBER,TABLE,BOOLEAN]|) == "table" then
+  for tempK, tempV in pairs(|[1|STRING,NUMBER,TABLE,BOOLEAN]|) do
+    InfCore.DebugPrint("[" .. tostring(tempK) .. "] (" .. type(tempK) .. ") = " .. tostring(tempV) .. " (" .. type(tempV) .. ")")
+    if type(tempV) == "table" then
+      for nestedTempK, nestedTempV in pairs(tempV) do
+        InfCore.DebugPrint(tostring(tempK) .. ": [" .. tostring(nestedTempK) .. "] (" .. type(nestedTempK) .. ") = " .. tostring(nestedTempV) .. " (" .. type(nestedTempV) .. ")")
+      end
+    end
+  end
+end</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Variable</Name>
+	  <Description>The variable that will be printed in-game.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	</Choice>
+  </Choices>
+</Scriptal>

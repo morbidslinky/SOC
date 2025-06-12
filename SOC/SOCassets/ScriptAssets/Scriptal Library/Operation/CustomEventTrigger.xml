@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Custom Event Trigger</Name>
+  <Category>MISSION</Category>
+  <Description>Immediately triggers a custom 'Mission' StrCode32 event.
+This can be used for daisy-chaining events together, or creating an event loop.</Description>
+  <EventFunctionTemplate>Mission.SendMessage("Mission", |[1|STRING]|, |[2|NUMBER]|, |[3|NUMBER]|, |[4|NUMBER]|, |[5|NUMBER]|)</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Message</Name>
+	  <Description>The name of the event Message. This operation triggers an event to occur. You can catch that event By creating a new script with a "Mission" StrCode, and this value as the message.</Description>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="TriggerMessage" />
+	</Choice>
+	<Choice>
+	  <Name>Argument 1</Name>
+	  <Description>The first arg sent from the trigger. This can carry over the original event arg1 or a custom value.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Value="arg1">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
+	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Argument 2</Name>
+	  <Description>The first arg sent from the trigger. This can carry over the original event arg2 or a custom value.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Value="arg2">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
+	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Argument 3</Name>
+	  <Description>The first arg sent from the trigger. This can carry over the original event arg3 or a custom value.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Value="arg3">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
+	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Argument 4</Name>
+	  <Description>The first arg sent from the trigger. This can carry over the original event arg4 or a custom value.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Event Default Arguments</Key>
+	  <Value xsi:type="LuaVariable" Value="arg4">
+	    <AssignedTo xsi:type="LuaNumber" Value="-1" />
+	  </Value>
+	</Choice>
+  </Choices>
+</Scriptal>

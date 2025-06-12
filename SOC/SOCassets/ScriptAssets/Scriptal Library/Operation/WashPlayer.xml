@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Wash Player</Name>
+  <Category>GAMEPLAY EFFECTS</Category>
+  <Description>Immediately washes the player. Resets blood, bugs (for 3 in-game days) and soot effects.
+Logic pulled from my Provisional Showers mod.</Description>
+  <EventFunctionTemplate>Player.SetWetEffect()
+Player.ResetDirtyEffect()
+vars.passageSecondsSinceOutMB = 259200
+TppUiCommand.AnnounceLogView("Partially Physically and Mentally Refreshed")</EventFunctionTemplate>
+</Scriptal>

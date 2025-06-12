@@ -331,6 +331,9 @@ namespace SOC.Classes.Lua
         public string Name;
 
         [XmlElement]
+        public string Category = "ALL";
+
+        [XmlElement]
         public string Description;
 
         [XmlElement]
@@ -355,6 +358,7 @@ namespace SOC.Classes.Lua
             Scriptal defaultScriptal = new Scriptal();
 
             defaultScriptal.Name = "Always True";
+            defaultScriptal.Category = "ALL";
             defaultScriptal.Description = "Empty Precondition.\r\n\r\n- Always returns true (same as having no preconditions at all).\r\n\r\nThis particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.\r\nOpen the ScriptAssets folder to view and create custom scriptal templates for the library.";
             defaultScriptal.EventFunctionTemplate = "return true";
 
@@ -366,6 +370,7 @@ namespace SOC.Classes.Lua
             Scriptal defaultScriptal = new Scriptal();
 
             defaultScriptal.Name = "Do Nothing";
+            defaultScriptal.Category = "ALL";
             defaultScriptal.Description = "Empty Operation.\r\n\r\n- Does nothing (same as having no operations at all).\r\n\r\nThis particular operation is baked into SOC, but the other operation templates are saved as xml files in the Scriptal Library folder.\r\nOpen the ScriptAssets folder to view and create custom scriptal templates for the library.";
             defaultScriptal.EventFunctionTemplate = "";
 

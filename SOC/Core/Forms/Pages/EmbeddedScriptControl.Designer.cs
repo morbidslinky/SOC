@@ -150,10 +150,10 @@
             // buttonApplyMessage
             // 
             buttonApplyMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            buttonApplyMessage.Location = new System.Drawing.Point(245, 90);
+            buttonApplyMessage.Location = new System.Drawing.Point(245, 91);
             buttonApplyMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             buttonApplyMessage.Name = "buttonApplyMessage";
-            buttonApplyMessage.Size = new System.Drawing.Size(83, 27);
+            buttonApplyMessage.Size = new System.Drawing.Size(81, 23);
             buttonApplyMessage.TabIndex = 18;
             buttonApplyMessage.Text = "Apply >>";
             buttonApplyMessage.UseVisualStyleBackColor = true;
@@ -174,10 +174,10 @@
             // buttonApplySender
             // 
             buttonApplySender.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            buttonApplySender.Location = new System.Drawing.Point(245, 168);
+            buttonApplySender.Location = new System.Drawing.Point(245, 170);
             buttonApplySender.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             buttonApplySender.Name = "buttonApplySender";
-            buttonApplySender.Size = new System.Drawing.Size(83, 27);
+            buttonApplySender.Size = new System.Drawing.Size(81, 23);
             buttonApplySender.TabIndex = 4;
             buttonApplySender.Text = "Apply >>";
             buttonApplySender.UseVisualStyleBackColor = true;
@@ -393,7 +393,7 @@
             groupBoxActions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxActions.Name = "groupBoxActions";
             groupBoxActions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxActions.Size = new System.Drawing.Size(333, 284);
+            groupBoxActions.Size = new System.Drawing.Size(333, 281);
             groupBoxActions.TabIndex = 10;
             groupBoxActions.TabStop = false;
             groupBoxActions.Text = "Operations :: \"Do\"";
@@ -431,7 +431,7 @@
             listBoxOperations.Location = new System.Drawing.Point(38, 18);
             listBoxOperations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxOperations.Name = "listBoxOperations";
-            listBoxOperations.Size = new System.Drawing.Size(291, 249);
+            listBoxOperations.Size = new System.Drawing.Size(291, 236);
             listBoxOperations.TabIndex = 13;
             listBoxOperations.SelectedIndexChanged += listBoxOperations_SelectedIndexChanged;
             listBoxOperations.DoubleClick += listBoxOperations_DoubleClick;

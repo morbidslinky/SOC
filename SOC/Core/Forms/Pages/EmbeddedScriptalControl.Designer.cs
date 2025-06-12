@@ -32,9 +32,11 @@
             groupBoxDescription = new System.Windows.Forms.GroupBox();
             textBoxDescription = new System.Windows.Forms.TextBox();
             groupBoxScriptalSelect = new System.Windows.Forms.GroupBox();
+            label1 = new System.Windows.Forms.Label();
+            comboBoxTemplateCategory = new System.Windows.Forms.ComboBox();
             buttonApplyTemplate = new System.Windows.Forms.Button();
             labelTemplate = new System.Windows.Forms.Label();
-            comboBoxScriptal = new System.Windows.Forms.ComboBox();
+            comboBoxScriptalTemplate = new System.Windows.Forms.ComboBox();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             groupBoxChoicesList = new System.Windows.Forms.GroupBox();
             listBoxChoices = new System.Windows.Forms.ListBox();
@@ -91,11 +93,11 @@
             groupBoxDescription.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxDescription.BackColor = System.Drawing.Color.Silver;
             groupBoxDescription.Controls.Add(textBoxDescription);
-            groupBoxDescription.Location = new System.Drawing.Point(0, 87);
+            groupBoxDescription.Location = new System.Drawing.Point(0, 133);
             groupBoxDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxDescription.Name = "groupBoxDescription";
             groupBoxDescription.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxDescription.Size = new System.Drawing.Size(331, 408);
+            groupBoxDescription.Size = new System.Drawing.Size(331, 362);
             groupBoxDescription.TabIndex = 1;
             groupBoxDescription.TabStop = false;
             // 
@@ -113,31 +115,56 @@
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.ReadOnly = true;
             textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxDescription.Size = new System.Drawing.Size(324, 382);
+            textBoxDescription.Size = new System.Drawing.Size(324, 336);
             textBoxDescription.TabIndex = 6;
             // 
             // groupBoxScriptalSelect
             // 
             groupBoxScriptalSelect.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxScriptalSelect.BackColor = System.Drawing.Color.Silver;
+            groupBoxScriptalSelect.Controls.Add(label1);
+            groupBoxScriptalSelect.Controls.Add(comboBoxTemplateCategory);
             groupBoxScriptalSelect.Controls.Add(buttonApplyTemplate);
             groupBoxScriptalSelect.Controls.Add(labelTemplate);
-            groupBoxScriptalSelect.Controls.Add(comboBoxScriptal);
+            groupBoxScriptalSelect.Controls.Add(comboBoxScriptalTemplate);
             groupBoxScriptalSelect.Location = new System.Drawing.Point(0, 0);
             groupBoxScriptalSelect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxScriptalSelect.Name = "groupBoxScriptalSelect";
             groupBoxScriptalSelect.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxScriptalSelect.Size = new System.Drawing.Size(331, 81);
+            groupBoxScriptalSelect.Size = new System.Drawing.Size(331, 127);
             groupBoxScriptalSelect.TabIndex = 0;
             groupBoxScriptalSelect.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(8, 28);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(138, 15);
+            label1.TabIndex = 3;
+            label1.Text = "Template Category Filter:";
+            // 
+            // comboBoxTemplateCategory
+            // 
+            comboBoxTemplateCategory.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxTemplateCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxTemplateCategory.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxTemplateCategory.FormattingEnabled = true;
+            comboBoxTemplateCategory.Location = new System.Drawing.Point(7, 46);
+            comboBoxTemplateCategory.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxTemplateCategory.Name = "comboBoxTemplateCategory";
+            comboBoxTemplateCategory.Size = new System.Drawing.Size(319, 22);
+            comboBoxTemplateCategory.TabIndex = 2;
+            comboBoxTemplateCategory.SelectedIndexChanged += comboBoxTemplateCategory_SelectedIndexChanged;
             // 
             // buttonApplyTemplate
             // 
             buttonApplyTemplate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            buttonApplyTemplate.Location = new System.Drawing.Point(245, 45);
+            buttonApplyTemplate.Location = new System.Drawing.Point(245, 91);
             buttonApplyTemplate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             buttonApplyTemplate.Name = "buttonApplyTemplate";
-            buttonApplyTemplate.Size = new System.Drawing.Size(83, 27);
+            buttonApplyTemplate.Size = new System.Drawing.Size(81, 23);
             buttonApplyTemplate.TabIndex = 1;
             buttonApplyTemplate.Text = "Apply >>";
             buttonApplyTemplate.UseVisualStyleBackColor = true;
@@ -146,25 +173,25 @@
             // labelTemplate
             // 
             labelTemplate.AutoSize = true;
-            labelTemplate.Location = new System.Drawing.Point(7, 28);
+            labelTemplate.Location = new System.Drawing.Point(7, 74);
             labelTemplate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelTemplate.Name = "labelTemplate";
             labelTemplate.Size = new System.Drawing.Size(58, 15);
             labelTemplate.TabIndex = 1;
             labelTemplate.Text = "Template:";
             // 
-            // comboBoxScriptal
+            // comboBoxScriptalTemplate
             // 
-            comboBoxScriptal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            comboBoxScriptal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboBoxScriptal.Font = new System.Drawing.Font("Consolas", 9F);
-            comboBoxScriptal.FormattingEnabled = true;
-            comboBoxScriptal.Location = new System.Drawing.Point(7, 46);
-            comboBoxScriptal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            comboBoxScriptal.Name = "comboBoxScriptal";
-            comboBoxScriptal.Size = new System.Drawing.Size(230, 22);
-            comboBoxScriptal.TabIndex = 0;
-            comboBoxScriptal.SelectedIndexChanged += comboBoxScriptal_SelectedIndexChanged;
+            comboBoxScriptalTemplate.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxScriptalTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxScriptalTemplate.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxScriptalTemplate.FormattingEnabled = true;
+            comboBoxScriptalTemplate.Location = new System.Drawing.Point(7, 92);
+            comboBoxScriptalTemplate.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxScriptalTemplate.Name = "comboBoxScriptalTemplate";
+            comboBoxScriptalTemplate.Size = new System.Drawing.Size(230, 22);
+            comboBoxScriptalTemplate.TabIndex = 0;
+            comboBoxScriptalTemplate.SelectedIndexChanged += comboBoxScriptal_SelectedIndexChanged;
             // 
             // splitContainer1
             // 
@@ -234,7 +261,7 @@
             groupBoxChoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxChoice.Name = "groupBoxChoice";
             groupBoxChoice.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxChoice.Size = new System.Drawing.Size(333, 284);
+            groupBoxChoice.Size = new System.Drawing.Size(333, 279);
             groupBoxChoice.TabIndex = 4;
             groupBoxChoice.TabStop = false;
             // 
@@ -252,14 +279,14 @@
             textBoxChoiceDescription.Name = "textBoxChoiceDescription";
             textBoxChoiceDescription.ReadOnly = true;
             textBoxChoiceDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 190);
+            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 185);
             textBoxChoiceDescription.TabIndex = 6;
             // 
             // labelChoice
             // 
             labelChoice.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoice.AutoSize = true;
-            labelChoice.Location = new System.Drawing.Point(29, 251);
+            labelChoice.Location = new System.Drawing.Point(29, 246);
             labelChoice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoice.Name = "labelChoice";
             labelChoice.Size = new System.Drawing.Size(38, 15);
@@ -270,7 +297,7 @@
             // 
             labelChoiceSet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoiceSet.AutoSize = true;
-            labelChoiceSet.Location = new System.Drawing.Point(7, 219);
+            labelChoiceSet.Location = new System.Drawing.Point(7, 214);
             labelChoiceSet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoiceSet.Name = "labelChoiceSet";
             labelChoiceSet.Size = new System.Drawing.Size(57, 15);
@@ -283,7 +310,7 @@
             comboBoxChoiceSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxChoiceSet.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxChoiceSet.FormattingEnabled = true;
-            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 216);
+            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 211);
             comboBoxChoiceSet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxChoiceSet.Name = "comboBoxChoiceSet";
             comboBoxChoiceSet.Size = new System.Drawing.Size(250, 22);
@@ -298,7 +325,7 @@
             panelBoolean.Controls.Add(radioButtonFalse);
             panelBoolean.Controls.Add(radioButtonTrue);
             panelBoolean.Font = new System.Drawing.Font("Consolas", 9F);
-            panelBoolean.Location = new System.Drawing.Point(79, 248);
+            panelBoolean.Location = new System.Drawing.Point(79, 243);
             panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panelBoolean.Name = "panelBoolean";
             panelBoolean.Size = new System.Drawing.Size(249, 23);
@@ -337,7 +364,7 @@
             textBoxLiteralNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxLiteralNumberValue.BackColor = System.Drawing.Color.LightGray;
             textBoxLiteralNumberValue.Font = new System.Drawing.Font("Consolas", 9F);
-            textBoxLiteralNumberValue.Location = new System.Drawing.Point(79, 248);
+            textBoxLiteralNumberValue.Location = new System.Drawing.Point(79, 243);
             textBoxLiteralNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxLiteralNumberValue.Name = "textBoxLiteralNumberValue";
             textBoxLiteralNumberValue.Size = new System.Drawing.Size(250, 22);
@@ -352,7 +379,7 @@
             textBoxLiteralStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxLiteralStringValue.BackColor = System.Drawing.Color.LightGray;
             textBoxLiteralStringValue.Font = new System.Drawing.Font("Consolas", 9F);
-            textBoxLiteralStringValue.Location = new System.Drawing.Point(79, 247);
+            textBoxLiteralStringValue.Location = new System.Drawing.Point(79, 242);
             textBoxLiteralStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxLiteralStringValue.Name = "textBoxLiteralStringValue";
             textBoxLiteralStringValue.Size = new System.Drawing.Size(250, 22);
@@ -366,7 +393,7 @@
             comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxPresetChoosables.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxPresetChoosables.FormattingEnabled = true;
-            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 247);
+            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 242);
             comboBoxPresetChoosables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
             comboBoxPresetChoosables.Size = new System.Drawing.Size(250, 22);
@@ -379,7 +406,7 @@
             comboBoxUserVarNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxUserVarNodes.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxUserVarNodes.FormattingEnabled = true;
-            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 247);
+            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 242);
             comboBoxUserVarNodes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxUserVarNodes.Name = "comboBoxUserVarNodes";
             comboBoxUserVarNodes.Size = new System.Drawing.Size(250, 22);
@@ -424,7 +451,6 @@
         internal System.Windows.Forms.GroupBox groupBoxChoice;
         internal System.Windows.Forms.ComboBox comboBoxChoiceSet;
         internal System.Windows.Forms.ComboBox comboBoxPresetChoosables;
-        internal System.Windows.Forms.ComboBox comboBoxScriptal;
         internal System.Windows.Forms.Label labelTemplate;
         internal System.Windows.Forms.Label labelChoice;
         internal System.Windows.Forms.Label labelChoiceSet;
@@ -439,5 +465,8 @@
         internal System.Windows.Forms.RadioButton radioButtonTrue;
         internal System.Windows.Forms.TextBox textBoxLiteralNumberValue;
         internal System.Windows.Forms.TextBox textBoxLiteralStringValue;
+        internal System.Windows.Forms.ComboBox comboBoxScriptalTemplate;
+        internal System.Windows.Forms.Label label1;
+        internal System.Windows.Forms.ComboBox comboBoxTemplateCategory;
     }
 }

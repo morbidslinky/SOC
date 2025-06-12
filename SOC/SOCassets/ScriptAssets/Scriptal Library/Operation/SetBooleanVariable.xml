@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Set Boolean Variable</Name>
+  <Category>VARIABLE MANIPULATIONS</Category>
+  <Description>Stores a Boolean to a user Variable.</Description>
+  <EventFunctionTemplate>|[1|BOOLEAN]| = |[2|BOOLEAN]|</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>User Variable</Name>
+	  <Description>The custom variable that the value will be set to.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	</Choice>
+	<Choice>
+	  <Name>Boolean Value</Name>
+	  <Description>The value to set to the User Variable.</Description>
+	  <Key>Boolean Literal</Key>
+	  <Value xsi:type="LuaBoolean" Value="1" />
+	</Choice>
+  </Choices>
+</Scriptal>
