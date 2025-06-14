@@ -103,6 +103,16 @@ namespace SOC.Classes.Lua
                     .Distinct()
                     .OrderBy(placeholder => placeholder.Index)
                     .ToList();
+
+                for (int i = placeholderTokens.Count - 1; i >= 0; i--)
+                {
+                    var currentToken = placeholderTokens[i];
+                    if (currentToken.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE) 
+                        && placeholderTokens.Any(token => token.Index == currentToken.Index && token.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.VARIABLE)))
+                    {
+                        placeholderTokens.Remove(currentToken);
+                    }
+                }
                 return true;
             }
 

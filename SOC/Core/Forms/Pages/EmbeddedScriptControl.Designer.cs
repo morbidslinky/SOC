@@ -99,7 +99,7 @@
             groupBoxDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxDescription.Name = "groupBoxDescription";
             groupBoxDescription.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxDescription.Size = new System.Drawing.Size(331, 283);
+            groupBoxDescription.Size = new System.Drawing.Size(331, 285);
             groupBoxDescription.TabIndex = 5;
             groupBoxDescription.TabStop = false;
             groupBoxDescription.Text = "Custom Description / Notes (Optional) ";
@@ -117,7 +117,7 @@
             textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxDescription.Size = new System.Drawing.Size(324, 257);
+            textBoxDescription.Size = new System.Drawing.Size(324, 259);
             textBoxDescription.TabIndex = 21;
             textBoxDescription.TextChanged += textBoxDescription_TextChanged;
             // 
@@ -393,7 +393,7 @@
             groupBoxActions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxActions.Name = "groupBoxActions";
             groupBoxActions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxActions.Size = new System.Drawing.Size(333, 281);
+            groupBoxActions.Size = new System.Drawing.Size(333, 283);
             groupBoxActions.TabIndex = 10;
             groupBoxActions.TabStop = false;
             groupBoxActions.Text = "Operations :: \"Do\"";
@@ -431,7 +431,7 @@
             listBoxOperations.Location = new System.Drawing.Point(38, 18);
             listBoxOperations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxOperations.Name = "listBoxOperations";
-            listBoxOperations.Size = new System.Drawing.Size(291, 236);
+            listBoxOperations.Size = new System.Drawing.Size(291, 262);
             listBoxOperations.TabIndex = 13;
             listBoxOperations.SelectedIndexChanged += listBoxOperations_SelectedIndexChanged;
             listBoxOperations.DoubleClick += listBoxOperations_DoubleClick;

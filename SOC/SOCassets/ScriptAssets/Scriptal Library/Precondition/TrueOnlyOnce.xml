@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>True Only Once</Name>
-  <Category>MANIPULATIVES</Category>
+  <Category>CHECKS</Category>
   <Description>Returns true if the boolean variable is true, and sets the variable to false.
 The variable would need to be reset to true in order to fulfill this precondition again.</Description>
   <EventFunctionTemplate>if |[1|BOOLEAN]| then 
