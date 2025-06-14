@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="0.8.0.0">
+  <SetupDetails FpkName="Example_Sideop_13" QuestNum="30202">
+    <QuestTitle>Example: Extract the Guarded Prisoner</QuestTitle>
+    <QuestDesc>Extract the hostage guarded by nearby soldiers.</QuestDesc>
+    <locationID>10</locationID>
+    <loadArea>ruins</loadArea>
+    <coords xCoord="1274" yCoord="320" zCoord="1814" />
+    <radius>3</radius>
+    <category>PRISONER</category>
+    <CPName>NONE</CPName>
+    <reward>D</reward>
+    <progressLangID>quest_extract_hostage</progressLangID>
+    <routeName>SkilledSoldier13</routeName>
+  </SetupDetails>
+  <ObjectsDetails>
+    <EnemiesDetail>
+      <enemyMetadata objectiveType="ELIMINATE" subtype="SOVIET_B" />
+      <enemies>
+        <Enemy name="sol_quest_0000" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>2036843189</cRoute>
+          <dRoute>2036843189</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>SOFT_ARMOR</string>
+            <string>HELMET</string>
+            <string>NVG</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0001" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>true</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_quest_d_0002</cRoute>
+          <dRoute>rt_quest_d_0002</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>QUEST_ARMOR</string>
+            <string>MG</string>
+            <string>HOLDUP_HIGH</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0002" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_quest_d_0000</cRoute>
+          <dRoute>rt_quest_d_0002</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>SMG</string>
+            <string>NVG</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0003" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_quest_d_0001</cRoute>
+          <dRoute>rt_quest_d_0001</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>SOFT_ARMOR</string>
+            <string>GAS_MASK</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0004" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>2036843189</cRoute>
+          <dRoute>rt_quest_d_0000</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>HELMET</string>
+            <string>SHIELD</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0005" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_quest_d_0003</cRoute>
+          <dRoute>rt_quest_d_0003</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>SHOTGUN</string>
+            <string>SOFT_ARMOR</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0006" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_quest_d_0003</cRoute>
+          <dRoute>rt_quest_d_0003</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>HELMET</string>
+            <string>STRONG_NOTICE_TRANQ</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0007" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>true</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_quest_d_0004</cRoute>
+          <dRoute>rt_quest_d_0004</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers>
+            <string>STRONG_NOTICE_TRANQ</string>
+            <string>QUEST_ARMOR</string>
+          </powers>
+        </Enemy>
+      </enemies>
+    </EnemiesDetail>
+    <HostagesDetail>
+      <hostageMetadata objectiveType="RECOVERED" hostageBodyName="AFGH_HOSTAGE" canInterrogate="true" />
+      <hostages>
+        <Hostage ID="0">
+          <isTarget>true</isTarget>
+          <isUntied>true</isUntied>
+          <isInjured>false</isInjured>
+          <skill>Lucky</skill>
+          <staffType>NORMAL</staffType>
+          <scared>ALWAYS</scared>
+          <language>english</language>
+          <position>
+            <coords xCoord="1274.136" yCoord="320.015" zCoord="1814.465" />
+            <rotation xRot="0" yRot="0.96753" zRot="0" wRot="0.25274" />
+          </position>
+        </Hostage>
+      </hostages>
+    </HostagesDetail>
+    <VehiclesDetail>
+      <vehicleMetadata ObjectiveType="ELIMINATE" />
+      <vehicles />
+    </VehiclesDetail>
+    <HelicoptersDetail>
+      <helicopterMetadata objectiveType="KILLREQUIRED" />
+      <helicopters>
+        <Helicopter ID="0">
+          <isSpawn>false</isSpawn>
+          <isTarget>false</isTarget>
+          <dRoute>2036843189</dRoute>
+          <cRoute>2036843189</cRoute>
+          <heliClass>DEFAULT</heliClass>
+        </Helicopter>
+      </helicopters>
+    </HelicoptersDetail>
+    <UAVsDetail>
+      <UAVmetadata objectiveType="KILLREQUIRED" />
+      <UAVs />
+    </UAVsDetail>
+    <CamerasDetail>
+      <cameraMetadata objectiveType="KILLREQUIRED" />
+      <cameras />
+    </CamerasDetail>
+    <WalkerGearsDetail>
+      <walkerMetadata objectiveType="ELIMINATE" />
+      <walkers />
+    </WalkerGearsDetail>
+    <AnimalsDetail>
+      <animalMetadata objectiveType="ELIMINATE" />
+      <animals>
+        <Animal ID="0">
+          <isTarget>false</isTarget>
+          <count>6</count>
+          <animal>Sheep</animal>
+          <typeID>TppNubian</typeID>
+          <position>
+            <coords xCoord="1251.650" yCoord="316.961" zCoord="1756.804" />
+            <rotation xRot="0" yRot="0.43350" zRot="0" wRot="0.90115" />
+          </position>
+        </Animal>
+      </animals>
+    </AnimalsDetail>
+    <ItemsDetail>
+      <itemMetadata objectiveType="RECOVERED" />
+      <items>
+        <Item ID="0">
+          <position>
+            <coords xCoord="1286.409" yCoord="322.222" zCoord="1838.025" />
+            <rotation xRot="0" yRot="0.99821" zRot="0" wRot="0.05983" />
+          </position>
+          <isBoxed>true</isBoxed>
+          <isTarget>false</isTarget>
+          <count>0</count>
+          <item>EQP_WP_EX_sr_000</item>
+        </Item>
+      </items>
+    </ItemsDetail>
+    <ActiveItemsDetail>
+      <activeItemMetadata objectiveType="RECOVERED" />
+      <activeItems />
+    </ActiveItemsDetail>
+    <ModelsDetail>
+      <modelMetadata />
+      <models />
+    </ModelsDetail>
+    <GeoTrapsDetail>
+      <trapMetadata />
+      <trapShapes />
+    </GeoTrapsDetail>
+  </ObjectsDetails>
+  <ScriptDetails>
+    <QStep_Main />
+    <Variables />
+  </ScriptDetails>
+</Quest>

@@ -77,8 +77,7 @@ namespace SOC.UI
             loadFile.InitialDirectory = ScriptExportDir;
 
             DialogResult result = loadFile.ShowDialog();
-            if (result != DialogResult.OK)
-                return;
+            if (result != DialogResult.OK) return;
 
             try
             {

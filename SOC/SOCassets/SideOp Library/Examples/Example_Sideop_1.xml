@@ -1,0 +1,1274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="0.8.0.0">
+  <SetupDetails FpkName="Example_Sideop_1" QuestNum="30350">
+    <QuestTitle>Example: Rescue the Bwala Prisoner</QuestTitle>
+    <QuestDesc>Rescue the prisoner atop the shipwreck in Bwala ya Masa.</QuestDesc>
+    <locationID>20</locationID>
+    <loadArea>outland</loadArea>
+    <coords xCoord="-700" yCoord="-9" zCoord="1060" />
+    <radius>3</radius>
+    <category>PRISONER</category>
+    <CPName>mafr_outland_cp</CPName>
+    <reward>C</reward>
+    <progressLangID>quest_extract_hostage</progressLangID>
+    <routeName>NONE</routeName>
+  </SetupDetails>
+  <ObjectsDetails>
+    <EnemiesDetail>
+      <enemyMetadata objectiveType="ELIMINATE" subtype="PF_A" />
+      <enemies>
+        <Enemy name="sol_quest_0000" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_n_0010</cRoute>
+          <dRoute>rt_outland_n_0006</dRoute>
+          <skill>NONE</skill>
+          <staffType>BASE_DEV</staffType>
+          <powers>
+            <string>SOFT_ARMOR</string>
+            <string>HELMET</string>
+            <string>NVG</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0001" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_n_0007</cRoute>
+          <dRoute>rt_outland_n_0004</dRoute>
+          <skill>DrugEngineer</skill>
+          <staffType>MEDICAL</staffType>
+          <powers>
+            <string>SOFT_ARMOR</string>
+            <string>HELMET</string>
+            <string>SHIELD</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0002" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_n_0008</cRoute>
+          <dRoute>rt_outland_d_0003</dRoute>
+          <skill>Athlete</skill>
+          <staffType>COMBAT</staffType>
+          <powers>
+            <string>SOFT_ARMOR</string>
+            <string>HELMET</string>
+            <string>SHIELD</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_quest_0003" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_c_0000</cRoute>
+          <dRoute>rt_outland_c_0000</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_quest_0004" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_c_0000</cRoute>
+          <dRoute>rt_outland_c_0000</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_quest_0005" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_c_0000</cRoute>
+          <dRoute>rt_outland_c_0000</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_quest_0006" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_c_0000</cRoute>
+          <dRoute>rt_outland_c_0000</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_quest_0007" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_c_0000</cRoute>
+          <dRoute>rt_outland_c_0000</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0000" spawn="true">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>true</armored>
+          <body>DEFAULT</body>
+          <cRoute>rt_outland_h_0003</cRoute>
+          <dRoute>rt_outland_r_0019</dRoute>
+          <skill>Moodmaker</skill>
+          <staffType>MEDICAL</staffType>
+          <powers>
+            <string>QUEST_ARMOR</string>
+            <string>COMBAT_SPECIAL</string>
+            <string>SHOTGUN</string>
+          </powers>
+        </Enemy>
+        <Enemy name="sol_outland_0001" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0002" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0003" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0004" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0005" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0006" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0007" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0008" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0009" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0010" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+        <Enemy name="sol_outland_0011" spawn="false">
+          <isTarget>false</isTarget>
+          <balaclava>false</balaclava>
+          <zombie>false</zombie>
+          <armored>false</armored>
+          <body>DEFAULT</body>
+          <cRoute>DEFAULT</cRoute>
+          <dRoute>DEFAULT</dRoute>
+          <skill>NONE</skill>
+          <staffType>NONE</staffType>
+          <powers />
+        </Enemy>
+      </enemies>
+    </EnemiesDetail>
+    <HostagesDetail>
+      <hostageMetadata objectiveType="RECOVERED" hostageBodyName="AFGH_HOSTAGE" canInterrogate="true" />
+      <hostages>
+        <Hostage ID="0">
+          <isTarget>true</isTarget>
+          <isUntied>true</isUntied>
+          <isInjured>true</isInjured>
+          <skill>Surgeon</skill>
+          <staffType>MEDICAL</staffType>
+          <scared>NEVER</scared>
+          <language>afrikaans</language>
+          <position>
+            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
+            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
+          </position>
+        </Hostage>
+        <Hostage ID="1">
+          <isTarget>false</isTarget>
+          <isUntied>true</isUntied>
+          <isInjured>false</isInjured>
+          <skill>Grappler</skill>
+          <staffType>COMBAT</staffType>
+          <scared>ALWAYS</scared>
+          <language>kikongo</language>
+          <position>
+            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
+            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
+          </position>
+        </Hostage>
+      </hostages>
+    </HostagesDetail>
+    <VehiclesDetail>
+      <vehicleMetadata ObjectiveType="ELIMINATE" />
+      <vehicles>
+        <Vehicle ID="0">
+          <position>
+            <coords xCoord="-640.829" yCoord="-16.734" zCoord="1013.709" />
+            <rotation xRot="0" yRot="-0.34898" zRot="0" wRot="0.93713" />
+          </position>
+          <isTarget>false</isTarget>
+          <vehicle>M84A MAGLOADER</vehicle>
+          <vehicleClass>DARK_GRAY</vehicleClass>
+        </Vehicle>
+      </vehicles>
+    </VehiclesDetail>
+    <HelicoptersDetail>
+      <helicopterMetadata objectiveType="KILLREQUIRED" />
+      <helicopters />
+    </HelicoptersDetail>
+    <UAVsDetail>
+      <UAVmetadata objectiveType="KILLREQUIRED" />
+      <UAVs />
+    </UAVsDetail>
+    <CamerasDetail>
+      <cameraMetadata objectiveType="KILLREQUIRED" />
+      <cameras />
+    </CamerasDetail>
+    <WalkerGearsDetail>
+      <walkerMetadata objectiveType="ELIMINATE" />
+      <walkers />
+    </WalkerGearsDetail>
+    <AnimalsDetail>
+      <animalMetadata objectiveType="ELIMINATE" />
+      <animals />
+    </AnimalsDetail>
+    <ItemsDetail>
+      <itemMetadata objectiveType="RECOVERED" />
+      <items />
+    </ItemsDetail>
+    <ActiveItemsDetail>
+      <activeItemMetadata objectiveType="ELIMINATE" />
+      <activeItems>
+        <ActiveItem ID="0">
+          <isTarget>false</isTarget>
+          <activeItem>EQP_SWP_DMine_G03</activeItem>
+          <position>
+            <coords xCoord="-690.658" yCoord="-9.034" zCoord="1069.189" />
+            <rotation xRot="0" yRot="0.65276" zRot="0" wRot="0.75756" />
+          </position>
+        </ActiveItem>
+        <ActiveItem ID="1">
+          <isTarget>false</isTarget>
+          <activeItem>EQP_SWP_DMine_G03</activeItem>
+          <position>
+            <coords xCoord="-690.801" yCoord="-8.986" zCoord="1070.102" />
+            <rotation xRot="0" yRot="0.65276" zRot="0" wRot="0.75756" />
+          </position>
+        </ActiveItem>
+      </activeItems>
+    </ActiveItemsDetail>
+    <ModelsDetail>
+      <modelMetadata />
+      <models />
+    </ModelsDetail>
+    <GeoTrapsDetail>
+      <trapMetadata />
+      <trapShapes>
+        <GeoTrap ID="0">
+          <geoTrap>GeoTrap_0</geoTrap>
+          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
+          <type>box</type>
+          <xScale>3</xScale>
+          <zScale>3</zScale>
+          <yScale>3</yScale>
+          <position>
+            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
+            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
+          </position>
+        </GeoTrap>
+        <GeoTrap ID="1">
+          <geoTrap>GeoTrap_0</geoTrap>
+          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
+          <type>box</type>
+          <xScale>3</xScale>
+          <zScale>3</zScale>
+          <yScale>3</yScale>
+          <position>
+            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
+            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
+          </position>
+        </GeoTrap>
+        <GeoTrap ID="2">
+          <geoTrap>GeoTrap_2</geoTrap>
+          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
+          <type>box</type>
+          <xScale>3</xScale>
+          <zScale>3</zScale>
+          <yScale>3</yScale>
+          <position>
+            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
+            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
+          </position>
+        </GeoTrap>
+        <GeoTrap ID="3">
+          <geoTrap>GeoTrap_3</geoTrap>
+          <isPlayerOnlyTrigger>false</isPlayerOnlyTrigger>
+          <type>box</type>
+          <xScale>3</xScale>
+          <zScale>3</zScale>
+          <yScale>3</yScale>
+          <position>
+            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
+            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
+          </position>
+        </GeoTrap>
+        <GeoTrap ID="4">
+          <geoTrap>GeoTrap_0</geoTrap>
+          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
+          <type>box</type>
+          <xScale>3</xScale>
+          <zScale>3</zScale>
+          <yScale>3</yScale>
+          <position>
+            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
+            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
+          </position>
+        </GeoTrap>
+        <GeoTrap ID="5">
+          <geoTrap>GeoTrap_0</geoTrap>
+          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
+          <type>box</type>
+          <xScale>3</xScale>
+          <zScale>3</zScale>
+          <yScale>3</yScale>
+          <position>
+            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
+            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
+          </position>
+        </GeoTrap>
+      </trapShapes>
+    </GeoTrapsDetail>
+  </ObjectsDetails>
+  <ScriptDetails>
+    <QStep_Main>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>UI</CodeKey>
+          <Message xsi:type="LuaString" Value="QuestAreaAnnounceLog" />
+          <SenderKey>ANY / ALL</SenderKey>
+          <SenderValue xsi:type="LuaNil" />
+        </CodeEvent>
+        <Identifier Value="NewEventScript" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>True Only Once</Name>
+            <Category>MANIPULATIVES</Category>
+            <Description>Returns true if the boolean variable is true, and sets the variable to false.
+The variable would need to be reset to true in order to fulfill this precondition again.</Description>
+            <EventFunctionTemplate>if |[1|BOOLEAN]| then 
+  |[1|BOOLEAN]| = false 
+  return true 
+end 
+return false</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Boolean Variable</Name>
+                <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="TimerLoopInit" />
+                  </TableKeyPath>
+                  <EvaluatesTo>BOOLEAN</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Start Hidden Timer</Name>
+            <Category>TIMERS</Category>
+            <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+This can be used for chaining events together on a delay, or creating a delayed event loop.
+The name of the timer is the sender of the event.</Description>
+            <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Sender</Name>
+                <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="TimerSender" />
+              </Choice>
+              <Choice>
+                <Name>Duration (Seconds)</Name>
+                <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="8" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Timer</CodeKey>
+          <Message xsi:type="LuaString" Value="Finish" />
+          <SenderKey>String Literal</SenderKey>
+          <SenderValue xsi:type="LuaString" Value="TimerSender" />
+        </CodeEvent>
+        <Identifier Value="NewEventScript_1" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Compare Number Values</Name>
+            <Category>COMPARISONS</Category>
+            <Description>Compares two numbers. 
+- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
+- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
+- 'qvars.LessThan' returns true when Num1 is less than Num2.
+- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
+- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
+- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
+            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets>
+              <KeyValuesSet Key="Comparison Functions">
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Equals" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="NotEquals" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="LessThan" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="GreaterThan" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+              </KeyValuesSet>
+            </EmbeddedChoosableValueSets>
+            <Choices>
+              <Choice>
+                <Name>Comparison</Name>
+                <Description>The comparison function.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Comparison Functions</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>false</AllowUserVariable>
+                <Key>Comparison Functions</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Num1</Name>
+                <Description>The number on the left-hand side of the comparison.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="RadioIndex" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Num2</Name>
+                <Description>The number on the right-hand side of the comparison.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="50" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="Equals" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="thisValue" />
+                    <Parameter Value="thatValue" />
+                  </Parameters>
+                  <Template>  return thisValue == thatValue</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="NotEquals" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="thisValue" />
+                    <Parameter Value="thatValue" />
+                  </Parameters>
+                  <Template>  return thisValue ~= thatValue</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="LessThan" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="thisValue" />
+                    <Parameter Value="thatValue" />
+                  </Parameters>
+                  <Template>  return thisValue &lt; thatValue</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="GreaterThan" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="thisValue" />
+                    <Parameter Value="thatValue" />
+                  </Parameters>
+                  <Template>  return thisValue &gt; thatValue</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="thisValue" />
+                    <Parameter Value="thatValue" />
+                  </Parameters>
+                  <Template>  return thisValue &lt;= thatValue</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="thisValue" />
+                    <Parameter Value="thatValue" />
+                  </Parameters>
+                  <Template>  return thisValue &gt;= thatValue</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Print Notification</Name>
+            <Category>USER INTERFACE</Category>
+            <Description>Prints up to 5 strings and or numbers as an in-game notification.</Description>
+            <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. |[2|STRING,NUMBER]| .. |[3|STRING,NUMBER]| .. |[4|STRING,NUMBER]| .. |[5|STRING,NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets>
+              <KeyValuesSet Key="Example Strings">
+                <Value xsi:type="LuaString" Value="Foo" />
+                <Value xsi:type="LuaString" Value="Bar" />
+              </KeyValuesSet>
+            </EmbeddedChoosableValueSets>
+            <Choices>
+              <Choice>
+                <Name>Value 1</Name>
+                <Description>1st Text that will print to notifications</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Example Strings</Key>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="RadioIndex" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Value 2</Name>
+                <Description>2nd Text that will print to notifications</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Example Strings</Key>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="" />
+              </Choice>
+              <Choice>
+                <Name>Value 3</Name>
+                <Description>3rd Text that will print to notifications</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Example Strings</Key>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="" />
+              </Choice>
+              <Choice>
+                <Name>Value 4</Name>
+                <Description>4th Text that will print to notifications</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Example Strings</Key>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="" />
+              </Choice>
+              <Choice>
+                <Name>Value 5</Name>
+                <Description>5th Text that will print to notifications</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Example Strings</Key>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Update Table Value</Name>
+            <Category>VARIABLE MANIPULATIONS</Category>
+            <Description>Sets a value in a table at the specified key/index</Description>
+            <EventFunctionTemplate>|[1|TABLE]|[|[2|STRING,NUMBER]|] = |[3|STRING,NUMBER,BOOLEAN]|</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Table</Name>
+                <Description>The table to be modified.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="RadioTable" />
+                  </TableKeyPath>
+                  <EvaluatesTo>TABLE</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Key</Name>
+                <Description>The key (or index) of the value to be modified.)</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="RadioIndex" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Value</Name>
+                <Description>The new value for the key.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="CurrentRadioString" />
+                  </TableKeyPath>
+                  <EvaluatesTo>STRING</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Play Common Radio Dialogue</Name>
+            <Category>SOUND EFFECTS</Category>
+            <Description>Plays a generic radio voiceover from the TppDefine radio library.</Description>
+            <EventFunctionTemplate>TppRadio.PlayCommonRadio(|[1|TABLE_IDENTIFIER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets>
+              <KeyValuesSet Key="Common Radio">
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="ENEMY_RECOVERED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="HOSTAGE_RECOVERED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="HOSTAGE_DEAD" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="HOSTAGE_DAMAGED_FROM_PC" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="PHASE_DOWN_OUTSIDE_HOTZONE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="OUTSIDE_MISSION_AREA" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="OUTSIDE_HOTZONE_ALERT" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="OUTSIDE_HOTZONE_CHANGE_SNEAK" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="OUTSIDE_HOTZONE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RETURN_HOTZONE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="ABORT_BY_HELI" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RECOMMEND_CURE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="SUPPRESSOR_BROKEN" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="CALL_HELI_FIRST_TIME" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="CALL_HELI_FIRST_TIME_HOT_ZONE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="CALL_HELI_SECOND_TIME" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RECOVERED_RUSSIAN_INTERPRETER" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_S" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_A" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_B" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_C" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_D" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_E" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="RESULT_RANK_NOT_DEFINED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="CALL_SUPPROT_BUDDY" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="TARGET_MARKED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="SEARCH_TARGET_ENABLED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="TARGET_RECOVERED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="TARGET_ELIMINATED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="CANNOT_GET_INTEL_ON_ALERT" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="CALL_BUDDY_QUIET_WHILE_FORCE_HOSPITALIZE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="UNLOCK_LANDING_ZONE" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="DISCOVERED_BY_SNIPER" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="DISCOVERED_BY_ENEMY_HELI" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="PLAYER_NEAR_ENEMY_HELI" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="HELI_LOST_CONTROL_END" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="HELI_LOST_CONTROL_END_ENEMY_ATTACK" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="HELI_DAMAGE_FROM_PLAYER" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="DISABLE_TRANSLATE_RUSSIAN" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="DISABLE_TRANSLATE_AFRIKANS" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+              </KeyValuesSet>
+            </EmbeddedChoosableValueSets>
+            <Choices>
+              <Choice>
+                <Name>Radio Dialogue</Name>
+                <Description>The TppDefine common radio identifier</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Common Radio</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>false</AllowUserVariable>
+                <Key>Common Radio</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
+                    <Key xsi:type="LuaString" Value="ENEMY_RECOVERED" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NIL</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Add To Number Variable</Name>
+            <Category>VARIABLE MANIPULATIONS</Category>
+            <Description>Adds a value to a number-variable. 
+Negative values will subtract from the number-variable.</Description>
+            <EventFunctionTemplate>|[1|NUMBER]| = |[1|NUMBER]| + |[2|NUMBER]|</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Variable</Name>
+                <Description>The custom variable that the value will be added to.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="RadioIndex" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Additional Value</Name>
+                <Description>The number that is added to the variable.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="1" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Start Hidden Timer</Name>
+            <Category>TIMERS</Category>
+            <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+This can be used for chaining events together on a delay, or creating a delayed event loop.
+The name of the timer is the sender of the event.</Description>
+            <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Sender</Name>
+                <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="TimerSender" />
+              </Choice>
+              <Choice>
+                <Name>Duration (Seconds)</Name>
+                <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="8" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+        </Operations>
+      </UserScript>
+    </QStep_Main>
+    <Variables>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="TimerLoopInit" />
+        <Value xsi:type="LuaBoolean" Value="true" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="RadioIndex" />
+        <Value xsi:type="LuaNumber" Value="1" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="RadioTable" />
+        <Value xsi:type="LuaTable">
+          <Entries>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="1" />
+              <Value xsi:type="LuaString" Value="f1000_mprg0050" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="2" />
+              <Value xsi:type="LuaString" Value="f1000_rtrg0010" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="3" />
+              <Value xsi:type="LuaString" Value="f1000_esrg1610" />
+            </Entry>
+          </Entries>
+        </Value>
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="CurrentRadioString" />
+        <Value xsi:type="LuaString" Value="" />
+      </UserVariable>
+    </Variables>
+  </ScriptDetails>
+</Quest>

@@ -12,6 +12,8 @@ namespace SOC.UI
 {
     public partial class FormMain : Form
     {
+        readonly string SideopExportDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SOCassets", "SideOp Library");
+
         enum Step
         {
             NONE,
@@ -167,9 +169,13 @@ namespace SOC.UI
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(SideopExportDir))
+            {
+                Directory.CreateDirectory(SideopExportDir);
+            }
             OpenFileDialog loadFile = new OpenFileDialog();
-            loadFile.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
+            loadFile.InitialDirectory = SideopExportDir;
 
             DialogResult result = loadFile.ShowDialog();
             if (result != DialogResult.OK) return;
@@ -218,9 +224,14 @@ namespace SOC.UI
                     break;
             }
 
+            if (!Directory.Exists(SideopExportDir))
+            {
+                Directory.CreateDirectory(SideopExportDir);
+            }
+
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
-            saveFile.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            saveFile.InitialDirectory = SideopExportDir;
             saveFile.FileName = Quest.SetupDetails.FpkName;
             DialogResult saveResult = saveFile.ShowDialog();
             if (saveResult != DialogResult.OK) return true;
@@ -282,9 +293,14 @@ namespace SOC.UI
 
         private void buttonBatchBuild_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(SideopExportDir))
+            {
+                Directory.CreateDirectory(SideopExportDir);
+            }
+
             OpenFileDialog loadFile = new OpenFileDialog();
             loadFile.Filter = "Xml Files|*.xml|All Files|*.*";
-            loadFile.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            loadFile.InitialDirectory = SideopExportDir;
             loadFile.Multiselect = true;
 
             DialogResult result = loadFile.ShowDialog();

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="0.8.0.0">
+  <SetupDetails FpkName="Example_Sideop_7" QuestNum="30356">
+    <QuestTitle>Example: Extract Sheep</QuestTitle>
+    <QuestDesc>Extract the sheep on the main Support platform</QuestDesc>
+    <locationID>50</locationID>
+    <loadArea>MtbsSupport</loadArea>
+    <coords xCoord="-1810" yCoord="340" zCoord="-320" />
+    <radius>5</radius>
+    <category>CAPTURE_ANIMAL</category>
+    <CPName>mtbs</CPName>
+    <reward>E</reward>
+    <progressLangID>announce_quest_extract_animal</progressLangID>
+    <routeName>NONE</routeName>
+  </SetupDetails>
+  <ObjectsDetails>
+    <EnemiesDetail>
+      <enemyMetadata objectiveType="ELIMINATE" subtype="" />
+      <enemies />
+    </EnemiesDetail>
+    <HostagesDetail>
+      <hostageMetadata objectiveType="ELIMINATE" hostageBodyName="XOF_GASMASK" canInterrogate="false" />
+      <hostages />
+    </HostagesDetail>
+    <VehiclesDetail>
+      <vehicleMetadata ObjectiveType="ELIMINATE" />
+      <vehicles />
+    </VehiclesDetail>
+    <HelicoptersDetail>
+      <helicopterMetadata objectiveType="KILLREQUIRED" />
+      <helicopters />
+    </HelicoptersDetail>
+    <UAVsDetail>
+      <UAVmetadata objectiveType="KILLREQUIRED" />
+      <UAVs />
+    </UAVsDetail>
+    <CamerasDetail>
+      <cameraMetadata objectiveType="KILLREQUIRED" />
+      <cameras />
+    </CamerasDetail>
+    <WalkerGearsDetail>
+      <walkerMetadata objectiveType="ELIMINATE" />
+      <walkers />
+    </WalkerGearsDetail>
+    <AnimalsDetail>
+      <animalMetadata objectiveType="ELIMINATE" />
+      <animals>
+        <Animal ID="0">
+          <isTarget>true</isTarget>
+          <count>1</count>
+          <animal>Sheep</animal>
+          <typeID>TppNubian</typeID>
+          <position>
+            <coords xCoord="373.092" yCoord="0.017" zCoord="858.185" />
+            <rotation xRot="0" yRot="-0.03054" zRot="0" wRot="0.99953" />
+          </position>
+        </Animal>
+        <Animal ID="1">
+          <isTarget>true</isTarget>
+          <count>1</count>
+          <animal>Sheep</animal>
+          <typeID>TppNubian</typeID>
+          <position>
+            <coords xCoord="400.130" yCoord="0.017" zCoord="854.736" />
+            <rotation xRot="0" yRot="0.05905" zRot="0" wRot="0.99826" />
+          </position>
+        </Animal>
+        <Animal ID="2">
+          <isTarget>true</isTarget>
+          <count>1</count>
+          <animal>Sheep</animal>
+          <typeID>TppNubian</typeID>
+          <position>
+            <coords xCoord="361.475" yCoord="12.583" zCoord="857.595" />
+            <rotation xRot="0" yRot="-0.01710" zRot="0" wRot="0.99985" />
+          </position>
+        </Animal>
+      </animals>
+    </AnimalsDetail>
+    <ItemsDetail>
+      <itemMetadata objectiveType="RECOVERED" />
+      <items />
+    </ItemsDetail>
+    <ActiveItemsDetail>
+      <activeItemMetadata objectiveType="ELIMINATE" />
+      <activeItems />
+    </ActiveItemsDetail>
+    <ModelsDetail>
+      <modelMetadata />
+      <models />
+    </ModelsDetail>
+    <GeoTrapsDetail>
+      <trapMetadata />
+      <trapShapes />
+    </GeoTrapsDetail>
+  </ObjectsDetails>
+  <ScriptDetails>
+    <QStep_Main />
+    <Variables />
+  </ScriptDetails>
+</Quest>

@@ -94,7 +94,10 @@ namespace SOC.Classes.Common
             locationID = setupPage.locationID;
             loadArea = setupPage.comboBoxLoadArea.Text;
             coords = new Coordinates(setupPage.textBoxXCoord.Text, setupPage.textBoxYCoord.Text, setupPage.textBoxZCoord.Text);
-            radius = setupPage.comboBoxRadius.Text.Substring(0,1);
+
+            if (setupPage.comboBoxRadius.Text.Length > 0)
+                radius = setupPage.comboBoxRadius.Text.Substring(0, 1);
+
             CPName = setupPage.comboBoxCP.Text;
 
             category = setupPage.comboBoxCategory.Text;
@@ -103,7 +106,8 @@ namespace SOC.Classes.Common
             if (progressLangID == null)
                 progressLangID = QuestBuild.UpdateNotifsManager.GetDefaultLangEntry().LangId;
 
-            reward = setupPage.comboBoxReward.Text.Substring(0, 1);
+            if (setupPage.comboBoxReward.Text.Length > 0)
+                reward = setupPage.comboBoxReward.Text.Substring(0, 1);
 
             routeName = setupPage.comboBoxRoute.Text;
             GetRoutesFromFile();

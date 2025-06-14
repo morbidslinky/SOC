@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="0.8.0.0">
+  <SetupDetails FpkName="Example_Sideop_6" QuestNum="30355">
+    <QuestTitle>Example: Extract the Bears</QuestTitle>
+    <QuestDesc>Extract all the bears at the Aabe Shifap Ruins along the river.</QuestDesc>
+    <locationID>10</locationID>
+    <loadArea>waterway</loadArea>
+    <coords xCoord="-1810" yCoord="340" zCoord="-320" />
+    <radius>5</radius>
+    <category>CAPTURE_ANIMAL</category>
+    <CPName>NONE</CPName>
+    <reward>C</reward>
+    <progressLangID>announce_quest_extract_animal</progressLangID>
+    <routeName>NONE</routeName>
+  </SetupDetails>
+  <ObjectsDetails>
+    <EnemiesDetail>
+      <enemyMetadata objectiveType="ELIMINATE" subtype="SOVIET_A" />
+      <enemies />
+    </EnemiesDetail>
+    <HostagesDetail>
+      <hostageMetadata objectiveType="ELIMINATE" hostageBodyName="DDS_RESEARCHER_FEMALE" canInterrogate="false" />
+      <hostages>
+        <Hostage ID="0">
+          <isTarget>false</isTarget>
+          <isUntied>true</isUntied>
+          <isInjured>false</isInjured>
+          <skill>Zoologist</skill>
+          <staffType>DEVELOP</staffType>
+          <scared>NEVER</scared>
+          <language>english</language>
+          <position>
+            <coords xCoord="-1843.320" yCoord="335.863" zCoord="-228.165" />
+            <rotation xRot="0" yRot="0.84423" zRot="0" wRot="0.53597" />
+          </position>
+        </Hostage>
+        <Hostage ID="1">
+          <isTarget>false</isTarget>
+          <isUntied>true</isUntied>
+          <isInjured>false</isInjured>
+          <skill>Zoologist</skill>
+          <staffType>SUPPORT</staffType>
+          <scared>NEVER</scared>
+          <language>english</language>
+          <position>
+            <coords xCoord="-1828.530" yCoord="360.378" zCoord="-359.566" />
+            <rotation xRot="0" yRot="0.62224" zRot="0" wRot="0.78283" />
+          </position>
+        </Hostage>
+      </hostages>
+    </HostagesDetail>
+    <VehiclesDetail>
+      <vehicleMetadata ObjectiveType="ELIMINATE" />
+      <vehicles />
+    </VehiclesDetail>
+    <HelicoptersDetail>
+      <helicopterMetadata objectiveType="KILLREQUIRED" />
+      <helicopters />
+    </HelicoptersDetail>
+    <UAVsDetail>
+      <UAVmetadata objectiveType="KILLREQUIRED" />
+      <UAVs />
+    </UAVsDetail>
+    <CamerasDetail>
+      <cameraMetadata objectiveType="KILLREQUIRED" />
+      <cameras />
+    </CamerasDetail>
+    <WalkerGearsDetail>
+      <walkerMetadata objectiveType="ELIMINATE" />
+      <walkers />
+    </WalkerGearsDetail>
+    <AnimalsDetail>
+      <animalMetadata objectiveType="ELIMINATE" />
+      <animals>
+        <Animal ID="0">
+          <isTarget>true</isTarget>
+          <count>1</count>
+          <animal>Bear</animal>
+          <typeID>TppBear</typeID>
+          <position>
+            <coords xCoord="-1802.899" yCoord="328.711" zCoord="-241.198" />
+            <rotation xRot="0" yRot="-0.43051" zRot="0" wRot="0.90259" />
+          </position>
+        </Animal>
+        <Animal ID="1">
+          <isTarget>true</isTarget>
+          <count>1</count>
+          <animal>Bear</animal>
+          <typeID>TppBear</typeID>
+          <position>
+            <coords xCoord="-1818.639" yCoord="343.487" zCoord="-403.223" />
+            <rotation xRot="0" yRot="0.02565" zRot="0" wRot="0.99967" />
+          </position>
+        </Animal>
+        <Animal ID="2">
+          <isTarget>true</isTarget>
+          <count>1</count>
+          <animal>Bear</animal>
+          <typeID>TppBear</typeID>
+          <position>
+            <coords xCoord="-1809.470" yCoord="343.848" zCoord="-361.095" />
+            <rotation xRot="0" yRot="0.06070" zRot="0" wRot="0.99816" />
+          </position>
+        </Animal>
+      </animals>
+    </AnimalsDetail>
+    <ItemsDetail>
+      <itemMetadata objectiveType="RECOVERED" />
+      <items>
+        <Item ID="0">
+          <position>
+            <coords xCoord="-1852.963" yCoord="338.119" zCoord="-258.723" />
+            <rotation xRot="0" yRot="-0.04388" zRot="0" wRot="0.99904" />
+          </position>
+          <isBoxed>false</isBoxed>
+          <isTarget>false</isTarget>
+          <count>4</count>
+          <item>EQP_SWP_ElectromagneticNetMine_G02</item>
+        </Item>
+        <Item ID="1">
+          <position>
+            <coords xCoord="-1850.695" yCoord="342.909" zCoord="-297.241" />
+            <rotation xRot="0" yRot="0.31350" zRot="0" wRot="0.94959" />
+          </position>
+          <isBoxed>true</isBoxed>
+          <isTarget>false</isTarget>
+          <count>0</count>
+          <item>EQP_WP_EX_hg_000_G04</item>
+        </Item>
+      </items>
+    </ItemsDetail>
+    <ActiveItemsDetail>
+      <activeItemMetadata objectiveType="ELIMINATE" />
+      <activeItems />
+    </ActiveItemsDetail>
+    <ModelsDetail>
+      <modelMetadata />
+      <models />
+    </ModelsDetail>
+    <GeoTrapsDetail>
+      <trapMetadata />
+      <trapShapes />
+    </GeoTrapsDetail>
+  </ObjectsDetails>
+  <ScriptDetails>
+    <QStep_Main />
+    <Variables />
+  </ScriptDetails>
+</Quest>
