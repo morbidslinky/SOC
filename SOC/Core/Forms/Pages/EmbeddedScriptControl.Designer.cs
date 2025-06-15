@@ -33,7 +33,6 @@
             textBoxDescription = new System.Windows.Forms.TextBox();
             groupBoxTrigger = new System.Windows.Forms.GroupBox();
             buttonApplyMessage = new System.Windows.Forms.Button();
-            textBoxMessage = new System.Windows.Forms.TextBox();
             buttonApplySender = new System.Windows.Forms.Button();
             labelSenderValue = new System.Windows.Forms.Label();
             labelStrCode32 = new System.Windows.Forms.Label();
@@ -126,7 +125,6 @@
             groupBoxTrigger.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxTrigger.BackColor = System.Drawing.Color.Silver;
             groupBoxTrigger.Controls.Add(buttonApplyMessage);
-            groupBoxTrigger.Controls.Add(textBoxMessage);
             groupBoxTrigger.Controls.Add(buttonApplySender);
             groupBoxTrigger.Controls.Add(labelSenderValue);
             groupBoxTrigger.Controls.Add(labelStrCode32);
@@ -158,18 +156,6 @@
             buttonApplyMessage.Text = "Apply >>";
             buttonApplyMessage.UseVisualStyleBackColor = true;
             buttonApplyMessage.Click += buttonApplyMessage_Click;
-            // 
-            // textBoxMessage
-            // 
-            textBoxMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            textBoxMessage.BackColor = System.Drawing.Color.LightGray;
-            textBoxMessage.Font = new System.Drawing.Font("Consolas", 9F);
-            textBoxMessage.Location = new System.Drawing.Point(7, 92);
-            textBoxMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            textBoxMessage.Name = "textBoxMessage";
-            textBoxMessage.Size = new System.Drawing.Size(230, 22);
-            textBoxMessage.TabIndex = 17;
-            textBoxMessage.Visible = false;
             // 
             // buttonApplySender
             // 
@@ -215,7 +201,7 @@
             comboBoxSenderOptions.Size = new System.Drawing.Size(319, 22);
             comboBoxSenderOptions.TabIndex = 2;
             comboBoxSenderOptions.DropDown += comboBoxSenderOptions_DropDown;
-            comboBoxSenderOptions.SelectedIndexChanged += comboBoxSendersOptions_SelectedIndexChanged;
+            comboBoxSenderOptions.SelectedIndexChanged += comboBoxSenderOptions_SelectedIndexChanged;
             // 
             // comboBoxCode
             // 
@@ -249,9 +235,10 @@
             comboBoxMessage.Location = new System.Drawing.Point(7, 92);
             comboBoxMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxMessage.Name = "comboBoxMessage";
-            comboBoxMessage.Size = new System.Drawing.Size(319, 22);
+            comboBoxMessage.Size = new System.Drawing.Size(231, 22);
             comboBoxMessage.TabIndex = 1;
             comboBoxMessage.SelectedIndexChanged += comboBoxMessage_SelectedIndexChanged;
+            comboBoxMessage.TextUpdate += comboBoxMessage_TextUpdate;
             // 
             // labelSenderOptions
             // 
@@ -393,7 +380,7 @@
             groupBoxActions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxActions.Name = "groupBoxActions";
             groupBoxActions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxActions.Size = new System.Drawing.Size(333, 283);
+            groupBoxActions.Size = new System.Drawing.Size(333, 281);
             groupBoxActions.TabIndex = 10;
             groupBoxActions.TabStop = false;
             groupBoxActions.Text = "Operations :: \"Do\"";
@@ -431,7 +418,7 @@
             listBoxOperations.Location = new System.Drawing.Point(38, 18);
             listBoxOperations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxOperations.Name = "listBoxOperations";
-            listBoxOperations.Size = new System.Drawing.Size(291, 262);
+            listBoxOperations.Size = new System.Drawing.Size(291, 236);
             listBoxOperations.TabIndex = 13;
             listBoxOperations.SelectedIndexChanged += listBoxOperations_SelectedIndexChanged;
             listBoxOperations.DoubleClick += listBoxOperations_DoubleClick;
@@ -489,6 +476,5 @@
         internal System.Windows.Forms.Label labelSenderValue;
         private System.Windows.Forms.Button buttonApplySender;
         private System.Windows.Forms.Button buttonApplyMessage;
-        internal System.Windows.Forms.TextBox textBoxMessage;
     }
 }

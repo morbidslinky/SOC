@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static SOC.Classes.Lua.Choice;
@@ -18,6 +19,8 @@ namespace SOC.UI
         private bool _isUpdatingControls = false;
         ScriptControl ParentControl;
         ScriptNode ScriptNode;
+
+        public const string MISSION_CODE = "Mission";
 
         public EmbeddedScriptControl(ScriptControl parentControl)
         {
@@ -112,27 +115,43 @@ namespace SOC.UI
         {
             MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
             string selectedCode = (string)comboBoxCode.SelectedItem;
+            var codeMessages = ScriptControl.StrCode32Classes.Get(selectedCode);
 
-            if (selectedCode == "Mission")
+            comboBoxMessage.Items.Clear();
+            comboBoxMessage.Items.AddRange(codeMessages.ToArray());
+
+            var match = comboBoxMessage.Items.OfType<LuaValue>().FirstOrDefault(value => value.Matches(msgSenderNode.Message));
+            if (selectedCode == MISSION_CODE)
             {
-                showCorrespondingMessageControl(textBoxMessage);
-                if (msgSenderNode.Message is LuaString text) textBoxMessage.Text = text.Value;
-                comboBoxSenderOptions.SelectedItem = StrCode32.NIL_LITERAL_KEY; comboBoxSenderOptions.Enabled = false;
-                MoveSelectedScript();
-            } 
+                comboBoxMessage.DropDownStyle = ComboBoxStyle.DropDown;
+                comboBoxSenderOptions.Enabled = false;
+
+                if (match != null)
+                {
+                    comboBoxMessage.SelectedItem = match;
+                }
+                else if (msgSenderNode.Message is LuaString text)
+                {
+                    comboBoxMessage.Text = text.TokenValue;
+                    MoveSelectedScript(Create.Nil());
+                }
+            }
             else
             {
-                showCorrespondingMessageControl(comboBoxMessage);
+                comboBoxMessage.DropDownStyle = ComboBoxStyle.DropDownList;
                 comboBoxSenderOptions.Enabled = true;
-                comboBoxMessage.Items.Clear();
-                comboBoxMessage.Items.AddRange(ScriptControl.StrCode32Classes.Get(selectedCode).ToArray());
 
-                var match = comboBoxMessage.Items.OfType<LuaValue>().FirstOrDefault(value => value.Matches(msgSenderNode.Message));
-                if (match == null && comboBoxMessage.Items.Count > 0)
-                    match = (LuaValue)comboBoxMessage.Items[0];
-
-                comboBoxMessage.SelectedItem = match;
+                if (match != null)
+                {
+                    comboBoxMessage.SelectedItem = match;
+                }
+                else if (comboBoxMessage.Items.Count > 0)
+                {
+                    comboBoxMessage.SelectedItem = (LuaValue)comboBoxMessage.Items[0];
+                }
             }
+
+            buttonApplyMessage.Enabled = false;
         }
 
         private void buttonApplyMessage_Click(object sender, EventArgs e)
@@ -140,21 +159,9 @@ namespace SOC.UI
             MoveSelectedScript();
         }
 
-        private void showCorrespondingMessageControl(Control choiceControl, bool enable = true)
+        private void comboBoxMessage_TextUpdate(object sender, EventArgs e)
         {
-            Control[] controlSet = { textBoxMessage, comboBoxMessage };
-
-            foreach (var control in controlSet)
-            {
-                control.Visible = control == choiceControl;
-            }
-
-            if (choiceControl != null)
-            {
-                choiceControl.Enabled = enable;
-            }
-
-            buttonApplyMessage.Visible = choiceControl == textBoxMessage;
+            buttonApplyMessage.Enabled = true;
         }
 
         private void comboBoxMessage_SelectedIndexChanged(object sender, EventArgs e)
@@ -162,7 +169,7 @@ namespace SOC.UI
             MoveSelectedScript();
         }
 
-        private void comboBoxSendersOptions_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxSenderOptions_SelectedIndexChanged(object sender, EventArgs e)
         {
             MessageSenderNode msgSenderNode = (MessageSenderNode)ScriptNode.Parent;
             ChoiceKeyValues selectedSenderChoosableSet = (ChoiceKeyValues)comboBoxSenderOptions.SelectedItem;
@@ -216,16 +223,16 @@ namespace SOC.UI
         {
             if (_isUpdatingControls) return;
 
-            string selectedCode = (string)comboBoxCode.SelectedItem; 
-            
+            string selectedCode = (string)comboBoxCode.SelectedItem;
+
             LuaValue selectedMsg;
-            if (selectedCode == "Mission")
+            if (comboBoxMessage.SelectedItem is LuaValue selectedLuaValue)
             {
-                selectedMsg = Create.String(textBoxMessage.Text);
-            } 
+                selectedMsg = selectedLuaValue;
+            }
             else
             {
-                selectedMsg = (LuaValue)comboBoxMessage.SelectedItem;
+                selectedMsg = Create.String(comboBoxMessage.Text.Replace("\"", ""));
             }
             ChoiceKeyValues selectedSenderChoosableSet = (ChoiceKeyValues)comboBoxSenderOptions.SelectedItem;
 

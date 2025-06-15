@@ -329,6 +329,12 @@ public static class StaticObjectiveFunctions
             totalTargets, objectiveCompleteCount, objectiveFailedCount = TallyMethod(totalTargets, objectiveCompleteCount, objectiveFailedCount) 
           end 
 
+          local targetMsg = ""OnTargetDeath""
+          if (messageId == ""PickUpDormant"") or (messageId == ""PickUpActive"") or (messageId == ""Fulton"") or (messageId == ""InHelicopter"") then
+            targetMsg = ""OnTargetExtraction""
+          end
+          Mission.SendMessage(""Mission"", targetMsg, gameId, totalTargets, objectiveCompleteCount, objectiveFailedCount)
+
           if totalTargets > 0 then
             if objectiveCompleteCount >= totalTargets then
               return TppDefine.QUEST_CLEAR_TYPE.CLEAR

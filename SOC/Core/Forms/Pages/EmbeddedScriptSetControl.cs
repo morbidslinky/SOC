@@ -101,7 +101,7 @@ namespace SOC.UI
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "Xml File|*.xml";
             saveFile.InitialDirectory = ScriptExportDir;
-            saveFile.FileName = $"{ParentControl.Quest.SetupDetails.FpkName}.ScriptExport";
+            saveFile.FileName = $"{ParentControl.Quest.SetupDetails.FpkName}.Script";
             DialogResult saveResult = saveFile.ShowDialog();
 
             if (saveResult == DialogResult.OK)

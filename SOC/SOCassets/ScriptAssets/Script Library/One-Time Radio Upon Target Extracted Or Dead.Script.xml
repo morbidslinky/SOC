@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <QStep_Main>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>Mission</CodeKey>
+        <Message xsi:type="LuaString" Value="OnTargetDeath" />
+        <SenderKey>ANY / ALL</SenderKey>
+        <SenderValue xsi:type="LuaNil" />
+      </CodeEvent>
+      <Identifier Value="TargetDestroyedRadioOnce" />
+      <Description>For the first walkergear, Kaz will exclaim that one of the targets have been eliminated.</Description>
+      <Preconditions>
+        <Precondition>
+          <Name>True Only Once</Name>
+          <Category>CHECKS</Category>
+          <Description>Returns true if the boolean variable is true, and sets the variable to false.
+The variable would need to be reset to true in order to fulfill this precondition again.</Description>
+          <EventFunctionTemplate>if |[1|BOOLEAN]| then 
+  |[1|BOOLEAN]| = false 
+  return true 
+end 
+return false</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Boolean Variable</Name>
+              <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>false</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Variable</Key>
+              <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                <TableKeyPath>
+                  <Key xsi:type="LuaString" Value="targetRadioOnce" />
+                </TableKeyPath>
+                <EvaluatesTo>BOOLEAN</EvaluatesTo>
+              </Value>
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Precondition>
+      </Preconditions>
+      <Operations>
+        <Operation>
+          <Name>Play Generic Radio Call</Name>
+          <Category>SOUND EFFECTS</Category>
+          <Description>Immediately plays a radio call from a radio group ID.
+Notes on english dialogue for the group ids can be found here:
+https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
+          <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets>
+            <KeyValuesSet Key="Radio Calls">
+              <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2170" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="APrisoner">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="PrisonerMightKnowTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0320" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="FindTheTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EasierToSpotTargetFromHighUp">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0410" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetSomewhereInThatArea">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0190" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EliminateTargetDontGetSpotted">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0430" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TheEnemyDontLetThemSeeYou">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0770" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="CompletedWithoutSpottedPraise">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0360" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ContinueOutOfAreaToComplete">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2640" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ObjectiveCompleteExfilHotzone">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2635" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="GreatWorkBoss">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3590" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="HeyHoldOnWhatsGottenIntoYou">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1150" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="GetHimOutOfThere">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4260" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="GetHerOutOfThere">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4270" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TreadCarefullyBoss">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0745" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EyesOpenBoss">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0740" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ShhListen">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2030" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TheySpottedYouGetAwayNow">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0800" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WhatsThis">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0710" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsAnEnemyUAV">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4620" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EnemyMustvePlantedMineWellSpotted">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2130" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WaitDidTheySetATrap">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1120" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ForestWillProvideCover">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2000" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="OneOfOurStaffCapturedForSideop">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4040" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="HeyBossUseMissleLauncher">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg1430" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="BossDoYouHaveSniperRifle">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1280" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="AvoidDirectApproach">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1560" />
+              </Value>
+            </KeyValuesSet>
+          </EmbeddedChoosableValueSets>
+          <Choices>
+            <Choice>
+              <Name>Radio Preset</Name>
+              <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Radio Calls</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>false</AllowLiteral>
+              <AllowUserVariable>false</AllowUserVariable>
+              <Key>Radio Calls</Key>
+              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+              </Value>
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>Mission</CodeKey>
+        <Message xsi:type="LuaString" Value="OnTargetExtraction" />
+        <SenderKey>ANY / ALL</SenderKey>
+        <SenderValue xsi:type="LuaNil" />
+      </CodeEvent>
+      <Identifier Value="TargetExtractedRadioOnce" />
+      <Description>For the first walkergear, Kaz will exclaim that one of the targets have been extracted.</Description>
+      <Preconditions>
+        <Precondition>
+          <Name>True Only Once</Name>
+          <Category>CHECKS</Category>
+          <Description>Returns true if the boolean variable is true, and sets the variable to false.
+The variable would need to be reset to true in order to fulfill this precondition again.</Description>
+          <EventFunctionTemplate>if |[1|BOOLEAN]| then 
+  |[1|BOOLEAN]| = false 
+  return true 
+end 
+return false</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Boolean Variable</Name>
+              <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>false</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Variable</Key>
+              <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                <TableKeyPath>
+                  <Key xsi:type="LuaString" Value="targetRadioOnce" />
+                </TableKeyPath>
+                <EvaluatesTo>BOOLEAN</EvaluatesTo>
+              </Value>
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Precondition>
+      </Preconditions>
+      <Operations>
+        <Operation>
+          <Name>Play Generic Radio Call</Name>
+          <Category>SOUND EFFECTS</Category>
+          <Description>Immediately plays a radio call from a radio group ID.
+Notes on english dialogue for the group ids can be found here:
+https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
+          <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets>
+            <KeyValuesSet Key="Radio Calls">
+              <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2170" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="APrisoner">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="PrisonerMightKnowTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0320" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="FindTheTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EasierToSpotTargetFromHighUp">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0410" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetSomewhereInThatArea">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0190" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EliminateTargetDontGetSpotted">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0430" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TheEnemyDontLetThemSeeYou">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0770" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="CompletedWithoutSpottedPraise">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0360" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ContinueOutOfAreaToComplete">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2640" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ObjectiveCompleteExfilHotzone">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2635" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="GreatWorkBoss">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3590" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="HeyHoldOnWhatsGottenIntoYou">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1150" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="GetHimOutOfThere">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4260" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="GetHerOutOfThere">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4270" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TreadCarefullyBoss">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0745" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EyesOpenBoss">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0740" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ShhListen">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2030" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TheySpottedYouGetAwayNow">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0800" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WhatsThis">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0710" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsAnEnemyUAV">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4620" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="EnemyMustvePlantedMineWellSpotted">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2130" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WaitDidTheySetATrap">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1120" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ForestWillProvideCover">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2000" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="OneOfOurStaffCapturedForSideop">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4040" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="HeyBossUseMissleLauncher">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg1430" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="BossDoYouHaveSniperRifle">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1280" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="AvoidDirectApproach">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg1560" />
+              </Value>
+            </KeyValuesSet>
+          </EmbeddedChoosableValueSets>
+          <Choices>
+            <Choice>
+              <Name>Radio Preset</Name>
+              <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Radio Calls</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>false</AllowLiteral>
+              <AllowUserVariable>false</AllowUserVariable>
+              <Key>Radio Calls</Key>
+              <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+              </Value>
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+  </QStep_Main>
+  <Variables>
+    <UserVariable Extrude="false">
+      <Key xsi:type="LuaString" Value="targetRadioOnce" />
+      <Value xsi:type="LuaBoolean" Value="true" />
+    </UserVariable>
+  </Variables>
+</ScriptDetails>
