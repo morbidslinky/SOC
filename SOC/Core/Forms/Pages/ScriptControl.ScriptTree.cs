@@ -143,6 +143,7 @@ namespace SOC.UI
 
         private void UpdateScriptControlsToSelectedNode()
         {
+            if (_isUpdatingControls) return;
             _isUpdatingControls = true;
 
             UnmarkVariableDependencies();
@@ -276,67 +277,47 @@ namespace SOC.UI
         {
             script.Identifier = Create.String(GetUniqueScriptName(script.Identifier.Value));
 
-            CodeNode nodeFamily = ConvertToNodeFamily(script);
-            Add(nodeFamily);
+            ScriptNode scriptNode = script.ConvertToNodeFamily();
+            Add(scriptNode);
 
-            return Expand(nodeFamily);
+            return scriptNode;
         }
 
-        public static CodeNode ConvertToNodeFamily(Script script)
+        public void Add(ScriptNode scriptNode)
         {
-            CodeNode codeNode = new CodeNode(script.CodeEvent.CodeKey);
-            MessageSenderNode msgSenderNode = new MessageSenderNode(script.CodeEvent.Message, script.CodeEvent.SenderKey, script.CodeEvent.SenderValue);
-            ScriptNode scriptNode = new ScriptNode(script.Identifier, script.Description, script.Preconditions, script.Operations);
+            MessageSenderNode msgSenderNode = scriptNode.GetMsgSenderNode();
+            CodeNode codeNode = scriptNode.GetCodeNode();
 
-            msgSenderNode.Nodes.Add(scriptNode);
-            codeNode.Nodes.Add(msgSenderNode);
-
-            return codeNode;
-        }
-
-        public void Add(CodeNode incomingCodeNode)
-        {
-            if (Nodes.ContainsKey(incomingCodeNode.Name))
+            if (Nodes.ContainsKey(codeNode.Name))
             {
-                CodeNode existingCodeNode = (CodeNode)Nodes[incomingCodeNode.Name];
-                foreach (MessageSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
+                CodeNode existingCodeNode = (CodeNode)Nodes[codeNode.Name];
+                if (existingCodeNode.Nodes.ContainsKey(msgSenderNode.Name))
                 {
-                    if (existingCodeNode.Nodes.ContainsKey(incomingMsgSenderNode.Name))
-                    {
-                        MessageSenderNode existingMsgSenderNode = (MessageSenderNode)existingCodeNode.Nodes[incomingMsgSenderNode.Name];
-                        foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
-                        {
-                            existingMsgSenderNode.Nodes.Add(incomingScriptNode);
-                        }
-                    }
-                    else
-                    {
-                        existingCodeNode.Nodes.Add(incomingMsgSenderNode);
-                    }
+                    MessageSenderNode existingMsgSenderNode = (MessageSenderNode)existingCodeNode.Nodes[msgSenderNode.Name];
+                    existingMsgSenderNode.Nodes.Add(scriptNode);
+                }
+                else
+                {
+                    existingCodeNode.Nodes.Add(msgSenderNode);
                 }
             }
             else
             {
-                Nodes.Add(incomingCodeNode);
+                Nodes.Add(codeNode);
             }
         }
 
-        public ScriptNode Expand(CodeNode incomingCodeNode)
+        public void Expand(CodeNode codeNode)
         {
-            ScriptNode selectedScriptNode = null;
-
             Expand();
-            incomingCodeNode.Expand();
-            foreach (MessageSenderNode incomingMsgSenderNode in incomingCodeNode.Nodes)
-            {
-                incomingMsgSenderNode.Expand();
-                foreach (ScriptNode incomingScriptNode in incomingMsgSenderNode.Nodes)
-                {
-                    selectedScriptNode = incomingScriptNode;
-                }
-            }
 
-            return selectedScriptNode;
+            if (codeNode == null) return;
+
+            codeNode.Expand();
+            foreach (MessageSenderNode msgSenderNode in codeNode.Nodes)
+            {
+                msgSenderNode.Expand();
+            }
         }
 
         public string GetUniqueScriptName(string baseName, ScriptNode except = null)
@@ -418,14 +399,41 @@ namespace SOC.UI
             return result;
         }
 
-        public ScriptNode MoveScript(ScriptNode selectedScriptNode, string newCode, LuaValue newMessage, string newSenderKey, LuaValue newSender)
+        public void MoveScriptNode(ScriptNode scriptNode, StrCode32 newStrCodeEvent)
         {
-            Script script = selectedScriptNode.ConvertToScript();
-            DeleteScriptNode(selectedScriptNode);
+            string codeNodeName = CodeNode.CodeNodeName(newStrCodeEvent.CodeKey);
+            if (!Nodes.ContainsKey(codeNodeName))
+            {
+                Nodes.Add(new CodeNode(newStrCodeEvent));
+            }
+            CodeNode codeNode = (CodeNode)Nodes[codeNodeName];
 
-            script.CodeEvent = new StrCode32(newCode, newMessage, newSenderKey, newSender);
+            string msgSenderNodeName = MessageSenderNode.MessageSenderNodeName(newStrCodeEvent.Message, newStrCodeEvent.SenderValue);
+            if (!codeNode.Nodes.ContainsKey(msgSenderNodeName))
+            {
+                MessageSenderNode messageSenderNode = new MessageSenderNode(newStrCodeEvent);
+                codeNode.Nodes.Add(messageSenderNode);
+            }
+            MessageSenderNode msgSenderNode = (MessageSenderNode)codeNode.Nodes[msgSenderNodeName];
 
-            return Add(script);
+            CodeNode prevCodeNode = scriptNode.GetCodeNode();
+            MessageSenderNode prevMsgSenderNode = scriptNode.GetMsgSenderNode();
+
+            scriptNode.Remove();
+            msgSenderNode.Nodes.Add(scriptNode);
+
+            if (prevCodeNode == null || prevMsgSenderNode == null)
+                return;
+
+            if (prevMsgSenderNode.Nodes.Count == 0)
+            {
+                prevCodeNode.Nodes.Remove(prevMsgSenderNode);
+
+                if (prevCodeNode.Nodes.Count == 0)
+                {
+                    Nodes.Remove(prevCodeNode);
+                }
+            }
         }
     }
 
@@ -558,6 +566,26 @@ namespace SOC.UI
                 dependency.NodeFont = ScriptControl.UNDERLINE;
             }
         }
+
+        public MessageSenderNode GetMsgSenderNode()
+        {
+            if (Parent != null
+                && Parent is MessageSenderNode msgSenderParentNode)
+                return msgSenderParentNode;
+
+            return null;
+        }
+
+        public CodeNode GetCodeNode()
+        {
+            MessageSenderNode msgSenderParentNode = GetMsgSenderNode();
+            if (msgSenderParentNode != null
+                && msgSenderParentNode.Parent != null
+                && msgSenderParentNode.Parent is CodeNode codeGrandparent)
+                return codeGrandparent;
+
+            return null;
+        }
     }
 
     public class ScriptalParentNode : TreeNode
@@ -688,15 +716,28 @@ namespace SOC.UI
             SenderKey = senderKey;
             Sender = sender;
 
-            if (Sender is LuaNil)
+            Name = MessageSenderNodeName(Message, Sender);
+            Text = Name;
+        }
+
+        public MessageSenderNode(StrCode32 strCodeEvent)
+        {
+            Message = strCodeEvent.Message;
+            SenderKey = strCodeEvent.SenderKey;
+            Sender = strCodeEvent.SenderValue;
+
+            Name = MessageSenderNodeName(Message, Sender);
+            Text = Name;
+        }
+
+        public static string MessageSenderNodeName(LuaValue message, LuaValue sender)
+        {
+            if (sender is LuaNil)
             {
-                Name = Message.ToString();
-                Text = Name;
-            } else 
-            {
-                Name = $"{Message} :: {Sender}";
-                Text = Name;
+                return message.ToString();
             }
+
+            return $"{message} :: {sender}";
         }
 
         public Str32TableNode GetTableNode()
@@ -741,8 +782,22 @@ namespace SOC.UI
         public CodeNode(string code)
         {
             CodeKey = code;
-            Name = code;
-            Text = code;
+
+            Name = CodeNodeName(CodeKey);
+            Text = Name;
+        }
+
+        public CodeNode(StrCode32 strCodeEvent)
+        {
+            CodeKey = strCodeEvent.CodeKey;
+
+            Name = CodeNodeName(CodeKey);
+            Text = Name;
+        }
+
+        public static string CodeNodeName(string code)
+        {
+            return code;
         }
     }
 }

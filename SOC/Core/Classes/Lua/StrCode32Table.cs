@@ -204,6 +204,18 @@ namespace SOC.Classes.Lua
             Subscripts.Add(subscript);
         }
 
+        public ScriptNode ConvertToNodeFamily()
+        {
+            CodeNode codeNode = new CodeNode(CodeEvent.CodeKey);
+            MessageSenderNode msgSenderNode = new MessageSenderNode(CodeEvent.Message, CodeEvent.SenderKey, CodeEvent.SenderValue);
+            ScriptNode scriptNode = new ScriptNode(Identifier, Description, Preconditions, Operations);
+
+            msgSenderNode.Nodes.Add(scriptNode);
+            codeNode.Nodes.Add(msgSenderNode);
+
+            return scriptNode;
+        }
+
         public override string ToString()
         {
             return string.Format(" {0,-25}:: {1, -35}:: {2}",

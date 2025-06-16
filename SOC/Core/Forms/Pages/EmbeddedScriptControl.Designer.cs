@@ -32,18 +32,16 @@
             groupBoxDescription = new System.Windows.Forms.GroupBox();
             textBoxDescription = new System.Windows.Forms.TextBox();
             groupBoxTrigger = new System.Windows.Forms.GroupBox();
-            buttonApplyMessage = new System.Windows.Forms.Button();
-            buttonApplySender = new System.Windows.Forms.Button();
             labelSenderValue = new System.Windows.Forms.Label();
             labelStrCode32 = new System.Windows.Forms.Label();
             comboBoxSenderOptions = new System.Windows.Forms.ComboBox();
             comboBoxCode = new System.Windows.Forms.ComboBox();
             labelmsg = new System.Windows.Forms.Label();
-            comboBoxMessage = new System.Windows.Forms.ComboBox();
             labelSenderOptions = new System.Windows.Forms.Label();
-            numericUpDownSenders = new System.Windows.Forms.NumericUpDown();
-            textBoxSenders = new System.Windows.Forms.TextBox();
+            textBoxSendersLiteralStringValue = new System.Windows.Forms.TextBox();
             comboBoxSenders = new System.Windows.Forms.ComboBox();
+            textBoxSendersLiteralNumberValue = new System.Windows.Forms.TextBox();
+            comboBoxMessage = new System.Windows.Forms.ComboBox();
             splitContainerInner = new System.Windows.Forms.SplitContainer();
             groupBoxPreconditions = new System.Windows.Forms.GroupBox();
             buttonUpPrecondition = new System.Windows.Forms.Button();
@@ -59,7 +57,6 @@
             splitContainerOuter.SuspendLayout();
             groupBoxDescription.SuspendLayout();
             groupBoxTrigger.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownSenders).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerInner).BeginInit();
             splitContainerInner.Panel1.SuspendLayout();
             splitContainerInner.Panel2.SuspendLayout();
@@ -124,18 +121,16 @@
             // 
             groupBoxTrigger.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxTrigger.BackColor = System.Drawing.Color.Silver;
-            groupBoxTrigger.Controls.Add(buttonApplyMessage);
-            groupBoxTrigger.Controls.Add(buttonApplySender);
             groupBoxTrigger.Controls.Add(labelSenderValue);
             groupBoxTrigger.Controls.Add(labelStrCode32);
             groupBoxTrigger.Controls.Add(comboBoxSenderOptions);
             groupBoxTrigger.Controls.Add(comboBoxCode);
             groupBoxTrigger.Controls.Add(labelmsg);
-            groupBoxTrigger.Controls.Add(comboBoxMessage);
             groupBoxTrigger.Controls.Add(labelSenderOptions);
-            groupBoxTrigger.Controls.Add(numericUpDownSenders);
-            groupBoxTrigger.Controls.Add(textBoxSenders);
+            groupBoxTrigger.Controls.Add(textBoxSendersLiteralStringValue);
             groupBoxTrigger.Controls.Add(comboBoxSenders);
+            groupBoxTrigger.Controls.Add(textBoxSendersLiteralNumberValue);
+            groupBoxTrigger.Controls.Add(comboBoxMessage);
             groupBoxTrigger.Location = new System.Drawing.Point(0, 0);
             groupBoxTrigger.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxTrigger.Name = "groupBoxTrigger";
@@ -144,30 +139,6 @@
             groupBoxTrigger.TabIndex = 31;
             groupBoxTrigger.TabStop = false;
             groupBoxTrigger.Text = "Trigger :: \"When\"";
-            // 
-            // buttonApplyMessage
-            // 
-            buttonApplyMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            buttonApplyMessage.Location = new System.Drawing.Point(245, 91);
-            buttonApplyMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonApplyMessage.Name = "buttonApplyMessage";
-            buttonApplyMessage.Size = new System.Drawing.Size(81, 23);
-            buttonApplyMessage.TabIndex = 18;
-            buttonApplyMessage.Text = "Apply >>";
-            buttonApplyMessage.UseVisualStyleBackColor = true;
-            buttonApplyMessage.Click += buttonApplyMessage_Click;
-            // 
-            // buttonApplySender
-            // 
-            buttonApplySender.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            buttonApplySender.Location = new System.Drawing.Point(245, 170);
-            buttonApplySender.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonApplySender.Name = "buttonApplySender";
-            buttonApplySender.Size = new System.Drawing.Size(81, 23);
-            buttonApplySender.TabIndex = 4;
-            buttonApplySender.Text = "Apply >>";
-            buttonApplySender.UseVisualStyleBackColor = true;
-            buttonApplySender.Click += buttonApplySender_Click;
             // 
             // labelSenderValue
             // 
@@ -226,20 +197,6 @@
             labelmsg.TabIndex = 2;
             labelmsg.Text = "Message:";
             // 
-            // comboBoxMessage
-            // 
-            comboBoxMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            comboBoxMessage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboBoxMessage.Font = new System.Drawing.Font("Consolas", 9F);
-            comboBoxMessage.FormattingEnabled = true;
-            comboBoxMessage.Location = new System.Drawing.Point(7, 92);
-            comboBoxMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            comboBoxMessage.Name = "comboBoxMessage";
-            comboBoxMessage.Size = new System.Drawing.Size(231, 22);
-            comboBoxMessage.TabIndex = 1;
-            comboBoxMessage.SelectedIndexChanged += comboBoxMessage_SelectedIndexChanged;
-            comboBoxMessage.TextUpdate += comboBoxMessage_TextUpdate;
-            // 
             // labelSenderOptions
             // 
             labelSenderOptions.AutoSize = true;
@@ -250,33 +207,19 @@
             labelSenderOptions.TabIndex = 4;
             labelSenderOptions.Text = "Sender Options:";
             // 
-            // numericUpDownSenders
+            // textBoxSendersLiteralStringValue
             // 
-            numericUpDownSenders.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            numericUpDownSenders.Font = new System.Drawing.Font("Consolas", 9F);
-            numericUpDownSenders.Location = new System.Drawing.Point(65, 171);
-            numericUpDownSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            numericUpDownSenders.Maximum = new decimal(new int[] { 1215752192, 23, 0, 0 });
-            numericUpDownSenders.Minimum = new decimal(new int[] { 1215752192, 23, 0, int.MinValue });
-            numericUpDownSenders.Name = "numericUpDownSenders";
-            numericUpDownSenders.Size = new System.Drawing.Size(173, 22);
-            numericUpDownSenders.TabIndex = 3;
-            numericUpDownSenders.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            numericUpDownSenders.Visible = false;
-            numericUpDownSenders.KeyDown += numericUpDownSenders_KeyDown;
-            // 
-            // textBoxSenders
-            // 
-            textBoxSenders.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            textBoxSenders.BackColor = System.Drawing.Color.LightGray;
-            textBoxSenders.Font = new System.Drawing.Font("Consolas", 9F);
-            textBoxSenders.Location = new System.Drawing.Point(65, 171);
-            textBoxSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            textBoxSenders.Name = "textBoxSenders";
-            textBoxSenders.Size = new System.Drawing.Size(172, 22);
-            textBoxSenders.TabIndex = 3;
-            textBoxSenders.Visible = false;
-            textBoxSenders.KeyDown += textBoxSenders_KeyDown;
+            textBoxSendersLiteralStringValue.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxSendersLiteralStringValue.BackColor = System.Drawing.Color.LightGray;
+            textBoxSendersLiteralStringValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxSendersLiteralStringValue.Location = new System.Drawing.Point(65, 171);
+            textBoxSendersLiteralStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxSendersLiteralStringValue.Name = "textBoxSendersLiteralStringValue";
+            textBoxSendersLiteralStringValue.Size = new System.Drawing.Size(261, 22);
+            textBoxSendersLiteralStringValue.TabIndex = 3;
+            textBoxSendersLiteralStringValue.Visible = false;
+            textBoxSendersLiteralStringValue.TextChanged += textBoxSendersLiteralStringValue_TextChanged;
+            textBoxSendersLiteralStringValue.KeyPress += textBoxSendersLiteralStringValue_KeyPress;
             // 
             // comboBoxSenders
             // 
@@ -287,10 +230,39 @@
             comboBoxSenders.Location = new System.Drawing.Point(65, 171);
             comboBoxSenders.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxSenders.Name = "comboBoxSenders";
-            comboBoxSenders.Size = new System.Drawing.Size(258, 22);
+            comboBoxSenders.Size = new System.Drawing.Size(261, 22);
             comboBoxSenders.TabIndex = 3;
             comboBoxSenders.DropDown += comboBoxSenders_DropDown;
             comboBoxSenders.SelectedIndexChanged += comboBoxSenders_SelectedIndexChanged;
+            // 
+            // textBoxSendersLiteralNumberValue
+            // 
+            textBoxSendersLiteralNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            textBoxSendersLiteralNumberValue.BackColor = System.Drawing.Color.LightGray;
+            textBoxSendersLiteralNumberValue.Font = new System.Drawing.Font("Consolas", 9F);
+            textBoxSendersLiteralNumberValue.Location = new System.Drawing.Point(65, 171);
+            textBoxSendersLiteralNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            textBoxSendersLiteralNumberValue.Name = "textBoxSendersLiteralNumberValue";
+            textBoxSendersLiteralNumberValue.Size = new System.Drawing.Size(261, 22);
+            textBoxSendersLiteralNumberValue.TabIndex = 17;
+            textBoxSendersLiteralNumberValue.Visible = false;
+            textBoxSendersLiteralNumberValue.TextChanged += textBoxSendersLiteralNumberValue_TextChanged;
+            textBoxSendersLiteralNumberValue.KeyPress += textBoxSendersLiteralNumberValue_KeyPress;
+            // 
+            // comboBoxMessage
+            // 
+            comboBoxMessage.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxMessage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxMessage.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxMessage.FormattingEnabled = true;
+            comboBoxMessage.Location = new System.Drawing.Point(7, 92);
+            comboBoxMessage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxMessage.Name = "comboBoxMessage";
+            comboBoxMessage.Size = new System.Drawing.Size(319, 22);
+            comboBoxMessage.TabIndex = 1;
+            comboBoxMessage.SelectedIndexChanged += comboBoxMessage_SelectedIndexChanged;
+            comboBoxMessage.TextUpdate += comboBoxMessage_TextUpdate;
+            comboBoxMessage.KeyPress += comboBoxMessage_KeyPress;
             // 
             // splitContainerInner
             // 
@@ -380,7 +352,7 @@
             groupBoxActions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxActions.Name = "groupBoxActions";
             groupBoxActions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxActions.Size = new System.Drawing.Size(333, 281);
+            groupBoxActions.Size = new System.Drawing.Size(333, 283);
             groupBoxActions.TabIndex = 10;
             groupBoxActions.TabStop = false;
             groupBoxActions.Text = "Operations :: \"Do\"";
@@ -418,7 +390,7 @@
             listBoxOperations.Location = new System.Drawing.Point(38, 18);
             listBoxOperations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxOperations.Name = "listBoxOperations";
-            listBoxOperations.Size = new System.Drawing.Size(291, 236);
+            listBoxOperations.Size = new System.Drawing.Size(291, 262);
             listBoxOperations.TabIndex = 13;
             listBoxOperations.SelectedIndexChanged += listBoxOperations_SelectedIndexChanged;
             listBoxOperations.DoubleClick += listBoxOperations_DoubleClick;
@@ -439,7 +411,6 @@
             groupBoxDescription.PerformLayout();
             groupBoxTrigger.ResumeLayout(false);
             groupBoxTrigger.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownSenders).EndInit();
             splitContainerInner.Panel1.ResumeLayout(false);
             splitContainerInner.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerInner).EndInit();
@@ -470,11 +441,9 @@
         private System.Windows.Forms.Button buttonDownPrecondition;
         private System.Windows.Forms.Button buttonUpOperation;
         private System.Windows.Forms.Button buttonDownOperation;
-        internal System.Windows.Forms.NumericUpDown numericUpDownSenders;
-        internal System.Windows.Forms.TextBox textBoxSenders;
+        internal System.Windows.Forms.TextBox textBoxSendersLiteralStringValue;
         internal System.Windows.Forms.ComboBox comboBoxSenders;
         internal System.Windows.Forms.Label labelSenderValue;
-        private System.Windows.Forms.Button buttonApplySender;
-        private System.Windows.Forms.Button buttonApplyMessage;
+        internal System.Windows.Forms.TextBox textBoxSendersLiteralNumberValue;
     }
 }

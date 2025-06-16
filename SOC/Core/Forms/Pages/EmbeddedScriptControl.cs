@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static SOC.Classes.Lua.Choice;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SOC.UI
 {
@@ -124,6 +125,7 @@ namespace SOC.UI
             if (selectedCode == MISSION_CODE)
             {
                 comboBoxMessage.DropDownStyle = ComboBoxStyle.DropDown;
+                comboBoxSenderOptions.SelectedIndex = 0;
                 comboBoxSenderOptions.Enabled = false;
 
                 if (match != null)
@@ -132,7 +134,7 @@ namespace SOC.UI
                 }
                 else if (msgSenderNode.Message is LuaString text)
                 {
-                    comboBoxMessage.Text = text.TokenValue;
+                    comboBoxMessage.Text = text.Value;
                     MoveSelectedScript(Create.Nil());
                 }
             }
@@ -150,18 +152,22 @@ namespace SOC.UI
                     comboBoxMessage.SelectedItem = (LuaValue)comboBoxMessage.Items[0];
                 }
             }
-
-            buttonApplyMessage.Enabled = false;
-        }
-
-        private void buttonApplyMessage_Click(object sender, EventArgs e)
-        {
-            MoveSelectedScript();
         }
 
         private void comboBoxMessage_TextUpdate(object sender, EventArgs e)
         {
-            buttonApplyMessage.Enabled = true;
+            MoveSelectedScript();
+            comboBoxMessage.Select(comboBoxMessage.Text.Length, 0);
+        }
+
+        private void comboBoxMessage_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            /*char ch = e.KeyChar;
+
+            if (ch == '\"')
+            {
+                e.Handled = true;
+            }*/
         }
 
         private void comboBoxMessage_SelectedIndexChanged(object sender, EventArgs e)
@@ -177,15 +183,15 @@ namespace SOC.UI
             switch (selectedSenderChoosableSet.Key)
             {
                 case ScriptControl.NUMBER_LITERAL_SET:
-                    showCorrespondingSenderControl(numericUpDownSenders);
-                    if (msgSenderNode.Sender is LuaNumber number) numericUpDownSenders.Value = (decimal)number.Value;
-                    MoveSelectedScript(Create.Number((double)numericUpDownSenders.Value));
+                    showCorrespondingSenderControl(textBoxSendersLiteralNumberValue);
+                    if (msgSenderNode.Sender is LuaNumber number) textBoxSendersLiteralNumberValue.Text = number.TokenValue;
+                    MoveSelectedScript(Create.Number(textBoxSendersLiteralNumberValue.Text));
                     break;
 
                 case ScriptControl.STRING_LITERAL_SET:
-                    showCorrespondingSenderControl(textBoxSenders);
-                    if (msgSenderNode.Sender is LuaString text) textBoxSenders.Text = text.Value;
-                    MoveSelectedScript(Create.String(textBoxSenders.Text));
+                    showCorrespondingSenderControl(textBoxSendersLiteralStringValue);
+                    if (msgSenderNode.Sender is LuaString text) textBoxSendersLiteralStringValue.Text = text.Value;
+                    MoveSelectedScript(Create.String(textBoxSendersLiteralStringValue.Text));
                     break;
 
                 case StrCode32.NIL_LITERAL_KEY:
@@ -203,7 +209,7 @@ namespace SOC.UI
 
         private void showCorrespondingSenderControl(Control choiceControl, bool enable = true)
         {
-            Control[] controlSet = { comboBoxSenders, textBoxSenders, numericUpDownSenders };
+            Control[] controlSet = { comboBoxSenders, textBoxSendersLiteralStringValue, textBoxSendersLiteralNumberValue };
 
             foreach (var control in controlSet)
             {
@@ -216,7 +222,6 @@ namespace SOC.UI
             }
 
             labelSenderValue.Visible = choiceControl != null;
-            buttonApplySender.Visible = choiceControl == textBoxSenders || choiceControl == numericUpDownSenders;
         }
 
         private void MoveSelectedScript(LuaValue Sender = null)
@@ -232,7 +237,7 @@ namespace SOC.UI
             }
             else
             {
-                selectedMsg = Create.String(comboBoxMessage.Text.Replace("\"", ""));
+                selectedMsg = Create.String(comboBoxMessage.Text);
             }
             ChoiceKeyValues selectedSenderChoosableSet = (ChoiceKeyValues)comboBoxSenderOptions.SelectedItem;
 
@@ -241,11 +246,16 @@ namespace SOC.UI
                 switch (selectedSenderChoosableSet.Key)
                 {
                     case ScriptControl.NUMBER_LITERAL_SET:
-                        Sender = Create.Number((double)numericUpDownSenders.Value);
+                        if (string.IsNullOrEmpty(textBoxSendersLiteralNumberValue.Text))
+                        {
+                            textBoxSendersLiteralNumberValue.Text = "0";
+                            textBoxSendersLiteralNumberValue.SelectAll();
+                        }
+                        Sender = Create.Number(textBoxSendersLiteralNumberValue.Text);
                         break;
 
                     case ScriptControl.STRING_LITERAL_SET:
-                        Sender = Create.String(textBoxSenders.Text);
+                        Sender = Create.String(textBoxSendersLiteralStringValue.Text);
                         break;
 
                     case StrCode32.NIL_LITERAL_KEY:
@@ -258,13 +268,14 @@ namespace SOC.UI
                 }
             }
 
-            var strCodeEvent = ScriptNode.getEvent();
-            if (!strCodeEvent.Message.Matches(selectedMsg) || !strCodeEvent.SenderValue.Matches(Sender) || !strCodeEvent.CodeKey.Equals(selectedCode) || !strCodeEvent.SenderKey.Equals(selectedSenderChoosableSet.Key))
+            var updatedCodeEvent = new StrCode32(selectedCode, selectedMsg, selectedSenderChoosableSet.Key, Sender);
+            if (!ScriptNode.getEvent().Equals(updatedCodeEvent))
             {
-                var movedNode = ScriptNode.GetStrCode32TableNode().MoveScript(ScriptNode, selectedCode, selectedMsg, selectedSenderChoosableSet.Key, Sender);
-                ParentControl.treeViewScripts.SelectedNode = movedNode;
-                ParentControl.RedrawScriptDependents();
-                movedNode.ExpandAll();
+                ParentControl._isUpdatingControls = true;
+                ScriptNode.GetStrCode32TableNode().MoveScriptNode(ScriptNode, updatedCodeEvent);
+                ParentControl._isUpdatingControls = false;
+
+                ParentControl.treeViewScripts.SelectedNode = ScriptNode;
             }
         }
 
@@ -292,20 +303,34 @@ namespace SOC.UI
             MoveSelectedScript();
         }
 
-        private void buttonApplySender_Click(object sender, EventArgs e)
+        private void textBoxSendersLiteralStringValue_TextChanged(object sender, EventArgs e)
         {
             MoveSelectedScript();
         }
 
-        private void numericUpDownSenders_KeyDown(object sender, KeyEventArgs e)
+        private void textBoxSendersLiteralNumberValue_TextChanged(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                MoveSelectedScript();
+            MoveSelectedScript();
         }
-        private void textBoxSenders_KeyDown(object sender, KeyEventArgs e)
+
+        private void textBoxSendersLiteralStringValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                MoveSelectedScript();
+            /*char ch = e.KeyChar;
+
+            if (ch == '\"')
+            {
+                e.Handled = true;
+            }*/
+        }
+
+        private void textBoxSendersLiteralNumberValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+
+            if (!char.IsControl(ch) && !char.IsDigit(ch))
+            {
+                e.Handled = true;
+            }
         }
 
         public void PopulateScriptalControls()

@@ -22,7 +22,7 @@ namespace SOC.UI
 
         public static ChoiceKeyValuesList StrCode32Classes = new ChoiceKeyValuesList();
 
-        private bool _isUpdatingControls = false;
+        internal bool _isUpdatingControls = false;
 
         public static readonly Font REGULAR = new Font("Consolas", 8.5F, FontStyle.Regular);
         public static readonly Font BOLD = new Font("Consolas", 8.5F, FontStyle.Bold);
@@ -212,7 +212,8 @@ namespace SOC.UI
         {
             foreach (var script in scripts)
             {
-                ScriptTablesRootNode.QStep_Main.Add(script);
+                var scriptNode = ScriptTablesRootNode.QStep_Main.Add(script);
+                ScriptTablesRootNode.QStep_Main.Expand(scriptNode.GetCodeNode());
             }
         }
 
