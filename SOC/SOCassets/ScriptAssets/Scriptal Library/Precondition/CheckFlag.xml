@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Check Flag</Name>
+  <Category>FLAGS</Category>
+  <Description>Checks whether a string identifier has been flagged or not.</Description>
+  <EventFunctionTemplate>local tempFlagCheck = qvars.CommonFlagTable[|[1|STRING,NUMBER]|]
+if |[2|BOOLEAN]| then
+  return tempFlagCheck == true
+else
+  return tempFlagCheck == nil
+end</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Flag Name</Name>
+	  <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
+	  <Key>Variable</Key>
+	</Choice>
+	<Choice>
+	  <Name>Is Set</Name>
+	  <Description>Set to true to check if the identifier has already been flagged. Set to false to check if the flag identifier has not been set yet.</Description>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <Key>Boolean Literal</Key>
+	  <Value xsi:type="LuaBoolean" Value="false" />
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="CommonFlagTable" />
+	  <Value xsi:type="LuaTable" />
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

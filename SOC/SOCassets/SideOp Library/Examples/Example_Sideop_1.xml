@@ -293,15 +293,15 @@
         </Hostage>
         <Hostage ID="1">
           <isTarget>false</isTarget>
-          <isUntied>true</isUntied>
+          <isUntied>false</isUntied>
           <isInjured>false</isInjured>
           <skill>Grappler</skill>
           <staffType>COMBAT</staffType>
-          <scared>ALWAYS</scared>
+          <scared>NORMAL</scared>
           <language>kikongo</language>
           <position>
-            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
-            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
+            <coords xCoord="-485.987" yCoord="-21.798" zCoord="1284.375" />
+            <rotation xRot="0" yRot="-0.93704" zRot="0" wRot="0.34923" />
           </position>
         </Hostage>
       </hostages>
@@ -375,73 +375,25 @@
         <GeoTrap ID="0">
           <geoTrap>GeoTrap_0</geoTrap>
           <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
-          <type>box</type>
-          <xScale>3</xScale>
-          <zScale>3</zScale>
-          <yScale>3</yScale>
+          <type>sphere</type>
+          <xScale>100</xScale>
+          <zScale>100</zScale>
+          <yScale>100</yScale>
           <position>
-            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
-            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
+            <coords xCoord="-447.686" yCoord="-21.798" zCoord="1324.558" />
+            <rotation xRot="0" yRot="-0.93719" zRot="0" wRot="0.34882" />
           </position>
         </GeoTrap>
         <GeoTrap ID="1">
           <geoTrap>GeoTrap_0</geoTrap>
           <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
-          <type>box</type>
-          <xScale>3</xScale>
-          <zScale>3</zScale>
-          <yScale>3</yScale>
+          <type>sphere</type>
+          <xScale>40</xScale>
+          <zScale>40</zScale>
+          <yScale>40</yScale>
           <position>
-            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
-            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
-          </position>
-        </GeoTrap>
-        <GeoTrap ID="2">
-          <geoTrap>GeoTrap_2</geoTrap>
-          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
-          <type>box</type>
-          <xScale>3</xScale>
-          <zScale>3</zScale>
-          <yScale>3</yScale>
-          <position>
-            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
-            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
-          </position>
-        </GeoTrap>
-        <GeoTrap ID="3">
-          <geoTrap>GeoTrap_3</geoTrap>
-          <isPlayerOnlyTrigger>false</isPlayerOnlyTrigger>
-          <type>box</type>
-          <xScale>3</xScale>
-          <zScale>3</zScale>
-          <yScale>3</yScale>
-          <position>
-            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
-            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
-          </position>
-        </GeoTrap>
-        <GeoTrap ID="4">
-          <geoTrap>GeoTrap_0</geoTrap>
-          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
-          <type>box</type>
-          <xScale>3</xScale>
-          <zScale>3</zScale>
-          <yScale>3</yScale>
-          <position>
-            <coords xCoord="-691.071" yCoord="-9.541" zCoord="1065.789" />
-            <rotation xRot="0" yRot="0.79732" zRot="0" wRot="0.60356" />
-          </position>
-        </GeoTrap>
-        <GeoTrap ID="5">
-          <geoTrap>GeoTrap_0</geoTrap>
-          <isPlayerOnlyTrigger>true</isPlayerOnlyTrigger>
-          <type>box</type>
-          <xScale>3</xScale>
-          <zScale>3</zScale>
-          <yScale>3</yScale>
-          <position>
-            <coords xCoord="-677.285" yCoord="-9.582" zCoord="967.234" />
-            <rotation xRot="0" yRot="-0.95541" zRot="0" wRot="0.29529" />
+            <coords xCoord="-510.177" yCoord="-4.350" zCoord="1232.196" />
+            <rotation xRot="0" yRot="-0.98763" zRot="0" wRot="0.15678" />
           </position>
         </GeoTrap>
       </trapShapes>
@@ -451,39 +403,527 @@
     <QStep_Main>
       <UserScript>
         <CodeEvent>
-          <CodeKey>UI</CodeKey>
-          <Message xsi:type="LuaString" Value="QuestAreaAnnounceLog" />
-          <SenderKey>ANY / ALL</SenderKey>
-          <SenderValue xsi:type="LuaNil" />
+          <CodeKey>Trap</CodeKey>
+          <Message xsi:type="LuaString" Value="Enter" />
+          <SenderKey>GeoTrap Names</SenderKey>
+          <SenderValue xsi:type="LuaString" Value="GeoTrap_0" />
         </CodeEvent>
-        <Identifier Value="NewEventScript" />
+        <Identifier Value="Hostage_0_Init_Route" />
         <Description />
         <Preconditions>
           <Precondition>
-            <Name>True Only Once</Name>
-            <Category>MANIPULATIVES</Category>
-            <Description>Returns true if the boolean variable is true, and sets the variable to false.
-The variable would need to be reset to true in order to fulfill this precondition again.</Description>
-            <EventFunctionTemplate>if |[1|BOOLEAN]| then 
-  |[1|BOOLEAN]| = false 
-  return true 
-end 
+            <Name>True Only Once Flag</Name>
+            <Category>FLAGS</Category>
+            <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+            <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
 return false</EventFunctionTemplate>
             <EmbeddedChoosableValueSets />
             <Choices>
               <Choice>
-                <Name>Boolean Variable</Name>
-                <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
+                <Name>Flag Name</Name>
+                <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
                 <ChoosableValueSetsFilter />
                 <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
+                <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
                 <Key>Variable</Key>
                 <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
                   <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="TimerLoopInit" />
+                    <Key xsi:type="LuaString" Value="Player_Enter_Forest" />
                   </TableKeyPath>
-                  <EvaluatesTo>BOOLEAN</EvaluatesTo>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="CommonFlagTable" />
+                <Value xsi:type="LuaTable">
+                  <Entries />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Set Route</Name>
+            <Category>ROUTES AND POSITIONS</Category>
+            <Description>Immediately sets the patrol route of a specific Game Object.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners.
+Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
+UAVs and Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+            <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The soldier/helicopter/UAV/Prisoner (their name or GameObjectId) to be re-routed</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>Helicopter Names (Targets)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Prisoner Names</Key>
+                <Value xsi:type="LuaString" Value="Hostage_1" />
+              </Choice>
+              <Choice>
+                <Name>New Route</Name>
+                <Description>The name of the route that the target Game Object will begin to patrol.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Route Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Route Names</Key>
+                <Value xsi:type="LuaString" Value="rt_outland_d_0000_no_tower_sub" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="gameObjectIdVal" />
+                    <Parameter Value="routeName" />
+                  </Parameters>
+                  <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+          <Operation>
+            <Name>Start Hidden Timer</Name>
+            <Category>TIMERS</Category>
+            <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+This can be used for chaining events together on a delay, or creating a delayed event loop.
+The name of the timer is the sender of the event.</Description>
+            <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Sender</Name>
+                <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="Timer_End_Route" />
+              </Choice>
+              <Choice>
+                <Name>Duration (Seconds)</Name>
+                <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="120" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Marker</CodeKey>
+          <Message xsi:type="LuaString" Value="ChangeToEnable" />
+          <SenderKey>Prisoner Names</SenderKey>
+          <SenderValue xsi:type="LuaString" Value="Hostage_1" />
+        </CodeEvent>
+        <Identifier Value="Hostage_1_Marked_Radio" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Always True</Name>
+            <Category>ALL</Category>
+            <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+            <EventFunctionTemplate>return true</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices />
+            <EmbeddedCommonDefinitions />
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Play Generic Radio Call</Name>
+            <Category>SOUND EFFECTS</Category>
+            <Description>Immediately plays a radio call from a radio group ID.
+Notes on english dialogue for the group ids can be found here:
+https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
+            <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets>
+              <KeyValuesSet Key="Radio Calls">
+                <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2170" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="APrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerMightKnowTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0320" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                  <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="FindTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EasierToSpotTargetFromHighUp">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0410" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInThatArea">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0190" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EliminateTargetDontGetSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheEnemyDontLetThemSeeYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0770" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="CompletedWithoutSpottedPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0360" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ContinueOutOfAreaToComplete">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2640" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ObjectiveCompleteExfilHotzone">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2635" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GreatWorkBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3590" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyHoldOnWhatsGottenIntoYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1150" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHimOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4260" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHerOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4270" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TreadCarefullyBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0745" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EyesOpenBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0740" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ShhListen">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2030" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheySpottedYouGetAwayNow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0800" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsThis">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0710" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsAnEnemyUAV">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EnemyMustvePlantedMineWellSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2130" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WaitDidTheySetATrap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1120" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ForestWillProvideCover">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2000" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OneOfOurStaffCapturedForSideop">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyBossUseMissleLauncher">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg1430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BossDoYouHaveSniperRifle">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1280" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AvoidDirectApproach">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1560" />
+                </Value>
+              </KeyValuesSet>
+            </EmbeddedChoosableValueSets>
+            <Choices>
+              <Choice>
+                <Name>Radio Preset</Name>
+                <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Radio Calls</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>false</AllowUserVariable>
+                <Key>Radio Calls</Key>
+                <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Marker</CodeKey>
+          <Message xsi:type="LuaString" Value="ChangeToEnable" />
+          <SenderKey>Prisoner Names</SenderKey>
+          <SenderValue xsi:type="LuaString" Value="Hostage_0" />
+        </CodeEvent>
+        <Identifier Value="Hostage_0_Marker_Flag" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Always True</Name>
+            <Category>ALL</Category>
+            <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+            <EventFunctionTemplate>return true</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices />
+            <EmbeddedCommonDefinitions />
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Set Flag</Name>
+            <Category>FLAGS</Category>
+            <Description>Flags an identifier. If the identifier is already flagged, this does nothing.</Description>
+            <EventFunctionTemplate>qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Flag Name</Name>
+                <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Hostage_0_Marked" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="CommonFlagTable" />
+                <Value xsi:type="LuaTable">
+                  <Entries />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>GameObject</CodeKey>
+          <Message xsi:type="LuaString" Value="Fulton" />
+          <SenderKey>ANY / ALL</SenderKey>
+          <SenderValue xsi:type="LuaNil" />
+        </CodeEvent>
+        <Identifier Value="Hostage_1_Start_Knowledge_Timer" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Check GameObjectId</Name>
+            <Category>CHECKS</Category>
+            <Description>Checks to see if a number matches a GameObjectId. 
+Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+            <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The Game Object (their string name or number GameObjectId) to be compared against.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Active Item Names (Targets)</Key>
+                  <Key>Active Item Names</Key>
+                  <Key>Animal Cluster Names (Targets)</Key>
+                  <Key>Animal Cluster Names</Key>
+                  <Key>Camera Names (Targets)</Key>
+                  <Key>Camera Names</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>GeoTrap Names</Key>
+                  <Key>Helicopter Names (Target)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                  <Key>Dormant Item Names (Targets)</Key>
+                  <Key>Dormant Item Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Heavy Vehicle Names (Targets)</Key>
+                  <Key>Heavy Vehicle Names</Key>
+                  <Key>Walker Gear Names (Targets)</Key>
+                  <Key>Walker Gear Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Prisoner Names</Key>
+                <Value xsi:type="LuaString" Value="Hostage_1" />
+              </Choice>
+              <Choice>
+                <Name>Number ID</Name>
+                <Description>The ID to compare to the GameObjectId</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Event Default Arguments</Key>
+                <Value xsi:type="LuaVariable" Value="arg1">
+                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
                 </Value>
               </Choice>
             </Choices>
@@ -513,7 +953,7 @@ You can catch that event By creating a new script with a "Timer" StrCode, "Finis
                 <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
                 <Key>String Literal</Key>
-                <Value xsi:type="LuaString" Value="TimerSender" />
+                <Value xsi:type="LuaString" Value="Timer_Knowledge" />
               </Choice>
               <Choice>
                 <Name>Duration (Seconds)</Name>
@@ -523,7 +963,342 @@ You can catch that event By creating a new script with a "Timer" StrCode, "Finis
                 <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
                 <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="8" />
+                <Value xsi:type="LuaNumber" Value="7" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>GameObject</CodeKey>
+          <Message xsi:type="LuaString" Value="Carried" />
+          <SenderKey>ANY / ALL</SenderKey>
+          <SenderValue xsi:type="LuaNil" />
+        </CodeEvent>
+        <Identifier Value="Hostage_0_Call_Heli" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Check Game Object Id</Name>
+            <Category>GAME OBJECTS</Category>
+            <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
+This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. 
+- For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
+- Check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+            <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The Game Object (their string name or number GameObjectId) to be compared against.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Active Item Names (Targets)</Key>
+                  <Key>Active Item Names</Key>
+                  <Key>Animal Cluster Names (Targets)</Key>
+                  <Key>Animal Cluster Names</Key>
+                  <Key>Camera Names (Targets)</Key>
+                  <Key>Camera Names</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>GeoTrap Names</Key>
+                  <Key>Helicopter Names (Target)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                  <Key>Dormant Item Names (Targets)</Key>
+                  <Key>Dormant Item Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Heavy Vehicle Names (Targets)</Key>
+                  <Key>Heavy Vehicle Names</Key>
+                  <Key>Walker Gear Names (Targets)</Key>
+                  <Key>Walker Gear Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Prisoner Names (Targets)</Key>
+                <Value xsi:type="LuaString" Value="Hostage_0" />
+              </Choice>
+              <Choice>
+                <Name>Game Object ID</Name>
+                <Description>The ID to compare against the game object. The precondition is fulfilled if they match.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Event Default Arguments</Key>
+                <Value xsi:type="LuaVariable" Value="arg1">
+                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Precondition>
+          <Precondition>
+            <Name>True Only Once Flag</Name>
+            <Category>FLAGS</Category>
+            <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+            <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
+return false</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Flag Name</Name>
+                <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Hostage_0_Carried" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="CommonFlagTable" />
+                <Value xsi:type="LuaTable">
+                  <Entries />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Play Generic Radio Call</Name>
+            <Category>SOUND EFFECTS</Category>
+            <Description>Immediately plays a radio call from a radio group ID.
+Notes on english dialogue for the group ids can be found here:
+https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
+            <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets>
+              <KeyValuesSet Key="Radio Calls">
+                <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2170" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="KazSendsHeliForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1750" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="APrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerMightKnowTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0320" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                  <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="FindTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EasierToSpotTargetFromHighUp">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0410" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInThatArea">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0190" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EliminateTargetDontGetSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheEnemyDontLetThemSeeYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0770" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="CompletedWithoutSpottedPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0360" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ContinueOutOfAreaToComplete">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2640" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ObjectiveCompleteExfilHotzone">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2635" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GreatWorkBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3590" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyHoldOnWhatsGottenIntoYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1150" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHimOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4260" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHerOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4270" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TreadCarefullyBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0745" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EyesOpenBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0740" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ShhListen">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2030" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheySpottedYouGetAwayNow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0800" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsThis">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0710" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsAnEnemyUAV">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EnemyMustvePlantedMineWellSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2130" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WaitDidTheySetATrap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1120" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ForestWillProvideCover">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2000" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OneOfOurStaffCapturedForSideop">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyBossUseMissleLauncher">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg1430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BossDoYouHaveSniperRifle">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1280" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AvoidDirectApproach">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1560" />
+                </Value>
+              </KeyValuesSet>
+            </EmbeddedChoosableValueSets>
+            <Choices>
+              <Choice>
+                <Name>Radio Preset</Name>
+                <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Radio Calls</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>false</AllowUserVariable>
+                <Key>Radio Calls</Key>
+                <Value xsi:type="LuaVariable" Value="KazSendsHeliForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1750" />
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Call Heli To LZ Near Player</Name>
+            <Category>GAMEPLAY EFFECTS</Category>
+            <Description>Calls a support helicopter to an LZ to wait for the player. The Helicopter will be routed to the LZ closest to the current position of the player.</Description>
+            <EventFunctionTemplate>local tempPlayerPos = TppPlayer.GetPosition()
+GameObject.SendCommand( GameObject.GetGameObjectId( "TppHeli2", "SupportHeli" ), { id = "CallToLandingZoneAtPosition", position = Vector3(tempPlayerPos[1], tempPlayerPos[2], tempPlayerPos[3]) } )
+GameObject.SendCommand( GameObject.GetGameObjectId( "TppHeli2", "SupportHeli" ), { id = "SetTakeOffWaitTime", time = |[2|NUMBER]| } )</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Wait For Player Duration</Name>
+                <Description>Once the helicopter arrives, wait at the LZ before deciding that the player is a no-show and leaving (in minutes). Set to 0 to wait forever.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="0" />
               </Choice>
             </Choices>
             <EmbeddedCommonDefinitions />
@@ -535,175 +1310,45 @@ You can catch that event By creating a new script with a "Timer" StrCode, "Finis
           <CodeKey>Timer</CodeKey>
           <Message xsi:type="LuaString" Value="Finish" />
           <SenderKey>String Literal</SenderKey>
-          <SenderValue xsi:type="LuaString" Value="TimerSender" />
+          <SenderValue xsi:type="LuaString" Value="Timer_Knowledge" />
         </CodeEvent>
-        <Identifier Value="NewEventScript_1" />
+        <Identifier Value="Hostage_1_Give_Knowledge" />
         <Description />
         <Preconditions>
           <Precondition>
-            <Name>Compare Number Values</Name>
-            <Category>COMPARISONS</Category>
-            <Description>Compares two numbers. 
-- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
-- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
-- 'qvars.LessThan' returns true when Num1 is less than Num2.
-- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
-- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
-- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
-            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Comparison Functions">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="NotEquals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
+            <Name>True Only Once Flag</Name>
+            <Category>FLAGS</Category>
+            <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+            <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
+return false</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
             <Choices>
               <Choice>
-                <Name>Comparison</Name>
-                <Description>The comparison function.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Comparison Functions</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>false</AllowUserVariable>
-                <Key>Comparison Functions</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num1</Name>
-                <Description>The number on the left-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
+                <Name>Flag Name</Name>
+                <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
+                <ChoosableValueSetsFilter />
                 <AllowUIEdit>true</AllowUIEdit>
                 <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
                 <Key>Variable</Key>
                 <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
                   <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="RadioIndex" />
+                    <Key xsi:type="LuaString" Value="Hostage_0_Marked" />
                   </TableKeyPath>
                   <EvaluatesTo>NUMBER</EvaluatesTo>
                 </Value>
               </Choice>
-              <Choice>
-                <Name>Num2</Name>
-                <Description>The number on the right-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="50" />
-              </Choice>
             </Choices>
             <EmbeddedCommonDefinitions>
               <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="Equals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue == thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="NotEquals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue ~= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt;= thatValue</Template>
-                  <PopulationValues />
+                <Key xsi:type="LuaString" Value="CommonFlagTable" />
+                <Value xsi:type="LuaTable">
+                  <Entries />
                 </Value>
               </qvarsDefinition>
             </EmbeddedCommonDefinitions>
@@ -711,525 +1356,747 @@ You can catch that event By creating a new script with a "Timer" StrCode, "Finis
         </Preconditions>
         <Operations>
           <Operation>
-            <Name>Print Notification</Name>
+            <Name>Mark As Target</Name>
             <Category>USER INTERFACE</Category>
-            <Description>Prints up to 5 strings and or numbers as an in-game notification.</Description>
-            <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. |[2|STRING,NUMBER]| .. |[3|STRING,NUMBER]| .. |[4|STRING,NUMBER]| .. |[5|STRING,NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Example Strings">
-                <Value xsi:type="LuaString" Value="Foo" />
-                <Value xsi:type="LuaString" Value="Bar" />
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
-            <Choices>
-              <Choice>
-                <Name>Value 1</Name>
-                <Description>1st Text that will print to notifications</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Example Strings</Key>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="RadioIndex" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NUMBER</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Value 2</Name>
-                <Description>2nd Text that will print to notifications</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Example Strings</Key>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>String Literal</Key>
-                <Value xsi:type="LuaString" Value="" />
-              </Choice>
-              <Choice>
-                <Name>Value 3</Name>
-                <Description>3rd Text that will print to notifications</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Example Strings</Key>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>String Literal</Key>
-                <Value xsi:type="LuaString" Value="" />
-              </Choice>
-              <Choice>
-                <Name>Value 4</Name>
-                <Description>4th Text that will print to notifications</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Example Strings</Key>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>String Literal</Key>
-                <Value xsi:type="LuaString" Value="" />
-              </Choice>
-              <Choice>
-                <Name>Value 5</Name>
-                <Description>5th Text that will print to notifications</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Example Strings</Key>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>String Literal</Key>
-                <Value xsi:type="LuaString" Value="" />
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions />
-          </Operation>
-          <Operation>
-            <Name>Update Table Value</Name>
-            <Category>VARIABLE MANIPULATIONS</Category>
-            <Description>Sets a value in a table at the specified key/index</Description>
-            <EventFunctionTemplate>|[1|TABLE]|[|[2|STRING,NUMBER]|] = |[3|STRING,NUMBER,BOOLEAN]|</EventFunctionTemplate>
+            <Description>Displays a Quest Target marker on the Game Object. 
+Accepts both GameObjectIds and GameObject Names.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation is purely visual and does not handle actual target logic.</Description>
+            <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+TppMarker.EnableQuestTargetMarker(tempGameObjectIdVal)
+TppSoundDaemon.PostEvent"sfx_s_enemytag_quest_tgt"</EventFunctionTemplate>
             <EmbeddedChoosableValueSets />
             <Choices>
               <Choice>
-                <Name>Table</Name>
-                <Description>The table to be modified.</Description>
-                <ChoosableValueSetsFilter />
+                <Name>Game Object</Name>
+                <Description>The soldier, hostage, etc. to be visually marked as the target.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Animal Cluster Names (Targets)</Key>
+                  <Key>Animal Cluster Names</Key>
+                  <Key>Camera Names (Targets)</Key>
+                  <Key>Camera Names</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Heavy Vehicle Names (Targets)</Key>
+                  <Key>Heavy Vehicle Names</Key>
+                  <Key>Walker Gear Names (Targets)</Key>
+                  <Key>Walker Gear Names</Key>
+                </ChoosableValueSetsFilter>
                 <AllowUIEdit>true</AllowUIEdit>
                 <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="RadioTable" />
-                  </TableKeyPath>
-                  <EvaluatesTo>TABLE</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Key</Name>
-                <Description>The key (or index) of the value to be modified.)</Description>
-                <ChoosableValueSetsFilter />
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="RadioIndex" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NUMBER</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Value</Name>
-                <Description>The new value for the key.</Description>
-                <ChoosableValueSetsFilter />
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="CurrentRadioString" />
-                  </TableKeyPath>
-                  <EvaluatesTo>STRING</EvaluatesTo>
-                </Value>
+                <Key>Prisoner Names (Targets)</Key>
+                <Value xsi:type="LuaString" Value="Hostage_0" />
               </Choice>
             </Choices>
             <EmbeddedCommonDefinitions />
           </Operation>
           <Operation>
-            <Name>Play Common Radio Dialogue</Name>
+            <Name>Play Generic Radio Call</Name>
             <Category>SOUND EFFECTS</Category>
-            <Description>Plays a generic radio voiceover from the TppDefine radio library.</Description>
-            <EventFunctionTemplate>TppRadio.PlayCommonRadio(|[1|TABLE_IDENTIFIER]|)</EventFunctionTemplate>
+            <Description>Immediately plays a radio call from a radio group ID.
+Notes on english dialogue for the group ids can be found here:
+https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
+            <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
             <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Common Radio">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="ENEMY_RECOVERED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+              <KeyValuesSet Key="Radio Calls">
+                <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2170" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="HOSTAGE_RECOVERED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="HOSTAGE_DEAD" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="HOSTAGE_DAMAGED_FROM_PC" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="PHASE_DOWN_OUTSIDE_HOTZONE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="OUTSIDE_MISSION_AREA" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="OUTSIDE_HOTZONE_ALERT" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="OUTSIDE_HOTZONE_CHANGE_SNEAK" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="OUTSIDE_HOTZONE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RETURN_HOTZONE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="ABORT_BY_HELI" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RECOMMEND_CURE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="APrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="SUPPRESSOR_BROKEN" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="CALL_HELI_FIRST_TIME" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="CALL_HELI_FIRST_TIME_HOT_ZONE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="CALL_HELI_SECOND_TIME" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="PrisonerMightKnowTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0320" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RECOVERED_RUSSIAN_INTERPRETER" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_S" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_A" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_B" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_C" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_D" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_E" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="RESULT_RANK_NOT_DEFINED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                  <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="CALL_SUPPROT_BUDDY" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="FindTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="TARGET_MARKED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="EasierToSpotTargetFromHighUp">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0410" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="SEARCH_TARGET_ENABLED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInThatArea">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0190" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="TARGET_RECOVERED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="EliminateTargetDontGetSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0430" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="TARGET_ELIMINATED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="TheEnemyDontLetThemSeeYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0770" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="CANNOT_GET_INTEL_ON_ALERT" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="CompletedWithoutSpottedPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0360" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="CALL_BUDDY_QUIET_WHILE_FORCE_HOSPITALIZE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="UNLOCK_LANDING_ZONE" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="DISCOVERED_BY_SNIPER" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ContinueOutOfAreaToComplete">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2640" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="DISCOVERED_BY_ENEMY_HELI" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="ObjectiveCompleteExfilHotzone">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2635" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="PLAYER_NEAR_ENEMY_HELI" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="GreatWorkBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3590" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="HELI_LOST_CONTROL_END" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="HELI_LOST_CONTROL_END_ENEMY_ATTACK" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="HELI_DAMAGE_FROM_PLAYER" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="DISABLE_TRANSLATE_RUSSIAN" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="HeyHoldOnWhatsGottenIntoYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1150" />
                 </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="DISABLE_TRANSLATE_AFRIKANS" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Value xsi:type="LuaVariable" Value="GetHimOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4260" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHerOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4270" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TreadCarefullyBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0745" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EyesOpenBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0740" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ShhListen">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2030" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheySpottedYouGetAwayNow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0800" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsThis">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0710" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsAnEnemyUAV">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EnemyMustvePlantedMineWellSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2130" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WaitDidTheySetATrap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1120" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ForestWillProvideCover">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2000" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OneOfOurStaffCapturedForSideop">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyBossUseMissleLauncher">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg1430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BossDoYouHaveSniperRifle">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1280" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AvoidDirectApproach">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1560" />
                 </Value>
               </KeyValuesSet>
             </EmbeddedChoosableValueSets>
             <Choices>
               <Choice>
-                <Name>Radio Dialogue</Name>
-                <Description>The TppDefine common radio identifier</Description>
+                <Name>Radio Preset</Name>
+                <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
                 <ChoosableValueSetsFilter>
-                  <Key>Common Radio</Key>
+                  <Key>Radio Calls</Key>
                 </ChoosableValueSetsFilter>
                 <AllowUIEdit>true</AllowUIEdit>
                 <AllowLiteral>false</AllowLiteral>
                 <AllowUserVariable>false</AllowUserVariable>
-                <Key>Common Radio</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="COMMON_RADIO" />
-                    <Key xsi:type="LuaString" Value="ENEMY_RECOVERED" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
+                <Key>Radio Calls</Key>
+                <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
                 </Value>
               </Choice>
             </Choices>
             <EmbeddedCommonDefinitions />
           </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Timer</CodeKey>
+          <Message xsi:type="LuaString" Value="Finish" />
+          <SenderKey>String Literal</SenderKey>
+          <SenderValue xsi:type="LuaString" Value="Timer_End_Route" />
+        </CodeEvent>
+        <Identifier Value="Hostage_1_End_Route" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Always True</Name>
+            <Category>ALL</Category>
+            <Description>Empty Precondition.
+
+- Always returns true (same as having no preconditions at all).
+
+This particular precondition is baked into SOC, but the other precondition templates are saved as xml files in the Scriptal Library folder.
+Open the ScriptAssets folder to view and create custom scriptal templates for the library.</Description>
+            <EventFunctionTemplate>return true</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices />
+            <EmbeddedCommonDefinitions />
+          </Precondition>
+        </Preconditions>
+        <Operations>
           <Operation>
-            <Name>Add To Number Variable</Name>
-            <Category>VARIABLE MANIPULATIONS</Category>
-            <Description>Adds a value to a number-variable. 
-Negative values will subtract from the number-variable.</Description>
-            <EventFunctionTemplate>|[1|NUMBER]| = |[1|NUMBER]| + |[2|NUMBER]|</EventFunctionTemplate>
+            <Name>Set Route</Name>
+            <Category>ROUTES AND POSITIONS</Category>
+            <Description>Immediately sets the patrol route of a specific Game Object.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners.
+Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
+UAVs and Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+            <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
             <EmbeddedChoosableValueSets />
             <Choices>
               <Choice>
-                <Name>Variable</Name>
-                <Description>The custom variable that the value will be added to.</Description>
+                <Name>Game Object</Name>
+                <Description>The soldier/helicopter/UAV/Prisoner (their name or GameObjectId) to be re-routed</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>Helicopter Names (Targets)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Prisoner Names</Key>
+                <Value xsi:type="LuaString" Value="Hostage_1" />
+              </Choice>
+              <Choice>
+                <Name>New Route</Name>
+                <Description>The name of the route that the target Game Object will begin to patrol.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Route Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Route Names</Key>
+                <Value xsi:type="LuaString" Value="" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="gameObjectIdVal" />
+                    <Parameter Value="routeName" />
+                  </Parameters>
+                  <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Player</CodeKey>
+          <Message xsi:type="LuaString" Value="IconFultonShown" />
+          <SenderKey>ANY / ALL</SenderKey>
+          <SenderValue xsi:type="LuaNil" />
+        </CodeEvent>
+        <Identifier Value="Hostage_0_Injured_Radio" />
+        <Description />
+        <Preconditions>
+          <Precondition>
+            <Name>Check GameObjectId</Name>
+            <Category>CHECKS</Category>
+            <Description>Checks to see if a number matches a GameObjectId. 
+Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+            <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The Game Object (their string name or number GameObjectId) to be compared against.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Active Item Names (Targets)</Key>
+                  <Key>Active Item Names</Key>
+                  <Key>Animal Cluster Names (Targets)</Key>
+                  <Key>Animal Cluster Names</Key>
+                  <Key>Camera Names (Targets)</Key>
+                  <Key>Camera Names</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>GeoTrap Names</Key>
+                  <Key>Helicopter Names (Target)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                  <Key>Dormant Item Names (Targets)</Key>
+                  <Key>Dormant Item Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Heavy Vehicle Names (Targets)</Key>
+                  <Key>Heavy Vehicle Names</Key>
+                  <Key>Walker Gear Names (Targets)</Key>
+                  <Key>Walker Gear Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Prisoner Names (Targets)</Key>
+                <Value xsi:type="LuaString" Value="Hostage_0" />
+              </Choice>
+              <Choice>
+                <Name>Number ID</Name>
+                <Description>The ID to compare to the GameObjectId</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Event Default Arguments</Key>
+                <Value xsi:type="LuaVariable" Value="arg2">
+                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Precondition>
+          <Precondition>
+            <Name>True Only Once Flag</Name>
+            <Category>FLAGS</Category>
+            <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+            <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
+return false</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Flag Name</Name>
+                <Description>A flag ID. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
                 <ChoosableValueSetsFilter />
                 <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
+                <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
                 <Key>Variable</Key>
                 <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
                   <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="RadioIndex" />
+                    <Key xsi:type="LuaString" Value="Hostage_0_Injured" />
                   </TableKeyPath>
                   <EvaluatesTo>NUMBER</EvaluatesTo>
                 </Value>
               </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="CommonFlagTable" />
+                <Value xsi:type="LuaTable">
+                  <Entries />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Precondition>
+        </Preconditions>
+        <Operations>
+          <Operation>
+            <Name>Set Sneak Route</Name>
+            <Category>ROUTES AND POSITIONS</Category>
+            <Description>Updates the route that the NPC patrols while out of the caution phase.
+Compatible with soldiers, helicopters and prisoners.
+Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation does not reset prisoners to a walkable state (not force-scared, force-downed, or unlocked). Using the "Set Route" operation instead is recommended for prisoners.</Description>
+            <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+local tempGameObjectCommand = {
+  id = "SetSneakRoute", route = |[2|STRING]|
+}
+GameObject.SendCommand(tempGameObjectIdVal, tempGameObjectCommand)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
               <Choice>
-                <Name>Additional Value</Name>
-                <Description>The number that is added to the variable.</Description>
-                <ChoosableValueSetsFilter />
+                <Name>Game Object</Name>
+                <Description>The soldier/helicopter/prisoner (their name or GameObjectId) to be re-routed</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>Helicopter Names (Targets)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                </ChoosableValueSetsFilter>
                 <AllowUIEdit>true</AllowUIEdit>
                 <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
-                <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="1" />
+                <Key>Enemy Names (Enabled/Customized)</Key>
+                <Value xsi:type="LuaString" Value="sol_outland_0000" />
+              </Choice>
+              <Choice>
+                <Name>Sneak Route</Name>
+                <Description>The name of the route that the NPC will patrol during the sneak phase.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Route Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Route Names</Key>
+                <Value xsi:type="LuaString" Value="rt_outland_d_0000_no_tower_sub" />
               </Choice>
             </Choices>
             <EmbeddedCommonDefinitions />
           </Operation>
           <Operation>
-            <Name>Start Hidden Timer</Name>
-            <Category>TIMERS</Category>
-            <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
-This can be used for chaining events together on a delay, or creating a delayed event loop.
-The name of the timer is the sender of the event.</Description>
-            <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
-  GkEventTimerManager.Stop(|[1|STRING]|)
-end
-GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+            <Name>Set Flag</Name>
+            <Category>FLAGS</Category>
+            <Description>Flags an identifier. If the identifier is already flagged, this does nothing.</Description>
+            <EventFunctionTemplate>qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true</EventFunctionTemplate>
             <EmbeddedChoosableValueSets />
             <Choices>
               <Choice>
-                <Name>Sender</Name>
-                <Description>The name of the timer. 
-When the timer is finished, an event will occur. 
-You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+                <Name>Flag Name</Name>
+                <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
                 <ChoosableValueSetsFilter />
                 <AllowUIEdit>true</AllowUIEdit>
                 <AllowLiteral>true</AllowLiteral>
                 <AllowUserVariable>true</AllowUserVariable>
-                <Key>String Literal</Key>
-                <Value xsi:type="LuaString" Value="TimerSender" />
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Hostage_0_Marked" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
               </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="CommonFlagTable" />
+                <Value xsi:type="LuaTable">
+                  <Entries />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+          <Operation>
+            <Name>Play Generic Radio Call</Name>
+            <Category>SOUND EFFECTS</Category>
+            <Description>Immediately plays a radio call from a radio group ID.
+Notes on english dialogue for the group ids can be found here:
+https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
+            <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets>
+              <KeyValuesSet Key="Radio Calls">
+                <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2170" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="KazSendsHeliForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1750" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="APrisoner">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerMightKnowTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0320" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="PrisonerKnewTargetMarkOnMap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2230" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                  <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="FindTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EasierToSpotTargetFromHighUp">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0410" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TargetSomewhereInThatArea">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_mprg0190" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EliminateTargetDontGetSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg0430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheEnemyDontLetThemSeeYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0770" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="CompletedWithoutSpottedPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0360" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ContinueOutOfAreaToComplete">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2640" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ObjectiveCompleteExfilHotzone">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2635" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GreatWorkBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3590" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyHoldOnWhatsGottenIntoYou">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1150" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHimOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4260" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="GetHerOutOfThere">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4270" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TreadCarefullyBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0745" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EyesOpenBoss">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0740" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ShhListen">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2030" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="TheySpottedYouGetAwayNow">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0800" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WhatsThis">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0710" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ThatsAnEnemyUAV">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4620" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="EnemyMustvePlantedMineWellSpotted">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2130" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="WaitDidTheySetATrap">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1120" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="ForestWillProvideCover">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg2000" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="OneOfOurStaffCapturedForSideop">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_rtrg4040" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="HeyBossUseMissleLauncher">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_oprg1430" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="BossDoYouHaveSniperRifle">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1280" />
+                </Value>
+                <Value xsi:type="LuaVariable" Value="AvoidDirectApproach">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg1560" />
+                </Value>
+              </KeyValuesSet>
+            </EmbeddedChoosableValueSets>
+            <Choices>
               <Choice>
-                <Name>Duration (Seconds)</Name>
-                <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
-                <ChoosableValueSetsFilter />
+                <Name>Radio Preset</Name>
+                <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Radio Calls</Key>
+                </ChoosableValueSetsFilter>
                 <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="8" />
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>false</AllowUserVariable>
+                <Key>Radio Calls</Key>
+                <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                  <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+                </Value>
               </Choice>
             </Choices>
             <EmbeddedCommonDefinitions />
@@ -1239,35 +2106,20 @@ You can catch that event By creating a new script with a "Timer" StrCode, "Finis
     </QStep_Main>
     <Variables>
       <UserVariable Extrude="false">
-        <Key xsi:type="LuaString" Value="TimerLoopInit" />
-        <Value xsi:type="LuaBoolean" Value="true" />
-      </UserVariable>
-      <UserVariable Extrude="false">
-        <Key xsi:type="LuaString" Value="RadioIndex" />
+        <Key xsi:type="LuaString" Value="Player_Enter_Forest" />
         <Value xsi:type="LuaNumber" Value="1" />
       </UserVariable>
       <UserVariable Extrude="false">
-        <Key xsi:type="LuaString" Value="RadioTable" />
-        <Value xsi:type="LuaTable">
-          <Entries>
-            <Entry Extrude="false">
-              <Key xsi:type="LuaNumber" Value="1" />
-              <Value xsi:type="LuaString" Value="f1000_mprg0050" />
-            </Entry>
-            <Entry Extrude="false">
-              <Key xsi:type="LuaNumber" Value="2" />
-              <Value xsi:type="LuaString" Value="f1000_rtrg0010" />
-            </Entry>
-            <Entry Extrude="false">
-              <Key xsi:type="LuaNumber" Value="3" />
-              <Value xsi:type="LuaString" Value="f1000_esrg1610" />
-            </Entry>
-          </Entries>
-        </Value>
+        <Key xsi:type="LuaString" Value="Hostage_0_Injured" />
+        <Value xsi:type="LuaNumber" Value="2" />
       </UserVariable>
       <UserVariable Extrude="false">
-        <Key xsi:type="LuaString" Value="CurrentRadioString" />
-        <Value xsi:type="LuaString" Value="" />
+        <Key xsi:type="LuaString" Value="Hostage_0_Marked" />
+        <Value xsi:type="LuaNumber" Value="3" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="Hostage_0_Carried" />
+        <Value xsi:type="LuaNumber" Value="4" />
       </UserVariable>
     </Variables>
   </ScriptDetails>

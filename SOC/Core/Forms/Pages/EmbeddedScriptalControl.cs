@@ -31,7 +31,6 @@ namespace SOC.UI
         internal UserControl Menu(ScriptalNode scriptalNode)
         {
             ScriptalNode = scriptalNode;
-            ParentControl.SetMenuText(ToString(), ScriptalNode.GetUnEventedScriptNode().Identifier.Value);
             UpdateCategoryFilter();
             SetChoiceMenu(ScriptalNode.Scriptal);
             return this;
@@ -91,13 +90,6 @@ namespace SOC.UI
             }
 
             SetDescription((Scriptal)comboBoxScriptalTemplate.SelectedItem);
-        }
-
-        internal void UpdateVarNodesUI()
-        {
-            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
-            ChoiceKeyValues selectedChoiceSet = (ChoiceKeyValues)comboBoxChoiceSet.SelectedItem;
-            RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
         }
 
         internal static string str(ScriptalType type)
@@ -352,10 +344,11 @@ string.Format(@"
             }
 
             ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
+            /* disorienting UX
             if (selectedChoice != null && selectedChoice.Dependency != null)
             {
                 ParentControl.treeViewVariables.SelectedNode = selectedChoice.Dependency;
-            }
+            }*/
         }
 
         private void showCorrespondingChoiceControl(Control choiceControl, bool enable = true)
@@ -385,6 +378,13 @@ string.Format(@"
                 match = (VariableNode)comboBoxUserVarNodes.Items[0];
 
             comboBoxUserVarNodes.SelectedItem = match;
+        }
+
+        private void comboBoxUserVarNodes_DropDown(object sender, EventArgs e)
+        {
+            Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
+            ChoiceKeyValues selectedChoiceSet = (ChoiceKeyValues)comboBoxChoiceSet.SelectedItem;
+            RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
         }
 
         private void comboBoxUserVarNodes_SelectedIndexChanged(object sender, EventArgs e)

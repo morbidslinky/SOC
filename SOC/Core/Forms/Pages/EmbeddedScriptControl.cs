@@ -35,8 +35,6 @@ namespace SOC.UI
             ClearScriptNodePassthroughs();
 
             ScriptNode = scriptNode;
-            ParentControl.SetMenuText(ScriptNode.ToString(), ScriptNode.Identifier.Value);
-
             UpdateMenu();
 
             return this;
@@ -125,7 +123,8 @@ namespace SOC.UI
             if (selectedCode == MISSION_CODE)
             {
                 comboBoxMessage.DropDownStyle = ComboBoxStyle.DropDown;
-                comboBoxSenderOptions.SelectedIndex = 0;
+                if (comboBoxMessage.Items.Count > 0)
+                    comboBoxSenderOptions.SelectedItem = 0;
                 comboBoxSenderOptions.Enabled = false;
 
                 if (match != null)
@@ -231,13 +230,13 @@ namespace SOC.UI
             string selectedCode = (string)comboBoxCode.SelectedItem;
 
             LuaValue selectedMsg;
-            if (comboBoxMessage.SelectedItem is LuaValue selectedLuaValue)
+            if (comboBoxMessage.DropDownStyle == ComboBoxStyle.DropDownList && comboBoxMessage.SelectedItem is LuaValue selectedLuaValue)
             {
                 selectedMsg = selectedLuaValue;
             }
             else
             {
-                selectedMsg = Create.String(comboBoxMessage.Text);
+                selectedMsg = Create.String(comboBoxMessage.Text.Replace("\"",""));
             }
             ChoiceKeyValues selectedSenderChoosableSet = (ChoiceKeyValues)comboBoxSenderOptions.SelectedItem;
 

@@ -9,37 +9,45 @@
         <SenderValue xsi:type="LuaNil" />
       </CodeEvent>
       <Identifier Value="TargetDestroyedRadioOnce" />
-      <Description>For the first walkergear, Kaz will exclaim that one of the targets have been eliminated.</Description>
+      <Description>For the first walkergear, Kaz will exclaim that one of the targets have been destroyed.</Description>
       <Preconditions>
         <Precondition>
-          <Name>True Only Once</Name>
-          <Category>CHECKS</Category>
-          <Description>Returns true if the boolean variable is true, and sets the variable to false.
-The variable would need to be reset to true in order to fulfill this precondition again.</Description>
-          <EventFunctionTemplate>if |[1|BOOLEAN]| then 
-  |[1|BOOLEAN]| = false 
-  return true 
-end 
+          <Name>True Only Once Flag</Name>
+          <Category>FLAGS</Category>
+          <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+          <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
 return false</EventFunctionTemplate>
           <EmbeddedChoosableValueSets />
           <Choices>
             <Choice>
-              <Name>Boolean Variable</Name>
-              <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
+              <Name>Flag Name</Name>
+              <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
               <ChoosableValueSetsFilter />
               <AllowUIEdit>true</AllowUIEdit>
-              <AllowLiteral>false</AllowLiteral>
+              <AllowLiteral>true</AllowLiteral>
               <AllowUserVariable>true</AllowUserVariable>
               <Key>Variable</Key>
               <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
                 <TableKeyPath>
-                  <Key xsi:type="LuaString" Value="targetRadioOnce" />
+                  <Key xsi:type="LuaString" Value="Target_Eliminated_Radio" />
                 </TableKeyPath>
-                <EvaluatesTo>BOOLEAN</EvaluatesTo>
+                <EvaluatesTo>NUMBER</EvaluatesTo>
               </Value>
             </Choice>
           </Choices>
-          <EmbeddedCommonDefinitions />
+          <EmbeddedCommonDefinitions>
+            <qvarsDefinition Extrude="false">
+              <Key xsi:type="LuaString" Value="CommonFlagTable" />
+              <Value xsi:type="LuaTable">
+                <Entries />
+              </Value>
+            </qvarsDefinition>
+          </EmbeddedCommonDefinitions>
         </Precondition>
       </Preconditions>
       <Operations>
@@ -64,14 +72,38 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
               </Value>
+              <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
+              </Value>
               <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="KazSendsHeliForTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1750" />
               </Value>
               <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
                 <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
               </Value>
               <Value xsi:type="LuaVariable" Value="APrisoner">
                 <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
               </Value>
               <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
@@ -84,6 +116,24 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               </Value>
               <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
               </Value>
               <Value xsi:type="LuaVariable" Value="FindTheTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
@@ -106,15 +156,6 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
               </Value>
-              <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
-                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
-              </Value>
               <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
               </Value>
@@ -130,32 +171,8 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
               </Value>
-              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
-              </Value>
               <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
                 <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
-                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
-                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
-                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
-                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
-                <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
-                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
               </Value>
               <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
@@ -221,8 +238,8 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <AllowLiteral>false</AllowLiteral>
               <AllowUserVariable>false</AllowUserVariable>
               <Key>Radio Calls</Key>
-              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+              <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
               </Value>
             </Choice>
           </Choices>
@@ -241,34 +258,42 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
       <Description>For the first walkergear, Kaz will exclaim that one of the targets have been extracted.</Description>
       <Preconditions>
         <Precondition>
-          <Name>True Only Once</Name>
-          <Category>CHECKS</Category>
-          <Description>Returns true if the boolean variable is true, and sets the variable to false.
-The variable would need to be reset to true in order to fulfill this precondition again.</Description>
-          <EventFunctionTemplate>if |[1|BOOLEAN]| then 
-  |[1|BOOLEAN]| = false 
-  return true 
-end 
+          <Name>True Only Once Flag</Name>
+          <Category>FLAGS</Category>
+          <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+          <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
 return false</EventFunctionTemplate>
           <EmbeddedChoosableValueSets />
           <Choices>
             <Choice>
-              <Name>Boolean Variable</Name>
-              <Description>The custom boolean variable. This will be set to false after the precondition is checked.</Description>
+              <Name>Flag Name</Name>
+              <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
               <ChoosableValueSetsFilter />
               <AllowUIEdit>true</AllowUIEdit>
-              <AllowLiteral>false</AllowLiteral>
+              <AllowLiteral>true</AllowLiteral>
               <AllowUserVariable>true</AllowUserVariable>
               <Key>Variable</Key>
               <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
                 <TableKeyPath>
-                  <Key xsi:type="LuaString" Value="targetRadioOnce" />
+                  <Key xsi:type="LuaString" Value="Target_Eliminated_Radio" />
                 </TableKeyPath>
-                <EvaluatesTo>BOOLEAN</EvaluatesTo>
+                <EvaluatesTo>NUMBER</EvaluatesTo>
               </Value>
             </Choice>
           </Choices>
-          <EmbeddedCommonDefinitions />
+          <EmbeddedCommonDefinitions>
+            <qvarsDefinition Extrude="false">
+              <Key xsi:type="LuaString" Value="CommonFlagTable" />
+              <Value xsi:type="LuaTable">
+                <Entries />
+              </Value>
+            </qvarsDefinition>
+          </EmbeddedCommonDefinitions>
         </Precondition>
       </Preconditions>
       <Operations>
@@ -293,14 +318,38 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
               </Value>
+              <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
+              </Value>
               <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="KazSendsHeliForTarget">
+                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1750" />
               </Value>
               <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
                 <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
               </Value>
               <Value xsi:type="LuaVariable" Value="APrisoner">
                 <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+                <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
               </Value>
               <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
@@ -313,6 +362,24 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               </Value>
               <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+              </Value>
+              <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+                <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
               </Value>
               <Value xsi:type="LuaVariable" Value="FindTheTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
@@ -335,15 +402,6 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
               </Value>
-              <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
-                <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
-              </Value>
               <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
               </Value>
@@ -359,32 +417,8 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
               <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
               </Value>
-              <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
-                <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
-              </Value>
               <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
                 <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
-                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
-                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
-                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
-                <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
-                <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
-              </Value>
-              <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
-                <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
               </Value>
               <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
                 <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />
@@ -462,8 +496,8 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
   </QStep_Main>
   <Variables>
     <UserVariable Extrude="false">
-      <Key xsi:type="LuaString" Value="targetRadioOnce" />
-      <Value xsi:type="LuaBoolean" Value="true" />
+      <Key xsi:type="LuaString" Value="Target_Eliminated_Radio" />
+      <Value xsi:type="LuaNumber" Value="0" />
     </UserVariable>
   </Variables>
 </ScriptDetails>

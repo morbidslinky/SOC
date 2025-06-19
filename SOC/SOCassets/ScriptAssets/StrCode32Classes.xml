@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ChoiceKeyValuesList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <KeyValuesSet Key="Mission">
-    <Value xsi:type="LuaString" Value="OnTargetExtraction" />
-    <Value xsi:type="LuaString" Value="OnTargetDeath" />
-  </KeyValuesSet>
   <KeyValuesSet Key="Trap">
     <Value xsi:type="LuaString" Value="Enter" />
     <Value xsi:type="LuaString" Value="Exit" />
+  </KeyValuesSet>
+  <KeyValuesSet Key="Mission">
+    <Value xsi:type="LuaString" Value="OnTargetExtraction" />
+    <Value xsi:type="LuaString" Value="OnTargetDeath" />
   </KeyValuesSet>
   <KeyValuesSet Key="Timer">
     <Value xsi:type="LuaString" Value="Start" />

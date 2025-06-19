@@ -27,8 +27,7 @@ namespace SOC.UI
             treeViewVariables.Nodes.Add(node);
             treeViewVariables.SelectedNode = node;
 
-            ScriptalEmbed.UpdateVarNodesUI();
-            ScriptSetEmbed.Menu();
+            UpdateEmbeddedScriptSetDisplay();
         }
 
         private void buttonRemoveVariableIdentifier_Click(object sender, EventArgs e)
@@ -66,8 +65,7 @@ namespace SOC.UI
                 buttonRemoveVariableIdentifier.Enabled = false;
                 ShowVarTypeValueControl(panelPlaceholder);
 
-                ScriptalEmbed.UpdateVarNodesUI();
-                ScriptSetEmbed.Menu();
+                UpdateEmbeddedScriptSetDisplay();
             }
 
             selectedNode.NotifyDependentsOfVariableNodeChange(true);
@@ -207,7 +205,7 @@ namespace SOC.UI
                 textBoxVarName.SelectionLength = selectionLength;
             }
 
-            ScriptSetEmbed.Menu();
+            UpdateEmbeddedScriptSetDisplay();
         }
         internal string GetUniqueVariableName(string baseName)
         {
@@ -298,9 +296,13 @@ namespace SOC.UI
             }
 
             currentNode.UpdateText();
+            UpdateEmbeddedScriptSetDisplay();
+        }
 
-            ScriptalEmbed.UpdateVarNodesUI();
-            ScriptSetEmbed.Menu();
+        internal void UpdateEmbeddedScriptSetDisplay()
+        {
+            if (IsEmbedded(ScriptSetEmbed))
+                ScriptSetEmbed.Menu();
         }
 
         private void textBoxName_KeyDown(object sender, KeyEventArgs e)

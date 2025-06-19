@@ -20,14 +20,38 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
 	  <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2390" />
 	  </Value>
+	  <Value xsi:type="LuaVariable" Value="TargetDestroyed">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3240" />
+	  </Value>
 	  <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="KazSendsHeliForTarget">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1750" />
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="ThatsOptionalPrisoner">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg0810" />
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="APrisoner">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg1870" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="WhatsAPrisonerDoingHere">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg2060" />
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="PrisonerDoesntLookLikeTarget">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2040" />
@@ -40,6 +64,24 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="WhyNotInterrogateForTarget">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_oprg0300" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
+	    <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
+	    <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="FindTheTarget">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_oprg0580" />
@@ -62,15 +104,6 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
 	  <Value xsi:type="LuaVariable" Value="AboutTimeForGuardShift">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0170" />
 	  </Value>
-	  <Value xsi:type="LuaVariable" Value="ThatsTheTargetGetHimOut">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3080" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="BadlyWoundedExtractByHeli">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1210" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="ThatsTheTargetLooksInjured">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg0620" />
-	  </Value>
 	  <Value xsi:type="LuaVariable" Value="AlrightNowGetOut">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1890" />
 	  </Value>
@@ -86,32 +119,8 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
 	  <Value xsi:type="LuaVariable" Value="OcelotMillerPraise">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1640" />
 	  </Value>
-	  <Value xsi:type="LuaVariable" Value="TargetEliminatedOntoTheNext">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3830" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="ThatCutDownEnemyMechForceStrength">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg3890" />
-	  </Value>
 	  <Value xsi:type="LuaVariable" Value="HuhIsThatIt">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg1250" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="ObjectiveIsToEliminateNoMatterHow">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_oprg0240" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="TargetSomewhereInAreaFindHim">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_mprg0080" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="CombatVehicleNearbyTryToFindIt">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_mprg0230" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="IntelTeamConfirmedEnemyVehicleWatchOut">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_mprg0220" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="SideopObjectiveAroundThere">
-	    <AssignedTo xsi:type="LuaString" Value="f2000_rtrg1910" />
-	  </Value>
-	  <Value xsi:type="LuaVariable" Value="DestroyTheTargets">
-	    <AssignedTo xsi:type="LuaString" Value="f1000_oprg0370" />
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="WOAHSTOPExtractTheTarget">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg0116" />

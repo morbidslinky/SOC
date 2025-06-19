@@ -43,11 +43,14 @@ namespace SOC.QuestObjects.Common
 
         public abstract void DrawMetadata(ObjectsMetadata meta);
 
-        private void DrawObjectsControls(List<QuestObject> questObjects)
+        private void DrawObjectsControls(List<QuestObject> questObjects)// TODO this sucks on the loading time for the detail page. Gotta figure out some kind of optimization.
         {
-            var questObjectBoxes = questObjects.Select(objects => NewQuestObjectBox(objects)).ToArray();
             flowPanel.Controls.Clear();
-            flowPanel.Controls.AddRange(questObjectBoxes); // TODO this sucks on the loading time for the detail page. Gotta figure out some kind of optimization.
+            foreach (QuestObject questObject in questObjects)
+            {
+                var box = NewQuestObjectBox(questObject);
+                flowPanel.Controls.Add(box);
+            }
         }
 
         public ObjectsDetail GetDetailFromControl()

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Check GameId Type</Name>
-  <Category>CHECKS</Category>
+  <Name>Check Game Object Type</Name>
+  <Category>GAME OBJECTS</Category>
   <Description>Check the type of a GameId using a selection of type-check functions.
 
-- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
-- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+- For most events, 'arg1' represents the GameObjectId that sent the event.
+- For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
+- Check Tex's notes on messages in InfLookup.lua for more details:
 https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
   <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|)</EventFunctionTemplate>
   <EmbeddedChoosableValueSets>

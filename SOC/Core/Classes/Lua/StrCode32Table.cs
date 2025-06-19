@@ -235,7 +235,7 @@ namespace SOC.Classes.Lua
             var sanitizedDescription = Description.Replace("--[[", "").Replace("]]", "");
             if (!string.IsNullOrEmpty(sanitizedDescription))
             {
-                functionBuilder.AppendPlainText($"--[[{sanitizedDescription}]]");
+                functionBuilder.AppendPlainText($"--[[{sanitizedDescription}]]\n");
             }
 
             foreach (Scriptal precondition in Preconditions)

@@ -134,11 +134,16 @@ namespace SOC.UI
 
         internal void Embed(UserControl control)
         {
-            if (control != null && !panelComponentDetails.Controls.Contains(control))
+            if (control != null && !IsEmbedded(control))
             {
                 panelComponentDetails.Controls.Clear();
                 panelComponentDetails.Controls.Add(control);
             }
+        }
+
+        internal bool IsEmbedded(UserControl control)
+        {
+            return panelComponentDetails.Controls.Contains(control);
         }
 
         private void UpdateScriptControlsToSelectedNode()
@@ -153,17 +158,21 @@ namespace SOC.UI
                 case ScriptNode scriptNode:
                     EnabledScriptEditControls(textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript);
                     embedControl = ScriptEmbed.Menu(scriptNode);
+                    SetMenuText(ScriptEmbed.ToString(), scriptNode.Identifier.Value);
                     scriptNode.MarkDependencies();
                     break;
 
                 case ScriptalParentNode parentNode:
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation);
-                    embedControl = ScriptEmbed.Menu(parentNode.GetUnEventedScriptNode());
+                    var ParentScriptNode = parentNode.GetScriptNode();
+                    embedControl = ScriptEmbed.Menu(ParentScriptNode);
+                    SetMenuText(ScriptEmbed.ToString(), ParentScriptNode.Identifier.Value);
                     parentNode.MarkDependencies();
                     break;
 
                 case ScriptalNode scriptalNode:
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation, buttonRemoveScript);
+                    SetMenuText(ToString(), scriptalNode.GetUnEventedScriptNode().Identifier.Value);
                     embedControl = ScriptalEmbed.Menu(scriptalNode); 
                     scriptalNode.MarkDependencies();
                     break;
@@ -171,6 +180,7 @@ namespace SOC.UI
                 default:
                     EnabledScriptEditControls();
                     SyncQuestDataToUserInput();
+                    SetMenuText("Import / Export Script Details", "");
                     embedControl = ScriptSetEmbed.Menu();
                     break;
             }
@@ -245,7 +255,7 @@ namespace SOC.UI
                     scriptNode = selectedScriptNode;
                     break;
                 case ScriptalParentNode selectedParentNode:
-                    scriptNode = selectedParentNode.GetUnEventedScriptNode();
+                    scriptNode = selectedParentNode.GetScriptNode();
                     break;
                 case ScriptalNode selectedScriptalNode:
                     scriptNode = selectedScriptalNode.GetUnEventedScriptNode();
@@ -616,7 +626,7 @@ namespace SOC.UI
             return childScriptals;
         }
 
-        public ScriptNode GetUnEventedScriptNode()
+        public ScriptNode GetScriptNode()
         {
             ScriptNode parentNode = (ScriptNode)Parent;
 
@@ -677,7 +687,7 @@ namespace SOC.UI
 
         public ScriptNode GetUnEventedScriptNode()
         {
-            return GetScriptalParentNode().GetUnEventedScriptNode();
+            return GetScriptalParentNode().GetScriptNode();
         }
 
         public StrCode32 GetEvent()

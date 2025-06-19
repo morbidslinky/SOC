@@ -3,7 +3,7 @@
   <Name>Update Table Value</Name>
   <Category>VARIABLE MANIPULATIONS</Category>
   <Description>Sets a value in a table at the specified key/index</Description>
-  <EventFunctionTemplate>|[1|TABLE]|[|[2|STRING,NUMBER]|] = |[3|STRING,NUMBER,BOOLEAN]|</EventFunctionTemplate>
+  <EventFunctionTemplate>|[1|TABLE]|[|[2|STRING,NUMBER]|] = |[3|STRING,NUMBER,BOOLEAN,TABLE]|</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Table</Name>
@@ -11,7 +11,7 @@
 	</Choice>
 	<Choice>
 	  <Name>Key</Name>
-	  <Description>The key (or index) of the value to be modified.)</Description>
+	  <Description>The key (or index) of the value to be modified.</Description>
 	</Choice>
 	<Choice>
 	  <Name>Value</Name>

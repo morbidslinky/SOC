@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Check Hidden Timer</Name>
-  <Category>CHECKS</Category>
+  <Category>TIMERS</Category>
   <Description>Checks whether or not a background timer is ticking.</Description>
   <EventFunctionTemplate>return GkEventTimerManager.IsTimerActive(|[1|STRING]|) == |[2|BOOLEAN]|</EventFunctionTemplate>
   <Choices>
@@ -12,8 +12,11 @@
 	  <Value xsi:type="LuaString" Value="TimerSender" />
 	</Choice>
 	<Choice>
-	  <Name>Is Active</Name>
+	  <Name>Is Already Active</Name>
 	  <Description>Set to true to check if the timer is running. Set to false to check if the timer is not running.</Description>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <Key>Boolean Literal</Key>
+	  <Value xsi:type="LuaBoolean" Value="true" />
 	</Choice>
   </Choices>
 </Scriptal>

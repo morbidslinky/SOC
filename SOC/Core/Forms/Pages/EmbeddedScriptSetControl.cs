@@ -25,11 +25,24 @@ namespace SOC.UI
         internal UserControl Menu()
         {
             UpdateMenu();
-            ParentControl.SetMenuText("Import / Export Script Details", "");
             return this;
         }
 
-        private void UpdateMenu()
+        internal void UpdateMenu()
+        {
+            RefreshVariableNodes();
+            RefreshScriptNodes();
+
+            int totalItems = checkedListBoxScripts.Items.Count + checkedListBoxVariables.Items.Count;
+            int totalChecks = checkedListBoxScripts.CheckedItems.Count + checkedListBoxVariables.CheckedItems.Count;
+
+            buttonExportVariablesScripts.Enabled = totalChecks != 0;
+            splitContainerOuter.Visible = totalItems != 0;
+            panelCheckDependencies.Enabled = totalItems != 0;
+            textEmptyHint.Visible = totalItems == 0;
+        }
+
+        private void RefreshVariableNodes()
         {
             var varNodes = ParentControl.treeViewVariables.Nodes.OfType<VariableNode>().ToList();
             foreach (VariableNode varNode in varNodes)
@@ -43,6 +56,10 @@ namespace SOC.UI
                 if (!varNodes.Contains(varNode))
                     checkedListBoxVariables.Items.Remove(varNode);
             }
+        }
+
+        private void RefreshScriptNodes ()
+        {
 
             var scriptNodes = ParentControl.ScriptTablesRootNode.QStep_Main.GetScriptNodes();
             foreach (ScriptNode scriptNode in scriptNodes)
@@ -56,14 +73,6 @@ namespace SOC.UI
                 if (!scriptNodes.Contains(scriptNode))
                     checkedListBoxScripts.Items.Remove(scriptNode);
             }
-
-            int totalItems = checkedListBoxScripts.Items.Count + checkedListBoxVariables.Items.Count;
-            int totalChecks = checkedListBoxScripts.CheckedItems.Count + checkedListBoxVariables.CheckedItems.Count;
-
-            buttonExportVariablesScripts.Enabled = totalChecks != 0;
-            splitContainerOuter.Visible = totalItems != 0;
-            panelCheckDependencies.Enabled = totalItems != 0;
-            textEmptyHint.Visible = totalItems == 0;
         }
 
         private void buttonLoadScript_Click(object sender, EventArgs e)

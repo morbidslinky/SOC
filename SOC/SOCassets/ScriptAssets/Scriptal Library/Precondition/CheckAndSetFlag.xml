@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>True Only Once Flag</Name>
+  <Category>FLAGS</Category>
+  <Description>Combines the Check Flag precondition with a Set Flag operation on the same identifier. 
+Checks whether a string identifier has been flagged. If not, this precondition will return true AND flag the identifier. 
+Thus, this precondition will only be fulfilled once, unless the flag is manually unset.</Description>
+  <EventFunctionTemplate>if not qvars.CommonFlagTable[|[1|STRING,NUMBER]|] then
+  qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = true
+  return true
+end
+return false</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Flag Name</Name>
+	  <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
+	  <Key>Variable</Key>
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="CommonFlagTable" />
+	  <Value xsi:type="LuaTable" />
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

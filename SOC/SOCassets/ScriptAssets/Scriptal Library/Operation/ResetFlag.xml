@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Unset Flag</Name>
+  <Category>FLAGS</Category>
+  <Description>Unflags an identifier. If the identifier is not flagged yet, this does nothing.</Description>
+  <EventFunctionTemplate>qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = nil</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Flag Name</Name>
+	  <Description>A flag ID value. Any string or number can be used as a flag identifier, even if it is being used for some other purpose, like a UI notification.</Description>
+	  <Key>Variable</Key>
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="CommonFlagTable" />
+	  <Value xsi:type="LuaTable" />
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

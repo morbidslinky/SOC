@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Check GameObjectId</Name>
-  <Category>CHECKS</Category>
-  <Description>Checks to see if a number matches a GameObjectId. 
-Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
+  <Name>Check Game Object Id</Name>
+  <Category>GAME OBJECTS</Category>
+  <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
+This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.
 
-- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
-- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
+- For most events, 'arg1' represents the GameObjectId that sent the event. 
+- For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
+- Check Tex's notes on messages in InfLookup.lua for more details:
 https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
   <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
@@ -45,8 +46,8 @@ return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
 	  <Value xsi:type="LuaString" Value=""/>
 	</Choice>
 	<Choice>
-	  <Name>Number ID</Name>
-	  <Description>The ID to compare to the GameObjectId</Description>
+	  <Name>Game Object ID</Name>
+	  <Description>The ID to compare against the game object. The precondition is fulfilled if they match.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>

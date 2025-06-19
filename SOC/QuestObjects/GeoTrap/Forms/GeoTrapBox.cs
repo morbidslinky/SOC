@@ -41,8 +41,9 @@ namespace SOC.QuestObjects.GeoTrap
 
             comboBox_geotrap.Text = qObject.geoTrap;
 
-            checkBoxPlayerOnlyTrigger.Checked = qObject.isPlayerOnlyTrigger;
-
+            _controlUpdate = true;
+            checkBoxPlayerOnlyTrigger.Checked = qObject.isPlayerOnlyTrigger || ParentPanel.GetPlayerOnlyTrigger((string)comboBox_geotrap.SelectedItem, this);
+            _controlUpdate = false;
             textBox_xscale.Text = qObject.xScale;
             textBox_yscale.Text = qObject.yScale;
             textBox_zscale.Text = qObject.zScale;
