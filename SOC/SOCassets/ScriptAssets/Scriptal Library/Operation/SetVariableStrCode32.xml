@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Set Variable To StrCode32 Number</Name>
+  <Category>VARIABLE MANIPULATIONS</Category>
+  <Description>Converts a string to a StrCode32 number and stores it to a variable.
+Default Event Arguments all numbers, so the game will convert strings to numbers when passing them as the event's args, like Route Names or GeoTrap Names.
+This operation can convert any string into a number using the same conversion technique.
+The ih_log.txt denotes these StrCode32 event args like '[[trapName:str32:trap_revMine_flowStation_South]] 3534836989', where 'trap_revMine_flowStation_South' is the string name of the trap, and 3534836989 is the StrCode32 that was passed as an arg.
+ih_log.txt is reversing the string name for every StrCode32 using a dictionary, but it doesn't know every StrCode32 string. If ih_log can't find the string for the StrCode32 number, it would look like '[[trapName:str32:~]] 3534836989'.</Description>
+  <EventFunctionTemplate>|[1|NUMBER]| = StrCode32(|[2|STRING]|)</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>User Variable</Name>
+	  <Description>The custom variable that the StrCode32 number will be stored to.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	</Choice>
+	<Choice>
+	  <Name>String</Name>
+	  <Description>The string to be converted into a StrCode32 number.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>GeoTrap Names</Key>
+	    <Key>Route Names</Key>
+	    <Key>Active Item Names (Targets)</Key>
+	    <Key>Active Item Names</Key>
+	    <Key>Animal Cluster Names (Targets)</Key>
+	    <Key>Animal Cluster Names</Key>
+	    <Key>Camera Names (Targets)</Key>
+	    <Key>Camera Names</Key>
+	    <Key>Enemy Names (Targets)</Key>
+	    <Key>Enemy Names (Enabled/Customized)</Key>
+	    <Key>Enemy Names</Key>
+	    <Key>Helicopter Names (Target)</Key>
+	    <Key>Helicopter Names</Key>
+	    <Key>Prisoner Names (Targets)</Key>
+	    <Key>Prisoner Names</Key>
+	    <Key>Dormant Item Names (Targets)</Key>
+	    <Key>Dormant Item Names</Key>
+	    <Key>UAV Names (Targets)</Key>
+	    <Key>UAV Names</Key>
+	    <Key>Heavy Vehicle Names (Targets)</Key>
+	    <Key>Heavy Vehicle Names</Key>
+	    <Key>Walker Gear Names (Targets)</Key>
+	    <Key>Walker Gear Names</Key>
+	  </ChoosableValueSetsFilter>
+	</Choice>
+  </Choices>
+</Scriptal>

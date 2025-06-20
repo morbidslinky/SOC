@@ -33,6 +33,11 @@ namespace SOC.UI
             RefreshVariableNodes();
             RefreshScriptNodes();
 
+            if (checkBoxDependencies.Checked)
+            {
+                RefreshCheckBoxes();
+            }
+
             int totalItems = checkedListBoxScripts.Items.Count + checkedListBoxVariables.Items.Count;
             int totalChecks = checkedListBoxScripts.CheckedItems.Count + checkedListBoxVariables.CheckedItems.Count;
 
@@ -58,7 +63,7 @@ namespace SOC.UI
             }
         }
 
-        private void RefreshScriptNodes ()
+        private void RefreshScriptNodes()
         {
 
             var scriptNodes = ParentControl.ScriptTablesRootNode.QStep_Main.GetScriptNodes();
@@ -74,6 +79,13 @@ namespace SOC.UI
                     checkedListBoxScripts.Items.Remove(scriptNode);
             }
         }
+
+        private void RefreshCheckBoxes()
+        {
+            foreach (ScriptNode scriptNode in checkedListBoxScripts.CheckedItems)
+                checkmarkDependencies(scriptNode, true);
+        }
+
 
         private void buttonLoadScript_Click(object sender, EventArgs e)
         {

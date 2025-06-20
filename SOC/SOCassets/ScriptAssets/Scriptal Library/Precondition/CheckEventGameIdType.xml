@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Check Game Object Type</Name>
+  <Name>Check GameObject Type</Name>
   <Category>GAME OBJECTS</Category>
   <Description>Check the type of a GameId using a selection of type-check functions.
 

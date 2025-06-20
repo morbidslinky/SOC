@@ -408,7 +408,7 @@
           <SenderKey>GeoTrap Names</SenderKey>
           <SenderValue xsi:type="LuaString" Value="GeoTrap_0" />
         </CodeEvent>
-        <Identifier Value="Hostage_0_Init_Route" />
+        <Identifier Value="Hostage_1_Init_Route" />
         <Description />
         <Preconditions>
           <Precondition>
@@ -865,13 +865,15 @@ Open the ScriptAssets folder to view and create custom scriptal templates for th
         <Preconditions>
           <Precondition>
             <Name>Check GameObjectId</Name>
-            <Category>CHECKS</Category>
-            <Description>Checks to see if a number matches a GameObjectId. 
-Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
+            <Category>GAME OBJECTS</Category>
+            <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
+This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.
 
-- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
-- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
-https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+- For most events, 'arg1' represents the GameObjectId that sent the event. 
+- For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
+- Check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua
+Signatures that contain an argument with a argType="gameId" are GameObjectId numbers. Use this to check against them.</Description>
             <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
@@ -913,8 +915,8 @@ return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
                 <Value xsi:type="LuaString" Value="Hostage_1" />
               </Choice>
               <Choice>
-                <Name>Number ID</Name>
-                <Description>The ID to compare to the GameObjectId</Description>
+                <Name>GameObjectID</Name>
+                <Description>The ID to compare against the game object. The precondition is fulfilled if they match.</Description>
                 <ChoosableValueSetsFilter>
                   <Key>Event Default Arguments</Key>
                 </ChoosableValueSetsFilter>
@@ -981,7 +983,7 @@ You can catch that event By creating a new script with a "Timer" StrCode, "Finis
         <Description />
         <Preconditions>
           <Precondition>
-            <Name>Check Game Object Id</Name>
+            <Name>Check GameObjectId</Name>
             <Category>GAME OBJECTS</Category>
             <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
 This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.
@@ -989,7 +991,8 @@ This is the go-to method of checking if a game object is involved in an event, a
 - For most events, 'arg1' represents the GameObjectId that sent the event. 
 - For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
 - Check Tex's notes on messages in InfLookup.lua for more details:
-https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua
+Signatures that contain an argument with a argType="gameId" are GameObjectId numbers. Use this to check against them.</Description>
             <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
@@ -1031,7 +1034,7 @@ return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
                 <Value xsi:type="LuaString" Value="Hostage_0" />
               </Choice>
               <Choice>
-                <Name>Game Object ID</Name>
+                <Name>GameObjectID</Name>
                 <Description>The ID to compare against the game object. The precondition is fulfilled if they match.</Description>
                 <ChoosableValueSetsFilter>
                   <Key>Event Default Arguments</Key>
@@ -1718,13 +1721,15 @@ GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
         <Preconditions>
           <Precondition>
             <Name>Check GameObjectId</Name>
-            <Category>CHECKS</Category>
-            <Description>Checks to see if a number matches a GameObjectId. 
-Comparing a GameObjectId to the Event Default Argument 'arg1' is similar to checking the Sender.
+            <Category>GAME OBJECTS</Category>
+            <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
+This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.
 
-- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
-- Other event args can contain GameIds, check Tex's notes on messages in InfLookup.lua for more details:
-https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua</Description>
+- For most events, 'arg1' represents the GameObjectId that sent the event. 
+- For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
+- Check Tex's notes on messages in InfLookup.lua for more details:
+https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua
+Signatures that contain an argument with a argType="gameId" are GameObjectId numbers. Use this to check against them.</Description>
             <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
 if type(tempGameObjectIdVal) == "string" then
   tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
@@ -1766,8 +1771,8 @@ return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
                 <Value xsi:type="LuaString" Value="Hostage_0" />
               </Choice>
               <Choice>
-                <Name>Number ID</Name>
-                <Description>The ID to compare to the GameObjectId</Description>
+                <Name>GameObjectID</Name>
+                <Description>The ID to compare against the game object. The precondition is fulfilled if they match.</Description>
                 <ChoosableValueSetsFilter>
                   <Key>Event Default Arguments</Key>
                 </ChoosableValueSetsFilter>

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Check GameObjectId</Name>
-  <Category>GAME OBJECTS</Category>
-  <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
-This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.
+  <Name>Check StrCode32</Name>
+  <Category>STRING CODES</Category>
+  <Description>Checks to see if a string or a number matches a StrCode32 number. Handy for checking event arguments.
+This is the go-to method of checking if a raw string is involved in an event, like a route name or a trap name.
 
-- For most events, 'arg1' represents the GameObjectId that sent the event. 
-- For GeoTraps and some Player messages, 'arg2' is the GameObjectId that entered/exited.
 - Check Tex's notes on messages in InfLookup.lua for more details:
 https://github.com/TinManTex/InfiniteHeaven/blob/master/tpp/gamedir-ih/GameDir/mod/modules/InfLookup.lua
-Signatures that contain an argument with a argType="gameId" are GameObjectId numbers. Use this to check against them.</Description>
-  <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
-if type(tempGameObjectIdVal) == "string" then
-  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+Signatures that contain an argument with a argType="str32" are StrCode32 numbers. Use this to check against them.</Description>
+  <EventFunctionTemplate>local tempStrCode32Val = |[1|STRING,NUMBER]|
+if type(tempStrCode32Val) == "string" then
+  tempStrCode32Val = StrCode32(tempStrCode32Val)
 end
-return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
+return tempStrCode32Val == |[2|NUMBER]|</EventFunctionTemplate>
   <Choices>
 	<Choice>
-	  <Name>Game Object</Name>
-	  <Description>The Game Object (their string name or number GameObjectId) to be compared against.</Description>
+	  <Name>Game String</Name>
+	  <Description>The String or Number to be compared against.</Description>
 	  <ChoosableValueSetsFilter>
+	    <Key>GeoTrap Names</Key>
+	    <Key>Route Names</Key>
 	    <Key>Active Item Names (Targets)</Key>
 	    <Key>Active Item Names</Key>
 	    <Key>Animal Cluster Names (Targets)</Key>
@@ -29,7 +29,6 @@ return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
 	    <Key>Enemy Names (Targets)</Key>
 	    <Key>Enemy Names (Enabled/Customized)</Key>
 	    <Key>Enemy Names</Key>
-	    <Key>GeoTrap Names</Key>
 	    <Key>Helicopter Names (Target)</Key>
 	    <Key>Helicopter Names</Key>
 	    <Key>Prisoner Names (Targets)</Key>
@@ -47,8 +46,8 @@ return tempGameObjectIdVal == |[2|NUMBER]|</EventFunctionTemplate>
 	  <Value xsi:type="LuaString" Value=""/>
 	</Choice>
 	<Choice>
-	  <Name>GameObjectID</Name>
-	  <Description>The ID to compare against the game object. The precondition is fulfilled if they match.</Description>
+	  <Name>StrCode32</Name>
+	  <Description>The StrCode32 to compare against the string/number. The precondition is fulfilled if they match.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Event Default Arguments</Key>
 	  </ChoosableValueSetsFilter>
