@@ -439,6 +439,8 @@ namespace SOC.Classes.Lua
             foreach(Choice choice in Choices)
             {
                 choice.ParentScriptalNode = scriptalNode;
+                if (choice.NeedsDependencyVacuumWarning())
+                    choice.HighlightDependencyVacuum();
             }
         }
     }
@@ -546,6 +548,9 @@ namespace SOC.Classes.Lua
         [XmlIgnore]
         public ScriptalNode ParentScriptalNode;
 
+        [XmlIgnore]
+        public static readonly Color DEPENDENCY_VACUUM_WARNING_COLOR = Color.Orange;
+
         public event EventHandler<VariableNodeEventArgs> VariableNodeEventPassthrough;
 
         public override string ToString() => $"{Name} :: {Key} :: {Value}";
@@ -582,7 +587,29 @@ namespace SOC.Classes.Lua
                 Value = new LuaNil();
 
                 if (notify) VariableNodeEventPassthrough?.Invoke(this, new VariableNodeEventArgs() { Doomed = true });
+
+                if (NeedsDependencyVacuumWarning())
+                    HighlightDependencyVacuum();
             }
+        }
+
+        public void HighlightDependencyVacuum()
+        {
+            ParentScriptalNode.BackColor = DEPENDENCY_VACUUM_WARNING_COLOR;
+            ParentScriptalNode.Parent.BackColor = DEPENDENCY_VACUUM_WARNING_COLOR;
+            ParentScriptalNode.Parent.Parent.BackColor = DEPENDENCY_VACUUM_WARNING_COLOR;
+        }
+
+        public bool NeedsDependencyVacuumWarning()
+        {
+            if (ParentScriptalNode == null || ParentScriptalNode.Parent == null || ParentScriptalNode.Parent.Parent == null) return false;
+
+            return Key == ScriptControl.CUSTOM_VARIABLE_SET && Value is LuaNil;
+        }
+
+        public static bool HasDependencyVacuumWarning(TreeNode scriptTreeNode)
+        {
+            return scriptTreeNode.BackColor == Choice.DEPENDENCY_VACUUM_WARNING_COLOR;
         }
 
         public void RefreshValue()

@@ -130,9 +130,38 @@ namespace SOC.Classes.Lua
                 if (token is LuaTemplatePlainText textToken)
                     populatedTemplate.Append(textToken.PlainText);
                 else if (token is LuaTemplatePlaceholder placeholder)
-                    populatedTemplate.Append(placeholder.Populate(populationData));
+                {
+                    if (IsUnusedAssignVariable(placeholder, tokens, populationData))
+                    {
+                        populatedTemplate.AppendLine("UNUSED_ASSIGN_VALUE_PLACEHOLDER = nil");
+                    } 
+                    else
+                    {
+                        populatedTemplate.Append(placeholder.Populate(populationData));
+                    }
+                }
             }
+
             return populatedTemplate.ToString();
+        }
+
+        private bool IsUnusedAssignVariable(LuaTemplatePlaceholder placeholder, List<LuaTemplateToken> tokens, LuaValue[] populationData)
+        {
+            if (!placeholder.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.ASSIGN_VARIABLE)) 
+                return false;
+
+            LuaTemplatePlaceholder correspondingVariable = tokens.OfType<LuaTemplatePlaceholder>()
+                .FirstOrDefault(placeholderLookahead => placeholderLookahead.Index == placeholder.Index && placeholderLookahead.AllowedTypes.Contains(LuaValue.TemplateRestrictionType.VARIABLE));
+
+            if (correspondingVariable == null) 
+                return false;
+
+            if (correspondingVariable.TryGetCorrespondingLuaValueAtIndex(populationData, out LuaValue luaValueAtIndex)
+                && correspondingVariable.Allows(luaValueAtIndex, out _)
+                && luaValueAtIndex.Type != LuaValue.TemplateRestrictionType.VARIABLE) 
+                return true;
+
+            return false;
         }
     }
 
@@ -235,14 +264,25 @@ namespace SOC.Classes.Lua
 
         internal bool TryGetValueString(LuaValue[] luaValues, out string valueString)
         {
+            if (TryGetCorrespondingLuaValueAtIndex(luaValues, out LuaValue luaValueAtIndex))
+            {
+                return Allows(luaValueAtIndex, out valueString);
+            }
+
+            valueString = $"Missing population data at 1-based index '{Index - 1}'";
+            return false;
+        }
+
+        internal bool TryGetCorrespondingLuaValueAtIndex(LuaValue[] luaValues, out LuaValue luaValueAtIndex)
+        {
             if (Index - 1 >= luaValues.Length || luaValues[Index - 1] == null)
             {
-                valueString = $"Missing population data at 1-based index '{Index - 1}'";
+                luaValueAtIndex = null;
                 return false;
             }
-            LuaValue luaValueAtIndex = luaValues[Index - 1];
 
-            return Allows(luaValueAtIndex, out valueString);
+            luaValueAtIndex = luaValues[Index - 1];
+            return true;
         }
 
         public bool Allows(LuaValue value, out string valueString)

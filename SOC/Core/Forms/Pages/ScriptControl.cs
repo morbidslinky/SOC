@@ -306,6 +306,8 @@ namespace SOC.UI
         {
             if (IsEmbedded(ScriptSetEmbed))
                 ScriptSetEmbed.Menu();
+            else if (IsEmbedded(ScriptalEmbed))
+                ScriptalEmbed.UpdateVarNodesUI();
         }
     }
 }

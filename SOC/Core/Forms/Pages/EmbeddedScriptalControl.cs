@@ -346,6 +346,7 @@ string.Format(@"
             }
 
             ParentControl.RedrawScriptDependents(); RedrawVariableDependencies();
+            ScriptalNode.GetScriptNode().CheckForDependencyWarnings();
             /* disorienting UX
             if (selectedChoice != null && selectedChoice.Dependency != null)
             {
@@ -380,13 +381,25 @@ string.Format(@"
                 match = (VariableNode)comboBoxUserVarNodes.Items[0];
 
             comboBoxUserVarNodes.SelectedItem = match;
+            if (match == null)
+            {
+                selectedChoice.Value = Create.Nil();
+                selectedChoice.HighlightDependencyVacuum();
+                RefreshListBoxDisplay();
+            }
         }
 
         private void comboBoxUserVarNodes_DropDown(object sender, EventArgs e)
         {
+            UpdateVarNodesUI();
+        }
+
+        internal void UpdateVarNodesUI()
+        {
             Choice selectedChoice = (Choice)listBoxChoices.SelectedItem;
             ChoiceKeyValues selectedChoiceSet = (ChoiceKeyValues)comboBoxChoiceSet.SelectedItem;
             RefreshUserVarNodeChoiceValues(selectedChoice, selectedChoiceSet);
+            ScriptalNode.GetScriptNode().CheckForDependencyWarnings();
         }
 
         private void comboBoxUserVarNodes_SelectedIndexChanged(object sender, EventArgs e)

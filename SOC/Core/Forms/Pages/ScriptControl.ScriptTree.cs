@@ -2,6 +2,7 @@
 using SOC.Classes.Lua;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -604,6 +605,43 @@ namespace SOC.UI
                 return codeGrandparent;
 
             return null;
+        }
+
+        internal void CheckForDependencyWarnings()
+        {
+            if (!Choice.HasDependencyVacuumWarning(this)) return;
+
+            bool allGood = true;
+            foreach (ScriptalParentNode parentNode in Nodes)
+            {
+                if (!Choice.HasDependencyVacuumWarning(parentNode)) continue;
+                
+                bool scriptalsGood = true;
+                foreach(ScriptalNode scriptalNode in parentNode.Nodes)
+                {
+                    if (!Choice.HasDependencyVacuumWarning(scriptalNode)) continue;
+
+                    bool choicesGood = true;
+                    foreach(Choice choice in scriptalNode.Scriptal.Choices)
+                    {
+                        if (choice.NeedsDependencyVacuumWarning())
+                        {
+                            choicesGood = false;
+                            break;
+                        }
+                    }
+                    if (choicesGood) 
+                        scriptalNode.BackColor = Color.Empty; 
+                    else 
+                        scriptalsGood = false;
+                }
+                if (scriptalsGood)
+                    parentNode.BackColor = Color.Empty;
+                else 
+                    allGood = false;
+            }
+            if (allGood)
+                BackColor = Color.Empty;
         }
     }
 
