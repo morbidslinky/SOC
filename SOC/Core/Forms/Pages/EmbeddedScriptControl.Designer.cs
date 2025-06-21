@@ -44,12 +44,8 @@
             comboBoxMessage = new System.Windows.Forms.ComboBox();
             splitContainerInner = new System.Windows.Forms.SplitContainer();
             groupBoxPreconditions = new System.Windows.Forms.GroupBox();
-            buttonUpPrecondition = new System.Windows.Forms.Button();
-            buttonDownPrecondition = new System.Windows.Forms.Button();
             listBoxPreconditions = new System.Windows.Forms.ListBox();
             groupBoxActions = new System.Windows.Forms.GroupBox();
-            buttonUpOperation = new System.Windows.Forms.Button();
-            buttonDownOperation = new System.Windows.Forms.Button();
             listBoxOperations = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)splitContainerOuter).BeginInit();
             splitContainerOuter.Panel1.SuspendLayout();
@@ -104,16 +100,16 @@
             // 
             textBoxDescription.AcceptsReturn = true;
             textBoxDescription.AcceptsTab = true;
-            textBoxDescription.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxDescription.BackColor = System.Drawing.Color.LightGray;
             textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.5F);
-            textBoxDescription.Location = new System.Drawing.Point(4, 18);
+            textBoxDescription.Location = new System.Drawing.Point(4, 19);
             textBoxDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxDescription.Size = new System.Drawing.Size(324, 259);
+            textBoxDescription.Size = new System.Drawing.Size(323, 265);
             textBoxDescription.TabIndex = 21;
             textBoxDescription.TextChanged += textBoxDescription_TextChanged;
             // 
@@ -291,8 +287,6 @@
             // 
             groupBoxPreconditions.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxPreconditions.BackColor = System.Drawing.Color.Silver;
-            groupBoxPreconditions.Controls.Add(buttonUpPrecondition);
-            groupBoxPreconditions.Controls.Add(buttonDownPrecondition);
             groupBoxPreconditions.Controls.Add(listBoxPreconditions);
             groupBoxPreconditions.Location = new System.Drawing.Point(0, 0);
             groupBoxPreconditions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -303,40 +297,18 @@
             groupBoxPreconditions.TabStop = false;
             groupBoxPreconditions.Text = "Preconditions :: \"If\"";
             // 
-            // buttonUpPrecondition
-            // 
-            buttonUpPrecondition.Location = new System.Drawing.Point(3, 42);
-            buttonUpPrecondition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonUpPrecondition.Name = "buttonUpPrecondition";
-            buttonUpPrecondition.Size = new System.Drawing.Size(35, 42);
-            buttonUpPrecondition.TabIndex = 7;
-            buttonUpPrecondition.Text = "▲";
-            buttonUpPrecondition.UseVisualStyleBackColor = true;
-            buttonUpPrecondition.Click += buttonUpPrecondition_Click;
-            // 
-            // buttonDownPrecondition
-            // 
-            buttonDownPrecondition.Location = new System.Drawing.Point(3, 81);
-            buttonDownPrecondition.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonDownPrecondition.Name = "buttonDownPrecondition";
-            buttonDownPrecondition.Size = new System.Drawing.Size(35, 42);
-            buttonDownPrecondition.TabIndex = 8;
-            buttonDownPrecondition.Text = "▼";
-            buttonDownPrecondition.UseVisualStyleBackColor = true;
-            buttonDownPrecondition.Click += buttonDownPrecondition_Click;
-            // 
             // listBoxPreconditions
             // 
-            listBoxPreconditions.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             listBoxPreconditions.BackColor = System.Drawing.Color.LightGray;
             listBoxPreconditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            listBoxPreconditions.Dock = System.Windows.Forms.DockStyle.Fill;
             listBoxPreconditions.Font = new System.Drawing.Font("Consolas", 8.5F);
             listBoxPreconditions.FormattingEnabled = true;
             listBoxPreconditions.ItemHeight = 13;
-            listBoxPreconditions.Location = new System.Drawing.Point(38, 18);
+            listBoxPreconditions.Location = new System.Drawing.Point(4, 19);
             listBoxPreconditions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxPreconditions.Name = "listBoxPreconditions";
-            listBoxPreconditions.Size = new System.Drawing.Size(291, 184);
+            listBoxPreconditions.Size = new System.Drawing.Size(325, 185);
             listBoxPreconditions.TabIndex = 9;
             listBoxPreconditions.SelectedIndexChanged += listBoxPreconditions_SelectedIndexChanged;
             listBoxPreconditions.DoubleClick += listBoxPreconditions_DoubleClick;
@@ -345,52 +317,28 @@
             // 
             groupBoxActions.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             groupBoxActions.BackColor = System.Drawing.Color.Silver;
-            groupBoxActions.Controls.Add(buttonUpOperation);
-            groupBoxActions.Controls.Add(buttonDownOperation);
             groupBoxActions.Controls.Add(listBoxOperations);
             groupBoxActions.Location = new System.Drawing.Point(0, 0);
             groupBoxActions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxActions.Name = "groupBoxActions";
             groupBoxActions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxActions.Size = new System.Drawing.Size(333, 284);
+            groupBoxActions.Size = new System.Drawing.Size(333, 285);
             groupBoxActions.TabIndex = 10;
             groupBoxActions.TabStop = false;
             groupBoxActions.Text = "Operations :: \"Do\"";
             // 
-            // buttonUpOperation
-            // 
-            buttonUpOperation.Location = new System.Drawing.Point(3, 42);
-            buttonUpOperation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonUpOperation.Name = "buttonUpOperation";
-            buttonUpOperation.Size = new System.Drawing.Size(35, 42);
-            buttonUpOperation.TabIndex = 11;
-            buttonUpOperation.Text = "▲";
-            buttonUpOperation.UseVisualStyleBackColor = true;
-            buttonUpOperation.Click += buttonUpOperation_Click;
-            // 
-            // buttonDownOperation
-            // 
-            buttonDownOperation.Location = new System.Drawing.Point(3, 81);
-            buttonDownOperation.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            buttonDownOperation.Name = "buttonDownOperation";
-            buttonDownOperation.Size = new System.Drawing.Size(35, 42);
-            buttonDownOperation.TabIndex = 12;
-            buttonDownOperation.Text = "▼";
-            buttonDownOperation.UseVisualStyleBackColor = true;
-            buttonDownOperation.Click += buttonDownOperation_Click;
-            // 
             // listBoxOperations
             // 
-            listBoxOperations.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             listBoxOperations.BackColor = System.Drawing.Color.LightGray;
             listBoxOperations.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            listBoxOperations.Dock = System.Windows.Forms.DockStyle.Fill;
             listBoxOperations.Font = new System.Drawing.Font("Consolas", 8.5F);
             listBoxOperations.FormattingEnabled = true;
             listBoxOperations.ItemHeight = 13;
-            listBoxOperations.Location = new System.Drawing.Point(38, 18);
+            listBoxOperations.Location = new System.Drawing.Point(4, 19);
             listBoxOperations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxOperations.Name = "listBoxOperations";
-            listBoxOperations.Size = new System.Drawing.Size(291, 262);
+            listBoxOperations.Size = new System.Drawing.Size(325, 263);
             listBoxOperations.TabIndex = 13;
             listBoxOperations.SelectedIndexChanged += listBoxOperations_SelectedIndexChanged;
             listBoxOperations.DoubleClick += listBoxOperations_DoubleClick;
@@ -437,10 +385,6 @@
         internal System.Windows.Forms.Label labelmsg;
         internal System.Windows.Forms.ComboBox comboBoxMessage;
         internal System.Windows.Forms.Label labelSenderOptions;
-        private System.Windows.Forms.Button buttonUpPrecondition;
-        private System.Windows.Forms.Button buttonDownPrecondition;
-        private System.Windows.Forms.Button buttonUpOperation;
-        private System.Windows.Forms.Button buttonDownOperation;
         internal System.Windows.Forms.TextBox textBoxSendersLiteralStringValue;
         internal System.Windows.Forms.ComboBox comboBoxSenders;
         internal System.Windows.Forms.Label labelSenderValue;

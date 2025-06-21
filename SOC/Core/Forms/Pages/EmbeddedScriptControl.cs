@@ -381,12 +381,12 @@ namespace SOC.UI
 
         private void listBoxPreconditions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateUpDownButtons(listBoxPreconditions, buttonUpPrecondition, buttonDownPrecondition);
+            //UpdateUpDownButtons(listBoxPreconditions, buttonUpPrecondition, buttonDownPrecondition);
         }
 
         private void listBoxOperations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateUpDownButtons(listBoxOperations, buttonUpOperation, buttonDownOperation);
+            //UpdateUpDownButtons(listBoxOperations, buttonUpOperation, buttonDownOperation);
         }
 
         private void UpdateUpDownButtons(ListBox listBoxScriptals, Button buttonUpOrder, Button buttonDownOrder)

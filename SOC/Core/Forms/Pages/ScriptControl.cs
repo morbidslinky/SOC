@@ -10,6 +10,25 @@ using System.Windows.Forms;
 
 namespace SOC.UI
 {
+    public class DoubleBufferedTreeView : TreeView
+    {
+        public DoubleBufferedTreeView()
+        {
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            UpdateStyles();
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                // Enable composited style for even better flicker suppression
+                cp.ExStyle |= 0x02000000; // WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+    }
+
     public partial class ScriptControl : UserControl
     {
         public Quest Quest;
@@ -224,6 +243,69 @@ namespace SOC.UI
 
             Quest.ScriptDetails.QStep_Main.Clear();
             Quest.ScriptDetails.QStep_Main.AddRange(ScriptTablesRootNode.QStep_Main.ConvertToScripts());
+        }
+
+        private TreeNode draggedNode = null;
+        private TreeNode lastReorderTarget = null;
+        private TreeNodeCollection siblingNodes = null;
+
+        private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            if (sender is not TreeView treeView) return;
+
+            draggedNode = (TreeNode)e.Item;
+            if (treeView.SelectedNode != draggedNode)
+            {
+                treeView.SelectedNode = draggedNode;
+            }
+            siblingNodes = draggedNode.Parent?.Nodes ?? treeView.Nodes;
+            DoDragDrop(draggedNode, DragDropEffects.Move);
+        }
+
+        private void TreeView_DragOver(object sender, DragEventArgs e)
+        {
+            if (sender is not TreeView treeView) return;
+
+            Point pt = treeView.PointToClient(new Point(e.X, e.Y));
+            TreeNode hoverNode = treeView.GetNodeAt(pt);
+
+            if (hoverNode == null || hoverNode == draggedNode || draggedNode is ScriptalParentNode || hoverNode.Parent != draggedNode?.Parent)
+            {
+                return;
+            }
+
+            e.Effect = DragDropEffects.Move;
+            _isUpdatingControls = true;
+
+            lastReorderTarget = hoverNode;
+
+            int hoverIndex = siblingNodes.IndexOf(hoverNode);
+            int dragIndex = siblingNodes.IndexOf(draggedNode);
+
+            if (hoverIndex != dragIndex)
+            {
+                siblingNodes.Remove(draggedNode);
+                siblingNodes.Insert(hoverIndex, draggedNode);
+                treeView.SelectedNode = draggedNode;
+            }
+        }
+
+        private void TreeView_DragDrop(object sender, DragEventArgs e)
+        {
+            if (sender is not TreeView treeView) return;
+
+            _isUpdatingControls = false;
+            UpdateEmbeddedScriptSetDisplay();
+
+            draggedNode = null;
+            lastReorderTarget = null;
+            siblingNodes = null;
+        }
+
+        internal void UpdateEmbeddedScriptSetDisplay()
+        {
+            if (IsEmbedded(ScriptSetEmbed))
+                ScriptSetEmbed.Menu();
         }
     }
 }

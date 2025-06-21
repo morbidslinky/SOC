@@ -45,13 +45,13 @@
             labelChoice = new System.Windows.Forms.Label();
             labelChoiceSet = new System.Windows.Forms.Label();
             comboBoxChoiceSet = new System.Windows.Forms.ComboBox();
+            comboBoxUserVarNodes = new System.Windows.Forms.ComboBox();
             panelBoolean = new System.Windows.Forms.Panel();
             radioButtonFalse = new System.Windows.Forms.RadioButton();
             radioButtonTrue = new System.Windows.Forms.RadioButton();
             textBoxLiteralNumberValue = new System.Windows.Forms.TextBox();
             textBoxLiteralStringValue = new System.Windows.Forms.TextBox();
             comboBoxPresetChoosables = new System.Windows.Forms.ComboBox();
-            comboBoxUserVarNodes = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)splitContainerScriptal).BeginInit();
             splitContainerScriptal.Panel1.SuspendLayout();
             splitContainerScriptal.Panel2.SuspendLayout();
@@ -97,7 +97,7 @@
             groupBoxDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxDescription.Name = "groupBoxDescription";
             groupBoxDescription.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxDescription.Size = new System.Drawing.Size(331, 364);
+            groupBoxDescription.Size = new System.Drawing.Size(331, 365);
             groupBoxDescription.TabIndex = 1;
             groupBoxDescription.TabStop = false;
             // 
@@ -105,17 +105,17 @@
             // 
             textBoxDescription.AcceptsReturn = true;
             textBoxDescription.AcceptsTab = true;
-            textBoxDescription.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxDescription.BackColor = System.Drawing.Color.LightGray;
             textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
             textBoxDescription.Font = new System.Drawing.Font("Consolas", 8.5F);
-            textBoxDescription.Location = new System.Drawing.Point(4, 18);
+            textBoxDescription.Location = new System.Drawing.Point(4, 19);
             textBoxDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
             textBoxDescription.ReadOnly = true;
             textBoxDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxDescription.Size = new System.Drawing.Size(324, 338);
+            textBoxDescription.Size = new System.Drawing.Size(323, 343);
             textBoxDescription.TabIndex = 6;
             // 
             // groupBoxScriptalSelect
@@ -261,7 +261,7 @@
             groupBoxChoice.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             groupBoxChoice.Name = "groupBoxChoice";
             groupBoxChoice.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            groupBoxChoice.Size = new System.Drawing.Size(333, 283);
+            groupBoxChoice.Size = new System.Drawing.Size(333, 285);
             groupBoxChoice.TabIndex = 4;
             groupBoxChoice.TabStop = false;
             // 
@@ -279,14 +279,14 @@
             textBoxChoiceDescription.Name = "textBoxChoiceDescription";
             textBoxChoiceDescription.ReadOnly = true;
             textBoxChoiceDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 193);
+            textBoxChoiceDescription.Size = new System.Drawing.Size(326, 195);
             textBoxChoiceDescription.TabIndex = 6;
             // 
             // labelChoice
             // 
             labelChoice.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoice.AutoSize = true;
-            labelChoice.Location = new System.Drawing.Point(29, 254);
+            labelChoice.Location = new System.Drawing.Point(29, 256);
             labelChoice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoice.Name = "labelChoice";
             labelChoice.Size = new System.Drawing.Size(38, 15);
@@ -297,7 +297,7 @@
             // 
             labelChoiceSet.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             labelChoiceSet.AutoSize = true;
-            labelChoiceSet.Location = new System.Drawing.Point(7, 222);
+            labelChoiceSet.Location = new System.Drawing.Point(7, 224);
             labelChoiceSet.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             labelChoiceSet.Name = "labelChoiceSet";
             labelChoiceSet.Size = new System.Drawing.Size(57, 15);
@@ -310,12 +310,26 @@
             comboBoxChoiceSet.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxChoiceSet.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxChoiceSet.FormattingEnabled = true;
-            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 219);
+            comboBoxChoiceSet.Location = new System.Drawing.Point(79, 221);
             comboBoxChoiceSet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxChoiceSet.Name = "comboBoxChoiceSet";
             comboBoxChoiceSet.Size = new System.Drawing.Size(250, 22);
             comboBoxChoiceSet.TabIndex = 5;
             comboBoxChoiceSet.SelectedIndexChanged += comboBoxChoiceSet_SelectedIndexChanged;
+            // 
+            // comboBoxUserVarNodes
+            // 
+            comboBoxUserVarNodes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            comboBoxUserVarNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxUserVarNodes.Font = new System.Drawing.Font("Consolas", 9F);
+            comboBoxUserVarNodes.FormattingEnabled = true;
+            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 253);
+            comboBoxUserVarNodes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            comboBoxUserVarNodes.Name = "comboBoxUserVarNodes";
+            comboBoxUserVarNodes.Size = new System.Drawing.Size(250, 22);
+            comboBoxUserVarNodes.TabIndex = 8;
+            comboBoxUserVarNodes.DropDown += comboBoxUserVarNodes_DropDown;
+            comboBoxUserVarNodes.SelectedIndexChanged += comboBoxUserVarNodes_SelectedIndexChanged;
             // 
             // panelBoolean
             // 
@@ -325,7 +339,7 @@
             panelBoolean.Controls.Add(radioButtonFalse);
             panelBoolean.Controls.Add(radioButtonTrue);
             panelBoolean.Font = new System.Drawing.Font("Consolas", 9F);
-            panelBoolean.Location = new System.Drawing.Point(79, 251);
+            panelBoolean.Location = new System.Drawing.Point(79, 253);
             panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             panelBoolean.Name = "panelBoolean";
             panelBoolean.Size = new System.Drawing.Size(249, 23);
@@ -364,7 +378,7 @@
             textBoxLiteralNumberValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxLiteralNumberValue.BackColor = System.Drawing.Color.LightGray;
             textBoxLiteralNumberValue.Font = new System.Drawing.Font("Consolas", 9F);
-            textBoxLiteralNumberValue.Location = new System.Drawing.Point(79, 251);
+            textBoxLiteralNumberValue.Location = new System.Drawing.Point(79, 253);
             textBoxLiteralNumberValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxLiteralNumberValue.Name = "textBoxLiteralNumberValue";
             textBoxLiteralNumberValue.Size = new System.Drawing.Size(250, 22);
@@ -379,7 +393,7 @@
             textBoxLiteralStringValue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             textBoxLiteralStringValue.BackColor = System.Drawing.Color.LightGray;
             textBoxLiteralStringValue.Font = new System.Drawing.Font("Consolas", 9F);
-            textBoxLiteralStringValue.Location = new System.Drawing.Point(79, 250);
+            textBoxLiteralStringValue.Location = new System.Drawing.Point(79, 252);
             textBoxLiteralStringValue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBoxLiteralStringValue.Name = "textBoxLiteralStringValue";
             textBoxLiteralStringValue.Size = new System.Drawing.Size(250, 22);
@@ -393,26 +407,12 @@
             comboBoxPresetChoosables.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxPresetChoosables.Font = new System.Drawing.Font("Consolas", 9F);
             comboBoxPresetChoosables.FormattingEnabled = true;
-            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 250);
+            comboBoxPresetChoosables.Location = new System.Drawing.Point(79, 252);
             comboBoxPresetChoosables.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             comboBoxPresetChoosables.Name = "comboBoxPresetChoosables";
             comboBoxPresetChoosables.Size = new System.Drawing.Size(250, 22);
             comboBoxPresetChoosables.TabIndex = 6;
             comboBoxPresetChoosables.SelectedIndexChanged += comboBoxPresetChoosables_SelectedIndexChanged;
-            // 
-            // comboBoxUserVarNodes
-            // 
-            comboBoxUserVarNodes.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            comboBoxUserVarNodes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboBoxUserVarNodes.Font = new System.Drawing.Font("Consolas", 9F);
-            comboBoxUserVarNodes.FormattingEnabled = true;
-            comboBoxUserVarNodes.Location = new System.Drawing.Point(79, 250);
-            comboBoxUserVarNodes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            comboBoxUserVarNodes.Name = "comboBoxUserVarNodes";
-            comboBoxUserVarNodes.Size = new System.Drawing.Size(250, 22);
-            comboBoxUserVarNodes.TabIndex = 8;
-            comboBoxUserVarNodes.DropDown += comboBoxUserVarNodes_DropDown;
-            comboBoxUserVarNodes.SelectedIndexChanged += comboBoxUserVarNodes_SelectedIndexChanged;
             // 
             // EmbeddedScriptalControl
             // 

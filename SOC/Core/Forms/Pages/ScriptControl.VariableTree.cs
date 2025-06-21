@@ -128,6 +128,7 @@ namespace SOC.UI
 
         private void treeViewVariables_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (_isUpdatingControls) return;
             UpdateVariableControlsToSelectedNode();
             RedrawScriptDependents();
         }
@@ -297,12 +298,6 @@ namespace SOC.UI
 
             currentNode.UpdateText();
             UpdateEmbeddedScriptSetDisplay();
-        }
-
-        internal void UpdateEmbeddedScriptSetDisplay()
-        {
-            if (IsEmbedded(ScriptSetEmbed))
-                ScriptSetEmbed.Menu();
         }
 
         private void textBoxName_KeyDown(object sender, KeyEventArgs e)

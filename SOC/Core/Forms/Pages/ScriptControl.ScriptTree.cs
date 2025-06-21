@@ -96,7 +96,7 @@ namespace SOC.UI
                     GetParent32TableNode(scriptNode).DeleteScriptNode(scriptNode);
                     break;
                 case ScriptalNode scriptalNode:
-                    ScriptNode parentScriptNode = scriptalNode.GetUnEventedScriptNode();
+                    ScriptNode parentScriptNode = scriptalNode.GetScriptNode();
                     scriptalNode.ClearAllVarNodeDependencies();
                     scriptalNode.Remove();
                     parentScriptNode.UpdateNodeText();
@@ -157,31 +157,40 @@ namespace SOC.UI
             {
                 case ScriptNode scriptNode:
                     EnabledScriptEditControls(textBoxScriptName, buttonNewOperation, buttonNewPrecondition, buttonRemoveScript);
+
+                    SetMenuText(scriptNode.Identifier.TokenValue, scriptNode.Identifier.Value);
                     embedControl = ScriptEmbed.Menu(scriptNode);
-                    SetMenuText(ScriptEmbed.ToString(), scriptNode.Identifier.Value);
+
                     scriptNode.MarkDependencies();
                     break;
 
                 case ScriptalParentNode parentNode:
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation);
+
                     var ParentScriptNode = parentNode.GetScriptNode();
+                    SetMenuText(ParentScriptNode.Identifier.TokenValue, ParentScriptNode.Identifier.Value);
                     embedControl = ScriptEmbed.Menu(ParentScriptNode);
-                    SetMenuText(ScriptEmbed.ToString(), ParentScriptNode.Identifier.Value);
+
                     parentNode.MarkDependencies();
                     break;
 
                 case ScriptalNode scriptalNode:
                     EnabledScriptEditControls(buttonNewPrecondition, buttonNewOperation, buttonRemoveScript);
-                    SetMenuText(ToString(), scriptalNode.GetUnEventedScriptNode().Identifier.Value);
-                    embedControl = ScriptalEmbed.Menu(scriptalNode); 
+
+                    ParentScriptNode = scriptalNode.GetScriptNode();
+                    SetMenuText(ParentScriptNode.Identifier.TokenValue, ParentScriptNode.Identifier.Value);
+                    embedControl = ScriptalEmbed.Menu(scriptalNode);
+
                     scriptalNode.MarkDependencies();
                     break;
 
                 default:
                     EnabledScriptEditControls();
                     SyncQuestDataToUserInput();
+
                     SetMenuText("Import / Export Script Details", "");
                     embedControl = ScriptSetEmbed.Menu();
+
                     break;
             }
             Embed(embedControl);
@@ -258,7 +267,7 @@ namespace SOC.UI
                     scriptNode = selectedParentNode.GetScriptNode();
                     break;
                 case ScriptalNode selectedScriptalNode:
-                    scriptNode = selectedScriptalNode.GetUnEventedScriptNode();
+                    scriptNode = selectedScriptalNode.GetScriptNode();
                     break;
             }
             return scriptNode;
@@ -685,14 +694,14 @@ namespace SOC.UI
             }
         }
 
-        public ScriptNode GetUnEventedScriptNode()
+        public ScriptNode GetScriptNode()
         {
             return GetScriptalParentNode().GetScriptNode();
         }
 
         public StrCode32 GetEvent()
         {
-            return GetUnEventedScriptNode().getEvent();
+            return GetScriptNode().getEvent();
         }
 
         public ScriptalParentNode GetScriptalParentNode()

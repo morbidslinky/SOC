@@ -33,16 +33,16 @@
             textBoxVarName = new System.Windows.Forms.TextBox();
             buttonNewVariable = new System.Windows.Forms.Button();
             buttonRemoveVariableIdentifier = new System.Windows.Forms.Button();
-            treeViewVariables = new System.Windows.Forms.TreeView();
+            treeViewVariables = new DoubleBufferedTreeView();
+            panelBoolean = new System.Windows.Forms.Panel();
+            radioButtonFalse = new System.Windows.Forms.RadioButton();
+            radioButtonTrue = new System.Windows.Forms.RadioButton();
             textBoxVarNumberValue = new System.Windows.Forms.TextBox();
             textBoxVarStringValue = new System.Windows.Forms.TextBox();
             panelPlaceholder = new System.Windows.Forms.Panel();
             panelNewIdentifier = new System.Windows.Forms.Panel();
             comboBoxTableAddOptions = new System.Windows.Forms.ComboBox();
             buttonNewIdentifier = new System.Windows.Forms.Button();
-            panelBoolean = new System.Windows.Forms.Panel();
-            radioButtonFalse = new System.Windows.Forms.RadioButton();
-            radioButtonTrue = new System.Windows.Forms.RadioButton();
             groupBoxScripts = new System.Windows.Forms.GroupBox();
             splitContainerPreconditionOperation = new System.Windows.Forms.SplitContainer();
             buttonNewPrecondition = new System.Windows.Forms.Button();
@@ -50,15 +50,15 @@
             textBoxScriptName = new System.Windows.Forms.TextBox();
             buttonRemoveScript = new System.Windows.Forms.Button();
             buttonNewScript = new System.Windows.Forms.Button();
-            treeViewScripts = new System.Windows.Forms.TreeView();
+            treeViewScripts = new DoubleBufferedTreeView();
             panelScripting = new System.Windows.Forms.Panel();
             splitContainerOuter = new System.Windows.Forms.SplitContainer();
             splitContainerInner = new System.Windows.Forms.SplitContainer();
             groupBoxScriptDetails = new System.Windows.Forms.GroupBox();
             panelComponentDetails = new System.Windows.Forms.Panel();
             groupBoxVariables.SuspendLayout();
-            panelNewIdentifier.SuspendLayout();
             panelBoolean.SuspendLayout();
+            panelNewIdentifier.SuspendLayout();
             groupBoxScripts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainerPreconditionOperation).BeginInit();
             splitContainerPreconditionOperation.Panel1.SuspendLayout();
@@ -155,6 +155,7 @@
             // 
             // treeViewVariables
             // 
+            treeViewVariables.AllowDrop = true;
             treeViewVariables.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             treeViewVariables.BackColor = System.Drawing.Color.Silver;
             treeViewVariables.Font = new System.Drawing.Font("Consolas", 8.5F);
@@ -166,7 +167,52 @@
             treeViewVariables.Name = "treeViewVariables";
             treeViewVariables.Size = new System.Drawing.Size(295, 363);
             treeViewVariables.TabIndex = 0;
+            treeViewVariables.ItemDrag += treeView_ItemDrag;
             treeViewVariables.AfterSelect += treeViewVariables_AfterSelect;
+            treeViewVariables.DragDrop += TreeView_DragDrop;
+            treeViewVariables.DragOver += TreeView_DragOver;
+            // 
+            // panelBoolean
+            // 
+            panelBoolean.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            panelBoolean.BackColor = System.Drawing.Color.Silver;
+            panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panelBoolean.Controls.Add(radioButtonFalse);
+            panelBoolean.Controls.Add(radioButtonTrue);
+            panelBoolean.Font = new System.Drawing.Font("Consolas", 9F);
+            panelBoolean.Location = new System.Drawing.Point(4, 456);
+            panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            panelBoolean.Name = "panelBoolean";
+            panelBoolean.Size = new System.Drawing.Size(295, 24);
+            panelBoolean.TabIndex = 4;
+            panelBoolean.Visible = false;
+            // 
+            // radioButtonFalse
+            // 
+            radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            radioButtonFalse.AutoSize = true;
+            radioButtonFalse.Checked = true;
+            radioButtonFalse.Location = new System.Drawing.Point(88, 3);
+            radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButtonFalse.Name = "radioButtonFalse";
+            radioButtonFalse.Size = new System.Drawing.Size(60, 18);
+            radioButtonFalse.TabIndex = 6;
+            radioButtonFalse.TabStop = true;
+            radioButtonFalse.Text = "False";
+            radioButtonFalse.UseVisualStyleBackColor = true;
+            radioButtonFalse.CheckedChanged += radioButtonFalse_CheckedChanged;
+            // 
+            // radioButtonTrue
+            // 
+            radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            radioButtonTrue.AutoSize = true;
+            radioButtonTrue.Location = new System.Drawing.Point(156, 3);
+            radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            radioButtonTrue.Name = "radioButtonTrue";
+            radioButtonTrue.Size = new System.Drawing.Size(53, 18);
+            radioButtonTrue.TabIndex = 7;
+            radioButtonTrue.Text = "True";
+            radioButtonTrue.UseVisualStyleBackColor = true;
             // 
             // textBoxVarNumberValue
             // 
@@ -246,48 +292,6 @@
             buttonNewIdentifier.Text = "Add >>";
             buttonNewIdentifier.UseVisualStyleBackColor = true;
             buttonNewIdentifier.Click += buttonNewIdentifier_Click;
-            // 
-            // panelBoolean
-            // 
-            panelBoolean.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            panelBoolean.BackColor = System.Drawing.Color.Silver;
-            panelBoolean.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panelBoolean.Controls.Add(radioButtonFalse);
-            panelBoolean.Controls.Add(radioButtonTrue);
-            panelBoolean.Font = new System.Drawing.Font("Consolas", 9F);
-            panelBoolean.Location = new System.Drawing.Point(4, 456);
-            panelBoolean.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            panelBoolean.Name = "panelBoolean";
-            panelBoolean.Size = new System.Drawing.Size(295, 24);
-            panelBoolean.TabIndex = 4;
-            panelBoolean.Visible = false;
-            // 
-            // radioButtonFalse
-            // 
-            radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            radioButtonFalse.AutoSize = true;
-            radioButtonFalse.Checked = true;
-            radioButtonFalse.Location = new System.Drawing.Point(88, 3);
-            radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            radioButtonFalse.Name = "radioButtonFalse";
-            radioButtonFalse.Size = new System.Drawing.Size(60, 18);
-            radioButtonFalse.TabIndex = 6;
-            radioButtonFalse.TabStop = true;
-            radioButtonFalse.Text = "False";
-            radioButtonFalse.UseVisualStyleBackColor = true;
-            radioButtonFalse.CheckedChanged += radioButtonFalse_CheckedChanged;
-            // 
-            // radioButtonTrue
-            // 
-            radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            radioButtonTrue.AutoSize = true;
-            radioButtonTrue.Location = new System.Drawing.Point(156, 3);
-            radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            radioButtonTrue.Name = "radioButtonTrue";
-            radioButtonTrue.Size = new System.Drawing.Size(53, 18);
-            radioButtonTrue.TabIndex = 7;
-            radioButtonTrue.Text = "True";
-            radioButtonTrue.UseVisualStyleBackColor = true;
             // 
             // groupBoxScripts
             // 
@@ -391,6 +395,7 @@
             // 
             // treeViewScripts
             // 
+            treeViewScripts.AllowDrop = true;
             treeViewScripts.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             treeViewScripts.BackColor = System.Drawing.Color.Silver;
             treeViewScripts.Font = new System.Drawing.Font("Consolas", 8.5F);
@@ -403,7 +408,10 @@
             treeViewScripts.ShowRootLines = false;
             treeViewScripts.Size = new System.Drawing.Size(355, 363);
             treeViewScripts.TabIndex = 0;
+            treeViewScripts.ItemDrag += treeView_ItemDrag;
             treeViewScripts.AfterSelect += treeViewScripts_AfterSelect;
+            treeViewScripts.DragDrop += TreeView_DragDrop;
+            treeViewScripts.DragOver += TreeView_DragOver;
             // 
             // panelScripting
             // 
@@ -492,9 +500,9 @@
             Size = new System.Drawing.Size(1353, 519);
             groupBoxVariables.ResumeLayout(false);
             groupBoxVariables.PerformLayout();
-            panelNewIdentifier.ResumeLayout(false);
             panelBoolean.ResumeLayout(false);
             panelBoolean.PerformLayout();
+            panelNewIdentifier.ResumeLayout(false);
             groupBoxScripts.ResumeLayout(false);
             groupBoxScripts.PerformLayout();
             splitContainerPreconditionOperation.Panel1.ResumeLayout(false);
@@ -519,7 +527,7 @@
         #endregion
 
         internal System.Windows.Forms.GroupBox groupBoxVariables;
-        internal System.Windows.Forms.TreeView treeViewVariables;
+        internal DoubleBufferedTreeView treeViewVariables;
         internal System.Windows.Forms.GroupBox groupBoxScripts;
         internal System.Windows.Forms.ComboBox comboBoxVarType;
         internal System.Windows.Forms.TextBox textBoxVarName;
@@ -530,7 +538,7 @@
         internal System.Windows.Forms.TextBox textBoxVarNumberValue;
         internal System.Windows.Forms.Panel panelScripting;
         internal System.Windows.Forms.GroupBox groupBoxScriptDetails;
-        internal System.Windows.Forms.TreeView treeViewScripts;
+        internal DoubleBufferedTreeView treeViewScripts;
         internal System.Windows.Forms.Button buttonNewScript;
         internal System.Windows.Forms.Button buttonRemoveScript;
         internal System.Windows.Forms.TextBox textBoxScriptName;

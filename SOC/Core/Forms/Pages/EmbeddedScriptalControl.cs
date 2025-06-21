@@ -141,6 +141,8 @@ namespace SOC.UI
 
         private void SetChoiceMenu(Scriptal scriptal)
         {
+            LuaString parentScriptName = ScriptalNode.GetScriptNode().Identifier;
+            ParentControl.SetMenuText($"{parentScriptName} :: {ScriptalNode.Scriptal.Name}", parentScriptName.Value);
             groupBoxChoicesList.Text = $"Choices List :: \"{scriptal.Name}\"";
 
             listBoxChoices.Items.Clear();

@@ -30,13 +30,8 @@ namespace SOC.UI
 
         internal void UpdateMenu()
         {
-            RefreshVariableNodes();
             RefreshScriptNodes();
-
-            if (checkBoxDependencies.Checked)
-            {
-                RefreshCheckBoxes();
-            }
+            RefreshVariableNodes();
 
             int totalItems = checkedListBoxScripts.Items.Count + checkedListBoxVariables.Items.Count;
             int totalChecks = checkedListBoxScripts.CheckedItems.Count + checkedListBoxVariables.CheckedItems.Count;
@@ -50,33 +45,28 @@ namespace SOC.UI
         private void RefreshVariableNodes()
         {
             var varNodes = ParentControl.treeViewVariables.Nodes.OfType<VariableNode>().ToList();
-            foreach (VariableNode varNode in varNodes)
-            {
-                if (!checkedListBoxVariables.Items.Contains(varNode))
-                    checkedListBoxVariables.Items.Add(varNode);
-            }
+            var checkedNodes = checkedListBoxVariables.CheckedItems.OfType<VariableNode>().ToList();
 
-            foreach (VariableNode varNode in checkedListBoxVariables.Items.OfType<VariableNode>().ToList())
+            checkedListBoxVariables.Items.Clear();
+            for (int i = 0; i < varNodes.Count; i++)
             {
-                if (!varNodes.Contains(varNode))
-                    checkedListBoxVariables.Items.Remove(varNode);
+                checkedListBoxVariables.Items.Add(varNodes[i]);
+                if (checkedNodes.Contains(varNodes[i]))
+                    checkedListBoxVariables.SetItemChecked(i, true);
             }
         }
 
         private void RefreshScriptNodes()
         {
-
             var scriptNodes = ParentControl.ScriptTablesRootNode.QStep_Main.GetScriptNodes();
-            foreach (ScriptNode scriptNode in scriptNodes)
-            {
-                if (!checkedListBoxScripts.Items.Contains(scriptNode))
-                    checkedListBoxScripts.Items.Add(scriptNode);
-            }
+            var checkedNodes = checkedListBoxScripts.CheckedItems.OfType<ScriptNode>().ToList();
 
-            foreach (ScriptNode scriptNode in checkedListBoxScripts.Items.OfType<ScriptNode>().ToList())
+            checkedListBoxScripts.Items.Clear();
+            for (int i = 0; i < scriptNodes.Count; i++)
             {
-                if (!scriptNodes.Contains(scriptNode))
-                    checkedListBoxScripts.Items.Remove(scriptNode);
+                checkedListBoxScripts.Items.Add(scriptNodes[i]);
+                if (checkedNodes.Contains(scriptNodes[i]))
+                    checkedListBoxScripts.SetItemChecked(i, true);
             }
         }
 
