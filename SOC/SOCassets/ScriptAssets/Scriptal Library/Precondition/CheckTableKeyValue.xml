@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Check Table Key-Value</Name>
+  <Category>COMPARISONS</Category>
+  <Description>Retrieves a value in a table at the specified key/index and compares it to a value.</Description>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Nil Value">
+	  <Value xsi:type="LuaNil"/>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <EventFunctionTemplate>return |[1|TABLE]|[|[2|STRING,NUMBER]|] == |[3|STRING,NUMBER,BOOLEAN,TABLE,NIL]|</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Table</Name>
+	  <Description>The table to be that stores the value.</Description>
+	</Choice>
+	<Choice>
+	  <Name>Key</Name>
+	  <Description>The key (or index) of the value to be retrieved.</Description>
+	</Choice>
+	<Choice>
+	  <Name>Expected Value</Name>
+	  <Description>The value to compare against. Set to "nil" to check that a key does not exist in the table.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Nil Value</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Nil Value</Key>
+	  <Value xsi:type="LuaNil"/>
+	</Choice>
+  </Choices>
+</Scriptal>

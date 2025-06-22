@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Play Generic Radio Call</Name>
+  <Name>Play Support Radio Call</Name>
   <Category>SOUND EFFECTS</Category>
-  <Description>Immediately plays a radio call from a radio group ID.
+  <Description>Plays radio calls from one or more radio group IDs. This call can attempt to interrupt a support radio talk that is already playing, or wait to play it afterwards.
+This operation also triggers a Radio -&gt; "Start" and Radio -&gt; "Finish" event, which can be handy for chaining logic, especially when a Delay Time is set for the call, without the need for a hidden timer.
+Applying this operation onto a Radio -&gt; "Start" event, with a Group ID as the Sender filter, can effectively overwrite a specific radio call.
 Notes on english dialogue for the group ids can be found here:
 https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
-  <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play(|[1|VARIABLE]|)</EventFunctionTemplate>
+  <EventFunctionTemplate>local |[1|ASSIGN_VARIABLE]| TppRadio.Play( |[1|VARIABLE,STRING,TABLE]|, { delayTime = |[2|NUMBER]|, isEnqueue = |[3|BOOLEAN]| } )</EventFunctionTemplate>
   <EmbeddedChoosableValueSets>
 	<KeyValuesSet Key="Radio Calls">
 	  <Value xsi:type="LuaVariable" Value="ThatsTheTarget">
@@ -14,7 +16,7 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
 	  <Value xsi:type="LuaVariable" Value="ThatsOneOfTheTargets">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg2200" />
 	  </Value>
-	  <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">
+	  <Value xsi:type="LuaVariable" Value="ThatsOneTargetEliminateHim">  
 	    <AssignedTo xsi:type="LuaString" Value="f1000_esrg0610" />
 	  </Value>
 	  <Value xsi:type="LuaVariable" Value="TargetConfirmedDead">
@@ -177,10 +179,11 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
   </EmbeddedChoosableValueSets>
   <Choices>
 	<Choice>
-	  <Name>Radio Preset</Name>
-	  <Description>The radio group ID that will be played over the radio. Wrapped in a variable to provide context.</Description>
-	  <AllowLiteral>false</AllowLiteral>
-	  <AllowUserVariable>false</AllowUserVariable>
+	  <Name>Radio ID</Name>
+	  <Description>The radio group ID that will be played over the radio. Included preset IDs are wrapped in a variable names to provide context.
+In addition to the presets, this choice also accepts strings and index-based tables. Refer to the wiki for useful radio strings: https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/
+A table with a list of strings will play each radio group message back-to-back, but it won't play the same string multiple times. 
+The Sender (for both Start and Finish events) is the first radio string provided.</Description>
 	  <ChoosableValueSetsFilter>
 	    <Key>Radio Calls</Key>
 	  </ChoosableValueSetsFilter>
@@ -188,6 +191,18 @@ https://mgsvmoddingwiki.github.io/RadioIDToEnglishVoice/</Description>
 	  <Value xsi:type="LuaVariable" Value="TargetExtractionConfirmed">
 	    <AssignedTo xsi:type="LuaString" Value="f1000_rtrg1560" />
 	  </Value>
+	</Choice>
+	<Choice>
+	  <Name>Delay Time (Seconds)</Name>
+	  <Description>Applies a delay before the radio call begins. This will also delay all enqueued radio calls as well, but any other scripts will continue to be executed, undelayed.</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="0" />
+	</Choice>
+	<Choice>
+	  <Name>Is Enqueued</Name>
+	  <Description>Enqueued calls will wait for other calls to finish before starting.</Description>
+	  <Key>Boolean Literal</Key>
+	  <Value xsi:type="LuaBoolean" Value="false" />
 	</Choice>
   </Choices>
 </Scriptal>

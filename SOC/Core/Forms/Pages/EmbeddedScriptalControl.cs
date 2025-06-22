@@ -334,7 +334,8 @@ string.Format(@"
                 case ScriptControl.BOOLEAN_LITERAL_SET:
                     selectedChoice.ClearVarNodeDependency();
                     showCorrespondingChoiceControl(panelBoolean, selectedChoice.AllowUIEdit);
-                    if (selectedChoice.Value is LuaBoolean boolean) radioButtonTrue.Checked = boolean.Value;
+                    if (selectedChoice.Value is LuaBoolean boolean && boolean.Value) radioButtonTrue.Checked = true; 
+                    else radioButtonFalse.Checked = true;    
                     UpdateChoiceLiteralValue();
                     break;
 

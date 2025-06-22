@@ -2,6 +2,6 @@
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Lose</Name>
   <Category>MISSION</Category>
-  <Description>The player immediately loses the sideop.</Description>
+  <Description>The player immediately loses the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
   <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.FAILURE)</EventFunctionTemplate>
 </Scriptal>

@@ -101,6 +101,7 @@ namespace SOC.UI
                     scriptalNode.ClearAllVarNodeDependencies();
                     scriptalNode.Remove();
                     parentScriptNode.UpdateNodeText();
+                    parentScriptNode.CheckForDependencyWarnings();
                     break;
                 default:
                     break;

@@ -5,7 +5,7 @@
   <Description>Calls a support helicopter to an LZ to wait for the player. The Helicopter will be routed to the LZ closest to the current position of the player.</Description>
   <EventFunctionTemplate>local tempPlayerPos = TppPlayer.GetPosition()
 GameObject.SendCommand( GameObject.GetGameObjectId( "TppHeli2", "SupportHeli" ), { id = "CallToLandingZoneAtPosition", position = Vector3(tempPlayerPos[1], tempPlayerPos[2], tempPlayerPos[3]) } )
-GameObject.SendCommand( GameObject.GetGameObjectId( "TppHeli2", "SupportHeli" ), { id = "SetTakeOffWaitTime", time = |[2|NUMBER]| } )</EventFunctionTemplate>
+GameObject.SendCommand( GameObject.GetGameObjectId( "TppHeli2", "SupportHeli" ), { id = "SetTakeOffWaitTime", time = |[1|NUMBER]| } )</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Wait For Player Duration</Name>

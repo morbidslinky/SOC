@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Set Variable To Table Count</Name>
+  <Category>VARIABLE MANIPULATIONS</Category>
+  <Description>Updates a custom number-variable to the number of keys in a table.</Description>
+  <EventFunctionTemplate>local tempTableCount = 0 
+for _ in pairs(|[1|TABLE]|) do
+  tempTableCount = tempTableCount + 1
+end
+|[2|NUMBER]| = tempTableCount</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Table</Name>
+	  <Description>The table to be that stores the value.</Description>
+	</Choice>
+	<Choice>
+	  <Name>Number Variable</Name>
+	  <Description>The variable to copy the table count to.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	</Choice>
+  </Choices>
+</Scriptal>

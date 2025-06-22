@@ -192,13 +192,13 @@
             radioButtonFalse.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             radioButtonFalse.AutoSize = true;
             radioButtonFalse.Checked = true;
-            radioButtonFalse.Location = new System.Drawing.Point(88, 3);
+            radioButtonFalse.Location = new System.Drawing.Point(13, 3);
             radioButtonFalse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButtonFalse.Name = "radioButtonFalse";
             radioButtonFalse.Size = new System.Drawing.Size(60, 18);
             radioButtonFalse.TabIndex = 6;
             radioButtonFalse.TabStop = true;
-            radioButtonFalse.Text = "False";
+            radioButtonFalse.Text = "false";
             radioButtonFalse.UseVisualStyleBackColor = true;
             radioButtonFalse.CheckedChanged += radioButtonFalse_CheckedChanged;
             // 
@@ -206,12 +206,12 @@
             // 
             radioButtonTrue.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             radioButtonTrue.AutoSize = true;
-            radioButtonTrue.Location = new System.Drawing.Point(156, 3);
+            radioButtonTrue.Location = new System.Drawing.Point(81, 3);
             radioButtonTrue.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             radioButtonTrue.Name = "radioButtonTrue";
             radioButtonTrue.Size = new System.Drawing.Size(53, 18);
             radioButtonTrue.TabIndex = 7;
-            radioButtonTrue.Text = "True";
+            radioButtonTrue.Text = "true";
             radioButtonTrue.UseVisualStyleBackColor = true;
             // 
             // textBoxVarNumberValue

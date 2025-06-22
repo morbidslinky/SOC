@@ -14,7 +14,7 @@
 	  <Name>Boolean Value</Name>
 	  <Description>The value to set to the User Variable.</Description>
 	  <Key>Boolean Literal</Key>
-	  <Value xsi:type="LuaBoolean" Value="1" />
+	  <Value xsi:type="LuaBoolean" Value="true" />
 	</Choice>
   </Choices>
 </Scriptal>
