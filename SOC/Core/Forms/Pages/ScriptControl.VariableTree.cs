@@ -252,14 +252,25 @@ namespace SOC.UI
 
         private void textBoxVarNumberValue_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (sender is not TextBox textBox) return;
+
             char ch = e.KeyChar;
 
-            if (!char.IsControl(ch) && !char.IsDigit(ch) && ch != '.')
+            if (!char.IsControl(ch) && !char.IsDigit(ch) && ch != '.' && ch != '-')
             {
                 e.Handled = true;
             }
 
-            if (ch == '.' && (sender as TextBox).Text.Contains('.'))
+            if (ch == '-')
+            {
+                if (!textBox.Text.Contains('-'))
+                {
+                    textBox.Text = $"-{textBox.Text}";
+                }
+                e.Handled = true;
+            }
+
+            if (ch == '.' && textBox.Text.Contains('.'))
             {
                 e.Handled = true;
             }

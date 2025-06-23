@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Update Heroism</Name>
+  <Category>REWARDS</Category>
+  <Description>Adds or removes Heroism from the player. A negative number will subtract Heroism.</Description>
+  <EventFunctionTemplate>
+local tempPrintHeroicNotif = ""
+if |[1|NUMBER]| &gt; 0 then
+  TppMotherBaseManagement.AddHeroicPoint( { heroicPoint = |[1|NUMBER]| } )
+  tempPrintHeroicNotif = |[2|STRING]| .. " [Heroism +" .. |[1|NUMBER]| .. "]"
+else
+  TppMotherBaseManagement.SubHeroicPoint( { heroicPoint = math.abs(|[1|NUMBER]|) } )
+  tempPrintHeroicNotif = |[2|STRING]| .. " [Heroism " .. |[1|NUMBER]| .. "]"
+end
+if |[2|STRING]| ~= "" then
+  InfCore.DebugPrint(tempPrintHeroicNotif)
+end
+</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Heroism Value</Name>
+	  <Description>The amount of Heroism to be granted to the player. 
+Set to a negative number to subtract Heroism Points. 
+The mimimum amount of transactionable Heroism is 5.</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="1000" />
+	</Choice>
+	<Choice>
+	  <Name>Notification Message</Name>
+	  <Description>Displays a notification to announce that Heroism has been added or removed. 
+Automatically appends [Heroism &lt;Heroism Value&gt;] to the end, to match the appearance of Heroism notifications in the base game.
+Leave empty to add/remove Heroism without a notification.</Description>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="Objective Complete" />
+	</Choice>
+  </Choices>
+</Scriptal>

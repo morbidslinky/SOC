@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Award Distinguished Service Medal Points</Name>
+  <Category>REWARDS</Category>
+  <Description>Grants points towards the Distinguished Service Medal for the Player Character Staff Member.</Description>
+  <EventFunctionTemplate>TppMotherBaseManagement.AwardedMeritMedalPointToPlayerStaff( { clearRank=|[1|TABLE_IDENTIFIER]| } )</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Mission Clear Ranks">
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="S" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="A" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="B" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="C" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="D" />
+		</TableKeyPath>
+	  </Value>
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="E" />
+		</TableKeyPath>
+	  </Value>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Award Rank Points</Name>
+	  <Description>In the base game, the Distinguished Service Medal is awarded over time, as the staff member completes missions.
+An S rank grants the Medal instantly, or the Medal can be awarded gradually with lower ranks.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <ChoosableValueSetsFilter>
+	    <Key>Mission Clear Ranks</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Mission Clear Ranks</Key>
+	  <Value xsi:type="LuaTableIdentifier" TableVariable="TppDefine">
+	    <TableKeyPath>
+		  <Key xsi:type="LuaString" Value="MISSION_CLEAR_RANK" />
+		  <Key xsi:type="LuaString" Value="S" />
+		</TableKeyPath>
+	  </Value>
+	</Choice>
+  </Choices>
+</Scriptal>

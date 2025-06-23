@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Update Demon Points</Name>
+  <Category>REWARDS</Category>
+  <Description>Adds or removes Demon (Ogre) Points from the player, the hidden morality value to grow Snake's horn. A negative number will subtract Demon Points, shrinking Snake's horn.</Description>
+  <EventFunctionTemplate>
+local tempPrintOgreNotif = ""
+if |[1|NUMBER]| &gt; 0 then
+  TppMotherBaseManagement.AddOgrePoint( { ogrePoint = |[1|NUMBER]| } )
+  tempPrintOgreNotif = |[2|STRING]| .. " [Demon Points +" .. |[1|NUMBER]| .. "]"
+else
+  TppMotherBaseManagement.SubOgrePoint( { ogrePoint = math.abs(|[1|NUMBER]|) } )
+  tempPrintOgreNotif = |[2|STRING]| .. " [Demon Points " .. |[1|NUMBER]| .. "]"
+end
+if |[2|STRING]| ~= "" then
+  InfCore.DebugPrint(tempPrintOgreNotif)
+end
+</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Demon Value</Name>
+	  <Description>The amount of Demon Points to be granted to the player. 
+Set to a negative number to subtract Demon Points. 
+For perspective, fultoning a hostage is -60 Demon Points in the base game. Killing a hostage is +100 Points.
+Read more on Demon point calculation here: https://metalgear.fandom.com/wiki/Demon_Points</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="100" />
+	</Choice>
+	<Choice>
+	  <Name>Notification Message</Name>
+	  <Description>Displays a notification to announce that Demon Points have been added or removed. 
+Automatically appends [Demon Points &lt;Demon Value&gt;] to the end.
+The base game does not notify the player of Demon point values. Leave empty to add/remove Demon Points without a notification.</Description>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="" />
+	</Choice>
+  </Choices>
+</Scriptal>

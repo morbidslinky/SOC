@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Update GMP</Name>
+  <Category>REWARDS</Category>
+  <Description>Adds or removes GMP from the player. A negative number will subtract GMP.</Description>
+  <EventFunctionTemplate>TppTerminal.UpdateGMP( { gmp = |[1|NUMBER]| } )
+if |[2|STRING]| ~= "" then
+  if |[1|NUMBER]| &gt; 0 then
+    InfCore.DebugPrint(|[2|STRING]| .. " [GMP +" .. |[1|NUMBER]| .. "]")
+  else
+    InfCore.DebugPrint(|[2|STRING]| .. " [GMP " .. |[1|NUMBER]| .. "]")
+  end
+end
+</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>GMP Value</Name>
+	  <Description>The amount of GMP to be granted to the player. 
+Set to a negative number to subtract GMP. 
+The mimimum amount of transactionable GMP is 10.</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="1000" />
+	</Choice>
+	<Choice>
+	  <Name>Notification Message</Name>
+	  <Description>Displays a notification to announce that GMP has been added or removed. 
+Automatically appends [GMP &lt;GMP Value&gt;] to the end, to match the appearance of GMP notifications in the base game.
+Leave empty to add/remove GMP without a notification.</Description>
+	  <Key>String Literal</Key>
+	  <Value xsi:type="LuaString" Value="Objective Complete" />
+	</Choice>
+  </Choices>
+</Scriptal>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Award Medal Of Honor</Name>
+  <Category>REWARDS</Category>
+  <Description>Grants the Medal of Honor to the Player Character Staff Member.</Description>
+  <EventFunctionTemplate>TppMotherBaseManagement.AwardedHonorMedalToPlayerStaff()</EventFunctionTemplate>
+</Scriptal>
