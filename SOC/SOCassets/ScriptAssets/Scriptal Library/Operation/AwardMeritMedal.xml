@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Award Distinguished Service Medal Points</Name>
+  <Category>REWARDS</Category>
+  <Description>Grants points towards the Distinguished Service Medal for the Player Character Staff Member. Does not affect Snake.</Description>
+  <EventFunctionTemplate>TppMotherBaseManagement.AwardedMeritMedalPointToPlayerStaff( { clearRank=qvars.MeritProficiencyLookupTable[|[1|STRING]|] } )</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Proficiency Improvement Rate">
+	  <Value xsi:type="LuaString" Value="Proficiency +3"/>
+	  <Value xsi:type="LuaString" Value="Proficiency +2"/>
+	  <Value xsi:type="LuaString" Value="Proficiency +1"/>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Award Rank Points</Name>
+	  <Description>In the base game, the Distinguished Service Medal is awarded over time, as the staff member completes missions.
+The medal is granted after the staff member has earned 9 proficiency points, which can be awarded 1, 2, or 3 points at a time.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <ChoosableValueSetsFilter>
+	    <Key>Proficiency Improvement Rate</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Proficiency Improvement Rate</Key>
+	  <Value xsi:type="LuaString" Value="Proficiency +3"/>
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="MeritProficiencyLookupTable" />
+	  <Value xsi:type="LuaTable" />
+	    <Entries>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Proficiency +3" />
+			<Value xsi:type="LuaString" Value="S" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Proficiency +2" />
+			<Value xsi:type="LuaString" Value="B" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Proficiency +1" />
+			<Value xsi:type="LuaString" Value="E" />
+		  </Entry>
+		</Entries>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

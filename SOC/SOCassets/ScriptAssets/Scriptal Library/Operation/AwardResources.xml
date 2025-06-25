@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Award Resources</Name>
+  <Category>REWARDS</Category>
+  <Description>Grants resources to the player with a notification, such as Processed Materials, Medicinal Plants, Vehicles and Gun Emplacements.</Description>
+  <EventFunctionTemplate>local tempResourceName = |[1|STRING]|
+local tempResourceCount = |[2|NUMBER]|
+InfCore.DebugPrint("Awarded " .. tempResourceName .. " x " .. tempResourceCount)
+TppMotherBaseManagement.DirectAddResource( { resource = qvars.ResourcesLookupDict[tempResourceName], count = tempResourceCount, requestProcess = false, isNew = true } )
+</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Resources">
+	  <Value xsi:type="LuaString" Value="Processed Material [Common Metal]"/>
+	  <Value xsi:type="LuaString" Value="Processed Material [Minor Metal]"/>
+	  <Value xsi:type="LuaString" Value="Processed Material [Precious Metal]"/>
+	  <Value xsi:type="LuaString" Value="Processed Material [Fuel Resources]"/>
+	  <Value xsi:type="LuaString" Value="Processed Material [Biological Material]"/>
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Golden Crescent]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [African Peach]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Digitalis (Purpurea)]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Digitalis (Lutea)]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Black Carrot]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Wormwood]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Tarragon]" />
+	  <Value xsi:type="LuaString" Value="Medicinal Plant [Haoma]" />
+	  <Value xsi:type="LuaString" Value="Four-Wheel Drive [ZaAZ-S84/4W]" />
+	  <Value xsi:type="LuaString" Value="Four-Wheel Drive [APE T-41LV]" />
+	  <Value xsi:type="LuaString" Value="Truck [Zi-GRA 6T]" />
+	  <Value xsi:type="LuaString" Value="Truck [BOAR-53CT]" />
+	  <Value xsi:type="LuaString" Value="Armored Vehicle [ZHUK BR-3]" />
+	  <Value xsi:type="LuaString" Value="Armored Vehicle [ZHUK RS-Z0]" />
+	  <Value xsi:type="LuaString" Value="Armored Vehicle [STOUT IFV-SC]" />
+	  <Value xsi:type="LuaString" Value="Armored Vehicle [STOUT IFV-FS]" />
+	  <Value xsi:type="LuaString" Value="Tank [TT77 NOSOROG]" />
+	  <Value xsi:type="LuaString" Value="Tank [M84A MAGLOADER]" />
+	  <Value xsi:type="LuaString" Value="Walker Gear [CCCP-WG TYPE-A]" />
+	  <Value xsi:type="LuaString" Value="Walker Gear [CCCP-WG TYPE-B]" />
+	  <Value xsi:type="LuaString" Value="Walker Gear [CCCP-WG TYPE-C]" />
+	  <Value xsi:type="LuaString" Value="Walker Gear [CFA-WG TYPE-A]" />
+	  <Value xsi:type="LuaString" Value="Walker Gear [CFA-WG TYPE-B]" />
+	  <Value xsi:type="LuaString" Value="Walker Gear [CFA-WG TYPE-C]" />
+	  <Value xsi:type="LuaString" Value="Skull Parasites [Camo]" />
+	  <Value xsi:type="LuaString" Value="Skull Parasites [Mist]" />
+	  <Value xsi:type="LuaString" Value="Skull Parasites [Armor]" />
+	  <Value xsi:type="LuaString" Value="Gun Emplacement [VOL-GA K12]" />
+	  <Value xsi:type="LuaString" Value="Gun Emplacement [HMG-3 WINGATE]" />
+	  <Value xsi:type="LuaString" Value="Mortar [M2A-304 MORTAR]" />
+	  <Value xsi:type="LuaString" Value="Anti-Air Cannon [ZHIZDRA-45]" />
+	  <Value xsi:type="LuaString" Value="Anti-Air Cannon [M276 AA G-GUN]" />
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Resource Type</Name>
+	  <Description>The resource that is granted to the player.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Resources</Key>
+	  </ChoosableValueSetsFilter>
+	  <AllowLiteral>false</AllowLiteral>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <Key>Resources</Key>
+	  <Value xsi:type="LuaString" Value="Processed Material [Common Metal]"/>
+	</Choice>
+	<Choice>
+	  <Name>Amount</Name>
+	  <Description>The amount of resource provided to the player.</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="10" />
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="ResourcesLookupDict" />
+	  <Value xsi:type="LuaTable">
+	    <Entries>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Processed Material [Common Metal]" />
+			<Value xsi:type="LuaString" Value="CommonMetal" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Processed Material [Minor Metal]" />
+			<Value xsi:type="LuaString" Value="MinorMetal" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Processed Material [Precious Metal]" />
+			<Value xsi:type="LuaString" Value="PreciousMetal" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Processed Material [Fuel Resources]" />
+			<Value xsi:type="LuaString" Value="FuelResource" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Processed Material [Biological Material]" />
+			<Value xsi:type="LuaString" Value="BioticResource" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Golden Crescent]" />
+			<Value xsi:type="LuaString" Value="Plant2000" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [African Peach]" />
+			<Value xsi:type="LuaString" Value="Plant2001" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Digitalis (Purpurea)]" />
+			<Value xsi:type="LuaString" Value="Plant2002" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Digitalis (Lutea)]" />
+			<Value xsi:type="LuaString" Value="Plant2003" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Black Carrot]" />
+			<Value xsi:type="LuaString" Value="Plant2004" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Wormwood]" />
+			<Value xsi:type="LuaString" Value="Plant2005" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Tarragon]" />
+			<Value xsi:type="LuaString" Value="Plant2006" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Medicinal Plant [Haoma]" />
+			<Value xsi:type="LuaString" Value="Plant2007" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Four-Wheel Drive [ZaAZ-S84/4W]" />
+			<Value xsi:type="LuaString" Value="4wdEast" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Four-Wheel Drive [APE T-41LV]" />
+			<Value xsi:type="LuaString" Value="4wdWest" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Truck [Zi-GRA 6T]" />
+			<Value xsi:type="LuaString" Value="TruckEast" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Truck [BOAR-53CT]" />
+			<Value xsi:type="LuaString" Value="TruckWest" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Armored Vehicle [ZHUK BR-3]" />
+			<Value xsi:type="LuaString" Value="ArmoredVehicleEast" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Armored Vehicle [ZHUK RS-Z0]" />
+			<Value xsi:type="LuaString" Value="ArmoredVehicleEastRocket" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Armored Vehicle [STOUT IFV-SC]" />
+			<Value xsi:type="LuaString" Value="ArmoredVehicleWest" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Armored Vehicle [STOUT IFV-FS]" />
+			<Value xsi:type="LuaString" Value="WheeledArmoredVehicleWest" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Tank [TT77 NOSOROG]" />
+			<Value xsi:type="LuaString" Value="TankEast" />
+		  </Entry>
+		  <Entry>
+			<Key xsi:type="LuaString" Value="Tank [M84A MAGLOADER]" />
+			<Value xsi:type="LuaString" Value="TankWest" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Walker Gear [CFA-WG TYPE-A]" />
+			<Value xsi:type="LuaString" Value="CfaWalkerGear1" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Walker Gear [CFA-WG TYPE-B]" />
+			<Value xsi:type="LuaString" Value="CfaWalkerGear2" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Walker Gear [CFA-WG TYPE-C]" />
+			<Value xsi:type="LuaString" Value="CfaWalkerGear3" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Walker Gear [CCCP-WG TYPE-A]" />
+			<Value xsi:type="LuaString" Value="SovietWalkerGear1" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Walker Gear [CCCP-WG TYPE-B]" />
+			<Value xsi:type="LuaString" Value="SovietWalkerGear2" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Walker Gear [CCCP-WG TYPE-C]" />
+			<Value xsi:type="LuaString" Value="SovietWalkerGear3" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Skull Parasites [Camo]" />
+			<Value xsi:type="LuaString" Value="ParasiteFog" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Skull Parasites [Mist]" />
+			<Value xsi:type="LuaString" Value="ParasiteCamofla" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Skull Parasites [Armor]" />
+			<Value xsi:type="LuaString" Value="ParasiteCuring" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Gun Emplacement [VOL-GA K12]" />
+			<Value xsi:type="LuaString" Value="EmplacementGunEast" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Gun Emplacement [HMG-3 WINGATE]" />
+			<Value xsi:type="LuaString" Value="EmplacementGunWest" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Mortar [M2A-304 MORTAR]" />
+			<Value xsi:type="LuaString" Value="Mortar" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Anti-Air Cannon [ZHIZDRA-45]" />
+			<Value xsi:type="LuaString" Value="AntiAirGatlingGunEast" />
+		  </Entry>
+		  <Entry>
+		    <Key xsi:type="LuaString" Value="Anti-Air Cannon [M276 AA G-GUN]" />
+			<Value xsi:type="LuaString" Value="AntiAirGatlingGunWest" />
+		  </Entry>
+		</Entries>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Award Service Cross Medal</Name>
+  <Category>REWARDS</Category>
+  <Description>Grants the Service Cross Medal to the Player Character Staff Member. Does not affect Snake.</Description>
+  <EventFunctionTemplate>if not qvars.CrossMedalAwarded then
+  qvars.CrossMedalAwarded = true
+  InfCore.DebugPrint("Awarded Service Cross Medal")
+  local tempstaffId = Player.GetStaffIdAtInstanceIndex(0)
+  TppMotherBaseManagement.SetStaffCrossMedalByStaffId({ staffId = tempstaffId, got = true })
+end</EventFunctionTemplate>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition>
+	  <Key xsi:type="LuaString" Value="CrossMedalAwarded" />
+	  <Value xsi:type="LuaNil" />
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>
