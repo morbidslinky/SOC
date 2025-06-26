@@ -123,9 +123,6 @@ namespace SOC.UI
             if (selectedCode == MISSION_CODE)
             {
                 comboBoxMessage.DropDownStyle = ComboBoxStyle.DropDown;
-                if (comboBoxMessage.Items.Count > 0)
-                    comboBoxSenderOptions.SelectedItem = 0;
-                comboBoxSenderOptions.Enabled = false;
 
                 if (match != null)
                 {
@@ -136,6 +133,9 @@ namespace SOC.UI
                     comboBoxMessage.Text = text.Value;
                     MoveSelectedScript(Create.Nil());
                 }
+
+                comboBoxSenderOptions.SelectedItem = comboBoxSenderOptions.Items.OfType<ChoiceKeyValues>().FirstOrDefault(set => set.Key == StrCode32.NIL_LITERAL_KEY);
+                comboBoxSenderOptions.Enabled = false;
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using SOC.Classes.Common;
 using SOC.QuestObjects.Common;
+using System.Linq;
 
 namespace SOC.Classes.Lua
 {
@@ -31,9 +32,10 @@ namespace SOC.Classes.Lua
             QStep_Main.StrCode32Table.AddCommonDefinitions(Quest.ScriptDetails.VariableDeclarations.ToArray());
             QStep_Main.StrCode32Table.Add(Quest.ScriptDetails.QStep_Main);
 
+            LuaString questTrapName = Create.String($"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}");
             QStep_Main.StrCode32Table.AddCommonDefinitions(
                 Create.TableEntry("DISTANTCP", QuestObjects.Enemy.EnemyInfo.ChooseDistantCP(Quest.SetupDetails.CPName, Quest.SetupDetails.locationID)),
-                Create.TableEntry("questTrapName", $"trap_preDeactiveQuestArea_{Quest.SetupDetails.loadArea}")
+                Create.TableEntry("questTrapName", questTrapName)
             );
 
             if (Quest.SetupDetails.CPName == "NONE")
@@ -52,6 +54,8 @@ namespace SOC.Classes.Lua
             QUEST_TABLE.Add(
                 Create.TableEntry("questType", Create.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
             );
+
+            AddTrapAreaHooks(questTrapName);
 
             foreach (ObjectsDetail detail in Quest.ObjectsDetails.Details)
             {
@@ -76,6 +80,25 @@ namespace SOC.Classes.Lua
             QStep_Main_MessagesDefVariable.AssignedTo = QStep_Main.StrCode32Table.GetStrCode32DefinitionsTable(QStep_Main_MessagesDefVariable.Value);
             Quest_MessagesDefVariable.AssignedTo = Messages.GetMessagesDefs();
             CommonDefinitionsVariable.AssignedTo = QStep_Main.StrCode32Table.GetCommonDefinitionsTable();
+        }
+
+        private void AddTrapAreaHooks(LuaString questTrapName)
+        {
+            string missionEnterCall = Create.FunctionCall(Create.TableIdentifier("Mission", "SendMessage"),
+                new LuaValue[] { Create.String("Mission"), Create.String("OnEnterQuestArea") }.Concat(StrCode32.GetDefaultParametersAsVariables()).ToArray()).TokenValue;
+
+            Script enterTrapHook = new Script(
+                new StrCode32("Trap", Create.String("Enter"), "", questTrapName),
+                Create.FunctionAsTableEntry("QuestArea", StrCode32.DefaultParameters, missionEnterCall, true));
+
+            string missionExitCall = Create.FunctionCall(Create.TableIdentifier("Mission", "SendMessage"),
+                new LuaValue[] { Create.String("Mission"), Create.String("OnLeaveQuestArea") }.Concat(StrCode32.GetDefaultParametersAsVariables()).ToArray()).TokenValue;
+
+            Script exitTrapHook = new Script(
+                    new StrCode32("Trap", Create.String("Exit"), "", questTrapName),
+                    Create.FunctionAsTableEntry("QuestArea", StrCode32.DefaultParameters, missionExitCall, true));
+
+            QStep_Main.StrCode32Table.Add(enterTrapHook, exitTrapHook);
         }
 
         public void Build(string mainLuaFilePath)

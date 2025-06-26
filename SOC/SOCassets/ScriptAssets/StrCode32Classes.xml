@@ -7,6 +7,8 @@
   <KeyValuesSet Key="Mission">
     <Value xsi:type="LuaString" Value="OnTargetExtraction" />
     <Value xsi:type="LuaString" Value="OnTargetDeath" />
+    <Value xsi:type="LuaString" Value="OnEnterQuestArea" />
+    <Value xsi:type="LuaString" Value="OnLeaveQuestArea" />
   </KeyValuesSet>
   <KeyValuesSet Key="Timer">
     <Value xsi:type="LuaString" Value="Start" />
