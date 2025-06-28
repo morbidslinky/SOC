@@ -324,28 +324,45 @@ namespace SOC.UI
 
         private void textBoxSendersLiteralNumberValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (sender is not TextBox textBox) return;
+            TextBox textBox = sender as TextBox;
+            char keyChar = e.KeyChar;
 
-            char ch = e.KeyChar;
-
-            if (!char.IsControl(ch) && !char.IsDigit(ch) && ch != '.' && ch != '-')
+            if (char.IsControl(keyChar))
             {
-                e.Handled = true;
+                return;
             }
 
-            if (ch == '-')
+            if (textBox.SelectionStart == 0 && textBox.SelectionLength == 0 && textBox.Text.Contains("-"))
+            {
+                textBox.SelectionStart = 1;
+            }
+
+            if (keyChar == '-')
             {
                 if (!textBox.Text.Contains('-'))
                 {
                     textBox.Text = $"-{textBox.Text}";
                 }
                 e.Handled = true;
+                return;
             }
 
-            if (ch == '.' && textBox.Text.Contains('.'))
+            if (char.IsDigit(keyChar))
             {
-                e.Handled = true;
+                return;
             }
+
+            if (keyChar == '.')
+            {
+                if (textBox.Text.Contains('.'))
+                {
+                    e.Handled = true;
+                    return;
+                }
+                return;
+            }
+
+            e.Handled = true;
         }
 
         public void PopulateScriptalControls()
