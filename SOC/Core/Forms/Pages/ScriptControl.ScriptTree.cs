@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SOC.UI
 {
@@ -18,6 +19,8 @@ namespace SOC.UI
 
             treeViewScripts.SelectedNode = ScriptTablesRootNode.QStep_Main.Add(newEventScript);
             treeViewScripts.SelectedNode.ExpandAll();
+
+            treeViewScripts.Focus();
         }
 
         private StrCode32 GetEventFromSelection()
@@ -89,6 +92,11 @@ namespace SOC.UI
 
         private void buttonRemoveScript_Click(object sender, EventArgs e)
         {
+            DeleteSelectedNode();
+        }
+
+        private void DeleteSelectedNode()
+        {
             switch (treeViewScripts.SelectedNode)
             {
                 case ScriptNode scriptNode:
@@ -130,6 +138,14 @@ namespace SOC.UI
         private void treeViewScripts_AfterSelect(object sender, TreeViewEventArgs e)
         {
             UpdateScriptControlsToSelectedNode();
+        }
+
+        private void treeViewScripts_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeleteSelectedNode();
+            }
         }
 
         internal void Embed(UserControl control)

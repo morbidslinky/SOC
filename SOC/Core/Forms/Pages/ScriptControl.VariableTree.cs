@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using static SOC.Classes.Lua.Choice;
 using static SOC.Classes.Lua.LuaValue;
 
 namespace SOC.UI
@@ -28,10 +27,25 @@ namespace SOC.UI
             treeViewVariables.SelectedNode = node;
 
             UpdateEmbeddedScriptSetDisplay();
+            treeViewVariables.Focus();
         }
 
         private void buttonRemoveVariableIdentifier_Click(object sender, EventArgs e)
         {
+            DeleteSelectedVariable();
+        }
+
+        private void treeViewVariables_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeleteSelectedVariable();
+            }
+        }
+
+        private void DeleteSelectedVariable()
+        {
+
             if (treeViewVariables.SelectedNode == null) { return; }
 
             var selectedNode = (VariableNode)treeViewVariables.SelectedNode;

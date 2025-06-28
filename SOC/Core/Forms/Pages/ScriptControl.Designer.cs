@@ -169,6 +169,7 @@
             treeViewVariables.TabIndex = 0;
             treeViewVariables.ItemDrag += treeView_ItemDrag;
             treeViewVariables.AfterSelect += treeViewVariables_AfterSelect;
+            treeViewVariables.KeyDown += treeViewVariables_KeyDown;
             treeViewVariables.DragDrop += TreeView_DragDrop;
             treeViewVariables.DragOver += TreeView_DragOver;
             // 
@@ -410,6 +411,7 @@
             treeViewScripts.TabIndex = 0;
             treeViewScripts.ItemDrag += treeView_ItemDrag;
             treeViewScripts.AfterSelect += treeViewScripts_AfterSelect;
+            treeViewScripts.KeyDown += treeViewScripts_KeyDown;
             treeViewScripts.DragDrop += TreeView_DragDrop;
             treeViewScripts.DragOver += TreeView_DragOver;
             // 
