@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Update GMP</Name>
+  <Version>1.0</Version>
   <Category>REWARDS</Category>
   <Description>Adds or removes GMP from the player. A negative number will subtract GMP.</Description>
   <EventFunctionTemplate>TppTerminal.UpdateGMP( { gmp = |[1|NUMBER]| } )

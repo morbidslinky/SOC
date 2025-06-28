@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Update Table Value</Name>
+  <Name>Set Table Value</Name>
+  <Version>1.0</Version>
   <Category>VARIABLE MANIPULATIONS</Category>
   <Description>Sets a value in a table at the specified key/index</Description>
   <EventFunctionTemplate>|[1|TABLE]|[|[2|STRING,NUMBER]|] = |[3|STRING,NUMBER,BOOLEAN,TABLE]|</EventFunctionTemplate>

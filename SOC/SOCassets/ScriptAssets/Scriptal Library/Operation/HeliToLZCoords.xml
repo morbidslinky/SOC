@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Call Heli To LZ Coordinates</Name>
+  <Version>1.0</Version>
   <Category>GAMEPLAY EFFECTS</Category>
   <Description>Calls a support helicopter to an LZ to wait for the player. The Helicopter will be routed to the LZ closest to the coordinates provided.</Description>
   <EventFunctionTemplate>local tempHeliPos = |[1|TABLE]|

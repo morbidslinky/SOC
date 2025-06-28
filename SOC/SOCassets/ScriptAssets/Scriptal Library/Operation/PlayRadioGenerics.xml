@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Play Support Radio Call</Name>
+  <Version>1.0</Version>
   <Category>SOUND EFFECTS</Category>
   <Description>Plays radio calls from one or more radio group IDs. This call can attempt to interrupt a support radio talk that is already playing, or wait to play it afterwards.
 This operation also triggers a Radio -&gt; "Start" and Radio -&gt; "Finish" event, which can be handy for chaining logic, especially when a Delay Time is set for the call, without the need for a hidden timer.

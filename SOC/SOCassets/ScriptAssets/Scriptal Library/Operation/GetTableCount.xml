@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Set Variable To Table Count</Name>
+  <Version>1.0</Version>
   <Category>VARIABLE MANIPULATIONS</Category>
   <Description>Updates a custom number-variable to the number of keys in a table.</Description>
   <EventFunctionTemplate>local tempTableCount = 0 

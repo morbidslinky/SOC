@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Force Stop Radio Call</Name>
+  <Version>1.0</Version>
   <Category>SOUND EFFECTS</Category>
   <Description>Almost immediately stops any ongoing support radio call by rapidly fading out the radio and ending the subtitle display. 
 This operation is fast enough that it can mute common radio calls if applied to the same event, like Kaz's common "That's the Target" line when applied to the Marker -&gt; "ChangeToEnable" event. 

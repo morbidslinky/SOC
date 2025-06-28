@@ -14,6 +14,7 @@
       <Operations>
         <Operation>
           <Name>Get Total Target Count</Name>
+          <Version>1.0</Version>
           <Category>MISSION</Category>
           <Description>Updates a variable to the number of total target objectives in the sideop.</Description>
           <EventFunctionTemplate>|[1|NUMBER]| = qvars.GetTargetCount()</EventFunctionTemplate>
@@ -78,6 +79,7 @@ return totalTargets</Template>
       <Preconditions>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -243,6 +245,7 @@ return totalTargets</Template>
         </Precondition>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -415,6 +418,7 @@ return totalTargets</Template>
       <Operations>
         <Operation>
           <Name>Win</Name>
+          <Version>1.0</Version>
           <Category>MISSION</Category>
           <Description>The player immediately wins the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
           <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.CLEAR)</EventFunctionTemplate>
@@ -436,6 +440,7 @@ return totalTargets</Template>
       <Preconditions>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -601,6 +606,7 @@ return totalTargets</Template>
         </Precondition>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -773,6 +779,7 @@ return totalTargets</Template>
       <Operations>
         <Operation>
           <Name>Print Sideop Progress Notification</Name>
+          <Version>1.0</Version>
           <Category>USER INTERFACE</Category>
           <Description>Prints the Progress Notification associated to the current sideop, given a current tally of the objectives completed and the total count of objectives.</Description>
           <EventFunctionTemplate>local tempCurrentObjectiveCount = |[1|NUMBER]|
@@ -831,6 +838,7 @@ end</EventFunctionTemplate>
       <Preconditions>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -998,6 +1006,7 @@ end</EventFunctionTemplate>
       <Operations>
         <Operation>
           <Name>Lose</Name>
+          <Version>1.0</Version>
           <Category>MISSION</Category>
           <Description>The player immediately loses the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
           <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.FAILURE)</EventFunctionTemplate>
@@ -1020,6 +1029,7 @@ end</EventFunctionTemplate>
       <Operations>
         <Operation>
           <Name>Get Total Target Count</Name>
+          <Version>1.0</Version>
           <Category>MISSION</Category>
           <Description>Updates a variable to the number of total target objectives in the sideop.</Description>
           <EventFunctionTemplate>|[1|NUMBER]| = qvars.GetTargetCount()</EventFunctionTemplate>
@@ -1084,6 +1094,7 @@ return totalTargets</Template>
       <Preconditions>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -1249,6 +1260,7 @@ return totalTargets</Template>
         </Precondition>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -1421,6 +1433,7 @@ return totalTargets</Template>
       <Operations>
         <Operation>
           <Name>Win</Name>
+          <Version>1.0</Version>
           <Category>MISSION</Category>
           <Description>The player immediately wins the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
           <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.CLEAR)</EventFunctionTemplate>
@@ -1442,6 +1455,7 @@ return totalTargets</Template>
       <Preconditions>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -1607,6 +1621,7 @@ return totalTargets</Template>
         </Precondition>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -1779,6 +1794,7 @@ return totalTargets</Template>
       <Operations>
         <Operation>
           <Name>Print Sideop Progress Notification</Name>
+          <Version>1.0</Version>
           <Category>USER INTERFACE</Category>
           <Description>Prints the Progress Notification associated to the current sideop, given a current tally of the objectives completed and the total count of objectives.</Description>
           <EventFunctionTemplate>local tempCurrentObjectiveCount = |[1|NUMBER]|
@@ -1837,6 +1853,7 @@ end</EventFunctionTemplate>
       <Preconditions>
         <Precondition>
           <Name>Compare Number Values</Name>
+          <Version>1.0</Version>
           <Category>COMPARISONS</Category>
           <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.
@@ -2004,6 +2021,7 @@ end</EventFunctionTemplate>
       <Operations>
         <Operation>
           <Name>Lose</Name>
+          <Version>1.0</Version>
           <Category>MISSION</Category>
           <Description>The player immediately loses the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
           <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.FAILURE)</EventFunctionTemplate>

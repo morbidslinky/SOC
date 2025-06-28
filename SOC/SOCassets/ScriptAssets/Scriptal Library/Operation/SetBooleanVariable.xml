@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Set Boolean Variable</Name>
+  <Version>1.0</Version>
   <Category>VARIABLE MANIPULATIONS</Category>
   <Description>Stores a Boolean to a user Variable.</Description>
   <EventFunctionTemplate>|[1|BOOLEAN]| = |[2|BOOLEAN]|</EventFunctionTemplate>

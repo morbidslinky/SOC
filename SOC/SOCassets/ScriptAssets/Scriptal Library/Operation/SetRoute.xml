@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Set Route</Name>
+  <Version>1.0</Version>
   <Category>ROUTES AND POSITIONS</Category>
   <Description>Immediately sets the patrol route of a specific Game Object.
 Compatible with Soldiers, Helicopters, UAVs and Prisoners.

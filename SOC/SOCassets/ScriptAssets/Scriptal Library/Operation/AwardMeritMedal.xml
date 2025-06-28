@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Award Distinguished Service Medal Points</Name>
+  <Version>1.0</Version>
   <Category>REWARDS</Category>
   <Description>Grants points towards the Distinguished Service Medal for the Player Character Staff Member. Does not affect Snake.</Description>
   <EventFunctionTemplate>TppMotherBaseManagement.AwardedMeritMedalPointToPlayerStaff( { clearRank=qvars.MeritProficiencyLookupTable[|[1|STRING]|] } )</EventFunctionTemplate>

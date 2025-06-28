@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Set Sneak Route</Name>
+  <Version>1.0</Version>
   <Category>ROUTES AND POSITIONS</Category>
   <Description>Updates the route that the NPC patrols while out of the caution phase.
 Compatible with soldiers, helicopters and prisoners.

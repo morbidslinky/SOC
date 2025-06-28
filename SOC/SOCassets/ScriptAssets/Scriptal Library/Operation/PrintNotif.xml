@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Print Notification</Name>
+  <Version>1.0</Version>
   <Category>USER INTERFACE</Category>
   <Description>Prints up to 5 strings and or numbers as an in-game notification.</Description>
   <EventFunctionTemplate>InfCore.DebugPrint(|[1|STRING,NUMBER]| .. |[2|STRING,NUMBER]| .. |[3|STRING,NUMBER]| .. |[4|STRING,NUMBER]| .. |[5|STRING,NUMBER]|)</EventFunctionTemplate>

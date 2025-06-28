@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Set Variable To StrCode32 Number</Name>
+  <Name>Set Variable To StrCode32</Name>
+  <Version>1.0</Version>
   <Category>VARIABLE MANIPULATIONS</Category>
   <Description>Converts a string to a StrCode32 number and stores it to a variable.
 Default Event Arguments all numbers, so the game will convert strings to numbers when passing them as the event's args, like Route Names or GeoTrap Names.

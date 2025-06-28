@@ -343,6 +343,9 @@ namespace SOC.Classes.Lua
         public string Name;
 
         [XmlElement]
+        public string Version = "";
+
+        [XmlElement]
         public string Category = "ALL";
 
         [XmlElement]

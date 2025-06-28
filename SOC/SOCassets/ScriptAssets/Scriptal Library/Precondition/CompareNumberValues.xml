@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Compare Number Values</Name>
+  <Version>1.0</Version>
   <Category>COMPARISONS</Category>
   <Description>Compares two numbers. 
 - 'qvars.Equals' returns true when Num1 and Num2 are the same value.

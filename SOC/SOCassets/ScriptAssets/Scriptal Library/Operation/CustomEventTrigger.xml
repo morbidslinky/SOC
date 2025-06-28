@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Custom Event Trigger</Name>
+  <Version>1.0</Version>
   <Category>MISSION</Category>
   <Description>Immediately triggers a custom 'Mission' StrCode32 event.
 This can be used for daisy-chaining events together, or creating an event loop.</Description>

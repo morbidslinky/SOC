@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Check GameObjectId</Name>
+  <Version>1.0</Version>
   <Category>GAME OBJECTS</Category>
   <Description>Checks to see if a number matches a GameObjectId. Handy for checking event arguments.
 This is the go-to method of checking if a game object is involved in an event, and much more reliable than filtering events with Senders.

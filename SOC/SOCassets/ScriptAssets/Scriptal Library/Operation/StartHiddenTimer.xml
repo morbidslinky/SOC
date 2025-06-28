@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Start Hidden Timer</Name>
+  <Version>1.0</Version>
   <Category>TIMERS</Category>
   <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
 This can be used for chaining events together on a delay, or creating a delayed event loop.

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Map NPC Table to Route Table</Name>
+  <Version>1.0</Version>
   <Category>ROUTES AND POSITIONS</Category>
   <Description>Sets NPCs from an index-based table to routes from another index-based table.
 Compatible with Soldiers, Helicopters, UAVs and Prisoners, depending on the Route Type Choice.

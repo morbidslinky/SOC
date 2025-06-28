@@ -76,7 +76,11 @@ namespace SOC.UI
                 comboBoxScriptalTemplate.Items.AddRange([.. ScriptalTemplates.Where(template => template.Category == selectedCategory)]);
             }
 
-            Scriptal matchingTemplate = comboBoxScriptalTemplate.Items.OfType<Scriptal>().FirstOrDefault(template => template.Name == ScriptalNode.Scriptal.Name && template.EventFunctionTemplate == ScriptalNode.Scriptal.EventFunctionTemplate);
+            Scriptal matchingTemplate = comboBoxScriptalTemplate.Items.OfType<Scriptal>().FirstOrDefault(template => 
+            template.Name == ScriptalNode.Scriptal.Name && 
+            template.Version == ScriptalNode.Scriptal.Version &&
+            template.EventFunctionTemplate == ScriptalNode.Scriptal.EventFunctionTemplate);
+
             if (matchingTemplate != null)
             {
                 int matchingIndex = comboBoxScriptalTemplate.Items.IndexOf(matchingTemplate);
@@ -142,7 +146,7 @@ namespace SOC.UI
         private void SetChoiceMenu(Scriptal scriptal)
         {
             LuaString parentScriptName = ScriptalNode.GetScriptNode().Identifier;
-            ParentControl.SetMenuText($"{parentScriptName} :: {ScriptalNode.Scriptal.Name}", parentScriptName.Value);
+            ParentControl.SetMenuText($"{parentScriptName} :: {ScriptalNode.Scriptal.Name} {ScriptalNode.Scriptal.Version}", parentScriptName.Value);
             groupBoxChoicesList.Text = $"Choices List :: \"{scriptal.Name}\"";
 
             listBoxChoices.Items.Clear();

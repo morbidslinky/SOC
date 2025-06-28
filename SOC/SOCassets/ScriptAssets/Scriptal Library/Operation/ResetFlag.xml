@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Name>Unset Flag</Name>
+  <Version>1.0</Version>
   <Category>FLAGS</Category>
   <Description>Unflags an identifier. If the identifier is not flagged yet, this does nothing.</Description>
   <EventFunctionTemplate>qvars.CommonFlagTable[|[1|STRING,NUMBER]|] = nil</EventFunctionTemplate>
