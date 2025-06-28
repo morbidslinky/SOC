@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Get Total Target Count</Name>
+  <Category>MISSION</Category>
+  <Description>Updates a variable to the number of total target objectives in the sideop.</Description>
+  <EventFunctionTemplate>|[1|NUMBER]| = qvars.GetTargetCount()</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Number Variable</Name>
+	  <Description>The variable to copy the table count to.</Description>
+	  <AllowLiteral>false</AllowLiteral>
+	</Choice>
+  </Choices>
+  <EmbeddedCommonDefinitions>
+    <qvarsDefinition Extrude="true">
+	  <Key xsi:type="LuaString" Value="GetTargetCount" />
+	  <Value xsi:type="LuaFunction">
+	    <Template>local totalTargets = 0
+if mvars.ene_questTargetList then
+  for _, targetInfo in pairs(mvars.ene_questTargetList) do
+    if targetInfo.isTarget == true then
+      totalTargets = totalTargets + 1
+    end
+  end
+end
+if mvars.ani_questTargetList then
+  for _, _ in pairs(mvars.ani_questTargetList) do
+    totalTargets = totalTargets + 1
+  end
+end
+if qvars.ObjectiveTypeList and qvars.ObjectiveTypeList.targetItemList then
+  for _, _ in pairs(qvars.ObjectiveTypeList.targetItemList) do
+    totalTargets = totalTargets + 1
+  end
+end
+return totalTargets</Template>
+	  </Value>
+    </qvarsDefinition>
+  </EmbeddedCommonDefinitions>
+</Scriptal>

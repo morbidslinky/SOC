@@ -32,7 +32,9 @@ namespace SOC.Classes.Lua
 
         public override string TokenValue => GetLuaFunctionValue();
 
-        public LuaFunction() : base(TemplateRestrictionType.FUNCTION) { }
+        public LuaFunction() : base(TemplateRestrictionType.FUNCTION) {
+            Parameters = Array.Empty<LuaVariable>();
+        }
 
         public LuaFunction(LuaTemplate template, LuaValue[] populationValues, LuaVariable[] parameters) : base(TemplateRestrictionType.FUNCTION)
         {

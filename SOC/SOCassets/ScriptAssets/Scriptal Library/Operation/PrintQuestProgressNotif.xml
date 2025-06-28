@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Print Sideop Progress Notification</Name>
+  <Category>USER INTERFACE</Category>
+  <Description>Prints the Progress Notification associated to the current sideop, given a current tally of the objectives completed and the total count of objectives.</Description>
+  <EventFunctionTemplate>local tempCurrentObjectiveCount = |[1|NUMBER]|
+local tempTotalObjectiveCount = |[2|NUMBER]|
+local showAnnounceLogId = TppQuest.questCompleteLangIds[ TppQuest.GetCurrentQuestName() ]
+if showAnnounceLogId then
+  TppUI.ShowAnnounceLog(showAnnounceLogId, tempCurrentObjectiveCount, tempTotalObjectiveCount)
+end</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Objectives Completed</Name>
+	  <Description>The number of objectives that the player has completed thus far.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="0" />
+	</Choice>
+	<Choice>
+	  <Name>Total Objectives</Name>
+	  <Description>The total number of objectives in the sideop.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Event Default Arguments</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="0" />
+	</Choice>
+  </Choices>
+</Scriptal>

@@ -66,7 +66,12 @@ namespace SOC.UI
             ScriptalEmbed = new EmbeddedScriptalControl(this);
 
             treeViewScripts.Nodes.Add(ScriptTablesRootNode);
-            Add(Quest.ScriptDetails);
+            SyncUserInputToQuestData();
+
+            if (ScriptTablesRootNode.IsEmpty() && treeViewVariables.Nodes.Count == 0)
+            {
+                AddDefault();
+            }
 
             treeViewScripts.SelectedNode = ScriptTablesRootNode;
         }
@@ -116,6 +121,29 @@ namespace SOC.UI
 
             AddToQStep_MainNode(scripts);
             RedrawScriptDependents();
+        }
+
+        public void AddDefault()
+        {
+            var defaultScriptDetails = Path.Combine(ScriptSetEmbed.ScriptExportDir, "Default.xml");
+            if (File.Exists(defaultScriptDetails))
+            {
+                try
+                {
+                    Add(ScriptDetails.LoadFromXml(defaultScriptDetails));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to load Default.xml script file: {ex.Message}");
+                    return;
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            ScriptTablesRootNode.ClearStrTables();
+            ClearVariableNodes();
         }
 
         private void MapChoicesToCorrespondingRuntimeTokens(List<Scriptal> scriptals)
@@ -245,8 +273,13 @@ namespace SOC.UI
             Quest.ScriptDetails.QStep_Main.AddRange(ScriptTablesRootNode.QStep_Main.ConvertToScripts());
         }
 
+        internal void SyncUserInputToQuestData()
+        {
+            Clear();
+            Add(Quest.ScriptDetails);
+        }
+
         private TreeNode draggedNode = null;
-        private TreeNode lastReorderTarget = null;
         private TreeNodeCollection siblingNodes = null;
 
         private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
@@ -277,8 +310,6 @@ namespace SOC.UI
             e.Effect = DragDropEffects.Move;
             _isUpdatingControls = true;
 
-            lastReorderTarget = hoverNode;
-
             int hoverIndex = siblingNodes.IndexOf(hoverNode);
             int dragIndex = siblingNodes.IndexOf(draggedNode);
 
@@ -298,7 +329,6 @@ namespace SOC.UI
             UpdateEmbeddedScriptSetDisplay();
 
             draggedNode = null;
-            lastReorderTarget = null;
             siblingNodes = null;
         }
 

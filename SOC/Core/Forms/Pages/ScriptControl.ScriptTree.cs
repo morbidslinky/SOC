@@ -92,8 +92,6 @@ namespace SOC.UI
             switch (treeViewScripts.SelectedNode)
             {
                 case ScriptNode scriptNode:
-                    foreach (ScriptalNode node in scriptNode.OperationsParent.Nodes) node.ClearAllVarNodeDependencies();
-                    foreach (ScriptalNode node in scriptNode.PreconditionsParent.Nodes) node.ClearAllVarNodeDependencies();
                     GetParent32TableNode(scriptNode).DeleteScriptNode(scriptNode);
                     break;
                 case ScriptalNode scriptalNode:
@@ -286,6 +284,21 @@ namespace SOC.UI
             Nodes.Add(QStep_Main);
             Expand();
         }
+
+        public bool IsEmpty()
+        {
+            foreach (TreeNode node in Nodes)
+            {
+                if (node.Nodes.Count != 0)
+                    return false;
+            }
+            return true;
+        }
+
+        public void ClearStrTables()
+        {
+            QStep_Main.Clear();
+        }
     }
 
     public class Str32TableNode : TreeNode
@@ -325,6 +338,14 @@ namespace SOC.UI
             else
             {
                 Nodes.Add(codeNode);
+            }
+        }
+
+        public void Clear()
+        {
+            foreach (ScriptNode node in GetScriptNodes())
+            {
+                DeleteScriptNode(node);
             }
         }
 
@@ -388,6 +409,9 @@ namespace SOC.UI
 
             if (msgSenderNode == null || codeNode == null)
                 return;
+
+            foreach (ScriptalNode node in selectedScriptNode.OperationsParent.Nodes) node.ClearAllVarNodeDependencies();
+            foreach (ScriptalNode node in selectedScriptNode.PreconditionsParent.Nodes) node.ClearAllVarNodeDependencies();
 
             msgSenderNode.Nodes.Remove(selectedScriptNode);
 

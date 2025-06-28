@@ -185,7 +185,7 @@ namespace SOC.UI
             if (Quest.Load(loadFile.FileName))
             {
                 SetupControl.SyncUserInputToQuestData();
-                ScriptControl = new ScriptControl(Quest);
+                ScriptControl.SyncUserInputToQuestData();
             }
         }
 
