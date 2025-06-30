@@ -389,7 +389,7 @@ string.Format(@"
             if (match == null)
             {
                 selectedChoice.Value = Create.Nil();
-                selectedChoice.HighlightDependencyVacuum();
+                selectedChoice.HighlightTypeMismatch();
                 RefreshListBoxDisplay();
             }
         }

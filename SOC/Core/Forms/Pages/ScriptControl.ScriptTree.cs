@@ -650,22 +650,22 @@ namespace SOC.UI
 
         internal void CheckForDependencyWarnings()
         {
-            if (!Choice.HasDependencyVacuumWarning(this)) return;
+            if (!Choice.HasTypeMismatchWarning(this)) return;
 
             bool allGood = true;
             foreach (ScriptalParentNode parentNode in Nodes)
             {
-                if (!Choice.HasDependencyVacuumWarning(parentNode)) continue;
+                if (!Choice.HasTypeMismatchWarning(parentNode)) continue;
                 
                 bool scriptalsGood = true;
                 foreach(ScriptalNode scriptalNode in parentNode.Nodes)
                 {
-                    if (!Choice.HasDependencyVacuumWarning(scriptalNode)) continue;
+                    if (!Choice.HasTypeMismatchWarning(scriptalNode)) continue;
 
                     bool choicesGood = true;
                     foreach(Choice choice in scriptalNode.Scriptal.Choices)
                     {
-                        if (choice.NeedsDependencyVacuumWarning())
+                        if (choice.NeedsTypeMismatchWarning())
                         {
                             choicesGood = false;
                             break;

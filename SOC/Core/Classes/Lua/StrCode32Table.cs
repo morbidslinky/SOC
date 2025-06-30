@@ -450,8 +450,8 @@ namespace SOC.Classes.Lua
             foreach(Choice choice in Choices)
             {
                 choice.ParentScriptalNode = scriptalNode;
-                if (choice.NeedsDependencyVacuumWarning())
-                    choice.HighlightDependencyVacuum();
+                if (choice.NeedsTypeMismatchWarning())
+                    choice.HighlightTypeMismatch();
             }
         }
     }
@@ -560,7 +560,7 @@ namespace SOC.Classes.Lua
         public ScriptalNode ParentScriptalNode;
 
         [XmlIgnore]
-        public static readonly Color DEPENDENCY_VACUUM_WARNING_COLOR = Color.Orange;
+        public static readonly Color TYPE_MISMATCH_WARNING_COLOR = Color.Orange;
 
         public event EventHandler<VariableNodeEventArgs> VariableNodeEventPassthrough;
 
@@ -599,28 +599,29 @@ namespace SOC.Classes.Lua
 
                 if (notify) VariableNodeEventPassthrough?.Invoke(this, new VariableNodeEventArgs() { Doomed = true });
 
-                if (NeedsDependencyVacuumWarning())
-                    HighlightDependencyVacuum();
+                if (NeedsTypeMismatchWarning())
+                    HighlightTypeMismatch();
             }
         }
 
-        public void HighlightDependencyVacuum()
+        public void HighlightTypeMismatch()
         {
-            ParentScriptalNode.BackColor = DEPENDENCY_VACUUM_WARNING_COLOR;
-            ParentScriptalNode.Parent.BackColor = DEPENDENCY_VACUUM_WARNING_COLOR;
-            ParentScriptalNode.Parent.Parent.BackColor = DEPENDENCY_VACUUM_WARNING_COLOR;
+            ParentScriptalNode.BackColor = TYPE_MISMATCH_WARNING_COLOR;
+            ParentScriptalNode.Parent.BackColor = TYPE_MISMATCH_WARNING_COLOR;
+            ParentScriptalNode.Parent.Parent.BackColor = TYPE_MISMATCH_WARNING_COLOR;
         }
 
-        public bool NeedsDependencyVacuumWarning()
+        public bool NeedsTypeMismatchWarning()
         {
             if (ParentScriptalNode == null || ParentScriptalNode.Parent == null || ParentScriptalNode.Parent.Parent == null) return false;
 
-            return Key == ScriptControl.CUSTOM_VARIABLE_SET && Value is LuaNil;
+
+            return !CorrespondingRuntimeToken.Allows(Value, out _);
         }
 
-        public static bool HasDependencyVacuumWarning(TreeNode scriptTreeNode)
+        public static bool HasTypeMismatchWarning(TreeNode scriptTreeNode)
         {
-            return scriptTreeNode.BackColor == Choice.DEPENDENCY_VACUUM_WARNING_COLOR;
+            return scriptTreeNode.BackColor == Choice.TYPE_MISMATCH_WARNING_COLOR;
         }
 
         public void RefreshValue()

@@ -139,6 +139,7 @@ namespace SOC.UI
             textBoxVarName.Enabled = true;
             buttonRemoveVariableIdentifier.Enabled = true;
 
+            _isUpdatingControls = true;
             switch (node.Entry.Value.Type)
             {
                 case TemplateRestrictionType.STRING:
@@ -157,6 +158,7 @@ namespace SOC.UI
                     comboBoxVarType.Text = "TABLE";
                     break;
             }
+            _isUpdatingControls = false;
 
             textBoxVarName.Text = node.Name.Trim('"');
             UpdateNode();
@@ -331,6 +333,8 @@ namespace SOC.UI
 
         private void UpdateNode()
         {
+            if (_isUpdatingControls) return;
+
             VariableNode currentNode = (VariableNode)treeViewVariables.SelectedNode;
             switch (comboBoxVarType.Text)
             {
