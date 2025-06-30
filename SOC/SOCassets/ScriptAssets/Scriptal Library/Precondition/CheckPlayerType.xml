@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Check Player Type</Name>
+  <Version>1.0</Version>
+  <Category>GAME OBJECTS</Category>
+  <Description>Checks the character that the player is playing as.</Description>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Characters">
+	  <Value xsi:type="LuaVariable" Value="Snake">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="SNAKE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Quiet">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="QUIET" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Ocelot">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="OCELOT" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Diamond_Dog_Male">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="DD_MALE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Diamond_Dog_Female">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="DD_FEMALE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Snake_Or_Avatar">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="SNAKE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+			<Entry>
+		      <Key xsi:type="LuaNumber" Value="2" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="AVATAR" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Diamond_Dog_Soldier">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="DD_FEMALE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+			<Entry>
+		      <Key xsi:type="LuaNumber" Value="2" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="DD_MALE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Male">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="SNAKE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+			<Entry>
+		      <Key xsi:type="LuaNumber" Value="2" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="AVATAR" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+			<Entry>
+		      <Key xsi:type="LuaNumber" Value="3" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="OCELOT" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+			<Entry>
+		      <Key xsi:type="LuaNumber" Value="4" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="DD_MALE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	  <Value xsi:type="LuaVariable" Value="Female">
+	    <AssignedTo xsi:type="LuaTable">
+		  <Entries>
+		    <Entry>
+		      <Key xsi:type="LuaNumber" Value="1" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="QUIET" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+			<Entry>
+		      <Key xsi:type="LuaNumber" Value="2" />
+		      <Value xsi:type="LuaTableIdentifier" TableVariable="PlayerType">
+	            <TableKeyPath>
+		          <Key xsi:type="LuaString" Value="DD_FEMALE" />
+		        </TableKeyPath>
+	          </Value>
+		    </Entry>
+		  </Entries>
+		</AssignedTo>
+	  </Value>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <EventFunctionTemplate>local tempPlayerType_|[1|ASSIGN_VARIABLE]| for _, value in pairs(tempPlayerType_|[1|VARIABLE]|) do
+  if vars.playerType == value then
+    return true
+  end
+end
+return false</EventFunctionTemplate>
+  <Choices>
+	<Choice>
+	  <Name>Character Type</Name>
+	  <Description>The player's current character.</Description>
+	  <AllowUserVariable>false</AllowUserVariable>
+	  <AllowLiteral>false</AllowLiteral>
+	  <ChoosableValueSetsFilter>
+	    <Key>Characters</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Characters</Key>
+	</Choice>
+  </Choices>
+</Scriptal>

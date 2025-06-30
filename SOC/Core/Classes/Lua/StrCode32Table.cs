@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -95,8 +96,11 @@ namespace SOC.Classes.Lua
             {
                 foreach (Script subscript in root.Subscripts)
                 {
+                    int index = 1;
                     foreach (Scriptal precondition in subscript.Preconditions)
                     {
+                        precondition.ScriptPrefixID = $"Precondition {index++}: ";
+
                         functionDefinitionsTable.Add(
                             Create.TableEntry(
                                 Create.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Create.String($"{precondition.ScriptPrefixID}{precondition.Name}")),
@@ -105,8 +109,12 @@ namespace SOC.Classes.Lua
                             )
                         );
                     }
+
+                    index = 1;
                     foreach (Scriptal operation in subscript.Operations)
                     {
+                        operation.ScriptPrefixID = $"Operation {index++}: ";
+
                         functionDefinitionsTable.Add(
                             Create.TableEntry(
                                 Create.TableIdentifier(definitionTableVariableName, subscript.CodeEvent.ToLuaString(), subscript.Identifier, Create.String($"{operation.ScriptPrefixID}{operation.Name}")),
@@ -190,11 +198,11 @@ namespace SOC.Classes.Lua
             CodeEvent = codeMsgSender;
             Identifier = (LuaString)legacyFormat.Key;
 
-            Scriptal legacyScriptal = new Scriptal();
+            Scriptal embeddedScriptal = new Scriptal();
 
-            legacyScriptal.Name = "func";
-            legacyScriptal.EventFunctionTemplate = ((LuaFunction)legacyFormat.Value).Body.Template;
-            Operations.Add(legacyScriptal);
+            embeddedScriptal.Name = "Embedded SOC Script";
+            embeddedScriptal.EventFunctionTemplate = ((LuaFunction)legacyFormat.Value).Body.Template;
+            Operations.Add(embeddedScriptal);
         }
 
         public Script(Script subscript)

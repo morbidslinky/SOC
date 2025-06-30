@@ -144,6 +144,7 @@ namespace SOC.UI
         {
             ScriptTablesRootNode.ClearStrTables();
             ClearVariableNodes();
+            UpdateEmbeddedScriptSetDisplay();
         }
 
         private void MapChoicesToCorrespondingRuntimeTokens(List<Scriptal> scriptals)

@@ -704,10 +704,8 @@ namespace SOC.UI
         public List<Scriptal> GetScriptals()
         {
             List<Scriptal> childScriptals = new List<Scriptal>();
-            int index = 1;
             foreach (ScriptalNode scriptalNode in Nodes)
             {
-                scriptalNode.Scriptal.ScriptPrefixID = $"{(ScriptalType == ScriptalType.Precondition ? "Precondition" : "Operation")} {index++}: ";
                 childScriptals.Add(scriptalNode.Scriptal);
             }
 
