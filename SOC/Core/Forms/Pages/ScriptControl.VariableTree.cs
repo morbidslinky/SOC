@@ -85,28 +85,6 @@ namespace SOC.UI
             selectedNode.NotifyDependentsOfVariableNodeChange(true);
         }
 
-        private void ClearVariableNodes()
-        {
-            foreach (VariableNode node in GetVariableNodes())
-            {
-                treeViewVariables.Nodes.Remove(node);
-                node.NotifyDependentsOfVariableNodeChange(true);
-            }
-        }
-
-        private List<VariableNode> GetVariableNodes()
-        {
-
-            List<VariableNode> variableNodes = new List<VariableNode>();
-
-            foreach (VariableNode node in treeViewVariables.Nodes)
-            {
-                variableNodes.Add(node);
-            }
-
-            return variableNodes;
-        }
-
         private void buttonNewIdentifier_Click(object sender, EventArgs e)
         {
             VariableNode parentNode = (VariableNode)treeViewVariables.SelectedNode;

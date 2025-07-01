@@ -65,15 +65,12 @@ namespace SOC.UI
             ScriptEmbed = new EmbeddedScriptControl(this);
             ScriptalEmbed = new EmbeddedScriptalControl(this);
 
-            treeViewScripts.Nodes.Add(ScriptTablesRootNode);
             SyncUserInputToQuestData();
 
             if (ScriptTablesRootNode.IsEmpty() && treeViewVariables.Nodes.Count == 0)
             {
                 AddDefault();
             }
-
-            treeViewScripts.SelectedNode = ScriptTablesRootNode;
         }
 
         private static void ParseMessageClassesFile()
@@ -138,13 +135,6 @@ namespace SOC.UI
                     return;
                 }
             }
-        }
-
-        public void Clear()
-        {
-            ScriptTablesRootNode.ClearStrTables();
-            ClearVariableNodes();
-            UpdateEmbeddedScriptSetDisplay();
         }
 
         private void MapChoicesToCorrespondingRuntimeTokens(List<Scriptal> scriptals)
@@ -276,8 +266,17 @@ namespace SOC.UI
 
         internal void SyncUserInputToQuestData()
         {
-            Clear();
+            ScriptTablesRootNode = new ScriptTablesRootNode();
+
+            treeViewVariables.Nodes.Clear();
+            treeViewScripts.Nodes.Clear();
+
+            treeViewScripts.Nodes.Add(ScriptTablesRootNode);
             Add(Quest.ScriptDetails);
+
+            UpdateEmbeddedScriptSetDisplay();
+
+            treeViewScripts.SelectedNode = ScriptTablesRootNode;
         }
 
         private TreeNode draggedNode = null;

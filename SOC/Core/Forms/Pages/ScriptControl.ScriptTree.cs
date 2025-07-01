@@ -310,11 +310,6 @@ namespace SOC.UI
             }
             return true;
         }
-
-        public void ClearStrTables()
-        {
-            QStep_Main.Clear();
-        }
     }
 
     public class Str32TableNode : TreeNode
