@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>Custom Event Trigger</Name>
+  <Name>Custom Mission Trigger</Name>
   <Version>1.0</Version>
   <Category>MISSION</Category>
   <Description>Immediately triggers a custom 'Mission' StrCode32 event.
-This can be used for daisy-chaining events together, or creating an event loop.</Description>
+This can be used for daisy-chaining events together, centralizing logic into a common script, or creating an event loop.</Description>
   <EventFunctionTemplate>Mission.SendMessage("Mission", |[1|STRING]|, |[2|NUMBER]|, |[3|NUMBER]|, |[4|NUMBER]|, |[5|NUMBER]|)</EventFunctionTemplate>
   <Choices>
 	<Choice>
 	  <Name>Message</Name>
-	  <Description>The name of the event Message. This operation triggers an event to occur. You can catch that event By creating a new script with a "Mission" StrCode, and this value as the message.</Description>
+	  <Description>The name of the event's Message. This operation triggers an event to occur, which can be "hooked" to a script. Create a new script with the "Mission" StrCode32, and this value as the Message.</Description>
 	  <Key>String Literal</Key>
-	  <Value xsi:type="LuaString" Value="TriggerMessage" />
+	  <Value xsi:type="LuaString" Value="Custom" />
 	</Choice>
 	<Choice>
 	  <Name>Argument 1</Name>

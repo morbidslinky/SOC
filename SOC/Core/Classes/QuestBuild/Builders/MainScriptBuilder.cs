@@ -84,12 +84,10 @@ namespace SOC.Classes.Lua
 
         private void AddTrapAreaHooks(LuaString questTrapName)
         {
-            string missionEnterCall = Create.FunctionCall(Create.TableIdentifier("Mission", "SendMessage"),
-                new LuaValue[] { Create.String("Mission"), Create.String("OnEnterQuestArea") }.Concat(StrCode32.GetDefaultParametersAsVariables()).ToArray()).TokenValue;
-
-            Script enterTrapHook = new Script(
-                new StrCode32("Trap", Create.String("Enter"), "", questTrapName),
-                Create.FunctionAsTableEntry("QuestArea", StrCode32.DefaultParameters, missionEnterCall, true));
+            LuaFunctionCall missionEnterCall = Create.FunctionCall(Create.TableIdentifier("Mission", "SendMessage"),
+                new LuaValue[] { Create.String("Mission"), Create.String("OnEnterQuestArea") }.Concat(StrCode32.GetDefaultParametersAsVariables()).ToArray());
+            
+            QStep_Main.OnEnterFunction.AppendLuaValue(missionEnterCall);
 
             string missionExitCall = Create.FunctionCall(Create.TableIdentifier("Mission", "SendMessage"),
                 new LuaValue[] { Create.String("Mission"), Create.String("OnLeaveQuestArea") }.Concat(StrCode32.GetDefaultParametersAsVariables()).ToArray()).TokenValue;
@@ -98,7 +96,7 @@ namespace SOC.Classes.Lua
                     new StrCode32("Trap", Create.String("Exit"), "", questTrapName),
                     Create.FunctionAsTableEntry("QuestArea", StrCode32.DefaultParameters, missionExitCall, true));
 
-            QStep_Main.StrCode32Table.Add(enterTrapHook, exitTrapHook);
+            QStep_Main.StrCode32Table.Add(exitTrapHook);
         }
 
         public void Build(string mainLuaFilePath)
