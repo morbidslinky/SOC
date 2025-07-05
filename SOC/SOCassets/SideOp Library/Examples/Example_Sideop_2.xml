@@ -1270,1021 +1270,6 @@ end</EventFunctionTemplate>
       <UserScript>
         <CodeEvent>
           <CodeKey>Mission</CodeKey>
-          <Message xsi:type="LuaString" Value="OnTargetExtraction" />
-          <SenderKey>ANY / ALL</SenderKey>
-          <SenderValue xsi:type="LuaNil" />
-        </CodeEvent>
-        <Identifier Value="Extract_Lose_If_Obj_Failed" />
-        <Description />
-        <Preconditions>
-          <Precondition>
-            <Name>Compare Number Values</Name>
-            <Version>1.0</Version>
-            <Category>COMPARISONS</Category>
-            <Description>Compares two numbers. 
-- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
-- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
-- 'qvars.LessThan' returns true when Num1 is less than Num2.
-- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
-- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
-- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
-            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Comparison Functions">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="NotEquals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
-            <Choices>
-              <Choice>
-                <Name>Comparison</Name>
-                <Description>The comparison function.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Comparison Functions</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>false</AllowUserVariable>
-                <Key>Comparison Functions</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num1</Name>
-                <Description>The number on the left-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Event Default Arguments</Key>
-                <Value xsi:type="LuaVariable" Value="arg2">
-                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num2</Name>
-                <Description>The number on the right-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="-1" />
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="Equals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue == thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="NotEquals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue ~= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-            </EmbeddedCommonDefinitions>
-          </Precondition>
-        </Preconditions>
-        <Operations>
-          <Operation>
-            <Name>Lose</Name>
-            <Version>1.0</Version>
-            <Category>MISSION</Category>
-            <Description>The player immediately loses the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
-            <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.FAILURE)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets />
-            <Choices />
-            <EmbeddedCommonDefinitions />
-          </Operation>
-        </Operations>
-      </UserScript>
-      <UserScript>
-        <CodeEvent>
-          <CodeKey>Mission</CodeKey>
-          <Message xsi:type="LuaString" Value="OnTargetDeath" />
-          <SenderKey>ANY / ALL</SenderKey>
-          <SenderValue xsi:type="LuaNil" />
-        </CodeEvent>
-        <Identifier Value="Dead_Get_Total_Target_Count" />
-        <Description />
-        <Preconditions />
-        <Operations>
-          <Operation>
-            <Name>Get Total Target Count</Name>
-            <Version>1.0</Version>
-            <Category>MISSION</Category>
-            <Description>Updates a variable to the number of total target objectives in the sideop.</Description>
-            <EventFunctionTemplate>|[1|NUMBER]| = qvars.GetTargetCount()</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets />
-            <Choices>
-              <Choice>
-                <Name>Number Variable</Name>
-                <Description>The variable to copy the table count to.</Description>
-                <ChoosableValueSetsFilter />
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Total_Targets" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NUMBER</EvaluatesTo>
-                </Value>
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions>
-              <qvarsDefinition Extrude="true">
-                <Key xsi:type="LuaString" Value="GetTargetCount" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters />
-                  <Template>local totalTargets = 0
-if mvars.ene_questTargetList then
-  for _, targetInfo in pairs(mvars.ene_questTargetList) do
-    if targetInfo.isTarget == true then
-      totalTargets = totalTargets + 1
-    end
-  end
-end
-if mvars.ani_questTargetList then
-  for _, _ in pairs(mvars.ani_questTargetList) do
-    totalTargets = totalTargets + 1
-  end
-end
-if qvars.ObjectiveTypeList and qvars.ObjectiveTypeList.targetItemList then
-  for _, _ in pairs(qvars.ObjectiveTypeList.targetItemList) do
-    totalTargets = totalTargets + 1
-  end
-end
-return totalTargets</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-            </EmbeddedCommonDefinitions>
-          </Operation>
-        </Operations>
-      </UserScript>
-      <UserScript>
-        <CodeEvent>
-          <CodeKey>Mission</CodeKey>
-          <Message xsi:type="LuaString" Value="OnTargetDeath" />
-          <SenderKey>ANY / ALL</SenderKey>
-          <SenderValue xsi:type="LuaNil" />
-        </CodeEvent>
-        <Identifier Value="Dead_Win_If_Obj_Quota_Reached" />
-        <Description />
-        <Preconditions>
-          <Precondition>
-            <Name>Compare Number Values</Name>
-            <Version>1.0</Version>
-            <Category>COMPARISONS</Category>
-            <Description>Compares two numbers. 
-- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
-- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
-- 'qvars.LessThan' returns true when Num1 is less than Num2.
-- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
-- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
-- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
-            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Comparison Functions">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="NotEquals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
-            <Choices>
-              <Choice>
-                <Name>Comparison</Name>
-                <Description>The comparison function.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Comparison Functions</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>false</AllowUserVariable>
-                <Key>Comparison Functions</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num1</Name>
-                <Description>The number on the left-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Event Default Arguments</Key>
-                <Value xsi:type="LuaVariable" Value="arg2">
-                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num2</Name>
-                <Description>The number on the right-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="1" />
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="Equals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue == thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="NotEquals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue ~= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-            </EmbeddedCommonDefinitions>
-          </Precondition>
-          <Precondition>
-            <Name>Compare Number Values</Name>
-            <Version>1.0</Version>
-            <Category>COMPARISONS</Category>
-            <Description>Compares two numbers. 
-- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
-- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
-- 'qvars.LessThan' returns true when Num1 is less than Num2.
-- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
-- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
-- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
-            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Comparison Functions">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="NotEquals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
-            <Choices>
-              <Choice>
-                <Name>Comparison</Name>
-                <Description>The comparison function.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Comparison Functions</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>false</AllowUserVariable>
-                <Key>Comparison Functions</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num1</Name>
-                <Description>The number on the left-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Event Default Arguments</Key>
-                <Value xsi:type="LuaVariable" Value="arg3">
-                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num2</Name>
-                <Description>The number on the right-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Total_Targets" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NUMBER</EvaluatesTo>
-                </Value>
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="Equals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue == thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="NotEquals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue ~= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-            </EmbeddedCommonDefinitions>
-          </Precondition>
-        </Preconditions>
-        <Operations>
-          <Operation>
-            <Name>Win</Name>
-            <Version>1.0</Version>
-            <Category>MISSION</Category>
-            <Description>The player immediately wins the sideop. Operations and scripts in the triggered event will finish executing, but any new events will not trigger sideop scripts.</Description>
-            <EventFunctionTemplate>TppQuest.ClearWithSave(TppDefine.QUEST_CLEAR_TYPE.CLEAR)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets />
-            <Choices />
-            <EmbeddedCommonDefinitions />
-          </Operation>
-        </Operations>
-      </UserScript>
-      <UserScript>
-        <CodeEvent>
-          <CodeKey>Mission</CodeKey>
-          <Message xsi:type="LuaString" Value="OnTargetDeath" />
-          <SenderKey>ANY / ALL</SenderKey>
-          <SenderValue xsi:type="LuaNil" />
-        </CodeEvent>
-        <Identifier Value="Dead_Print_Progress_If_Obj_Completed" />
-        <Description />
-        <Preconditions>
-          <Precondition>
-            <Name>Compare Number Values</Name>
-            <Version>1.0</Version>
-            <Category>COMPARISONS</Category>
-            <Description>Compares two numbers. 
-- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
-- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
-- 'qvars.LessThan' returns true when Num1 is less than Num2.
-- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
-- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
-- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
-            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Comparison Functions">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="NotEquals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
-            <Choices>
-              <Choice>
-                <Name>Comparison</Name>
-                <Description>The comparison function.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Comparison Functions</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>false</AllowUserVariable>
-                <Key>Comparison Functions</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num1</Name>
-                <Description>The number on the left-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Event Default Arguments</Key>
-                <Value xsi:type="LuaVariable" Value="arg2">
-                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num2</Name>
-                <Description>The number on the right-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Number Literal</Key>
-                <Value xsi:type="LuaNumber" Value="1" />
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="Equals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue == thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="NotEquals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue ~= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-            </EmbeddedCommonDefinitions>
-          </Precondition>
-          <Precondition>
-            <Name>Compare Number Values</Name>
-            <Version>1.0</Version>
-            <Category>COMPARISONS</Category>
-            <Description>Compares two numbers. 
-- 'qvars.Equals' returns true when Num1 and Num2 are the same value.
-- 'qvars.NotEquals' returns true when Num1 and Num2 are not the same value.
-- 'qvars.LessThan' returns true when Num1 is less than Num2.
-- 'qvars.GreaterThan' returns true when Num1 is greater than Num2.
-- 'qvars.LessThanOrEqualTo' returns true when Num1 is less than or equal to Num2.
-- 'qvars.GreaterThanOrEqualTo' returns true when Num1 is greater than or equal to Num2.</Description>
-            <EventFunctionTemplate>return |[1|TABLE_IDENTIFIER]|(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets>
-              <KeyValuesSet Key="Comparison Functions">
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Equals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="NotEquals" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </KeyValuesSet>
-            </EmbeddedChoosableValueSets>
-            <Choices>
-              <Choice>
-                <Name>Comparison</Name>
-                <Description>The comparison function.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Comparison Functions</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>false</AllowLiteral>
-                <AllowUserVariable>false</AllowUserVariable>
-                <Key>Comparison Functions</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="LessThan" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NIL</EvaluatesTo>
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num1</Name>
-                <Description>The number on the left-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Event Default Arguments</Key>
-                <Value xsi:type="LuaVariable" Value="arg3">
-                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Num2</Name>
-                <Description>The number on the right-hand side of the comparison.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Total_Targets" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NUMBER</EvaluatesTo>
-                </Value>
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="Equals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue == thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="NotEquals" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue ~= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThan" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt; thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="LessThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &lt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-              <qvarsDefinition Extrude="false">
-                <Key xsi:type="LuaString" Value="GreaterThanOrEqualTo" />
-                <Value xsi:type="LuaFunction">
-                  <Parameters>
-                    <Parameter Value="thisValue" />
-                    <Parameter Value="thatValue" />
-                  </Parameters>
-                  <Template>  return thisValue &gt;= thatValue</Template>
-                  <PopulationValues />
-                </Value>
-              </qvarsDefinition>
-            </EmbeddedCommonDefinitions>
-          </Precondition>
-        </Preconditions>
-        <Operations>
-          <Operation>
-            <Name>Print Sideop Progress Notification</Name>
-            <Version>1.0</Version>
-            <Category>USER INTERFACE</Category>
-            <Description>Prints the Progress Notification associated to the current sideop, given a current tally of the objectives completed and the total count of objectives.</Description>
-            <EventFunctionTemplate>local tempCurrentObjectiveCount = |[1|NUMBER]|
-local tempTotalObjectiveCount = |[2|NUMBER]|
-local showAnnounceLogId = TppQuest.questCompleteLangIds[ TppQuest.GetCurrentQuestName() ]
-if showAnnounceLogId then
-  TppUI.ShowAnnounceLog(showAnnounceLogId, tempCurrentObjectiveCount, tempTotalObjectiveCount)
-end</EventFunctionTemplate>
-            <EmbeddedChoosableValueSets />
-            <Choices>
-              <Choice>
-                <Name>Objectives Completed</Name>
-                <Description>The number of objectives that the player has completed thus far.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Event Default Arguments</Key>
-                <Value xsi:type="LuaVariable" Value="arg3">
-                  <AssignedTo xsi:type="LuaNumber" Value="-1" />
-                </Value>
-              </Choice>
-              <Choice>
-                <Name>Total Objectives</Name>
-                <Description>The total number of objectives in the sideop.</Description>
-                <ChoosableValueSetsFilter>
-                  <Key>Event Default Arguments</Key>
-                </ChoosableValueSetsFilter>
-                <AllowUIEdit>true</AllowUIEdit>
-                <AllowLiteral>true</AllowLiteral>
-                <AllowUserVariable>true</AllowUserVariable>
-                <Key>Variable</Key>
-                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
-                  <TableKeyPath>
-                    <Key xsi:type="LuaString" Value="Total_Targets" />
-                  </TableKeyPath>
-                  <EvaluatesTo>NUMBER</EvaluatesTo>
-                </Value>
-              </Choice>
-            </Choices>
-            <EmbeddedCommonDefinitions />
-          </Operation>
-        </Operations>
-      </UserScript>
-      <UserScript>
-        <CodeEvent>
-          <CodeKey>Mission</CodeKey>
           <Message xsi:type="LuaString" Value="OnTargetDeath" />
           <SenderKey>ANY / ALL</SenderKey>
           <SenderValue xsi:type="LuaNil" />
@@ -2472,11 +1457,470 @@ end</EventFunctionTemplate>
           </Operation>
         </Operations>
       </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Mission</CodeKey>
+          <Message xsi:type="LuaString" Value="OnEnterQuestArea" />
+          <SenderKey>ANY / ALL</SenderKey>
+          <SenderValue xsi:type="LuaNil" />
+        </CodeEvent>
+        <Identifier Value="Init_Route_Loop" />
+        <Description />
+        <Preconditions />
+        <Operations>
+          <Operation>
+            <Name>Start Hidden Timer</Name>
+            <Version>1.0</Version>
+            <Category>TIMERS</Category>
+            <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+This can be used for chaining events together on a delay, or creating a delayed event loop.
+The name of the timer is the sender of the event.</Description>
+            <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Sender</Name>
+                <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="Route_Loop" />
+              </Choice>
+              <Choice>
+                <Name>Duration (Seconds)</Name>
+                <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="120" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+        </Operations>
+      </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Timer</CodeKey>
+          <Message xsi:type="LuaString" Value="Finish" />
+          <SenderKey>String Literal</SenderKey>
+          <SenderValue xsi:type="LuaString" Value="Route_Loop" />
+        </CodeEvent>
+        <Identifier Value="Route_Loop" />
+        <Description />
+        <Preconditions />
+        <Operations>
+          <Operation>
+            <Name>Start Hidden Timer</Name>
+            <Version>1.0</Version>
+            <Category>TIMERS</Category>
+            <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+This can be used for chaining events together on a delay, or creating a delayed event loop.
+The name of the timer is the sender of the event.</Description>
+            <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Sender</Name>
+                <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>String Literal</Key>
+                <Value xsi:type="LuaString" Value="Route_Loop" />
+              </Choice>
+              <Choice>
+                <Name>Duration (Seconds)</Name>
+                <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="180" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Set Variable To Random Number</Name>
+            <Version>1.0</Version>
+            <Category>VARIABLE MANIPULATIONS</Category>
+            <Description>Updates a custom number-variable to a random number within a defined range.</Description>
+            <EventFunctionTemplate>|[1|NUMBER]| = math.random(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Variable</Name>
+                <Description>The custom variable that the random value will be set to.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Random_Route_Index" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>From</Name>
+                <Description>The lowest value that the random number can return.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="1" />
+              </Choice>
+              <Choice>
+                <Name>To</Name>
+                <Description>The highest value that the random number can return.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="14" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Get Table Value</Name>
+            <Version>1.0</Version>
+            <Category>VARIABLE MANIPULATIONS</Category>
+            <Description>Retrieves a value in a table at the specified key/index</Description>
+            <EventFunctionTemplate>|[3|STRING,NUMBER,BOOLEAN,TABLE]| = |[1|TABLE]|[|[2|STRING,NUMBER]|]</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Table</Name>
+                <Description>The table to be that stores the value.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="All_Routes" />
+                  </TableKeyPath>
+                  <EvaluatesTo>TABLE</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Key</Name>
+                <Description>The key (or index) of the value to be retrieved.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Random_Route_Index" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Storage Variable</Name>
+                <Description>The variable to copy the value to.
+	  
+Warning: due to the ambiguous value type of the response, any variable type is accepted for this choice. 
+However, this may cause type inconsistencies if the command returns a mismatching value type.
+It is recommended to know exactly what type of value will be returned from the command, so that the variable type can match.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Target_Route" />
+                  </TableKeyPath>
+                  <EvaluatesTo>STRING</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Set Route</Name>
+            <Version>1.0</Version>
+            <Category>ROUTES AND POSITIONS</Category>
+            <Description>Immediately sets the patrol route of a specific Game Object.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners.
+Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
+UAVs and Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+            <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The soldier/helicopter/UAV/Prisoner (their name or GameObjectId) to be re-routed</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>Helicopter Names (Targets)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Enemy Names (Targets)</Key>
+                <Value xsi:type="LuaString" Value="sol_quest_0000" />
+              </Choice>
+              <Choice>
+                <Name>New Route</Name>
+                <Description>The name of the route that the target Game Object will begin to patrol.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Route Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Target_Route" />
+                  </TableKeyPath>
+                  <EvaluatesTo>STRING</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="gameObjectIdVal" />
+                    <Parameter Value="routeName" />
+                  </Parameters>
+                  <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+          <Operation>
+            <Name>Set Route</Name>
+            <Version>1.0</Version>
+            <Category>ROUTES AND POSITIONS</Category>
+            <Description>Immediately sets the patrol route of a specific Game Object.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners.
+Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
+UAVs and Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+            <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The soldier/helicopter/UAV/Prisoner (their name or GameObjectId) to be re-routed</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Enemy Names (Targets)</Key>
+                  <Key>Enemy Names (Enabled/Customized)</Key>
+                  <Key>Enemy Names</Key>
+                  <Key>Helicopter Names (Targets)</Key>
+                  <Key>Helicopter Names</Key>
+                  <Key>UAV Names (Targets)</Key>
+                  <Key>UAV Names</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Enemy Names (Enabled/Customized)</Key>
+                <Value xsi:type="LuaString" Value="sol_quest_0002" />
+              </Choice>
+              <Choice>
+                <Name>New Route</Name>
+                <Description>The name of the route that the target Game Object will begin to patrol.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Route Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Target_Route" />
+                  </TableKeyPath>
+                  <EvaluatesTo>STRING</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="gameObjectIdVal" />
+                    <Parameter Value="routeName" />
+                  </Parameters>
+                  <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+        </Operations>
+      </UserScript>
     </QStep_Main>
     <Variables>
       <UserVariable Extrude="false">
         <Key xsi:type="LuaString" Value="Total_Targets" />
         <Value xsi:type="LuaNumber" Value="-1" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="All_Routes" />
+        <Value xsi:type="LuaTable">
+          <Entries>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="1" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0000" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="2" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0001" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="3" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0002" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="4" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0002" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="5" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0003" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="6" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0004" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="7" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0005" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="8" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0006" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="9" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0007" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="10" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0008" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="11" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0008" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="12" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0009" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="13" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0010" />
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="14" />
+              <Value xsi:type="LuaString" Value="rt_pfCamp_c_0011" />
+            </Entry>
+          </Entries>
+        </Value>
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="Random_Route_Index" />
+        <Value xsi:type="LuaNumber" Value="1" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="Target_Route" />
+        <Value xsi:type="LuaString" Value="rt_pfCamp_c_0000" />
       </UserVariable>
     </Variables>
   </ScriptDetails>

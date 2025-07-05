@@ -2,7 +2,7 @@
 <Quest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="0.8.0.0">
   <SetupDetails FpkName="Example_Sideop_11" QuestNum="30200">
     <QuestTitle>Example: Eliminate the Oilfield Walker Gears</QuestTitle>
-    <QuestDesc>Eliminate the three Walker Gears parket at Mfinda Oilfield.</QuestDesc>
+    <QuestDesc>Eliminate the three Walker Gears parked at Mfinda Oilfield.</QuestDesc>
     <locationID>20</locationID>
     <loadArea>outland</loadArea>
     <coords xCoord="-1034" yCoord="-13" zCoord="-249" />

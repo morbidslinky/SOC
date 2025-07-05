@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Set Command Post Phase</Name>
+  <Version>1.0</Version>
+  <Category>GAMEPLAY EFFECTS</Category>
+  <Description>Sets the detection phase for an enemy command post.</Description>
+  <EventFunctionTemplate>InfEnemyPhase.ChangePhase(|[1|STRING]|,TppGameObject[|[2|STRING]|])</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Command Posts">
+	  <Value xsi:type="LuaString" Value="afgh_field_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_remnants_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_tent_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_village_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_slopedTown_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_commFacility_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_enemyBase_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_bridge_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_cliffTown_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_fort_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_powerPlant_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_sovietBase_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_citadel_cp"/>
+	  <Value xsi:type="LuaString" Value="afgh_fieldEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_remnantsNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_fieldWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_tentEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_tentNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_commWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_ruinsNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_slopedWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_villageEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_villageNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_villageWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_enemyEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_bridgeNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_bridgeWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_cliffEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_cliffSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_cliffWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_enemyNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_fortSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_fortWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_slopedEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_plantSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_plantWest_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_sovietSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_waterwayEast_ob"/>
+	  <Value xsi:type="LuaString" Value="afgh_citadelSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_outland_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_flowStation_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_swamp_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_savannah_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_pfCamp_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_banana_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_diamond_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_hill_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_factory_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_lab_cp"/>
+	  <Value xsi:type="LuaString" Value="mafr_outlandEast_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_outlandNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_swampEast_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_swampSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_swampWest_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_pfCampNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_pfCampEast_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_savannahEast_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_savannahWest_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_chicoVilWest_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_hillSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_factorySouth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_hillNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_hillWest_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_hillWestNear_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_diamondSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_diamondNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_diamondWest_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_bananaEast_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_savannahNorth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_bananaSouth_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_factoryWest_ob"/>
+	  <Value xsi:type="LuaString" Value="mafr_labWest_ob"/>
+	</KeyValuesSet>
+	<KeyValuesSet Key="Phases">
+	  <Value xsi:type="LuaString" Value="PHASE_SNEAK"/>
+	  <Value xsi:type="LuaString" Value="PHASE_CAUTION"/>
+	  <Value xsi:type="LuaString" Value="PHASE_EVASION"/>
+	  <Value xsi:type="LuaString" Value="PHASE_ALERT"/>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>
+  <Choices>
+	<Choice>
+	  <Name>Command Post</Name>
+	  <Description>The command post to update.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Command Posts</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Command Posts</Key>
+	  <Value xsi:type="LuaString" Value="afgh_field_cp"/>
+	</Choice>
+	<Choice>
+	  <Name>Phase</Name>
+	  <Description>The enemy detection phase (Sneak, Caution, Evasion, Alert)</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Phases</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Phases</Key>
+	  <Value xsi:type="LuaString" Value="PHASE_SNEAK"/>
+	</Choice>
+  </Choices>
+</Scriptal>

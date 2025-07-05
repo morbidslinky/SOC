@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Cancel Forced Weather</Name>
+  <Version>1.0</Version>
+  <Category>GAMEPLAY EFFECTS</Category>
+  <Description>Ends a forced weather event.</Description>
+  <EventFunctionTemplate>TppWeather.CancelForceRequestWeather()</EventFunctionTemplate>
+</Scriptal>

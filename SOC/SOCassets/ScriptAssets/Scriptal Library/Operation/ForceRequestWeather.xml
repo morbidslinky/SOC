@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Force Weather</Name>
+  <Version>1.0</Version>
+  <Category>GAMEPLAY EFFECTS</Category>
+  <Description>Forces a weather event. The event will continue unless manually cancelled.</Description>
+  <EventFunctionTemplate>TppWeather.CancelForceRequestWeather()
+local tempWeatherType = TppDefine.WEATHER[|[1|STRING]|]
+local tempInterpTime = |[2|NUMBER]|
+local tempFogParam = nil
+if tempWeatherType == TppDefine.WEATHER.FOGGY then
+  tempFogParam = { fogDensity = |[3|NUMBER]|/100,fogType = WeatherManager[|[4|STRING]|] }
+end
+TppWeather.ForceRequestWeather(tempWeatherType,tempInterpTime,tempFogParam)</EventFunctionTemplate>
+  <EmbeddedChoosableValueSets>
+	<KeyValuesSet Key="Weather Types">
+	  <Value xsi:type="LuaString" Value="SUNNY"/>
+	  <Value xsi:type="LuaString" Value="CLOUDY"/>
+	  <Value xsi:type="LuaString" Value="FOGGY"/>
+	  <Value xsi:type="LuaString" Value="RAINY"/>
+	  <Value xsi:type="LuaString" Value="POURING"/>
+	  <Value xsi:type="LuaString" Value="SANDSTORM"/>
+	</KeyValuesSet>
+	<KeyValuesSet Key="Fog Types">
+	  <Value xsi:type="LuaString" Value="FOG_TYPE_NORMAL"/>
+	  <Value xsi:type="LuaString" Value="FOG_TYPE_PARASITE"/>
+	  <Value xsi:type="LuaString" Value="FOG_TYPE_EERIE"/>
+	</KeyValuesSet>
+  </EmbeddedChoosableValueSets>  
+  <Choices>
+	<Choice>
+	  <Name>Weather Type</Name>
+	  <Description>The type of weather to play during the forced weather event.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Weather Types</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Weather Types</Key>
+	  <Value xsi:type="LuaString" Value="RAINY"/>
+	</Choice>
+	<Choice>
+	  <Name>Transition Time (~Seconds)</Name>
+	  <Description>The time it takes to fully transition to the weather event. Exact unit measurement is unknown, seemingly longer than seconds.</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="8"/>
+	</Choice>
+	<Choice>
+	  <Name>Fog Density (Percent)</Name>
+	  <Description>The percent strength of the fog. Choose a value between 1 and 100. NOTE: This only applies if the Weather Type is FOGGY. This value has no effect otherwise.</Description>
+	  <Key>Number Literal</Key>
+	  <Value xsi:type="LuaNumber" Value="100"/>
+	</Choice>
+	<Choice>
+	  <Name>Fog Type</Name>
+	  <Description>The type of fog. NOTE: This only applies if the Weather Type is FOGGY. This value has no effect otherwise. There does not seem to be a difference between the NORMAL and EERIE options.</Description>
+	  <ChoosableValueSetsFilter>
+	    <Key>Fog Types</Key>
+	  </ChoosableValueSetsFilter>
+	  <Key>Fog Types</Key>
+	  <Value xsi:type="LuaString" Value="FOG_TYPE_NORMAL"/>
+	</Choice>
+  </Choices>
+</Scriptal>

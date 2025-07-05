@@ -2391,11 +2391,343 @@ end</EventFunctionTemplate>
           </Operation>
         </Operations>
       </UserScript>
+      <UserScript>
+        <CodeEvent>
+          <CodeKey>Mission</CodeKey>
+          <Message xsi:type="LuaString" Value="OnEnterQuestArea" />
+          <SenderKey>ANY / ALL</SenderKey>
+          <SenderValue xsi:type="LuaNil" />
+        </CodeEvent>
+        <Identifier Value="Warp_Hostage_Random" />
+        <Description />
+        <Preconditions />
+        <Operations>
+          <Operation>
+            <Name>Set Variable To Random Number</Name>
+            <Version>1.0</Version>
+            <Category>VARIABLE MANIPULATIONS</Category>
+            <Description>Updates a custom number-variable to a random number within a defined range.</Description>
+            <EventFunctionTemplate>|[1|NUMBER]| = math.random(|[2|NUMBER]|, |[3|NUMBER]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Variable</Name>
+                <Description>The custom variable that the random value will be set to.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Random_Location_Index" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>From</Name>
+                <Description>The lowest value that the random number can return.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="1" />
+              </Choice>
+              <Choice>
+                <Name>To</Name>
+                <Description>The highest value that the random number can return.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Number Literal</Key>
+                <Value xsi:type="LuaNumber" Value="5" />
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Get Table Value</Name>
+            <Version>1.0</Version>
+            <Category>VARIABLE MANIPULATIONS</Category>
+            <Description>Retrieves a value in a table at the specified key/index</Description>
+            <EventFunctionTemplate>|[3|STRING,NUMBER,BOOLEAN,TABLE]| = |[1|TABLE]|[|[2|STRING,NUMBER]|]</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Table</Name>
+                <Description>The table to be that stores the value.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Warp_Locations" />
+                  </TableKeyPath>
+                  <EvaluatesTo>TABLE</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Key</Name>
+                <Description>The key (or index) of the value to be retrieved.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Random_Location_Index" />
+                  </TableKeyPath>
+                  <EvaluatesTo>NUMBER</EvaluatesTo>
+                </Value>
+              </Choice>
+              <Choice>
+                <Name>Storage Variable</Name>
+                <Description>The variable to copy the value to.
+	  
+Warning: due to the ambiguous value type of the response, any variable type is accepted for this choice. 
+However, this may cause type inconsistencies if the command returns a mismatching value type.
+It is recommended to know exactly what type of value will be returned from the command, so that the variable type can match.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>false</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Selected_Warp_Location" />
+                  </TableKeyPath>
+                  <EvaluatesTo>TABLE</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions />
+          </Operation>
+          <Operation>
+            <Name>Warp</Name>
+            <Version>1.0</Version>
+            <Category>ROUTES AND POSITIONS</Category>
+            <Description>Immediately and unceremoniously teleports the target to a new position. 
+Compatible with the player character, prisoners and vehicles.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- The embedded Warp function was yoinked from Infinite Heaven</Description>
+            <EventFunctionTemplate>local tempGameObjectIdVal = |[1|STRING,NUMBER]|
+if type(tempGameObjectIdVal) == "string" then
+  tempGameObjectIdVal = GetGameObjectId(tempGameObjectIdVal)
+end
+qvars.Warp(tempGameObjectIdVal, |[2|TABLE]|)</EventFunctionTemplate>
+            <EmbeddedChoosableValueSets />
+            <Choices>
+              <Choice>
+                <Name>Game Object</Name>
+                <Description>The character or vehicle to be warped.</Description>
+                <ChoosableValueSetsFilter>
+                  <Key>Event Default Arguments</Key>
+                  <Key>Prisoner Names (Targets)</Key>
+                  <Key>Prisoner Names</Key>
+                  <Key>Walker Gear Names (Targets)</Key>
+                  <Key>Walker Gear Names</Key>
+                  <Key>Heavy Vehicle Names (Targets)</Key>
+                  <Key>Heavy Vehicle Names</Key>
+                </ChoosableValueSetsFilter>
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Prisoner Names (Targets)</Key>
+                <Value xsi:type="LuaString" Value="Hostage_1" />
+              </Choice>
+              <Choice>
+                <Name>X, Y, Z, rotY Table</Name>
+                <Description>A table that contains 3 numbers for X, Y, Z coordinates, and an optional 4th number for degree rotation.</Description>
+                <ChoosableValueSetsFilter />
+                <AllowUIEdit>true</AllowUIEdit>
+                <AllowLiteral>true</AllowLiteral>
+                <AllowUserVariable>true</AllowUserVariable>
+                <Key>Variable</Key>
+                <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                  <TableKeyPath>
+                    <Key xsi:type="LuaString" Value="Selected_Warp_Location" />
+                  </TableKeyPath>
+                  <EvaluatesTo>TABLE</EvaluatesTo>
+                </Value>
+              </Choice>
+            </Choices>
+            <EmbeddedCommonDefinitions>
+              <qvarsDefinition Extrude="false">
+                <Key xsi:type="LuaString" Value="Warp" />
+                <Value xsi:type="LuaFunction">
+                  <Parameters>
+                    <Parameter Value="gameId" />
+                    <Parameter Value="pos" />
+                    <Parameter Value="rotY" />
+                  </Parameters>
+                  <Template>rotY=rotY or pos[4] or 0
+  local typeIndex=GameObject.GetTypeIndex(gameId)   
+  if typeIndex==TppGameObject.GAME_OBJECT_TYPE_PLAYER2 then
+    rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(rotY))
+    local command={id="WarpAndWaitBlock",pos=pos,rotY=rotY}
+    GameObject.SendCommand(gameId,command)
+  elseif typeIndex==TppGameObject.GAME_OBJECT_TYPE_VEHICLE then
+    pos=Vector3(pos[1],pos[2],pos[3])
+    rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(rotY))
+    GameObject.SendCommand(gameId,{id="SetPosition",position=pos,rotY=rotY})
+  elseif typeIndex==TppGameObject.GAME_OBJECT_TYPE_WALKERGEAR2 or typeIndex==TppGameObject.GAME_OBJECT_TYPE_COMMON_WALKERGEAR2 then
+    rotY=foxmath.NormalizeRadian(foxmath.DegreeToRadian(rotY))
+    GameObject.SendCommand(gameId,{id="SetPosition",pos=pos,rotY=rotY})
+  elseif TppDefine.HOSTAGE_GM_TYPE[typeIndex] then
+    pos=Vector3(pos[1],pos[2],pos[3])
+    GameObject.SendCommand(gameId,{id="Warp",degRotationY=rotY,position=pos})
+  end</Template>
+                  <PopulationValues />
+                </Value>
+              </qvarsDefinition>
+            </EmbeddedCommonDefinitions>
+          </Operation>
+        </Operations>
+      </UserScript>
     </QStep_Main>
     <Variables>
       <UserVariable Extrude="false">
         <Key xsi:type="LuaString" Value="Total_Targets" />
         <Value xsi:type="LuaNumber" Value="-1" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="Random_Location_Index" />
+        <Value xsi:type="LuaNumber" Value="-1" />
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="Warp_Locations" />
+        <Value xsi:type="LuaTable">
+          <Entries>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="1" />
+              <Value xsi:type="LuaTable">
+                <Entries>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="1" />
+                    <Value xsi:type="LuaNumber" Value="-681.717" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="3" />
+                    <Value xsi:type="LuaNumber" Value="539.186" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="2" />
+                    <Value xsi:type="LuaNumber" Value="-1433.825" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="4" />
+                    <Value xsi:type="LuaNumber" Value="-125.826" />
+                  </Entry>
+                </Entries>
+              </Value>
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="2" />
+              <Value xsi:type="LuaTable">
+                <Entries>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="1" />
+                    <Value xsi:type="LuaNumber" Value="-663.704" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="2" />
+                    <Value xsi:type="LuaNumber" Value="544.948" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="3" />
+                    <Value xsi:type="LuaNumber" Value="-1530.462" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="4" />
+                    <Value xsi:type="LuaNumber" Value="-126.776" />
+                  </Entry>
+                </Entries>
+              </Value>
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="3" />
+              <Value xsi:type="LuaTable">
+                <Entries>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="1" />
+                    <Value xsi:type="LuaNumber" Value="-680.811" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="2" />
+                    <Value xsi:type="LuaNumber" Value="546.281" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="3" />
+                    <Value xsi:type="LuaNumber" Value="-1511.795" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="4" />
+                    <Value xsi:type="LuaNumber" Value="-9.618" />
+                  </Entry>
+                </Entries>
+              </Value>
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="4" />
+              <Value xsi:type="LuaTable">
+                <Entries>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="1" />
+                    <Value xsi:type="LuaNumber" Value="-708.013" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="2" />
+                    <Value xsi:type="LuaNumber" Value="549.28" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="3" />
+                    <Value xsi:type="LuaNumber" Value="-1517.383" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="4" />
+                    <Value xsi:type="LuaNumber" Value="81.343" />
+                  </Entry>
+                </Entries>
+              </Value>
+            </Entry>
+            <Entry Extrude="false">
+              <Key xsi:type="LuaNumber" Value="5" />
+              <Value xsi:type="LuaTable">
+                <Entries>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="1" />
+                    <Value xsi:type="LuaNumber" Value="-739.328" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="2" />
+                    <Value xsi:type="LuaNumber" Value="547.281" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="3" />
+                    <Value xsi:type="LuaNumber" Value="-1535.116" />
+                  </Entry>
+                  <Entry Extrude="false">
+                    <Key xsi:type="LuaNumber" Value="4" />
+                    <Value xsi:type="LuaNumber" Value="156.753" />
+                  </Entry>
+                </Entries>
+              </Value>
+            </Entry>
+          </Entries>
+        </Value>
+      </UserVariable>
+      <UserVariable Extrude="false">
+        <Key xsi:type="LuaString" Value="Selected_Warp_Location" />
+        <Value xsi:type="LuaTable">
+          <Entries />
+        </Value>
       </UserVariable>
     </Variables>
   </ScriptDetails>
