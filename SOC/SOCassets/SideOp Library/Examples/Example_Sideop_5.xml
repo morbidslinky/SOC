@@ -2121,7 +2121,7 @@ end</EventFunctionTemplate>
           <SenderKey>ANY / ALL</SenderKey>
           <SenderValue xsi:type="LuaNil" />
         </CodeEvent>
-        <Identifier Value="NewEventScript" />
+        <Identifier Value="Start_Parasite_Fog" />
         <Description />
         <Preconditions>
           <Precondition>

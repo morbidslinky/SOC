@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptDetails xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <QStep_Main>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>Mission</CodeKey>
+        <Message xsi:type="LuaString" Value="OnEnterQuestArea" />
+        <SenderKey>ANY / ALL</SenderKey>
+        <SenderValue xsi:type="LuaNil" />
+      </CodeEvent>
+      <Identifier Value="Walking_Hostage_Start_Route" />
+      <Description />
+      <Preconditions />
+      <Operations>
+        <Operation>
+          <Name>Set Route</Name>
+          <Version>1.0</Version>
+          <Category>ROUTES AND POSITIONS</Category>
+          <Description>Immediately sets the patrol route of a specific Game Object.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners.
+Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
+UAVs and Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+          <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Game Object</Name>
+              <Description>The soldier/helicopter/UAV/Prisoner (their name or GameObjectId) to be re-routed</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Event Default Arguments</Key>
+                <Key>Enemy Names (Targets)</Key>
+                <Key>Enemy Names (Enabled/Customized)</Key>
+                <Key>Enemy Names</Key>
+                <Key>Helicopter Names (Targets)</Key>
+                <Key>Helicopter Names</Key>
+                <Key>UAV Names (Targets)</Key>
+                <Key>UAV Names</Key>
+                <Key>Prisoner Names (Targets)</Key>
+                <Key>Prisoner Names</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Variable</Key>
+              <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                <TableKeyPath>
+                  <Key xsi:type="LuaString" Value="Walking_Hostage_Name" />
+                </TableKeyPath>
+                <EvaluatesTo>STRING</EvaluatesTo>
+              </Value>
+            </Choice>
+            <Choice>
+              <Name>New Route</Name>
+              <Description>The name of the route that the target Game Object will begin to patrol.</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Route Names</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Variable</Key>
+              <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                <TableKeyPath>
+                  <Key xsi:type="LuaString" Value="Walking_Hostage_Route" />
+                </TableKeyPath>
+                <EvaluatesTo>STRING</EvaluatesTo>
+              </Value>
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions>
+            <qvarsDefinition Extrude="false">
+              <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+              <Value xsi:type="LuaFunction">
+                <Parameters>
+                  <Parameter Value="gameObjectIdVal" />
+                  <Parameter Value="routeName" />
+                </Parameters>
+                <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+                <PopulationValues />
+              </Value>
+            </qvarsDefinition>
+          </EmbeddedCommonDefinitions>
+        </Operation>
+        <Operation>
+          <Name>Start Hidden Timer</Name>
+          <Version>1.0</Version>
+          <Category>TIMERS</Category>
+          <Description>Begins a background countdown that sends a Timer -&gt; "Start" and Timer -&gt; "Finish" event.
+This can be used for chaining events together on a delay, or creating a delayed event loop.
+The name of the timer is the sender of the event.</Description>
+          <EventFunctionTemplate>if GkEventTimerManager.IsTimerActive(|[1|STRING]|) then
+  GkEventTimerManager.Stop(|[1|STRING]|)
+end
+GkEventTimerManager.Start(|[1|STRING]|, |[2|NUMBER]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Sender</Name>
+              <Description>The name of the timer. 
+When the timer is finished, an event will occur. 
+You can catch that event By creating a new script with a "Timer" StrCode, "Finish" message, and this value as the "Sender".</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>String Literal</Key>
+              <Value xsi:type="LuaString" Value="Hostage_Route_Timer" />
+            </Choice>
+            <Choice>
+              <Name>Duration (Seconds)</Name>
+              <Description>The number of seconds that the timer will count to before triggering the "Finish" event.</Description>
+              <ChoosableValueSetsFilter />
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Number Literal</Key>
+              <Value xsi:type="LuaNumber" Value="120" />
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions />
+        </Operation>
+      </Operations>
+    </UserScript>
+    <UserScript>
+      <CodeEvent>
+        <CodeKey>Timer</CodeKey>
+        <Message xsi:type="LuaString" Value="Finish" />
+        <SenderKey>String Literal</SenderKey>
+        <SenderValue xsi:type="LuaString" Value="Hostage_Route_Timer" />
+      </CodeEvent>
+      <Identifier Value="Walking_Hostage_End_Route" />
+      <Description />
+      <Preconditions />
+      <Operations>
+        <Operation>
+          <Name>Set Route</Name>
+          <Version>1.0</Version>
+          <Category>ROUTES AND POSITIONS</Category>
+          <Description>Immediately sets the patrol route of a specific Game Object.
+Compatible with Soldiers, Helicopters, UAVs and Prisoners.
+Soldiers and Helicopters will transition back to their defined sneak/caution route when prompted by their command post.
+UAVs and Prisoners will retain this route across both sneak and caution phases.
+
+- For most events, 'arg1' represents the GameObjectId that sent the event. For GeoTraps, 'arg2' is the GameObjectId that entered/exited.
+- This operation will set Prisoners to a walkable state (not force-scared, force-downed, or unlocked). Untied prisoners will become tied again.</Description>
+          <EventFunctionTemplate>qvars.SetImmediateRoute(|[1|STRING,NUMBER]|, |[2|STRING]|)</EventFunctionTemplate>
+          <EmbeddedChoosableValueSets />
+          <Choices>
+            <Choice>
+              <Name>Game Object</Name>
+              <Description>The soldier/helicopter/UAV/Prisoner (their name or GameObjectId) to be re-routed</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Event Default Arguments</Key>
+                <Key>Enemy Names (Targets)</Key>
+                <Key>Enemy Names (Enabled/Customized)</Key>
+                <Key>Enemy Names</Key>
+                <Key>Helicopter Names (Targets)</Key>
+                <Key>Helicopter Names</Key>
+                <Key>UAV Names (Targets)</Key>
+                <Key>UAV Names</Key>
+                <Key>Prisoner Names (Targets)</Key>
+                <Key>Prisoner Names</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Variable</Key>
+              <Value xsi:type="LuaTableIdentifier" TableVariable="qvars">
+                <TableKeyPath>
+                  <Key xsi:type="LuaString" Value="Walking_Hostage_Name" />
+                </TableKeyPath>
+                <EvaluatesTo>STRING</EvaluatesTo>
+              </Value>
+            </Choice>
+            <Choice>
+              <Name>New Route</Name>
+              <Description>The name of the route that the target Game Object will begin to patrol.</Description>
+              <ChoosableValueSetsFilter>
+                <Key>Route Names</Key>
+              </ChoosableValueSetsFilter>
+              <AllowUIEdit>true</AllowUIEdit>
+              <AllowLiteral>true</AllowLiteral>
+              <AllowUserVariable>true</AllowUserVariable>
+              <Key>Route Names</Key>
+              <Value xsi:type="LuaString" Value="" />
+            </Choice>
+          </Choices>
+          <EmbeddedCommonDefinitions>
+            <qvarsDefinition Extrude="false">
+              <Key xsi:type="LuaString" Value="SetImmediateRoute" />
+              <Value xsi:type="LuaFunction">
+                <Parameters>
+                  <Parameter Value="gameObjectIdVal" />
+                  <Parameter Value="routeName" />
+                </Parameters>
+                <Template>if type(gameObjectIdVal) == "string" then
+  gameObjectIdVal = GetGameObjectId(gameObjectIdVal)
+end
+local gameObjectCommand = {
+  id = "SwitchRoute", route = routeName
+}
+if Tpp.IsEnemyHelicopter(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "RequestRoute", route = routeName
+  }
+elseif Tpp.IsUAV(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetPatrolRoute", route = routeName
+  }
+elseif Tpp.IsHostage(gameObjectIdVal) then
+  gameObjectCommand = {
+    id = "SetSneakRoute", route = routeName
+  }
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetForceScared", scared = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetEverDown", enabled = false })
+  GameObject.SendCommand(gameObjectIdVal, { id = "SetHostage2Flag", flag = "unlocked", on = false })
+end
+
+GameObject.SendCommand(gameObjectIdVal, gameObjectCommand)</Template>
+                <PopulationValues />
+              </Value>
+            </qvarsDefinition>
+          </EmbeddedCommonDefinitions>
+        </Operation>
+      </Operations>
+    </UserScript>
+  </QStep_Main>
+  <Variables>
+    <UserVariable Extrude="false">
+      <Key xsi:type="LuaString" Value="Walking_Hostage_Route" />
+      <Value xsi:type="LuaString" Value="rt_outland_r_0000" />
+    </UserVariable>
+    <UserVariable Extrude="false">
+      <Key xsi:type="LuaString" Value="Walking_Hostage_Name" />
+      <Value xsi:type="LuaString" Value="Hostage_0" />
+    </UserVariable>
+  </Variables>
+</ScriptDetails>
