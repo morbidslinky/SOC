@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scriptal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Disable Default Target Radio Call</Name>
+  <Version>1.0</Version>
+  <Category>SOUND EFFECTS</Category>
+  <Description>Disables the one-time radio call where Kaz says "That's The Target" upon marking a target.</Description>
+  <EventFunctionTemplate>mvars.qst_isRadioTarget = true</EventFunctionTemplate>
+</Scriptal>
