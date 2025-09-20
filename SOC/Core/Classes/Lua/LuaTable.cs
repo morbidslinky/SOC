@@ -25,6 +25,11 @@ namespace SOC.Classes.Lua
             Add(entries);
         }
 
+        public void Filter(Predicate<LuaTableEntry> match)
+        {
+            KeyValuePairs = KeyValuePairs.Where(kvp => match(kvp)).ToList();
+        }
+
         public void PrependOrMove(LuaTableEntry newEntry)
         {
             if (TryGetKeyValuePair(newEntry.Key, out LuaTableEntry existingEntry))

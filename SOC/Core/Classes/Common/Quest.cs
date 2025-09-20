@@ -119,17 +119,20 @@ namespace SOC.Classes.Common
 
                     System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
                     System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
-                    string version = fvi.FileVersion;
-                    if (version != loadedQuest.Version)
+                    string[] SOCVersion = fvi.FileVersion.Split('.');
+                    string[] questVersion = loadedQuest.Version.Split('.');
+
+                    if (questVersion.Length >= 3 && SOCVersion[0] == questVersion[0] && SOCVersion[1] == questVersion[1] && SOCVersion[2] == questVersion[2])
                     {
-                        MessageBox.Show("The selected xml file is from an earlier version of SOC. \n\nThe save file is no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
-                        return false;
+                        SetupDetails = loadedQuest.SetupDetails;
+                        ObjectsDetails = loadedQuest.ObjectsDetails;
+                        ScriptDetails = loadedQuest.ScriptDetails;
+                        return true;
                     }
 
-                    SetupDetails = loadedQuest.SetupDetails;
-                    ObjectsDetails = loadedQuest.ObjectsDetails;
-                    ScriptDetails = loadedQuest.ScriptDetails;
-                    return true;
+                    MessageBox.Show("The selected xml file is from an earlier version of SOC. \n\nThe save file is no longer supported.", "SOC", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                    return false;
+
                 }
                 catch (InvalidOperationException e)
                 {

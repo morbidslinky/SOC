@@ -52,7 +52,8 @@ namespace SOC.Classes.Lua
 
 
             QUEST_TABLE.Add(
-                Create.TableEntry("questType", Create.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE"))
+                Create.TableEntry("questType", Create.TableIdentifier("TppDefine", "QUEST_TYPE", "ELIMINATE")),
+                Create.TableEntry("targetList", new LuaTable())
             );
 
             AddTrapAreaHooks(questTrapName);

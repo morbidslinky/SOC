@@ -30,6 +30,7 @@ namespace SOC.Classes.Lua
                 Create.TableEntry("faceIdList", faceIdList),
                 Create.TableEntry("bodyIdList", bodyIdList));
 
+
             definitionTable = Create.Table(
                 Create.TableEntry("questPackList", questPackList),
                 Create.TableEntry("disableLzs", disableLzs),
@@ -49,12 +50,21 @@ namespace SOC.Classes.Lua
                 definitionTable.Add(Create.TableEntry("clusterName", setupDetails.loadArea.Substring(4)));
             }
 
+
             foreach (ObjectsDetail detail in objectsDetails.Details)
             {
                 detail.AddToDefinitionLua(this);
             }
 
             questPackList.Add(Create.TableEntry($"/Assets/tpp/pack/mission2/quest/ih/{setupDetails.FpkName}.fpk"));
+
+            RemoveEmptyTables(questPackList);
+            RemoveEmptyTables(definitionTable);
+        }
+
+        private void RemoveEmptyTables(LuaTable table)
+        {
+            table.Filter(entry => (entry.Value is not LuaTable) || (entry.Value is LuaTable table && table.KeyValuePairs.Count > 0));
         }
 
         public void AddFpkPathToQuestPackList(string packPath)

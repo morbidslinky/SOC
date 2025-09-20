@@ -48,7 +48,7 @@ namespace SOC.QuestObjects.Enemy
         {
             foreach (Enemy enemy in enemies)
             {
-                if (enemy.armored)
+                if (enemy.spawn && enemy.armored)
                     return true;
             }
             return false;
@@ -58,7 +58,7 @@ namespace SOC.QuestObjects.Enemy
         {
             foreach (Enemy enemy in enemies)
             {
-                if (enemy.balaclava)
+                if (enemy.spawn && enemy.balaclava)
                     return true;
             }
             return false;
@@ -68,7 +68,7 @@ namespace SOC.QuestObjects.Enemy
         {
             foreach (Enemy enemy in enemies)
             {
-                if (enemy.zombie)
+                if (enemy.spawn && enemy.zombie)
                     return true;
             }
             return false;
@@ -79,7 +79,7 @@ namespace SOC.QuestObjects.Enemy
             List<string> uniqueBodies = new List<string>();
             foreach (Enemy enemy in enemies)
             {
-                if (enemy.body != "DEFAULT" && !enemy.armored && !uniqueBodies.Contains(enemy.body))
+                if (enemy.spawn && enemy.body != "DEFAULT" && !enemy.armored && !uniqueBodies.Contains(enemy.body))
                 {
                     uniqueBodies.Add(enemy.body);
                 }
